@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class GithubUserInfo implements Oauth2UserInfo {
     public GithubUserInfo(Map<String, Object> attributes) {
-        id = (String) attributes.get(USER_IDENTIFIER_KEY);
+        id = attributes.get(USER_IDENTIFIER_KEY).toString();
         nickname = (String) attributes.get(NICKNAME_KEY);
         imgUrl = (String) attributes.get(IMG_URL_KEY);
     }

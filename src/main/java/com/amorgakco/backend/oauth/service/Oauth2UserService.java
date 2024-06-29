@@ -1,12 +1,9 @@
 package com.amorgakco.backend.oauth.service;
 
-import com.amorgakco.backend.member.domain.Account;
 import com.amorgakco.backend.member.domain.Member;
-import com.amorgakco.backend.member.mapper.AccountMapper;
-import com.amorgakco.backend.member.repository.AccountRepository;
+import com.amorgakco.backend.member.mapper.MemberMapper;
 import com.amorgakco.backend.member.repository.MemberRepository;
-import com.amorgakco.backend.oauth.Oauth2Principal;
-import com.amorgakco.backend.oauth.exception.Oauth2UserNotFound;
+import com.amorgakco.backend.oauth.UserPrincipal;
 import com.amorgakco.backend.oauth.mapper.Oauth2UserInfoMapper;
 import com.amorgakco.backend.oauth.userinfo.Oauth2UserInfo;
 
@@ -26,8 +23,6 @@ import java.util.Map;
 public class Oauth2UserService extends DefaultOAuth2UserService {
 
     private final MemberRepository memberRepository;
-    private final AccountRepository accountRepository;
-    private final AccountMapper accountMapper;
     private final Oauth2UserInfoMapper userInfoMapper;
 
     @Transactional
@@ -38,27 +33,13 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
         Oauth2UserInfo oauth2UserInfo =
                 userInfoMapper.toDetailOauth2UserInfo(oauth2Provider, attributes);
 
-        if (isNotRegistered(oauth2Provider, oauth2UserInfo.getIdentifier())) {
-            Member member = memberRepository.save(new Member());
-            accountRepository.save(accountMapper.toAccount(member, oauth2Provider, oauth2UserInfo));
-        } else {
-            updateAccount(oauth2Provider, oauth2UserInfo);
-        }
-        return new Oauth2Principal();
-    }
+        Member member =
+                memberRepository
+                        .findByProviderAndIdentifier(oauth2Provider, oauth2UserInfo.getIdentifier())
+                        .orElseGet(() -> MemberMapper.mapFrom(oauth2Provider, oauth2UserInfo));
 
-    private boolean isNotRegistered(String registrationId, String identifier) {
-        return accountRepository.existsByProviderAndIdentifier(registrationId, identifier);
-    }
+        memberRepository.save(member);
 
-    private void updateAccount(final String provider, final Oauth2UserInfo oauth2UserInfo) {
-        Account account =
-                accountRepository
-                        .findByProviderAndIdentifier(provider, oauth2UserInfo.getIdentifier())
-                        .orElseThrow(Oauth2UserNotFound::new);
-        account.updateAccount(
-                oauth2UserInfo.getIdentifier(),
-                oauth2UserInfo.getImgUrl(),
-                oauth2UserInfo.getNickname());
+        return new UserPrincipal(member, attributes);
     }
 }

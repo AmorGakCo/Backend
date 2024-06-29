@@ -1,6 +1,6 @@
 package com.amorgakco.backend.oauth.mapper;
 
-import com.amorgakco.backend.oauth.exception.UnsupportedOauth2Client;
+import com.amorgakco.backend.oauth.exception.UnsupportedOauth2ClientException;
 import com.amorgakco.backend.oauth.userinfo.GithubUserInfo;
 import com.amorgakco.backend.oauth.userinfo.KakaoUserInfo;
 import com.amorgakco.backend.oauth.userinfo.Oauth2UserInfo;
@@ -22,7 +22,7 @@ public class Oauth2UserInfoMapper {
         return switch (registrationId) {
             case KAKAO -> new KakaoUserInfo(attributes);
             case GITHUB -> new GithubUserInfo(attributes);
-            default -> throw new UnsupportedOauth2Client();
+            default -> throw new UnsupportedOauth2ClientException();
         };
     }
 }
