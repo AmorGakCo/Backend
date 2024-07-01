@@ -18,7 +18,7 @@ public class Oauth2UserInfoMapper {
     private static final String GITHUB = "github";
 
     public Oauth2UserInfo toDetailOauth2UserInfo(
-            String registrationId, Map<String, Object> attributes) {
+            final String registrationId, final Map<String, Object> attributes) {
         return switch (registrationId) {
             case KAKAO -> new KakaoUserInfo(attributes);
             case GITHUB -> new GithubUserInfo(attributes);

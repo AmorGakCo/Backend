@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 
 public class JwtCookieLoader {
+
     private static final int COOKIE_AGE_SECONDS = 604800;
     private static final String REFRESH_TOKEN_COOKIE_NAME = "refresh-token";
 
@@ -27,4 +28,6 @@ public class JwtCookieLoader {
                 .path("/")
                 .build();
     }
+
+    private JwtCookieLoader() {}
 }

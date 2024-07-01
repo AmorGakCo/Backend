@@ -27,13 +27,14 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
 
     @Transactional
     @Override
-    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        Map<String, Object> attributes = super.loadUser(userRequest).getAttributes();
-        String oauth2Provider = userRequest.getClientRegistration().getRegistrationId();
-        Oauth2UserInfo oauth2UserInfo =
+    public OAuth2User loadUser(final OAuth2UserRequest userRequest)
+            throws OAuth2AuthenticationException {
+        final Map<String, Object> attributes = super.loadUser(userRequest).getAttributes();
+        final String oauth2Provider = userRequest.getClientRegistration().getRegistrationId();
+        final Oauth2UserInfo oauth2UserInfo =
                 userInfoMapper.toDetailOauth2UserInfo(oauth2Provider, attributes);
 
-        Member member =
+        final Member member =
                 memberRepository
                         .findByProviderAndIdentifier(oauth2Provider, oauth2UserInfo.getIdentifier())
                         .orElseGet(() -> MemberMapper.mapFrom(oauth2Provider, oauth2UserInfo));

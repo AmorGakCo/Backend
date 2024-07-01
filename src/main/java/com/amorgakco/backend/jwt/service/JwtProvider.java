@@ -16,15 +16,15 @@ import javax.crypto.SecretKey;
 
 @Component
 public class JwtProvider {
-    public JwtProvider(JwtProperties props) {
+    public JwtProvider(final JwtProperties props) {
         this.secretKey = Keys.hmacShaKeyFor(props.secretKey().getBytes(StandardCharsets.UTF_8));
     }
 
     private final SecretKey secretKey;
 
-    public String create(String subject, Long duration) {
-        Date now = new Date();
-        Date expirationDate = new Date(now.getTime() + duration);
+    public String create(final String subject, final Long duration) {
+        final Date now = new Date();
+        final Date expirationDate = new Date(now.getTime() + duration);
         return Jwts.builder()
                 .subject(subject)
                 .issuedAt(now)
@@ -33,7 +33,7 @@ public class JwtProvider {
                 .compact();
     }
 
-    public void checkAccessToken(String accessToken) {
+    public void checkAccessToken(final String accessToken) {
         try {
             parse(accessToken);
         } catch (ExpiredJwtException e) {
@@ -43,21 +43,21 @@ public class JwtProvider {
         }
     }
 
-    private Jws<Claims> parse(String token) {
+    private Jws<Claims> parse(final String token) {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
     }
 
-    public void checkRefreshToken(String refreshToken) {
+    public void checkRefreshToken(final String refreshToken) {
         try {
             parse(refreshToken);
-        } catch (ExpiredJwtException e) {
+        } catch (final ExpiredJwtException e) {
             throw new RefreshTokenExpiredException();
-        } catch (JwtException e) {
+        } catch (final JwtException e) {
             throw new InvalidJwtException();
         }
     }
 
-    public String getSubject(String token) {
+    public String getSubject(final String token) {
         return parse(token).getPayload().getSubject();
     }
 }

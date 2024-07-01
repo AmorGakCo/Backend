@@ -36,7 +36,7 @@ public class Member {
     private String nickname;
     private Role role;
 
-    public void updateRefreshToken(String refreshToken) {
+    public void updateRefreshToken(final String refreshToken) {
         this.refreshToken = refreshToken;
     }
 }

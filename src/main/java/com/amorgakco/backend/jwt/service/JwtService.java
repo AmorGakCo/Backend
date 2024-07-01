@@ -18,11 +18,12 @@ public class JwtService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public MemberJwt createMemberToken(Long memberId) {
-        String accessToken = jwtProvider.create(String.valueOf(memberId), props.accessExpiration());
-        String refreshToken =
+    public MemberJwt createMemberToken(final Long memberId) {
+        final String accessToken =
+                jwtProvider.create(String.valueOf(memberId), props.accessExpiration());
+        final String refreshToken =
                 jwtProvider.create(String.valueOf(memberId), props.refreshExpiration());
-        Member member =
+        final Member member =
                 memberRepository.findById(memberId).orElseThrow(MemberNotFoundException::new);
         member.updateRefreshToken(refreshToken);
         return new MemberJwt(accessToken, refreshToken);

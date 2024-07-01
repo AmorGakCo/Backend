@@ -28,15 +28,17 @@ public class Oauth2SuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(
-            HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+            final HttpServletRequest request,
+            final HttpServletResponse response,
+            final Authentication authentication)
             throws IOException {
-        MemberJwt memberJwt =
+        final MemberJwt memberJwt =
                 jwtService.createMemberToken(Long.parseLong(authentication.getName()));
         JwtCookieLoader.loadCookie(response, memberJwt.refreshToken());
         response.sendRedirect(createUriWithAccessToken(memberJwt.accessToken()));
     }
 
-    private String createUriWithAccessToken(String accessToken) {
+    private String createUriWithAccessToken(final String accessToken) {
         return UriComponentsBuilder.fromUriString(tokenRedirectUri)
                 .queryParam(ACCESS_TOKEN, accessToken)
                 .build()

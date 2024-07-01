@@ -3,7 +3,7 @@ package com.amorgakco.backend.oauth.userinfo;
 import java.util.Map;
 
 public class GithubUserInfo implements Oauth2UserInfo {
-    public GithubUserInfo(Map<String, Object> attributes) {
+    public GithubUserInfo(final Map<String, Object> attributes) {
         id = attributes.get(USER_IDENTIFIER_KEY).toString();
         nickname = (String) attributes.get(NICKNAME_KEY);
         imgUrl = (String) attributes.get(IMG_URL_KEY);

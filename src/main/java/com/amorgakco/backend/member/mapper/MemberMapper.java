@@ -5,8 +5,7 @@ import com.amorgakco.backend.member.domain.Role;
 import com.amorgakco.backend.oauth.userinfo.Oauth2UserInfo;
 
 public class MemberMapper {
-
-    public static Member mapFrom(String provider, Oauth2UserInfo oauth2UserInfo) {
+    public static Member mapFrom(final String provider, final Oauth2UserInfo oauth2UserInfo) {
         return Member.builder()
                 .identifier(oauth2UserInfo.getIdentifier())
                 .imgUrl(oauth2UserInfo.getImgUrl())
@@ -15,4 +14,6 @@ public class MemberMapper {
                 .role(Role.ROLE_MEMBER)
                 .build();
     }
+
+    private MemberMapper() {}
 }

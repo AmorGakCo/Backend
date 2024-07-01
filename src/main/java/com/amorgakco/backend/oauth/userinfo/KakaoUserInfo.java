@@ -3,8 +3,8 @@ package com.amorgakco.backend.oauth.userinfo;
 import java.util.Map;
 
 public class KakaoUserInfo implements Oauth2UserInfo {
-    public KakaoUserInfo(Map<String, Object> attributes) {
-        Map<String, Object> properties = (Map<String, Object>) attributes.get(PROPERTIES_KET);
+    public KakaoUserInfo(final Map<String, Object> attributes) {
+        final Map<String, Object> properties = (Map<String, Object>) attributes.get(PROPERTIES_KET);
         id = attributes.get(USER_IDENTIFIER_KEY).toString();
         nickname = (String) properties.get(NICKNAME_KEY);
         imgUrl = (String) properties.get(IMG_URL_KEY);
