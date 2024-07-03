@@ -1,6 +1,7 @@
 package com.amorgakco.backend.global.config;
 
 import com.amorgakco.backend.oauth.handler.Oauth2SuccessHandler;
+import com.amorgakco.backend.oauth.jwt.filter.JwtAuthenticationFilter;
 import com.amorgakco.backend.oauth.service.Oauth2UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -8,16 +9,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
+@EnableWebSecurity(debug = true)
 public class SecurityConfig {
 
     private final Oauth2UserService oauth2UserService;
     private final Oauth2SuccessHandler oauth2SuccessHandler;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
@@ -29,16 +34,16 @@ public class SecurityConfig {
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(
                         request ->
-                                request.requestMatchers("/", "/token")
-                                        .permitAll()
+                                request.requestMatchers("/", "/token", "/login")
+                                        .anonymous()
                                         .anyRequest()
                                         .authenticated())
                 .oauth2Login(
-                        oauth -> // OAuth2 로그인 기능에 대한 여러 설정의 진입점
-                                // OAuth2 로그인 성공 이후 사용자 정보를 가져올 때의 설정을 담당
+                        oauth ->
                                 oauth.userInfoEndpoint(c -> c.userService(oauth2UserService))
-                                        // 로그인 성공 시 핸들러
-                                        .successHandler(oauth2SuccessHandler));
+                                        .successHandler(oauth2SuccessHandler))
+                .addFilterBefore(
+                        jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }

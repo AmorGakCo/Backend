@@ -6,3 +6,4 @@ spring:
     active: develop
     group:
       develop: dev,oauth2,jwt
+      production: oauth2,jwt

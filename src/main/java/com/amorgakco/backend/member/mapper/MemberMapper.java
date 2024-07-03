@@ -7,7 +7,7 @@ import com.amorgakco.backend.oauth.userinfo.Oauth2UserInfo;
 public class MemberMapper {
     public static Member mapFrom(final String provider, final Oauth2UserInfo oauth2UserInfo) {
         return Member.builder()
-                .identifier(oauth2UserInfo.getIdentifier())
+                .identifier(oauth2UserInfo.getOauth2Id())
                 .imgUrl(oauth2UserInfo.getImgUrl())
                 .nickname(oauth2UserInfo.getNickname())
                 .provider(provider)

@@ -1,4 +1,4 @@
-package com.amorgakco.backend.jwt.service;
+package com.amorgakco.backend.oauth.jwt.service;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

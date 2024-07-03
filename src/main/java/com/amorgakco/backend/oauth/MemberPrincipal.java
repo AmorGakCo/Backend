@@ -10,9 +10,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
-public class UserPrincipal implements OAuth2User {
+public class MemberPrincipal implements OAuth2User {
 
-    public UserPrincipal(final Member member, final Map<String, Object> attributes) {
+    public MemberPrincipal(final Member member, final Map<String, Object> attributes) {
         this.member = member;
         this.attributes = attributes;
     }

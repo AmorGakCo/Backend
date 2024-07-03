@@ -1,7 +1,7 @@
 package com.amorgakco.backend.oauth.handler;
 
-import com.amorgakco.backend.jwt.dto.MemberJwt;
-import com.amorgakco.backend.jwt.service.JwtService;
+import com.amorgakco.backend.oauth.jwt.dto.MemberJwt;
+import com.amorgakco.backend.oauth.jwt.service.JwtService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -33,13 +33,13 @@ public class Oauth2SuccessHandler implements AuthenticationSuccessHandler {
             final Authentication authentication)
             throws IOException {
         final MemberJwt memberJwt =
-                jwtService.createMemberToken(Long.parseLong(authentication.getName()));
+                jwtService.createAndSaveMemberToken(Long.parseLong(authentication.getName()));
         JwtCookieLoader.loadCookie(response, memberJwt.refreshToken());
         response.sendRedirect(createUriWithAccessToken(memberJwt.accessToken()));
     }
 
     private String createUriWithAccessToken(final String accessToken) {
-        return UriComponentsBuilder.fromUriString(tokenRedirectUri)
+        return UriComponentsBuilder.fromUriString(tokenRedirectUri) // FIXME
                 .queryParam(ACCESS_TOKEN, accessToken)
                 .build()
                 .toUriString();
