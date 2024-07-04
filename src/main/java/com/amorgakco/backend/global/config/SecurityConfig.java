@@ -1,11 +1,9 @@
 package com.amorgakco.backend.global.config;
 
-import com.amorgakco.backend.oauth.handler.Oauth2SuccessHandler;
-import com.amorgakco.backend.oauth.jwt.filter.JwtAuthenticationFilter;
-import com.amorgakco.backend.oauth.service.Oauth2UserService;
-
+import com.amorgakco.backend.global.jwt.filter.JwtAuthenticationFilter;
+import com.amorgakco.backend.global.oauth.handler.Oauth2SuccessHandler;
+import com.amorgakco.backend.global.oauth.service.Oauth2UserService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,24 +24,26 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable)
+        return http.csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
-                .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(
                         request ->
                                 request.requestMatchers("/", "/token", "/login")
-                                        .anonymous()
+                                        .permitAll()
                                         .anyRequest()
                                         .authenticated())
+                .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2Login(
                         oauth ->
-                                oauth.userInfoEndpoint(c -> c.userService(oauth2UserService))
+                                oauth.authorizationEndpoint(a -> a.baseUri("/oauth2/authorize"))
+                                        .redirectionEndpoint(a -> a.baseUri("/oauth2/callback/*"))
+                                        .userInfoEndpoint(c -> c.userService(oauth2UserService))
                                         .successHandler(oauth2SuccessHandler))
                 .addFilterBefore(
-                        jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        return http.build();
+                        jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 }

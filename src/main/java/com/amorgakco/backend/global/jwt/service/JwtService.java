@@ -1,12 +1,10 @@
-package com.amorgakco.backend.oauth.jwt.service;
+package com.amorgakco.backend.global.jwt.service;
 
+import com.amorgakco.backend.global.jwt.dto.MemberJwt;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.exception.MemberNotFoundException;
 import com.amorgakco.backend.member.repository.MemberRepository;
-import com.amorgakco.backend.oauth.jwt.dto.MemberJwt;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class JwtService {
     private static final String EMPTY_SUBJECT = "";
     private final JwtCreator jwtCreator;
-    private final JwtProperties props;
+    private final JwtProperties jwtProperties;
     private final MemberRepository memberRepository;
 
     @Transactional
@@ -23,8 +21,8 @@ public class JwtService {
         final Member member =
                 memberRepository.findById(memberId).orElseThrow(MemberNotFoundException::new);
         final String accessToken =
-                jwtCreator.create(String.valueOf(memberId), props.accessExpiration());
-        final String refreshToken = jwtCreator.create(EMPTY_SUBJECT, props.refreshExpiration());
+                jwtCreator.create(String.valueOf(memberId), jwtProperties.accessExpiration());
+        final String refreshToken = jwtCreator.create(EMPTY_SUBJECT, jwtProperties.refreshExpiration());
         member.updateRefreshToken(refreshToken);
         return new MemberJwt(accessToken, refreshToken);
     }

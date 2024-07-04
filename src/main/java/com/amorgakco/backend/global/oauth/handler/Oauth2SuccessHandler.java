@@ -1,13 +1,10 @@
-package com.amorgakco.backend.oauth.handler;
+package com.amorgakco.backend.global.oauth.handler;
 
-import com.amorgakco.backend.oauth.jwt.dto.MemberJwt;
-import com.amorgakco.backend.oauth.jwt.service.JwtService;
-
+import com.amorgakco.backend.global.jwt.dto.MemberJwt;
+import com.amorgakco.backend.global.jwt.service.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -20,11 +17,11 @@ import java.io.IOException;
 @Component
 public class Oauth2SuccessHandler implements AuthenticationSuccessHandler {
 
-    @Value("${token-redirect-uri}")
-    private String tokenRedirectUri;
-
     private static final String ACCESS_TOKEN = "access-token";
     private final JwtService jwtService;
+
+    @Value("${token-redirect-uri}")
+    private String tokenRedirectUri;
 
     @Override
     public void onAuthenticationSuccess(

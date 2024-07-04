@@ -4,11 +4,26 @@ import jakarta.persistence.*;
 
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public class Member {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    private String refreshToken;
+    private String provider;
+    private String identifier;
+    private String imgUrl;
+    private String nickname;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
+    private List<RoleEntity> role;
+
     @Builder
     public Member(
             final String provider,
@@ -22,17 +37,6 @@ public class Member {
         this.nickname = nickname;
         this.role = role;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    private String refreshToken;
-    private String provider;
-    private String identifier;
-    private String imgUrl;
-    private String nickname;
-    private Role role;
 
     public void updateRefreshToken(final String refreshToken) {
         this.refreshToken = refreshToken;

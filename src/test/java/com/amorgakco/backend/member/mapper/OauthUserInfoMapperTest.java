@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.*;
 
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.domain.Role;
-import com.amorgakco.backend.oauth.service.mapper.Oauth2Mapper;
-import com.amorgakco.backend.oauth.userinfo.KakaoUserInfo;
-import com.amorgakco.backend.oauth.userinfo.Oauth2UserInfo;
+import com.amorgakco.backend.global.oauth.service.mapper.Oauth2Mapper;
+import com.amorgakco.backend.global.oauth.userinfo.KakaoUserInfo;
+import com.amorgakco.backend.global.oauth.userinfo.Oauth2UserInfo;
 
 import org.junit.jupiter.api.Test;
 

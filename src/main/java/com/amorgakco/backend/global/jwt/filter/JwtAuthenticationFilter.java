@@ -1,15 +1,12 @@
-package com.amorgakco.backend.oauth.jwt.filter;
+package com.amorgakco.backend.global.jwt.filter;
 
-import com.amorgakco.backend.oauth.jwt.exception.InvalidHeaderException;
-import com.amorgakco.backend.oauth.jwt.service.JwtValidator;
-
+import com.amorgakco.backend.global.jwt.exception.InvalidHeaderException;
+import com.amorgakco.backend.global.jwt.service.JwtValidator;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -43,8 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String token = request.getHeader(AUTHORIZATION_HEADER);
         if (StringUtils.hasText(token) && token.startsWith(TOKEN_PREFIX)) {
             return token.substring(TOKEN_PREFIX_LENGTH);
-        } else {
-            throw new InvalidHeaderException();
         }
+        throw new InvalidHeaderException();
     }
 }

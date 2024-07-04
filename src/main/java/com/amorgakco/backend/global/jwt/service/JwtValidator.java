@@ -1,25 +1,23 @@
-package com.amorgakco.backend.oauth.jwt.service;
+package com.amorgakco.backend.global.jwt.service;
 
+import com.amorgakco.backend.global.jwt.exception.InvalidJwtException;
+import com.amorgakco.backend.global.jwt.exception.TokenExpiredException;
 import com.amorgakco.backend.member.exception.MemberNotFoundException;
 import com.amorgakco.backend.member.repository.MemberRepository;
-import com.amorgakco.backend.oauth.jwt.exception.InvalidJwtException;
-import com.amorgakco.backend.oauth.jwt.exception.TokenExpiredException;
-
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
-
-import javax.crypto.SecretKey;
 
 @Component
 @RequiredArgsConstructor
@@ -29,8 +27,8 @@ public class JwtValidator {
     private final SecretKey secretKey;
 
     @Autowired
-    public JwtValidator(final JwtProperties props, final MemberRepository memberRepository) {
-        this.secretKey = Keys.hmacShaKeyFor(props.secretKey().getBytes(StandardCharsets.UTF_8));
+    public JwtValidator(final JwtProperties jwtProperties, final MemberRepository memberRepository) {
+        this.secretKey = Keys.hmacShaKeyFor(jwtProperties.secretKey().getBytes(StandardCharsets.UTF_8));
         this.memberRepository = memberRepository;
     }
 

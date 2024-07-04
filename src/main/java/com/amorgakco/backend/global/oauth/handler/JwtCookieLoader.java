@@ -1,11 +1,12 @@
-package com.amorgakco.backend.oauth.handler;
+package com.amorgakco.backend.global.oauth.handler;
 
 import jakarta.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
+import org.springframework.stereotype.Component;
 
+@Component
 public class JwtCookieLoader {
 
     private static final int COOKIE_AGE_SECONDS = 604800;
@@ -29,5 +30,6 @@ public class JwtCookieLoader {
                 .build();
     }
 
-    private JwtCookieLoader() {}
+    private JwtCookieLoader() {
+    }
 }
