@@ -1,9 +1,6 @@
 package com.amorgakco.backend.global.oauth.userinfo;
 
-public interface Oauth2UserInfo {
-    String getOauth2Id();
+import com.amorgakco.backend.global.oauth.provider.Oauth2Provider;
 
-    String getImgUrl();
-
-    String getNickname();
-}
+public record Oauth2UserInfo(
+        String oauth2Id, String nickname, String imgUrl, Oauth2Provider oauth2Provider) {}

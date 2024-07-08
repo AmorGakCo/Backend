@@ -2,11 +2,11 @@ package com.amorgakco.backend.member.mapper;
 
 import static org.assertj.core.api.Assertions.*;
 
-import com.amorgakco.backend.member.domain.Member;
-import com.amorgakco.backend.member.domain.Role;
-import com.amorgakco.backend.global.oauth.service.mapper.Oauth2Mapper;
 import com.amorgakco.backend.global.oauth.userinfo.KakaoUserInfo;
 import com.amorgakco.backend.global.oauth.userinfo.Oauth2UserInfo;
+import com.amorgakco.backend.member.domain.Member;
+import com.amorgakco.backend.member.domain.Role;
+import com.amorgakco.backend.member.service.mapper.MemberMapper;
 
 import org.junit.jupiter.api.Test;
 
@@ -30,11 +30,11 @@ class OauthUserInfoMapperTest {
         final Oauth2UserInfo oauth2UserInfo = new KakaoUserInfo(attributes);
         // when
         final Member member =
-                Oauth2Mapper.INSTANCE.toMember(oauth2UserInfo, "kakao", Role.ROLE_MEMBER);
+                MemberMapper.INSTANCE.toMember(oauth2UserInfo, "kakao", Role.ROLE_MEMBER);
         // then
-        assertThat(member.getIdentifier()).isEqualTo(ID);
+        assertThat(member.getOauth2Id()).isEqualTo(ID);
         assertThat(member.getImgUrl()).isEqualTo(IMG);
         assertThat(member.getNickname()).isEqualTo(NICKNAME);
-        assertThat(member.getRole()).isEqualTo(Role.ROLE_MEMBER);
+        assertThat(member.getRoles()).isEqualTo(Role.ROLE_MEMBER);
     }
 }

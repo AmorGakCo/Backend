@@ -16,5 +16,7 @@ spring:
       hibernate:
         format_sql: true
     defer-datasource-initialization: true
-
-token-redirect-uri: "http://localhost:8080/token"
+  data:
+    redis:
+      host: localhost
+      port: 6379

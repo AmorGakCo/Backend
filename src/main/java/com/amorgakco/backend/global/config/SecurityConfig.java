@@ -1,9 +1,10 @@
 package com.amorgakco.backend.global.config;
 
-import com.amorgakco.backend.global.jwt.filter.JwtAuthenticationFilter;
 import com.amorgakco.backend.global.oauth.handler.Oauth2SuccessHandler;
 import com.amorgakco.backend.global.oauth.service.Oauth2UserService;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,6 +22,8 @@ public class SecurityConfig {
     private final Oauth2UserService oauth2UserService;
     private final Oauth2SuccessHandler oauth2SuccessHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
@@ -31,19 +34,21 @@ public class SecurityConfig {
                 .logout(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         request ->
-                                request.requestMatchers("/", "/token", "/login")
+                                request.requestMatchers("/", "/token")
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated())
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2Login(
                         oauth ->
-                                oauth.authorizationEndpoint(a -> a.baseUri("/oauth2/authorize"))
-                                        .redirectionEndpoint(a -> a.baseUri("/oauth2/callback/*"))
-                                        .userInfoEndpoint(c -> c.userService(oauth2UserService))
+                                oauth.userInfoEndpoint(c -> c.userService(oauth2UserService))
                                         .successHandler(oauth2SuccessHandler))
                 .addFilterBefore(
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(
+                        e ->
+                                e.authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                                        .accessDeniedHandler(jwtAccessDeniedHandler))
                 .build();
     }
 }
