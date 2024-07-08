@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .logout(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         request ->
-                                request.requestMatchers("/", "/token")
+                                request.requestMatchers("/", "/logout", "/token/reissue")
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated())

@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -24,6 +25,7 @@ public class JwtController {
     private final JwtCookieLoader jwtCookieLoader;
 
     @PostMapping("/token/reissue")
+    @ResponseStatus(HttpStatus.CREATED)
     public AccessTokenResponse reissue(
             @CookieValue(value = "refresh-token") final Cookie cookie,
             @RequestHeader(value = "Authorization") final String accessTokenHeader,
@@ -35,6 +37,7 @@ public class JwtController {
     }
 
     @DeleteMapping("/logout")
+    @ResponseStatus(HttpStatus.OK)
     public void logout(@CookieValue(value = "refresh-token") final Cookie cookie) {
         jwtService.logout(Optional.ofNullable(cookie));
     }

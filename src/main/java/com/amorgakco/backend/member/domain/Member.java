@@ -1,5 +1,6 @@
 package com.amorgakco.backend.member.domain;
 
+import com.amorgakco.backend.global.BaseTimeEntity;
 import com.amorgakco.backend.global.oauth.provider.Oauth2Provider;
 
 import jakarta.persistence.*;
@@ -12,7 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
