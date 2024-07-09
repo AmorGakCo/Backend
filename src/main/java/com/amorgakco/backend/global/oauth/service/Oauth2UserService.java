@@ -4,8 +4,6 @@ import com.amorgakco.backend.global.oauth.MemberPrincipal;
 import com.amorgakco.backend.global.oauth.provider.Oauth2Selector;
 import com.amorgakco.backend.global.oauth.userinfo.Oauth2UserInfo;
 import com.amorgakco.backend.member.domain.Member;
-import com.amorgakco.backend.member.domain.Role;
-import com.amorgakco.backend.member.domain.RoleEntity;
 import com.amorgakco.backend.member.repository.MemberRepository;
 import com.amorgakco.backend.member.service.mapper.MemberMapper;
 
@@ -18,8 +16,8 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 @RequiredArgsConstructor
@@ -43,15 +41,24 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
                 memberRepository
                         .findByOauth2ProviderAndOauth2Id(
                                 oauth2UserInfo.oauth2Provider(), oauth2UserInfo.oauth2Id())
+                        .map(updateMember(oauth2UserInfo))
                         .orElseGet(createMember(oauth2UserInfo));
-
-        memberRepository.saveAndFlush(member);
 
         return new MemberPrincipal(String.valueOf(member.getId()), attributes, member.getRoles());
     }
 
+    private Function<Member, Member> updateMember(final Oauth2UserInfo oauth2UserInfo) {
+        return existingMember -> {
+            existingMember.updateNicknameAndImgUrl(
+                    oauth2UserInfo.nickname(), oauth2UserInfo.imgUrl());
+            return existingMember;
+        };
+    }
+
     private Supplier<Member> createMember(final Oauth2UserInfo oauth2UserInfo) {
-        return () ->
-                memberMapper.toMember(oauth2UserInfo, List.of(new RoleEntity(Role.ROLE_MEMBER)));
+        return () -> {
+            final Member member = memberMapper.toMember(oauth2UserInfo);
+            return memberRepository.save(member);
+        };
     }
 }

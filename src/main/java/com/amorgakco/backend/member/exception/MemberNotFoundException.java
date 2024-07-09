@@ -1,3 +1,5 @@
 package com.amorgakco.backend.member.exception;
 
-public class MemberNotFoundException extends RuntimeException {}
+import java.util.NoSuchElementException;
+
+public class MemberNotFoundException extends NoSuchElementException {}

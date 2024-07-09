@@ -1,43 +1,32 @@
 package com.amorgakco.backend.jwt.service;
 
+import com.amorgakco.backend.jwt.domain.JwtSecretKey;
 import com.amorgakco.backend.jwt.exception.AccessTokenExpiredException;
+import com.amorgakco.backend.jwt.exception.IllegalAccessException;
 import com.amorgakco.backend.jwt.exception.InvalidJwtException;
-import com.amorgakco.backend.jwt.exception.RefreshTokenExpiredException;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.service.MemberService;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Component;
 
-import java.nio.charset.StandardCharsets;
 import java.util.List;
-
-import javax.crypto.SecretKey;
 
 @Component
 @RequiredArgsConstructor
 public class JwtValidator {
     private static final String EMPTY_CREDENTIAL = "";
     private final MemberService memberService;
-    private final SecretKey secretKey;
-
-    @Autowired
-    public JwtValidator(final JwtProperties jwtProperties, final MemberService memberService) {
-        this.secretKey =
-                Keys.hmacShaKeyFor(jwtProperties.secretKey().getBytes(StandardCharsets.UTF_8));
-        this.memberService = memberService;
-    }
+    private final JwtSecretKey jwtSecretKey;
 
     public Authentication getAuthentication(final String token) {
         checkAccessToken(token);
@@ -47,7 +36,7 @@ public class JwtValidator {
 
     public void checkAccessToken(final String token) {
         try {
-            Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
+            Jwts.parser().verifyWith(jwtSecretKey.getSecretKey()).build().parseSignedClaims(token);
         } catch (final ExpiredJwtException e) {
             throw new AccessTokenExpiredException();
         } catch (final JwtException e) {
@@ -57,7 +46,7 @@ public class JwtValidator {
 
     public String getClaim(final String token) {
         return Jwts.parser()
-                .verifyWith(secretKey)
+                .verifyWith(jwtSecretKey.getSecretKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload()
@@ -72,26 +61,24 @@ public class JwtValidator {
 
     private List<GrantedAuthority> getAuthorityList(final Member m) {
         return AuthorityUtils.createAuthorityList(
-                m.getRoles().stream().map(r -> r.getRole().toString()).toList());
+                m.getRoleNames().stream().map(r -> r.getRole().toString()).toList());
     }
 
-    public boolean reissueValidate(final String refreshToken, final String accessToken) {
-        checkRefreshToken(refreshToken);
+    public boolean validateReissue(final String accessToken, final String refreshTokenMemberId) {
         try {
             checkAccessToken(accessToken);
         } catch (final AccessTokenExpiredException e) {
+            final String accessTokenMemberId = getClaim(accessToken);
+            checkMemberId(refreshTokenMemberId, accessTokenMemberId);
             return true;
         }
         return false;
     }
 
-    public void checkRefreshToken(final String token) {
-        try {
-            Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
-        } catch (final ExpiredJwtException e) {
-            throw new RefreshTokenExpiredException();
-        } catch (final JwtException e) {
-            throw new InvalidJwtException();
+    private static void checkMemberId(
+            final String refreshTokenMemberId, final String accessTokenMemberId) {
+        if (!accessTokenMemberId.equals(refreshTokenMemberId)) {
+            throw new IllegalAccessException();
         }
     }
 }

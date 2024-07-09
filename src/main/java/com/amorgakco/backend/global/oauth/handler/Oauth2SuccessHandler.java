@@ -1,8 +1,8 @@
 package com.amorgakco.backend.global.oauth.handler;
 
+import com.amorgakco.backend.jwt.controller.JwtCookieLoader;
 import com.amorgakco.backend.jwt.dto.AccessTokenResponse;
 import com.amorgakco.backend.jwt.dto.MemberJwt;
-import com.amorgakco.backend.jwt.service.JwtProperties;
 import com.amorgakco.backend.jwt.service.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -25,7 +25,6 @@ public class Oauth2SuccessHandler implements AuthenticationSuccessHandler {
     private final JwtService jwtService;
     private final JwtCookieLoader jwtCookieLoader;
     private final ObjectMapper objectMapper;
-    private final JwtProperties jwtProperties;
 
     @Override
     public void onAuthenticationSuccess(

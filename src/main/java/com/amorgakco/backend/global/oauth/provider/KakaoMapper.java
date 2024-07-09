@@ -24,7 +24,7 @@ public class KakaoMapper implements Oauth2Mapper {
     }
 
     @Override
-    public boolean is(final String oauth2Provider) {
+    public boolean isEqualsTo(final String oauth2Provider) {
         return Objects.equals(
                 Oauth2Provider.KAKAO.name().toLowerCase(), oauth2Provider.toLowerCase());
     }

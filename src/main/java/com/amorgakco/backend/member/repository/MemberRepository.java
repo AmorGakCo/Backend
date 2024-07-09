@@ -14,5 +14,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByOauth2ProviderAndOauth2Id(Oauth2Provider provider, String id);
 
     @Query("select m from Member m join fetch m.roles")
-    Optional<Member> findMemberById(Long memberId);
+    Optional<Member> findByIdWithRoles(Long memberId);
 }

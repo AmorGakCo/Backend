@@ -1,6 +1,6 @@
 package com.amorgakco.backend.global.oauth;
 
-import com.amorgakco.backend.member.domain.RoleEntity;
+import com.amorgakco.backend.member.domain.Roles;
 
 import lombok.Getter;
 
@@ -22,7 +22,7 @@ public class MemberPrincipal implements OAuth2User, UserDetails {
     private final String name;
 
     public MemberPrincipal(
-            final String name, final Map<String, Object> attributes, final List<RoleEntity> roles) {
+            final String name, final Map<String, Object> attributes, final List<Roles> roles) {
         this.name = name;
         this.attributes = attributes;
         this.authorities =

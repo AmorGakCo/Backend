@@ -15,7 +15,7 @@ public class Oauth2Selector {
 
     public Oauth2Mapper getOauth2Mapper(final String oauth2Provider) {
         return oauth2UserMappers.stream()
-                .filter(provider -> provider.is(oauth2Provider))
+                .filter(provider -> provider.isEqualsTo(oauth2Provider))
                 .findFirst()
                 .orElseThrow(InvalidOauth2ProviderException::new);
     }

@@ -1,74 +1,51 @@
 package com.amorgakco.backend.jwt.service;
 
+import com.amorgakco.backend.jwt.domain.JwtSecretKey;
 import com.amorgakco.backend.jwt.domain.RefreshToken;
 import com.amorgakco.backend.jwt.dto.MemberJwt;
-import com.amorgakco.backend.jwt.exception.AccessTokenRequiredException;
+import com.amorgakco.backend.jwt.exception.IllegalAccessException;
 import com.amorgakco.backend.jwt.exception.InvalidJwtException;
 import com.amorgakco.backend.jwt.exception.RefreshTokenRequiredException;
 import com.amorgakco.backend.jwt.repository.RefreshTokenRepository;
-import com.amorgakco.backend.member.service.MemberService;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 
 import jakarta.servlet.http.Cookie;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Optional;
 
-import javax.crypto.SecretKey;
-
 @Service
-@RequiredArgsConstructor
 @Transactional
+@RequiredArgsConstructor
 public class JwtService {
     private static final String TOKEN_PREFIX = "Bearer ";
-    private static final int TOKEN_PREFIX_LENGTH = 7;
+    private static final int TOKEN_PREFIX_LENGTH = TOKEN_PREFIX.length();
     private final JwtProperties jwtProperties;
-    private final MemberService memberService;
-    private final SecretKey secretKey;
     private final JwtValidator jwtValidator;
+    private final JwtSecretKey jwtSecretKey;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    @Autowired
-    public JwtService(
-            final JwtProperties jwtProperties,
-            final MemberService memberService,
-            final JwtValidator jwtValidator,
-            final RefreshTokenRepository refreshTokenRepository) {
-        this.jwtProperties = jwtProperties;
-        this.secretKey =
-                Keys.hmacShaKeyFor(jwtProperties.secretKey().getBytes(StandardCharsets.UTF_8));
-        this.memberService = memberService;
-        this.jwtValidator = jwtValidator;
-        this.refreshTokenRepository = refreshTokenRepository;
-    }
-
-    /** Refresh Token Rotation */
-    public MemberJwt reissue(final Optional<Cookie> cookie, final String accessTokenHeader) {
-        final Cookie tokenCookie = cookie.orElseThrow(RefreshTokenRequiredException::new);
-        final String oldRefreshToken = tokenCookie.getValue();
+    public MemberJwt reissue(final String refreshToken, final String accessTokenHeader) {
+        final RefreshToken savedRefreshToken = findRefreshTokenFromRedis(refreshToken);
         final String accessToken =
-                extractAccessToken(accessTokenHeader)
-                        .orElseThrow(AccessTokenRequiredException::new);
-        if (jwtValidator.reissueValidate(oldRefreshToken, accessToken)) {
-            final RefreshToken refreshToken =
-                    refreshTokenRepository
-                            .findById(oldRefreshToken)
-                            .orElseThrow(InvalidJwtException::new);
-            final String memberId = refreshToken.getMemberId();
-            refreshTokenRepository.delete(refreshToken);
+                extractAccessToken(accessTokenHeader).orElseThrow(InvalidJwtException::new);
+        final String memberId = savedRefreshToken.getMemberId();
+        if (jwtValidator.validateReissue(accessToken, memberId)) {
+            refreshTokenRepository.delete(savedRefreshToken);
             return createAndSaveMemberToken(memberId);
         }
-        throw new InvalidJwtException();
+        throw new IllegalAccessException();
+    }
+
+    private RefreshToken findRefreshTokenFromRedis(final String token) {
+        return refreshTokenRepository.findById(token).orElseThrow(InvalidJwtException::new);
     }
 
     public Optional<String> extractAccessToken(final String accessTokenWithBearer) {
@@ -86,14 +63,14 @@ public class JwtService {
         return new MemberJwt(accessToken, refreshToken);
     }
 
-    public String create(final String memberId, final Long duration) {
+    private String create(final String memberId, final Long duration) {
         final Date now = new Date();
         final Date expirationDate = new Date(now.getTime() + duration);
         return Jwts.builder()
                 .subject(memberId)
                 .issuedAt(now)
                 .expiration(expirationDate)
-                .signWith(secretKey)
+                .signWith(jwtSecretKey.getSecretKey())
                 .compact();
     }
 

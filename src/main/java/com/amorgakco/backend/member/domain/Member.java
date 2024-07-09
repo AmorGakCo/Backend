@@ -24,27 +24,26 @@ public class Member extends BaseTimeEntity {
     private String oauth2Id;
     private String imgUrl;
     private String nickname;
-    private String refreshToken;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private List<RoleEntity> roles = new ArrayList<>();
+    private List<Roles> roleNames = new ArrayList<>();
 
     @Builder
     public Member(
             final Oauth2Provider oauth2Provider,
             final String oauth2Id,
             final String imgUrl,
-            final String nickname,
-            final List<RoleEntity> roles) {
+            final String nickname) {
         this.oauth2Provider = oauth2Provider;
         this.oauth2Id = oauth2Id;
         this.imgUrl = imgUrl;
         this.nickname = nickname;
-        this.roles = roles;
+        this.roleNames = List.of(new Roles(Role.ROLE_MEMBER));
     }
 
-    public void updateRefreshToken(final String refreshToken) {
-        this.refreshToken = refreshToken;
+    public void updateNicknameAndImgUrl(final String nickname, final String imgUrl) {
+        this.nickname = nickname;
+        this.imgUrl = imgUrl;
     }
 }

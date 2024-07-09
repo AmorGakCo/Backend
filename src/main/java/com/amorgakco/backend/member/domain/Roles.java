@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RoleEntity {
+public class Roles {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,7 +18,7 @@ public class RoleEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public RoleEntity(final Role role) {
+    public Roles(final Role role) {
         this.role = role;
     }
 }

@@ -1,4 +1,4 @@
-package com.amorgakco.backend.global.oauth.handler;
+package com.amorgakco.backend.jwt.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
 
