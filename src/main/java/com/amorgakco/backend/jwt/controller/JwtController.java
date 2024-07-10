@@ -35,9 +35,8 @@ public class JwtController {
     }
 
     @DeleteMapping("/logout")
-    @ResponseStatus(HttpStatus.OK)
-    public HttpStatus logout(@CookieValue(value = "refresh-token") final Cookie cookie) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void logout(@CookieValue(value = "refresh-token") final Cookie cookie) {
         jwtService.logout(Optional.ofNullable(cookie));
-        return HttpStatus.OK;
     }
 }

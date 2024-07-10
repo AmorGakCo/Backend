@@ -44,7 +44,8 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
                         .map(updateMember(oauth2UserInfo))
                         .orElseGet(createMember(oauth2UserInfo));
 
-        return new MemberPrincipal(String.valueOf(member.getId()), attributes, member.getRoles());
+        return new MemberPrincipal(
+                String.valueOf(member.getId()), attributes, member.getRoleNames());
     }
 
     private Function<Member, Member> updateMember(final Oauth2UserInfo oauth2UserInfo) {

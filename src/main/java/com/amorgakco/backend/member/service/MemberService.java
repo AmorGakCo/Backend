@@ -1,7 +1,7 @@
 package com.amorgakco.backend.member.service;
 
 import com.amorgakco.backend.member.domain.Member;
-import com.amorgakco.backend.member.exception.MemberNotFoundException;
+import com.amorgakco.backend.member.exception.ResourceNotFoundException;
 import com.amorgakco.backend.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -18,6 +18,6 @@ public class MemberService {
     public Member getMember(final Long memberId) {
         return memberRepository
                 .findByIdWithRoles(memberId)
-                .orElseThrow(MemberNotFoundException::new);
+                .orElseThrow(ResourceNotFoundException::new);
     }
 }
