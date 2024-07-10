@@ -1,1 +1,9 @@
-spring.application.name=backend
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: develop
+    group:
+      develop: dev,oauth2,jwt
+      production: oauth2,jwt
