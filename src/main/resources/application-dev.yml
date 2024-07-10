@@ -1,0 +1,22 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/amorgakco?serverTimezone=Asia/Seoul
+    username: root
+    password: 1234
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      dialect: org.hibernate.dialect.MySQL8InnoDBDialect
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
