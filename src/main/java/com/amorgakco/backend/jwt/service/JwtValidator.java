@@ -1,9 +1,10 @@
 package com.amorgakco.backend.jwt.service;
 
+import com.amorgakco.backend.global.exception.ErrorCode;
+import com.amorgakco.backend.global.exception.IllegalAccessException;
+import com.amorgakco.backend.global.exception.InvalidTokenException;
+import com.amorgakco.backend.global.exception.TokenExpiredException;
 import com.amorgakco.backend.jwt.domain.JwtSecretKey;
-import com.amorgakco.backend.jwt.exception.AccessTokenExpiredException;
-import com.amorgakco.backend.jwt.exception.IllegalAccessException;
-import com.amorgakco.backend.jwt.exception.InvalidJwtException;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.service.MemberService;
 
@@ -38,9 +39,9 @@ public class JwtValidator {
         try {
             Jwts.parser().verifyWith(jwtSecretKey.getSecretKey()).build().parseSignedClaims(token);
         } catch (final ExpiredJwtException e) {
-            throw new AccessTokenExpiredException();
+            throw new TokenExpiredException(ErrorCode.ACCESS_TOKEN_EXPIRED);
         } catch (final JwtException e) {
-            throw new InvalidJwtException();
+            throw new InvalidTokenException(ErrorCode.CANNOT_PARSE_TOKEN);
         }
     }
 
@@ -67,7 +68,7 @@ public class JwtValidator {
     public boolean validateReissue(final String accessToken, final String refreshTokenMemberId) {
         try {
             checkAccessToken(accessToken);
-        } catch (final AccessTokenExpiredException e) {
+        } catch (final TokenExpiredException e) {
             final String accessTokenMemberId = getClaim(accessToken);
             checkMemberId(refreshTokenMemberId, accessTokenMemberId);
             return true;
@@ -78,7 +79,7 @@ public class JwtValidator {
     private static void checkMemberId(
             final String refreshTokenMemberId, final String accessTokenMemberId) {
         if (!accessTokenMemberId.equals(refreshTokenMemberId)) {
-            throw new IllegalAccessException();
+            throw new IllegalAccessException(ErrorCode.TOKEN_CLAIM_NOT_MATCHED);
         }
     }
 }
