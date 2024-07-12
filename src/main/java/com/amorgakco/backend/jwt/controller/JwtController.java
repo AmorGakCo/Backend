@@ -18,12 +18,13 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/token")
 public class JwtController {
 
     private final JwtService jwtService;
     private final JwtCookieLoader jwtCookieLoader;
 
-    @PostMapping("/token/reissue")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public AccessTokenResponse reissue(
             @CookieValue(value = "refresh-token") final String refreshToken,
@@ -34,7 +35,7 @@ public class JwtController {
         return new AccessTokenResponse(memberJwt.accessToken());
     }
 
-    @DeleteMapping("/logout")
+    @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void logout(@CookieValue(value = "refresh-token") final Cookie cookie) {
         jwtService.logout(Optional.ofNullable(cookie));

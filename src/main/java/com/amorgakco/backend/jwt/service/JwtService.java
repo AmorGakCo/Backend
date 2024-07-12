@@ -1,11 +1,10 @@
 package com.amorgakco.backend.jwt.service;
 
+import com.amorgakco.backend.global.exception.*;
+import com.amorgakco.backend.global.exception.IllegalAccessException;
 import com.amorgakco.backend.jwt.domain.JwtSecretKey;
 import com.amorgakco.backend.jwt.domain.RefreshToken;
 import com.amorgakco.backend.jwt.dto.MemberJwt;
-import com.amorgakco.backend.jwt.exception.IllegalAccessException;
-import com.amorgakco.backend.jwt.exception.InvalidJwtException;
-import com.amorgakco.backend.jwt.exception.RefreshTokenRequiredException;
 import com.amorgakco.backend.jwt.repository.RefreshTokenRepository;
 
 import io.jsonwebtoken.Jwts;
@@ -35,17 +34,24 @@ public class JwtService {
     public MemberJwt reissue(final String refreshToken, final String accessTokenHeader) {
         final RefreshToken savedRefreshToken = findRefreshTokenFromRedis(refreshToken);
         final String accessToken =
-                extractAccessToken(accessTokenHeader).orElseThrow(InvalidJwtException::new);
+                extractAccessToken(accessTokenHeader)
+                        .orElseThrow(
+                                () ->
+                                        new ResourceNotFoundException(
+                                                ErrorCode.ACCESS_TOKEN_NOT_FOUND));
         final String memberId = savedRefreshToken.getMemberId();
         if (jwtValidator.validateReissue(accessToken, memberId)) {
             refreshTokenRepository.delete(savedRefreshToken);
             return createAndSaveMemberToken(memberId);
         }
-        throw new IllegalAccessException();
+        throw new InvalidTokenException(ErrorCode.RECHECK_YOUR_TOKEN);
     }
 
     private RefreshToken findRefreshTokenFromRedis(final String token) {
-        return refreshTokenRepository.findById(token).orElseThrow(InvalidJwtException::new);
+        return refreshTokenRepository
+                .findById(token)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException(ErrorCode.REFRESH_TOKEN_NOT_FOUND));
     }
 
     public Optional<String> extractAccessToken(final String accessTokenWithBearer) {
@@ -75,7 +81,9 @@ public class JwtService {
     }
 
     public void logout(final Optional<Cookie> cookie) {
-        final Cookie tokenCookie = cookie.orElseThrow(RefreshTokenRequiredException::new);
+        final Cookie tokenCookie =
+                cookie.orElseThrow(
+                        () -> new IllegalAccessException(ErrorCode.REFRESH_TOKEN_REQUIRED));
         final String refreshToken = tokenCookie.getValue();
         refreshTokenRepository.deleteById(refreshToken);
     }
