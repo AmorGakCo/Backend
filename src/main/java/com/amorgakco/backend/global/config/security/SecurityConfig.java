@@ -1,4 +1,4 @@
-package com.amorgakco.backend.global.config;
+package com.amorgakco.backend.global.config.security;
 
 import com.amorgakco.backend.global.oauth.handler.Oauth2SuccessHandler;
 import com.amorgakco.backend.global.oauth.service.Oauth2UserService;
@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .logout(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         request ->
-                                request.requestMatchers("/", "/logout", "/token/reissue")
+                                request.requestMatchers("/", "/logout", "/token")
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated())

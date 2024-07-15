@@ -1,6 +1,6 @@
 package com.amorgakco.backend.member.domain;
 
-import com.amorgakco.backend.global.BaseTimeEntity;
+import com.amorgakco.backend.global.BaseTime;
 import com.amorgakco.backend.global.oauth.provider.Oauth2Provider;
 
 import jakarta.persistence.*;
@@ -13,10 +13,8 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member extends BaseTimeEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class Member extends BaseTime {
+    @Id @GeneratedValue private Long id;
 
     @Enumerated(EnumType.STRING)
     private Oauth2Provider oauth2Provider;
@@ -39,7 +37,7 @@ public class Member extends BaseTimeEntity {
         this.oauth2Id = oauth2Id;
         this.imgUrl = imgUrl;
         this.nickname = nickname;
-        this.roleNames = List.of(new Roles(Role.ROLE_MEMBER));
+        this.roleNames.add(new Roles(Role.ROLE_MEMBER));
     }
 
     public void updateNicknameAndImgUrl(final String nickname, final String imgUrl) {
