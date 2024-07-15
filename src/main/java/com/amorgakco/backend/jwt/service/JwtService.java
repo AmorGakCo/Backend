@@ -2,7 +2,6 @@ package com.amorgakco.backend.jwt.service;
 
 import com.amorgakco.backend.global.exception.*;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
-import com.amorgakco.backend.jwt.domain.JwtSecretKey;
 import com.amorgakco.backend.jwt.domain.RefreshToken;
 import com.amorgakco.backend.jwt.dto.MemberJwt;
 import com.amorgakco.backend.jwt.repository.RefreshTokenRepository;
@@ -20,6 +19,8 @@ import org.springframework.util.StringUtils;
 import java.util.Date;
 import java.util.Optional;
 
+import javax.crypto.SecretKey;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class JwtService {
     private static final int TOKEN_PREFIX_LENGTH = TOKEN_PREFIX.length();
     private final JwtProperties jwtProperties;
     private final JwtValidator jwtValidator;
-    private final JwtSecretKey jwtSecretKey;
+    private final SecretKey secretKey;
     private final RefreshTokenRepository refreshTokenRepository;
 
     public MemberJwt reissue(final String refreshToken, final String accessTokenHeader) {
@@ -76,7 +77,7 @@ public class JwtService {
                 .subject(memberId)
                 .issuedAt(now)
                 .expiration(expirationDate)
-                .signWith(jwtSecretKey.getSecretKey())
+                .signWith(secretKey)
                 .compact();
     }
 

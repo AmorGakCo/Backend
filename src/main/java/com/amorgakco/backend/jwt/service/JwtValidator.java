@@ -2,7 +2,6 @@ package com.amorgakco.backend.jwt.service;
 
 import com.amorgakco.backend.global.exception.*;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
-import com.amorgakco.backend.jwt.domain.JwtSecretKey;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.repository.MemberRepository;
 
@@ -20,12 +19,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import javax.crypto.SecretKey;
+
 @Component
 @RequiredArgsConstructor
 public class JwtValidator {
     private static final String EMPTY_CREDENTIAL = "";
     private final MemberRepository memberRepository;
-    private final JwtSecretKey jwtSecretKey;
+    private final SecretKey secretKey;
 
     public Authentication getAuthentication(final String token) {
         checkAccessToken(token);
@@ -39,7 +40,7 @@ public class JwtValidator {
 
     private void checkAccessToken(final String token) {
         try {
-            Jwts.parser().verifyWith(jwtSecretKey.getSecretKey()).build().parseSignedClaims(token);
+            Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
         } catch (final ExpiredJwtException e) {
             throw new JwtAuthenticationException(ErrorCode.ACCESS_TOKEN_EXPIRED);
         } catch (final JwtException e) {
