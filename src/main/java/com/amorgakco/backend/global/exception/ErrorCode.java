@@ -1,9 +1,9 @@
 package com.amorgakco.backend.global.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 public enum ErrorCode {
     ACCESS_TOKEN_EXPIRED("0001", "액세스 토큰이 만료됐습니다."),
