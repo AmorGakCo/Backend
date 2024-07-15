@@ -1,12 +1,10 @@
 package com.amorgakco.backend.jwt.service;
 
-import com.amorgakco.backend.global.exception.ErrorCode;
+import com.amorgakco.backend.global.exception.*;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
-import com.amorgakco.backend.global.exception.InvalidTokenException;
-import com.amorgakco.backend.global.exception.TokenExpiredException;
 import com.amorgakco.backend.jwt.domain.JwtSecretKey;
 import com.amorgakco.backend.member.domain.Member;
-import com.amorgakco.backend.member.service.MemberService;
+import com.amorgakco.backend.member.repository.MemberRepository;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -26,22 +24,26 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtValidator {
     private static final String EMPTY_CREDENTIAL = "";
-    private final MemberService memberService;
+    private final MemberRepository memberRepository;
     private final JwtSecretKey jwtSecretKey;
 
     public Authentication getAuthentication(final String token) {
         checkAccessToken(token);
-        final Member member = memberService.getMember(Long.parseLong(getClaim(token)));
+        final Member member =
+                memberRepository
+                        .findById(Long.parseLong(getClaim(token)))
+                        .orElseThrow(
+                                () -> new JwtAuthenticationException(ErrorCode.MEMBER_NOT_FOUND));
         return getUsernamePasswordAuthenticationToken(member);
     }
 
-    public void checkAccessToken(final String token) {
+    private void checkAccessToken(final String token) {
         try {
             Jwts.parser().verifyWith(jwtSecretKey.getSecretKey()).build().parseSignedClaims(token);
         } catch (final ExpiredJwtException e) {
-            throw new TokenExpiredException(ErrorCode.ACCESS_TOKEN_EXPIRED);
+            throw new JwtAuthenticationException(ErrorCode.ACCESS_TOKEN_EXPIRED);
         } catch (final JwtException e) {
-            throw new InvalidTokenException(ErrorCode.CANNOT_PARSE_TOKEN);
+            throw new JwtAuthenticationException(ErrorCode.CANNOT_PARSE_TOKEN);
         }
     }
 

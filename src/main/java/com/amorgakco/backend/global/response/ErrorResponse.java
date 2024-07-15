@@ -2,9 +2,6 @@ package com.amorgakco.backend.global.response;
 
 import com.amorgakco.backend.global.exception.ErrorCode;
 
-import lombok.Builder;
-
-@Builder
 public record ErrorResponse(String status, String code, String message) {
     private static final String FAILURE = "failure";
 
