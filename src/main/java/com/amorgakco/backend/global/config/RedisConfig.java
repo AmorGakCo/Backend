@@ -1,4 +1,4 @@
-package com.amorgakco.backend.global.config.redis;
+package com.amorgakco.backend.global.config;
 
 import lombok.RequiredArgsConstructor;
 

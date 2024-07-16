@@ -2,6 +2,7 @@ package com.amorgakco.backend.jwt.service;
 
 import com.amorgakco.backend.global.exception.*;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
+import com.amorgakco.backend.global.oauth.MemberPrincipal;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.repository.MemberRepository;
 
@@ -32,10 +33,13 @@ public class JwtValidator {
         checkAccessToken(token);
         final Member member =
                 memberRepository
-                        .findById(Long.parseLong(getClaim(token)))
+                        .findByIdWithRoles(Long.parseLong(getClaim(token)))
                         .orElseThrow(
                                 () -> new JwtAuthenticationException(ErrorCode.MEMBER_NOT_FOUND));
-        return getUsernamePasswordAuthenticationToken(member);
+        final MemberPrincipal memberPrincipal =
+                new MemberPrincipal(getClaim(token), null, member.getRoleNames());
+        return new UsernamePasswordAuthenticationToken(
+                memberPrincipal, EMPTY_CREDENTIAL, getAuthorityList(member));
     }
 
     private void checkAccessToken(final String token) {
@@ -50,17 +54,11 @@ public class JwtValidator {
 
     public String getClaim(final String token) {
         return Jwts.parser()
-                .verifyWith(jwtSecretKey.getSecretKey())
+                .verifyWith(secretKey)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload()
                 .getSubject();
-    }
-
-    private UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(
-            final Member member) {
-        return new UsernamePasswordAuthenticationToken(
-                member, EMPTY_CREDENTIAL, getAuthorityList(member));
     }
 
     private List<GrantedAuthority> getAuthorityList(final Member m) {
