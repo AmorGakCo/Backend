@@ -21,7 +21,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class GroupLocationService {
+public class RedisGeoSpatialService implements GeoSpatialService {
 
     private static final String AMOR_GAK_CO = "amor_gak_co";
     private final GeoOperations<String, String> geoOperations;
@@ -32,7 +32,7 @@ public class GroupLocationService {
         geoOperations.add(AMOR_GAK_CO, point, groupId.toString());
     }
 
-    public GroupLocationResponse getNearBy(final GroupLocationRequest locationRequest) {
+    public GroupLocationResponse getNearByGroups(final GroupLocationRequest locationRequest) {
         final GeoReference<String> geoReference =
                 GeoReference.fromCoordinate(
                         locationRequest.longitude(), locationRequest.latitude());

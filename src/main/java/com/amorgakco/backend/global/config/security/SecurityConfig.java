@@ -1,16 +1,10 @@
-package com.amorgakco.backend.global.config.bean;
+package com.amorgakco.backend.global.config.security;
 
-import com.amorgakco.backend.global.config.security.JwtAccessDeniedHandler;
-import com.amorgakco.backend.global.config.security.JwtAuthenticationEntryPoint;
-import com.amorgakco.backend.global.config.security.JwtAuthenticationFilter;
 import com.amorgakco.backend.global.oauth.handler.Oauth2SuccessHandler;
 import com.amorgakco.backend.global.oauth.service.Oauth2UserService;
 
-import io.jsonwebtoken.security.Keys;
-
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,10 +13,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import java.nio.charset.StandardCharsets;
-
-import javax.crypto.SecretKey;
 
 @Configuration
 @RequiredArgsConstructor
@@ -44,7 +34,12 @@ public class SecurityConfig {
                 .logout(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         request ->
-                                request.requestMatchers("/", "/logout", "/token")
+                                request.requestMatchers(
+                                                "/logout",
+                                                "/token",
+                                                "/favicon.ico",
+                                                "/errors",
+                                                "/locations")
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated())
@@ -60,10 +55,5 @@ public class SecurityConfig {
                                 e.authenticationEntryPoint(jwtAuthenticationEntryPoint)
                                         .accessDeniedHandler(jwtAccessDeniedHandler))
                 .build();
-    }
-
-    @Bean
-    public SecretKey secretKey(final @Value("${jwt.secret-key}") String jwtSign) {
-        return Keys.hmacShaKeyFor(jwtSign.getBytes(StandardCharsets.UTF_8));
     }
 }

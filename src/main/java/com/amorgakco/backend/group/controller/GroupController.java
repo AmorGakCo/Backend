@@ -1,14 +1,14 @@
 package com.amorgakco.backend.group.controller;
 
+import com.amorgakco.backend.global.config.argumentresolver.AuthMember;
+import com.amorgakco.backend.group.dto.GroupBasicInfoResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
+import com.amorgakco.backend.group.dto.GroupRegisterResponse;
 import com.amorgakco.backend.group.service.GroupService;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/groups")
@@ -18,7 +18,14 @@ public class GroupController {
     private final GroupService groupService;
 
     @PostMapping
-    public void register(@RequestBody final GroupRegisterRequest groupRegisterRequest) {
-        groupService.register(groupRegisterRequest);
+    public GroupRegisterResponse register(
+            @RequestBody final GroupRegisterRequest groupRegisterRequest,
+            @AuthMember final Long hostId) {
+        return groupService.register(groupRegisterRequest, hostId);
+    }
+
+    @GetMapping("/basic")
+    public GroupBasicInfoResponse getGroupInfo(@RequestParam final Long groupId) {
+        return groupService.getGroupInfo(groupId);
     }
 }

@@ -1,4 +1,4 @@
-package com.amorgakco.backend.global.config.bean;
+package com.amorgakco.backend.global.config;
 
 import org.locationtech.jts.geom.GeometryFactory;
 import org.springframework.context.annotation.Bean;
