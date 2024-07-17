@@ -34,8 +34,7 @@ public class JwtValidator {
         final Member member =
                 memberRepository
                         .findByIdWithRoles(Long.parseLong(getClaim(token)))
-                        .orElseThrow(
-                                () -> new JwtAuthenticationException(ErrorCode.MEMBER_NOT_FOUND));
+                        .orElseThrow(JwtAuthenticationException::memberNotFound);
         final MemberPrincipal memberPrincipal =
                 new MemberPrincipal(getClaim(token), null, member.getRoleNames());
         return new UsernamePasswordAuthenticationToken(
@@ -46,9 +45,9 @@ public class JwtValidator {
         try {
             Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
         } catch (final ExpiredJwtException e) {
-            throw new JwtAuthenticationException(ErrorCode.ACCESS_TOKEN_EXPIRED);
+            JwtAuthenticationException.accessTokenExpired();
         } catch (final JwtException e) {
-            throw new JwtAuthenticationException(ErrorCode.CANNOT_PARSE_TOKEN);
+            JwtAuthenticationException.canNotParseToken();
         }
     }
 
