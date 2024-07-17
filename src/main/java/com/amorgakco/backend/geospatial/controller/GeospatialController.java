@@ -1,8 +1,8 @@
 package com.amorgakco.backend.geospatial.controller;
 
-import com.amorgakco.backend.geospatial.dto.GeoSpatialRequest;
-import com.amorgakco.backend.geospatial.dto.GeoSpatialResponse;
-import com.amorgakco.backend.geospatial.service.GeoSpatialService;
+import com.amorgakco.backend.geospatial.dto.GeospatialRequest;
+import com.amorgakco.backend.geospatial.dto.GeospatialResponse;
+import com.amorgakco.backend.geospatial.service.GeospatialService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,17 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/locations")
 @RequiredArgsConstructor
-public class GeoSpatialController {
+public class GeospatialController {
 
-    private final GeoSpatialService geoSpatialService;
+    private final GeospatialService geoSpatialService;
 
     @GetMapping
-    public GeoSpatialResponse getLocations(
+    public GeospatialResponse getLocations(
             @RequestParam final double latitude,
             @RequestParam final double longitude,
             @RequestParam final double width,
             @RequestParam final double height) {
         return geoSpatialService.getNearByGroups(
-                new GeoSpatialRequest(width, height, latitude, longitude));
+                new GeospatialRequest(width, height, latitude, longitude));
     }
 }

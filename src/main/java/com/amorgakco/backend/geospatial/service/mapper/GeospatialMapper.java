@@ -1,15 +1,15 @@
 package com.amorgakco.backend.geospatial.service.mapper;
 
-import com.amorgakco.backend.geospatial.dto.GroupGeoSpatial;
+import com.amorgakco.backend.geospatial.dto.GroupGeospatial;
 
 import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GeoSpatialMapper {
+public class GeospatialMapper {
 
-    public GroupGeoSpatial toGroupGeoSpatial(final Point point, final String groupId) {
-        return GroupGeoSpatial.builder()
+    public GroupGeospatial toGroupGeoSpatial(final Point point, final String groupId) {
+        return GroupGeospatial.builder()
                 .longitude(point.getX())
                 .latitude(point.getY())
                 .groupId(groupId)

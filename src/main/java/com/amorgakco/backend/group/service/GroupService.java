@@ -1,6 +1,6 @@
 package com.amorgakco.backend.group.service;
 
-import com.amorgakco.backend.geospatial.service.GeoSpatialService;
+import com.amorgakco.backend.geospatial.service.GeospatialService;
 import com.amorgakco.backend.global.CommonIdResponse;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.Duration;
@@ -28,7 +28,7 @@ public class GroupService {
     private final GroupRepository groupRepository;
     private final GroupMapper groupMapper;
     private final GeometryFactory geometryFactory;
-    private final GeoSpatialService locationService;
+    private final GeospatialService locationService;
     private final MemberService memberService;
 
     @Transactional
