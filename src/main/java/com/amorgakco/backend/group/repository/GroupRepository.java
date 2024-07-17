@@ -11,5 +11,5 @@ import java.util.Optional;
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Long> {
     @Query("select g from Group g join fetch g.host where g.id = :groupId ")
-    Optional<Group> findByIdWithMember(final Long groupId);
+    Optional<Group> findByIdWithHost(final Long groupId);
 }

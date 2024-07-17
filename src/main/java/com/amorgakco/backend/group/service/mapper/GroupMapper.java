@@ -1,5 +1,6 @@
 package com.amorgakco.backend.group.service.mapper;
 
+import com.amorgakco.backend.group.domain.Duration;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.dto.GroupBasicInfoResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
@@ -14,13 +15,13 @@ public class GroupMapper {
     public Group toGroup(
             final Member host,
             final GroupRegisterRequest groupRegisterRequest,
-            final Point location) {
+            final Point location,
+            final Duration duration) {
         return Group.builder()
                 .name(groupRegisterRequest.name())
                 .address(groupRegisterRequest.address())
                 .description(groupRegisterRequest.description())
-                .beginTime(groupRegisterRequest.beginTime())
-                .endTime(groupRegisterRequest.endTime())
+                .duration(duration)
                 .groupCapacity(groupRegisterRequest.groupCapacity())
                 .location(location)
                 .host(host)
@@ -29,16 +30,17 @@ public class GroupMapper {
 
     public GroupBasicInfoResponse toGroupBasicInfoResponse(final Group group) {
         final Member host = group.getHost();
+        final Duration duration = group.getDuration();
         return GroupBasicInfoResponse.builder()
                 .hostNickname(host.getNickname())
                 .hostPoint(host.getPoint())
-                .hostGitHubUrl(host.getGitHubUrl())
+                .hostGitHubUrl(host.getGithubUrl())
                 .hostImgUrl(host.getImgUrl())
                 .address(group.getAddress())
                 .groupCapacity(group.getGroupCapacity())
                 .currentParticipants(group.getCurrentGroupSize())
-                .beginTime(group.getBeginTime())
-                .endTime(group.getEndTime())
+                .beginAt(duration.getBeginAt())
+                .endAt(duration.getEndAt())
                 .build();
     }
 }

@@ -1,8 +1,8 @@
-package com.amorgakco.backend.location.controller;
+package com.amorgakco.backend.grouplocation.controller;
 
-import com.amorgakco.backend.location.dto.GroupLocationRequest;
-import com.amorgakco.backend.location.dto.GroupLocationResponse;
-import com.amorgakco.backend.location.service.GeoSpatialService;
+import com.amorgakco.backend.grouplocation.dto.GroupLocationRequest;
+import com.amorgakco.backend.grouplocation.dto.GroupLocationResponse;
+import com.amorgakco.backend.grouplocation.service.GeoSpatialService;
 
 import lombok.RequiredArgsConstructor;
 

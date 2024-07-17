@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 
 import org.locationtech.jts.geom.Point;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,19 +25,17 @@ public class Group extends BaseTime {
     private String name;
     private String description;
     private int groupCapacity;
-    private LocalDateTime beginTime;
-    private LocalDateTime endTime;
+    private String address;
+    @Embedded private Duration duration;
 
     @Column(columnDefinition = "geometry(POINT, 4326)")
     private Point location;
 
-    private String address;
-
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private final List<Participants> participants = new ArrayList<>();
-
     @OneToOne(fetch = FetchType.LAZY)
     private Member host;
+
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    private List<Participants> participants = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private ProgressStatus progressStatus;
@@ -48,16 +45,14 @@ public class Group extends BaseTime {
             final String name,
             final String description,
             final int groupCapacity,
-            final LocalDateTime beginTime,
-            final LocalDateTime endTime,
+            final Duration duration,
             final Point location,
             final Member host,
             final String address) {
         this.name = name;
         this.description = description;
         this.groupCapacity = groupCapacity;
-        this.beginTime = beginTime;
-        this.endTime = endTime;
+        this.duration = duration;
         this.location = location;
         this.host = host;
         this.address = address;
