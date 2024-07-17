@@ -1,9 +1,9 @@
-package com.amorgakco.backend.location.service;
+package com.amorgakco.backend.grouplocation.service;
 
-import com.amorgakco.backend.location.dto.GroupLocation;
-import com.amorgakco.backend.location.dto.GroupLocationRequest;
-import com.amorgakco.backend.location.dto.GroupLocationResponse;
-import com.amorgakco.backend.location.service.mapper.GroupLocationMapper;
+import com.amorgakco.backend.grouplocation.dto.GroupLocation;
+import com.amorgakco.backend.grouplocation.dto.GroupLocationRequest;
+import com.amorgakco.backend.grouplocation.dto.GroupLocationResponse;
+import com.amorgakco.backend.grouplocation.service.mapper.GroupLocationMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,17 +32,24 @@ public class RedisGeoSpatialService implements GeoSpatialService {
         geoOperations.add(AMOR_GAK_CO, point, groupId.toString());
     }
 
-    public GroupLocationResponse getNearByGroups(final GroupLocationRequest locationRequest) {
+    public GroupLocationResponse getNearByGroups(final GroupLocationRequest request) {
         final GeoReference<String> geoReference =
-                GeoReference.fromCoordinate(
-                        locationRequest.longitude(), locationRequest.latitude());
+                GeoReference.fromCoordinate(request.longitude(), request.latitude());
         final BoundingBox boundingBox =
-                new BoundingBox(
-                        locationRequest.width(), locationRequest.height(), Metrics.KILOMETERS);
+                new BoundingBox(request.width(), request.height(), Metrics.KILOMETERS);
         final GeoResults<RedisGeoCommands.GeoLocation<String>> results =
-                geoOperations.search(AMOR_GAK_CO, geoReference, boundingBox);
+                getResults(geoReference, boundingBox);
         final List<GroupLocation> locations = getLocations(results);
         return new GroupLocationResponse(locations);
+    }
+
+    private GeoResults<RedisGeoCommands.GeoLocation<String>> getResults(
+            final GeoReference<String> geoReference, final BoundingBox boundingBox) {
+        return geoOperations.search(
+                AMOR_GAK_CO,
+                geoReference,
+                boundingBox,
+                RedisGeoCommands.GeoSearchCommandArgs.newGeoSearchArgs().includeCoordinates());
     }
 
     private List<GroupLocation> getLocations(

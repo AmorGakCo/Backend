@@ -1,4 +1,4 @@
-package com.amorgakco.backend.location.dto;
+package com.amorgakco.backend.grouplocation.dto;
 
 import java.util.List;
 

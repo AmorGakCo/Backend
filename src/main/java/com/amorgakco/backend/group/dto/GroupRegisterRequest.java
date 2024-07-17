@@ -8,8 +8,8 @@ public record GroupRegisterRequest(
         String name,
         String description,
         int groupCapacity,
-        @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm:ss") LocalDateTime beginTime,
-        @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm:ss") LocalDateTime endTime,
+        @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm:ss") LocalDateTime beginAt,
+        @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm:ss") LocalDateTime endAt,
         double latitude,
         double longitude,
         String address) {}

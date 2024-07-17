@@ -10,8 +10,8 @@ public record GroupBasicInfoResponse(
         String hostImgUrl,
         int hostPoint,
         String hostGitHubUrl,
-        LocalDateTime beginTime,
-        LocalDateTime endTime,
+        LocalDateTime beginAt,
+        LocalDateTime endAt,
         int groupCapacity,
         int currentParticipants,
         String address) {}

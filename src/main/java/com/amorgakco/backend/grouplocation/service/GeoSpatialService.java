@@ -1,7 +1,7 @@
-package com.amorgakco.backend.location.service;
+package com.amorgakco.backend.grouplocation.service;
 
-import com.amorgakco.backend.location.dto.GroupLocationRequest;
-import com.amorgakco.backend.location.dto.GroupLocationResponse;
+import com.amorgakco.backend.grouplocation.dto.GroupLocationRequest;
+import com.amorgakco.backend.grouplocation.dto.GroupLocationResponse;
 
 public interface GeoSpatialService {
     void save(final Long groupId, final double latitude, final double longitude);
