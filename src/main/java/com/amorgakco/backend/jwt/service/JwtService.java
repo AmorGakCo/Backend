@@ -36,23 +36,19 @@ public class JwtService {
         final RefreshToken savedRefreshToken = findRefreshTokenFromRedis(refreshToken);
         final String accessToken =
                 extractAccessToken(accessTokenHeader)
-                        .orElseThrow(
-                                () ->
-                                        new ResourceNotFoundException(
-                                                ErrorCode.ACCESS_TOKEN_NOT_FOUND));
+                        .orElseThrow(ResourceNotFoundException::accessTokenNotFound);
         final String memberId = savedRefreshToken.getMemberId();
         if (jwtValidator.validateReissue(accessToken, memberId)) {
             refreshTokenRepository.delete(savedRefreshToken);
             return createAndSaveMemberToken(memberId);
         }
-        throw new InvalidTokenException(ErrorCode.RECHECK_YOUR_TOKEN);
+        throw JwtAuthenticationException.checkYourToken();
     }
 
     private RefreshToken findRefreshTokenFromRedis(final String token) {
         return refreshTokenRepository
                 .findById(token)
-                .orElseThrow(
-                        () -> new ResourceNotFoundException(ErrorCode.REFRESH_TOKEN_NOT_FOUND));
+                .orElseThrow(ResourceNotFoundException::refreshTokenNotFound);
     }
 
     public Optional<String> extractAccessToken(final String accessTokenWithBearer) {
@@ -82,9 +78,7 @@ public class JwtService {
     }
 
     public void logout(final Optional<Cookie> cookie) {
-        final Cookie tokenCookie =
-                cookie.orElseThrow(
-                        () -> new IllegalAccessException(ErrorCode.REFRESH_TOKEN_REQUIRED));
+        final Cookie tokenCookie = cookie.orElseThrow(IllegalAccessException::refreshTokenRequired);
         final String refreshToken = tokenCookie.getValue();
         refreshTokenRepository.deleteById(refreshToken);
     }
