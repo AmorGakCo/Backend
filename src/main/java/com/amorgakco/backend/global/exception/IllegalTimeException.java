@@ -5,6 +5,6 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class TokenExpiredException extends IllegalStateException {
-    private final ErrorCode errorcode;
+public class IllegalTimeException extends IllegalStateException {
+    private final ErrorCode errorCode;
 }

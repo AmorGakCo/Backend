@@ -19,7 +19,10 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND("201", "존재하지 않는 회원입니다."),
 
     // Group Error Code
-    GROUP_NOT_FOUND("301", "존재하지 않는 그룹입니다.");
+    GROUP_NOT_FOUND("301", "존재하지 않는 그룹입니다."),
+    START_TIME_AFTER_ENT_TIME("302", "시작시간이 종료시간보다 늦을 수 없습니다."),
+    MAX_DURATION("303", "모임 지속 시간은 12시간을 넘을 수 없습니다."),
+    MIN_DURATION("304", "모임 지속 시간은 1시간 이상 되어야 합니다.");
 
     private final String code;
     private final String message;

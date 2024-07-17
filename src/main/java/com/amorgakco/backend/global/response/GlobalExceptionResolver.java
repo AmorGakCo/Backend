@@ -34,13 +34,6 @@ public class GlobalExceptionResolver {
         return new ErrorResponse(e.getMessage());
     }
 
-    @ExceptionHandler(JwtAuthenticationException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ErrorResponse jwtUnauthorized(final JwtAuthenticationException e) {
-        setCustomExceptionLog(e.getErrorcode());
-        return new ErrorResponse(e.getErrorcode());
-    }
-
     private void setCustomExceptionLog(final ErrorCode errorCode) {
         log.error("Error Code : {} , Message : {}", errorCode.getCode(), errorCode.getMessage());
     }
@@ -71,5 +64,12 @@ public class GlobalExceptionResolver {
     public ErrorResponse tokenExpired(final TokenExpiredException e) {
         setCustomExceptionLog(e.getErrorcode());
         return new ErrorResponse(e.getErrorcode());
+    }
+
+    @ExceptionHandler(IllegalTimeException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse tokenExpired(final IllegalTimeException e) {
+        setCustomExceptionLog(e.getErrorCode());
+        return new ErrorResponse(e.getErrorCode());
     }
 }

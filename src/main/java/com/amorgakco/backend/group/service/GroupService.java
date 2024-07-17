@@ -1,5 +1,6 @@
 package com.amorgakco.backend.group.service;
 
+import com.amorgakco.backend.geospatial.service.GeoSpatialService;
 import com.amorgakco.backend.global.CommonIdResponse;
 import com.amorgakco.backend.global.exception.ErrorCode;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
@@ -9,7 +10,6 @@ import com.amorgakco.backend.group.dto.GroupBasicInfoResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
 import com.amorgakco.backend.group.repository.GroupRepository;
 import com.amorgakco.backend.group.service.mapper.GroupMapper;
-import com.amorgakco.backend.grouplocation.service.GeoSpatialService;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.service.MemberService;
 
