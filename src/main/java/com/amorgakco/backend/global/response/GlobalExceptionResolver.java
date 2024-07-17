@@ -34,10 +34,6 @@ public class GlobalExceptionResolver {
         return new ErrorResponse(e.getMessage());
     }
 
-    private void setCustomExceptionLog(final ErrorCode errorCode) {
-        log.error("Error Code : {} , Message : {}", errorCode.getCode(), errorCode.getMessage());
-    }
-
     @ExceptionHandler(IllegalAccessException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse illegalAccess(final IllegalAccessException e) {
@@ -45,23 +41,13 @@ public class GlobalExceptionResolver {
         return new ErrorResponse(e.getErrorcode());
     }
 
-    @ExceptionHandler(InvalidTokenException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse invalidToken(final InvalidTokenException e) {
-        setCustomExceptionLog(e.getErrorcode());
-        return new ErrorResponse(e.getErrorcode());
+    private void setCustomExceptionLog(final ErrorCode errorCode) {
+        log.error("Error Code : {} , Message : {}", errorCode.getCode(), errorCode.getMessage());
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse resourceNotFound(final ResourceNotFoundException e) {
-        setCustomExceptionLog(e.getErrorcode());
-        return new ErrorResponse(e.getErrorcode());
-    }
-
-    @ExceptionHandler(TokenExpiredException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse tokenExpired(final TokenExpiredException e) {
         setCustomExceptionLog(e.getErrorcode());
         return new ErrorResponse(e.getErrorcode());
     }

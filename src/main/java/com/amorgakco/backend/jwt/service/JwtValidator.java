@@ -45,9 +45,9 @@ public class JwtValidator {
         try {
             Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
         } catch (final ExpiredJwtException e) {
-            JwtAuthenticationException.accessTokenExpired();
+            throw JwtAuthenticationException.accessTokenExpired();
         } catch (final JwtException e) {
-            JwtAuthenticationException.canNotParseToken();
+            throw JwtAuthenticationException.canNotParseToken();
         }
     }
 
@@ -68,7 +68,7 @@ public class JwtValidator {
     public boolean validateReissue(final String accessToken, final String refreshTokenMemberId) {
         try {
             checkAccessToken(accessToken);
-        } catch (final TokenExpiredException e) {
+        } catch (final JwtAuthenticationException e) {
             final String accessTokenMemberId = getClaim(accessToken);
             checkMemberId(refreshTokenMemberId, accessTokenMemberId);
             return true;
@@ -79,7 +79,7 @@ public class JwtValidator {
     private static void checkMemberId(
             final String refreshTokenMemberId, final String accessTokenMemberId) {
         if (!accessTokenMemberId.equals(refreshTokenMemberId)) {
-            throw new IllegalAccessException(ErrorCode.TOKEN_CLAIM_NOT_MATCHED);
+            throw IllegalAccessException.tokenClaimDoesNotMatch();
         }
     }
 }

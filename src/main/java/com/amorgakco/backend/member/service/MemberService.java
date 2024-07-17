@@ -1,6 +1,5 @@
 package com.amorgakco.backend.member.service;
 
-import com.amorgakco.backend.global.exception.ErrorCode;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.repository.MemberRepository;
@@ -19,6 +18,6 @@ public class MemberService {
     public Member getMember(final Long memberId) {
         return memberRepository
                 .findByIdWithRoles(memberId)
-                .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+                .orElseThrow(ResourceNotFoundException::memberNotFound);
     }
 }

@@ -2,7 +2,6 @@ package com.amorgakco.backend.group.service;
 
 import com.amorgakco.backend.geospatial.service.GeoSpatialService;
 import com.amorgakco.backend.global.CommonIdResponse;
-import com.amorgakco.backend.global.exception.ErrorCode;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.Duration;
 import com.amorgakco.backend.group.domain.Group;
@@ -52,8 +51,7 @@ public class GroupService {
         final Group group =
                 groupRepository
                         .findById(groupId)
-                        .orElseThrow(
-                                () -> new ResourceNotFoundException(ErrorCode.GROUP_NOT_FOUND));
+                        .orElseThrow(ResourceNotFoundException::groupNotFound);
         return groupMapper.toGroupBasicInfoResponse(group);
     }
 }
