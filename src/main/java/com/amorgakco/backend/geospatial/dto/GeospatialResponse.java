@@ -2,4 +2,4 @@ package com.amorgakco.backend.geospatial.dto;
 
 import java.util.List;
 
-public record GeoSpatialResponse(List<GroupGeoSpatial> locations) {}
+public record GeospatialResponse(List<GroupGeospatial> locations) {}

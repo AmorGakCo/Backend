@@ -1,9 +1,9 @@
 package com.amorgakco.backend.geospatial.service;
 
-import com.amorgakco.backend.geospatial.dto.GeoSpatialRequest;
-import com.amorgakco.backend.geospatial.dto.GeoSpatialResponse;
-import com.amorgakco.backend.geospatial.dto.GroupGeoSpatial;
-import com.amorgakco.backend.geospatial.service.mapper.GeoSpatialMapper;
+import com.amorgakco.backend.geospatial.dto.GeospatialRequest;
+import com.amorgakco.backend.geospatial.dto.GeospatialResponse;
+import com.amorgakco.backend.geospatial.dto.GroupGeospatial;
+import com.amorgakco.backend.geospatial.service.mapper.GeospatialMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,26 +21,26 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class RedisGeoSpatialService implements GeoSpatialService {
+public class RedisGeospatialService implements GeospatialService {
 
     private static final String AMOR_GAK_CO = "amor_gak_co";
     private final GeoOperations<String, String> geoOperations;
-    private final GeoSpatialMapper geoSpatialMapper;
+    private final GeospatialMapper geoSpatialMapper;
 
     public void save(final Long groupId, final double latitude, final double longitude) {
         final Point point = new Point(longitude, latitude);
         geoOperations.add(AMOR_GAK_CO, point, groupId.toString());
     }
 
-    public GeoSpatialResponse getNearByGroups(final GeoSpatialRequest request) {
+    public GeospatialResponse getNearByGroups(final GeospatialRequest request) {
         final GeoReference<String> geoReference =
                 GeoReference.fromCoordinate(request.longitude(), request.latitude());
         final BoundingBox boundingBox =
                 new BoundingBox(request.width(), request.height(), Metrics.KILOMETERS);
         final GeoResults<RedisGeoCommands.GeoLocation<String>> results =
                 getResults(geoReference, boundingBox);
-        final List<GroupGeoSpatial> locations = getLocations(results);
-        return new GeoSpatialResponse(locations);
+        final List<GroupGeospatial> locations = getLocations(results);
+        return new GeospatialResponse(locations);
     }
 
     private GeoResults<RedisGeoCommands.GeoLocation<String>> getResults(
@@ -52,7 +52,7 @@ public class RedisGeoSpatialService implements GeoSpatialService {
                 RedisGeoCommands.GeoSearchCommandArgs.newGeoSearchArgs().includeCoordinates());
     }
 
-    private List<GroupGeoSpatial> getLocations(
+    private List<GroupGeospatial> getLocations(
             final GeoResults<RedisGeoCommands.GeoLocation<String>> results) {
         return results.getContent().stream()
                 .map(GeoResult::getContent)
