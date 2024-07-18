@@ -2,7 +2,6 @@ package com.amorgakco.backend.jwt.service;
 
 import com.amorgakco.backend.global.exception.*;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
-import com.amorgakco.backend.jwt.domain.JwtSecretKey;
 import com.amorgakco.backend.jwt.domain.RefreshToken;
 import com.amorgakco.backend.jwt.dto.MemberJwt;
 import com.amorgakco.backend.jwt.repository.RefreshTokenRepository;
@@ -20,6 +19,8 @@ import org.springframework.util.StringUtils;
 import java.util.Date;
 import java.util.Optional;
 
+import javax.crypto.SecretKey;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -28,30 +29,26 @@ public class JwtService {
     private static final int TOKEN_PREFIX_LENGTH = TOKEN_PREFIX.length();
     private final JwtProperties jwtProperties;
     private final JwtValidator jwtValidator;
-    private final JwtSecretKey jwtSecretKey;
+    private final SecretKey secretKey;
     private final RefreshTokenRepository refreshTokenRepository;
 
     public MemberJwt reissue(final String refreshToken, final String accessTokenHeader) {
         final RefreshToken savedRefreshToken = findRefreshTokenFromRedis(refreshToken);
         final String accessToken =
                 extractAccessToken(accessTokenHeader)
-                        .orElseThrow(
-                                () ->
-                                        new ResourceNotFoundException(
-                                                ErrorCode.ACCESS_TOKEN_NOT_FOUND));
+                        .orElseThrow(ResourceNotFoundException::accessTokenNotFound);
         final String memberId = savedRefreshToken.getMemberId();
         if (jwtValidator.validateReissue(accessToken, memberId)) {
             refreshTokenRepository.delete(savedRefreshToken);
             return createAndSaveMemberToken(memberId);
         }
-        throw new InvalidTokenException(ErrorCode.RECHECK_YOUR_TOKEN);
+        throw JwtAuthenticationException.checkYourToken();
     }
 
     private RefreshToken findRefreshTokenFromRedis(final String token) {
         return refreshTokenRepository
                 .findById(token)
-                .orElseThrow(
-                        () -> new ResourceNotFoundException(ErrorCode.REFRESH_TOKEN_NOT_FOUND));
+                .orElseThrow(ResourceNotFoundException::refreshTokenNotFound);
     }
 
     public Optional<String> extractAccessToken(final String accessTokenWithBearer) {
@@ -76,14 +73,12 @@ public class JwtService {
                 .subject(memberId)
                 .issuedAt(now)
                 .expiration(expirationDate)
-                .signWith(jwtSecretKey.getSecretKey())
+                .signWith(secretKey)
                 .compact();
     }
 
     public void logout(final Optional<Cookie> cookie) {
-        final Cookie tokenCookie =
-                cookie.orElseThrow(
-                        () -> new IllegalAccessException(ErrorCode.REFRESH_TOKEN_REQUIRED));
+        final Cookie tokenCookie = cookie.orElseThrow(IllegalAccessException::refreshTokenRequired);
         final String refreshToken = tokenCookie.getValue();
         refreshTokenRepository.deleteById(refreshToken);
     }
