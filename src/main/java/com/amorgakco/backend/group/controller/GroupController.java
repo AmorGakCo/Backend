@@ -27,7 +27,13 @@ public class GroupController {
     }
 
     @GetMapping("/basic/{groupId}")
-    public GroupBasicInfoResponse getGroupInfo(@PathVariable final Long groupId) {
-        return groupService.getGroupInfo(groupId);
+    public GroupBasicInfoResponse getGroupBasicInfo(@PathVariable final Long groupId) {
+        return groupService.getBasicGroupInfo(groupId);
+    }
+
+    @DeleteMapping("/{groupId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@AuthMember final Long hostId, @PathVariable final Long groupId) {
+        groupService.delete(hostId, groupId);
     }
 }
