@@ -17,6 +17,8 @@ public enum ErrorCode {
 
     // Member Error Code
     MEMBER_NOT_FOUND("201", "존재하지 않는 회원입니다."),
+    DASH_NOT_ALLOWED("202", "전화번호에 '-'를 포함할 수 없습니다."),
+    INVALID_GITHUB_URL("203", "부적절한 github 주소입니다."),
 
     // Group Error Code
     GROUP_NOT_FOUND("301", "존재하지 않는 그룹입니다."),
