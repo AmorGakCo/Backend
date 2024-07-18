@@ -37,9 +37,6 @@ public class Group extends BaseTime {
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Participants> participants = new ArrayList<>();
 
-    @Enumerated(EnumType.STRING)
-    private ProgressStatus progressStatus;
-
     @Builder
     public Group(
             final String name,
@@ -56,7 +53,6 @@ public class Group extends BaseTime {
         this.location = location;
         this.host = host;
         this.address = address;
-        this.progressStatus = ProgressStatus.BEFORE_START;
     }
 
     public void addParticipants(final Participants participants) {

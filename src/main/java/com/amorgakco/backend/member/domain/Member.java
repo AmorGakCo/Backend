@@ -41,7 +41,6 @@ public class Member extends BaseTime {
         this.nickname = nickname;
         this.roleNames.add(new Roles(Role.ROLE_MEMBER));
         this.point = 0;
-        this.githubUrl = "";
     }
 
     public void updateNicknameAndImgUrl(final String nickname, final String imgUrl) {
