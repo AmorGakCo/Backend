@@ -2,6 +2,7 @@ package com.amorgakco.backend.group.service;
 
 import com.amorgakco.backend.geospatial.service.GeospatialService;
 import com.amorgakco.backend.global.CommonIdResponse;
+import com.amorgakco.backend.global.exception.IllegalAccessException;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.Duration;
 import com.amorgakco.backend.group.domain.Group;
@@ -42,16 +43,31 @@ public class GroupService {
         return new CommonIdResponse(groupId);
     }
 
+    @Transactional
+    public void delete(final Long hostId, final Long groupId) {
+        final Group group = getGroup(groupId);
+        if (group.isGroupHost(hostId)) {
+            groupRepository.delete(group);
+        }
+        throw IllegalAccessException.noAuthorityForGroup();
+    }
+
     private Point createLocation(final GroupRegisterRequest groupRegisterRequest) {
         return geometryFactory.createPoint(
                 new Coordinate(groupRegisterRequest.longitude(), groupRegisterRequest.latitude()));
     }
 
-    public GroupBasicInfoResponse getGroupInfo(final Long groupId) {
+    public GroupBasicInfoResponse getBasicGroupInfo(final Long groupId) {
         final Group group =
                 groupRepository
                         .findById(groupId)
                         .orElseThrow(ResourceNotFoundException::groupNotFound);
         return groupMapper.toGroupBasicInfoResponse(group);
+    }
+
+    public Group getGroup(final Long groupId) {
+        return groupRepository
+                .findById(groupId)
+                .orElseThrow(ResourceNotFoundException::groupNotFound);
     }
 }

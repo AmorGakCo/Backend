@@ -63,4 +63,8 @@ public class Group extends BaseTime {
     public int getCurrentGroupSize() {
         return participants.size() + 1;
     }
+
+    public boolean isGroupHost(final Long hostId) {
+        return host.getId().equals(hostId);
+    }
 }
