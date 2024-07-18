@@ -3,18 +3,19 @@ spring:
     activate:
       on-profile: dev
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/amorgakco?serverTimezone=Asia/Seoul
-    username: root
-    password: 1234
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/amorgakco
+    hikari:
+      username: haechan
+      password: 1234
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: create
     properties:
-      dialect: org.hibernate.dialect.MySQL8InnoDBDialect
       hibernate:
         format_sql: true
+      database-platform: org.hibernate.spatial.dialect.postgis.PostgisDialect
     defer-datasource-initialization: true
   data:
     redis:

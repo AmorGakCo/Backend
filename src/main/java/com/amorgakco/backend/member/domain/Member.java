@@ -22,6 +22,8 @@ public class Member extends BaseTime {
     private String oauth2Id;
     private String imgUrl;
     private String nickname;
+    private Integer point;
+    private String githubUrl;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -38,6 +40,7 @@ public class Member extends BaseTime {
         this.imgUrl = imgUrl;
         this.nickname = nickname;
         this.roleNames.add(new Roles(Role.ROLE_MEMBER));
+        this.point = 0;
     }
 
     public void updateNicknameAndImgUrl(final String nickname, final String imgUrl) {

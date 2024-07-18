@@ -26,7 +26,7 @@ public class JwtController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public AccessTokenResponse reissue(
+    public AccessTokenResponse reissueAccessToken(
             @CookieValue(value = "refresh-token") final String refreshToken,
             @RequestHeader(value = "Authorization") final String accessTokenHeader,
             final HttpServletResponse response) {
