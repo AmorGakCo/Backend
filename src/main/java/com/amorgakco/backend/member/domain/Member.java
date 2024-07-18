@@ -23,7 +23,11 @@ public class Member extends BaseTime {
     private String imgUrl;
     private String nickname;
     private Integer point;
+    private String phoneNumber;
     private String githubUrl;
+
+    @Enumerated(EnumType.STRING)
+    private SMSNotificationSetting smsNotificationSetting;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -41,10 +45,23 @@ public class Member extends BaseTime {
         this.nickname = nickname;
         this.roleNames.add(new Roles(Role.ROLE_MEMBER));
         this.point = 0;
+        this.smsNotificationSetting = SMSNotificationSetting.OFF;
     }
 
     public void updateNicknameAndImgUrl(final String nickname, final String imgUrl) {
         this.nickname = nickname;
         this.imgUrl = imgUrl;
+    }
+
+    public void validateAndUpdateAdditionalInfo(
+            final String githubUrl,
+            final String phoneNumber,
+            final SMSNotificationSetting setting,
+            final MemberValidator memberValidator) {
+        memberValidator.validateGithubUrl(githubUrl);
+        memberValidator.validatePhoneNumber(phoneNumber);
+        this.githubUrl = githubUrl;
+        this.phoneNumber = phoneNumber;
+        this.smsNotificationSetting = setting;
     }
 }

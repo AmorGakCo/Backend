@@ -1,5 +1,6 @@
-package com.amorgakco.backend.global.config.argumentresolver;
+package com.amorgakco.backend.global.argumentresolver;
 
+import com.amorgakco.backend.global.oauth.MemberPrincipal;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -24,8 +25,9 @@ public class AuthMemberArgumentResolver implements HandlerMethodArgumentResolver
             final NativeWebRequest webRequest,
             final WebDataBinderFactory binderFactory)
             throws Exception {
-        final User user =
-                (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return Long.valueOf(user.getUsername());
+        final MemberPrincipal principal =
+                (MemberPrincipal)
+                        SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return Long.valueOf(principal.getUsername());
     }
 }
