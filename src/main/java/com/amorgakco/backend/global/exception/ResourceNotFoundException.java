@@ -26,4 +26,8 @@ public class ResourceNotFoundException extends NoSuchElementException {
     public static ResourceNotFoundException accessTokenNotFound() {
         return new ResourceNotFoundException(ErrorCode.ACCESS_TOKEN_NOT_FOUND);
     }
+
+    public static ResourceNotFoundException participantsNotFound() {
+        return new ResourceNotFoundException(ErrorCode.PARTICIPANTS_NOT_FOUND);
+    }
 }

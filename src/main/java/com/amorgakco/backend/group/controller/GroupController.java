@@ -4,6 +4,8 @@ import com.amorgakco.backend.global.CommonIdResponse;
 import com.amorgakco.backend.global.argumentresolver.AuthMember;
 import com.amorgakco.backend.group.dto.GroupBasicInfoResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
+import com.amorgakco.backend.group.dto.GroupSearchResponse;
+import com.amorgakco.backend.group.dto.LocationVerificationRequest;
 import com.amorgakco.backend.group.service.GroupService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,5 +37,29 @@ public class GroupController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@AuthMember final Long hostId, @PathVariable final Long groupId) {
         groupService.delete(hostId, groupId);
+    }
+
+    @GetMapping("/locations")
+    public GroupSearchResponse getLocations(
+            @RequestParam final double longitude,
+            @RequestParam final double latitude,
+            @RequestParam final double width,
+            @RequestParam final double height) {
+        return groupService.getNearByGroups(width, height, longitude, latitude);
+    }
+
+    @PostMapping("/{groupId}/participants")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void approveParticipant(
+            @AuthMember final Long memberId, @PathVariable final Long groupId) {
+        groupService.approveParticipant(memberId, groupId);
+    }
+
+    @PatchMapping("/participants")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void verifyLocation(
+            @AuthMember final Long memberId,
+            @RequestBody final LocationVerificationRequest request) {
+        groupService.verifyParticipantLocation(request, memberId);
     }
 }

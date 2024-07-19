@@ -1,13 +1,16 @@
 package com.amorgakco.backend.group.service;
 
-import com.amorgakco.backend.geospatial.service.GeospatialService;
 import com.amorgakco.backend.global.CommonIdResponse;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.Duration;
 import com.amorgakco.backend.group.domain.Group;
+import com.amorgakco.backend.group.domain.Participants;
 import com.amorgakco.backend.group.dto.GroupBasicInfoResponse;
+import com.amorgakco.backend.group.dto.GroupLocation;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
+import com.amorgakco.backend.group.dto.GroupSearchResponse;
+import com.amorgakco.backend.group.dto.LocationVerificationRequest;
 import com.amorgakco.backend.group.repository.GroupRepository;
 import com.amorgakco.backend.group.service.mapper.GroupMapper;
 import com.amorgakco.backend.member.domain.Member;
@@ -26,10 +29,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class GroupService {
 
+    private static final double VERIFICATION_RADIUS_LIMIT = 0.15;
     private final GroupRepository groupRepository;
     private final GroupMapper groupMapper;
     private final GeometryFactory geometryFactory;
-    private final GeospatialService locationService;
+    private final GeoCalculator geoCalculator;
     private final MemberService memberService;
 
     @Transactional
@@ -39,8 +43,13 @@ public class GroupService {
         final Duration duration = new Duration(request.beginAt(), request.endAt());
         final Group group = groupMapper.toGroup(host, request, location, duration);
         final Long groupId = groupRepository.save(group).getId();
-        locationService.save(groupId, request.latitude(), request.longitude());
+        geoCalculator.save(groupId.toString(), request.longitude(), request.latitude());
         return new CommonIdResponse(groupId);
+    }
+
+    private Point createLocation(final GroupRegisterRequest groupRegisterRequest) {
+        return geometryFactory.createPoint(
+                new Coordinate(groupRegisterRequest.longitude(), groupRegisterRequest.latitude()));
     }
 
     @Transactional
@@ -52,9 +61,10 @@ public class GroupService {
         throw IllegalAccessException.noAuthorityForGroup();
     }
 
-    private Point createLocation(final GroupRegisterRequest groupRegisterRequest) {
-        return geometryFactory.createPoint(
-                new Coordinate(groupRegisterRequest.longitude(), groupRegisterRequest.latitude()));
+    public Group getGroup(final Long groupId) {
+        return groupRepository
+                .findById(groupId)
+                .orElseThrow(ResourceNotFoundException::groupNotFound);
     }
 
     public GroupBasicInfoResponse getBasicGroupInfo(final Long groupId) {
@@ -65,9 +75,34 @@ public class GroupService {
         return groupMapper.toGroupBasicInfoResponse(group);
     }
 
-    public Group getGroup(final Long groupId) {
-        return groupRepository
-                .findById(groupId)
-                .orElseThrow(ResourceNotFoundException::groupNotFound);
+    public GroupSearchResponse getNearByGroups(
+            final double width,
+            final double height,
+            final double longitude,
+            final double latitude) {
+        return new GroupSearchResponse(
+                geoCalculator.searchByBox(width, height, longitude, latitude));
+    }
+
+    public void verifyParticipantLocation(
+            final LocationVerificationRequest request, final Long memberId) {
+        final GroupLocation groupLocation =
+                geoCalculator
+                        .searchByCircle(
+                                VERIFICATION_RADIUS_LIMIT, request.longitude(), request.latitude())
+                        .stream()
+                        .filter(g -> g.groupId().equals(request.groupId()))
+                        .findFirst()
+                        .orElseThrow(IllegalAccessException::verificationFailed);
+        final Group group = getGroup(Long.parseLong(groupLocation.groupId()));
+        group.verifyLocation(memberId);
+    }
+
+    @Transactional
+    public void approveParticipant(final Long memberId, final Long groupId) {
+        final Group group = getGroup(groupId);
+        final Member member = memberService.getMember(memberId);
+        final Participants participants = new Participants(member);
+        group.addParticipants(participants);
     }
 }
