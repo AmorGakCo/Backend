@@ -20,4 +20,8 @@ public class IllegalAccessException extends IllegalStateException {
     public static IllegalAccessException noAuthorityForGroup() {
         return new IllegalAccessException(ErrorCode.NO_AUTHORITY_FOR_GROUP);
     }
+
+    public static IllegalAccessException verificationFailed() {
+        return new IllegalAccessException(ErrorCode.VERIFICATION_FAILED);
+    }
 }
