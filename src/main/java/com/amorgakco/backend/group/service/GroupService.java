@@ -99,7 +99,7 @@ public class GroupService {
     }
 
     @Transactional
-    public void approveParticipant(final Long memberId, final Long groupId) {
+    public void approve(final Long memberId, final Long groupId) {
         final Group group = getGroup(groupId);
         final Member member = memberService.getMember(memberId);
         final Participants participants = new Participants(member);

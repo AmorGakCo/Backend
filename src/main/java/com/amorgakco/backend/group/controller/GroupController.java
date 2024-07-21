@@ -48,13 +48,6 @@ public class GroupController {
         return groupService.getNearByGroups(width, height, longitude, latitude);
     }
 
-    @PostMapping("/{groupId}/participants")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void approveParticipant(
-            @AuthMember final Long memberId, @PathVariable final Long groupId) {
-        groupService.approveParticipant(memberId, groupId);
-    }
-
     @PatchMapping("/participants")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void verifyLocation(

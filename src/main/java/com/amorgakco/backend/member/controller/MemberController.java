@@ -27,4 +27,5 @@ public class MemberController {
             @AuthMember final Long memberId) {
         memberService.updateAdditionalInfo(additionalInfoRequest, memberId);
     }
+    
 }

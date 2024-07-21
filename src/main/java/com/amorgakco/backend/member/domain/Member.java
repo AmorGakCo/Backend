@@ -1,6 +1,7 @@
 package com.amorgakco.backend.member.domain;
 
 import com.amorgakco.backend.global.BaseTime;
+import com.amorgakco.backend.global.exception.IllegalFormatException;
 import com.amorgakco.backend.global.oauth.provider.Oauth2Provider;
 
 import jakarta.persistence.*;
@@ -14,6 +15,8 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseTime {
+    private static final String HTTPS_GITHUB_PREFIX = "https://github";
+    private static final String GITHUB_PREFIX = "github";
     @Id @GeneratedValue private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -56,12 +59,23 @@ public class Member extends BaseTime {
     public void validateAndUpdateAdditionalInfo(
             final String githubUrl,
             final String phoneNumber,
-            final SMSNotificationSetting setting,
-            final MemberValidator memberValidator) {
-        memberValidator.validateGithubUrl(githubUrl);
-        memberValidator.validatePhoneNumber(phoneNumber);
+            final SMSNotificationSetting setting) {
+        validateGithubUrl(githubUrl);
+        validatePhoneNumber(phoneNumber);
         this.githubUrl = githubUrl;
         this.phoneNumber = phoneNumber;
         this.smsNotificationSetting = setting;
+    }
+
+    public void validateGithubUrl(final String githubUrl) {
+        if (!githubUrl.startsWith(HTTPS_GITHUB_PREFIX) || !githubUrl.startsWith(GITHUB_PREFIX)) {
+            throw IllegalFormatException.dashNotAllowed();
+        }
+    }
+
+    public void validatePhoneNumber(final String phoneNumber) {
+        if (phoneNumber.contains("-")) {
+            throw IllegalFormatException.invalidGithubUrl();
+        }
     }
 }

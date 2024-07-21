@@ -2,7 +2,6 @@ package com.amorgakco.backend.member.service;
 
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.member.domain.Member;
-import com.amorgakco.backend.member.domain.MemberValidator;
 import com.amorgakco.backend.member.domain.SMSNotificationSetting;
 import com.amorgakco.backend.member.dto.AdditionalInfoRequest;
 import com.amorgakco.backend.member.repository.MemberRepository;
@@ -16,10 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class MemberService {
-    private static final String HTTPS_GITHUB_PREFIX = "https://github";
-    private static final String GITHUB_PREFIX = "github";
     private final MemberRepository memberRepository;
-    private final MemberValidator memberValidator;
 
     @Transactional
     public void updateAdditionalInfo(final AdditionalInfoRequest request, final Long memberId) {
@@ -29,8 +25,7 @@ public class MemberService {
         member.validateAndUpdateAdditionalInfo(
                 request.githubUrl(),
                 request.phoneNumber(),
-                smsNotificationSetting,
-                memberValidator);
+                smsNotificationSetting);
     }
 
     public Member getMember(final Long memberId) {
