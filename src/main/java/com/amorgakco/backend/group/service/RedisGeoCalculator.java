@@ -1,6 +1,7 @@
 package com.amorgakco.backend.group.service;
 
 import com.amorgakco.backend.global.exception.IllegalAccessException;
+import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.dto.GroupLocation;
 import com.amorgakco.backend.group.service.mapper.GeoSearchMapper;
 
@@ -19,6 +20,7 @@ import org.springframework.data.redis.domain.geo.GeoReference;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
@@ -43,17 +45,20 @@ public class RedisGeoCalculator implements GeoCalculator {
         final GeoReference<String> geoReference = GeoReference.fromCoordinate(longitude, latitude);
         final BoundingBox boundingBox = new BoundingBox(width, height, Metrics.KILOMETERS);
         final GeoResults<RedisGeoCommands.GeoLocation<String>> results =
-                getResults(geoReference, boundingBox);
+                getResults(geoReference, boundingBox)
+                        .orElseThrow(ResourceNotFoundException::locationNotFound);
         return getLocations(results);
     }
 
-    private GeoResults<RedisGeoCommands.GeoLocation<String>> getResults(
+    private Optional<GeoResults<RedisGeoCommands.GeoLocation<String>>> getResults(
             final GeoReference<String> geoReference, final BoundingBox boundingBox) {
-        return geoOperations.search(
-                AMOR_GAK_CO,
-                geoReference,
-                boundingBox,
-                RedisGeoCommands.GeoSearchCommandArgs.newGeoSearchArgs().includeCoordinates());
+        return Optional.ofNullable(
+                geoOperations.search(
+                        AMOR_GAK_CO,
+                        geoReference,
+                        boundingBox,
+                        RedisGeoCommands.GeoSearchCommandArgs.newGeoSearchArgs()
+                                .includeCoordinates()));
     }
 
     private List<GroupLocation> getLocations(
@@ -72,11 +77,17 @@ public class RedisGeoCalculator implements GeoCalculator {
         final Distance distance = new Distance(radius, Metrics.KILOMETERS);
         final Circle circle = new Circle(point, distance);
         final GeoResults<RedisGeoCommands.GeoLocation<String>> results =
+                findByLocation(circle).orElseThrow(ResourceNotFoundException::locationNotFound);
+        return getLocations(results);
+    }
+
+    private Optional<GeoResults<RedisGeoCommands.GeoLocation<String>>> findByLocation(
+            final Circle circle) {
+        return Optional.ofNullable(
                 geoOperations.radius(
                         AMOR_GAK_CO,
                         circle,
                         RedisGeoCommands.GeoRadiusCommandArgs.newGeoRadiusArgs()
-                                .includeCoordinates());
-        return getLocations(results);
+                                .includeCoordinates()));
     }
 }
