@@ -22,6 +22,9 @@ import java.util.List;
 @Table(name = "groups")
 public class Group extends BaseTime {
 
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    private final List<Participants> participants = new ArrayList<>();
+
     @Id @GeneratedValue private Long id;
     private String name;
     private String description;
@@ -34,9 +37,6 @@ public class Group extends BaseTime {
 
     @OneToOne(fetch = FetchType.LAZY)
     private Member host;
-
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private final List<Participants> participants = new ArrayList<>();
 
     @Builder
     public Group(

@@ -1,9 +1,9 @@
 package com.amorgakco.backend.global.argumentresolver;
 
 import com.amorgakco.backend.global.oauth.MemberPrincipal;
+
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
