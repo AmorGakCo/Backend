@@ -23,9 +23,7 @@ public class MemberService {
         final SMSNotificationSetting smsNotificationSetting =
                 SMSNotificationSetting.valueOf(request.smsNotificationSetting());
         member.validateAndUpdateAdditionalInfo(
-                request.githubUrl(),
-                request.phoneNumber(),
-                smsNotificationSetting);
+                request.githubUrl(), request.phoneNumber(), smsNotificationSetting);
     }
 
     public Member getMember(final Long memberId) {
