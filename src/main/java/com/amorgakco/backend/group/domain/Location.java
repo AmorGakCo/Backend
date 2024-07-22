@@ -36,6 +36,11 @@ public class Location {
         final PointShapeFactory.Circle circle =
                 new PointShapeFactory.Circle(VERIFICATION_RADIUS_LIMIT);
         final Shape groupCircle = circle.createPoint(groupPoint);
+        validateCurrentLocation(longitude, latitude, groupCircle);
+    }
+
+    private void validateCurrentLocation(
+            final double longitude, final double latitude, final Shape groupCircle) {
         if (isNotInCircle(longitude, latitude, groupCircle)) {
             throw IllegalAccessException.verificationFailed();
         }

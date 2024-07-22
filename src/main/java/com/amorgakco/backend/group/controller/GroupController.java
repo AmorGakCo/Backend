@@ -1,8 +1,8 @@
 package com.amorgakco.backend.group.controller;
 
-import com.amorgakco.backend.global.CommonIdResponse;
+import com.amorgakco.backend.global.IdResponse;
 import com.amorgakco.backend.global.argumentresolver.AuthMember;
-import com.amorgakco.backend.group.dto.GroupBasicInfoResponse;
+import com.amorgakco.backend.group.dto.GroupBasicResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
 import com.amorgakco.backend.group.dto.GroupSearchResponse;
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
@@ -22,14 +22,14 @@ public class GroupController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CommonIdResponse register(
+    public IdResponse register(
             @RequestBody final GroupRegisterRequest groupRegisterRequest,
             @AuthMember final Long hostId) {
         return groupService.register(groupRegisterRequest, hostId);
     }
 
     @GetMapping("/basic/{groupId}")
-    public GroupBasicInfoResponse getGroupBasicInfo(@PathVariable final Long groupId) {
+    public GroupBasicResponse getGroupBasicInfo(@PathVariable final Long groupId) {
         return groupService.getBasicGroupInfo(groupId);
     }
 

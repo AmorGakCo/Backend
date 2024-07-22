@@ -1,13 +1,12 @@
 package com.amorgakco.backend.group.service;
 
-import com.amorgakco.backend.global.CommonIdResponse;
+import com.amorgakco.backend.global.IdResponse;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.Duration;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.domain.Location;
-import com.amorgakco.backend.group.dto.GroupBasicInfoResponse;
-import com.amorgakco.backend.group.dto.GroupLocation;
+import com.amorgakco.backend.group.dto.GroupBasicResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
 import com.amorgakco.backend.group.dto.GroupSearchResponse;
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
@@ -23,8 +22,7 @@ import org.locationtech.jts.geom.GeometryFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.*;
-import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -36,13 +34,13 @@ public class GroupService {
     private final MemberService memberService;
 
     @Transactional
-    public CommonIdResponse register(final GroupRegisterRequest request, final Long hostId) {
+    public IdResponse register(final GroupRegisterRequest request, final Long hostId) {
         final Location location = createLocation(request.longitude(), request.latitude());
         final Member host = memberService.getMember(hostId);
         final Duration duration = new Duration(request.beginAt(), request.endAt());
         final Group group = groupMapper.toGroup(host, request, location, duration);
         final Long groupId = groupRepository.save(group).getId();
-        return new CommonIdResponse(groupId);
+        return new IdResponse(groupId);
     }
 
     private Location createLocation(final double longitude, final double latitude) {
@@ -64,7 +62,7 @@ public class GroupService {
                 .orElseThrow(ResourceNotFoundException::groupNotFound);
     }
 
-    public GroupBasicInfoResponse getBasicGroupInfo(final Long groupId) {
+    public GroupBasicResponse getBasicGroupInfo(final Long groupId) {
         final Group group =
                 groupRepository
                         .findByIdWithHost(groupId)
@@ -76,11 +74,11 @@ public class GroupService {
             final double longitude, final double latitude, final double radius) {
         final Location location = createLocation(longitude, latitude);
         final double validRadius = location.validateAndGetRadius(radius);
-        final List<GroupLocation> results =
-                groupRepository.findByLocationWithRadius(location.getPoint(), validRadius).stream()
-                        .map(groupMapper::toGroupLocation)
-                        .toList();
-        return new GroupSearchResponse(results);
+        return groupRepository.findByLocationWithRadius(location.getPoint(), validRadius).stream()
+                .map(groupMapper::toGroupLocation)
+                .collect(
+                        Collectors.collectingAndThen(
+                                Collectors.toList(), GroupSearchResponse::new));
     }
 
     public void verifyParticipantLocation(
