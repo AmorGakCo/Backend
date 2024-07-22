@@ -24,15 +24,15 @@ public class Participants {
     private Group group;
 
     @Enumerated(EnumType.STRING)
-    private LocationVerifyStatus locationVerifyStatus;
+    private LocationVerificationStatus locationVerificationStatus;
 
     public Participants(final Member member) {
         this.member = member;
-        this.locationVerifyStatus = LocationVerifyStatus.UNVERIFIED;
+        this.locationVerificationStatus = LocationVerificationStatus.UNVERIFIED;
     }
 
-    public void locationVerified() {
-        this.locationVerifyStatus = LocationVerifyStatus.VERIFIED;
+    public void verify() {
+        this.locationVerificationStatus = LocationVerificationStatus.VERIFIED;
     }
 
     public void add(final Group group) {

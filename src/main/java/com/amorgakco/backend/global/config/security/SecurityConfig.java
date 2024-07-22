@@ -40,7 +40,7 @@ public class SecurityConfig {
                                                 "/token",
                                                 "/favicon.ico",
                                                 "/errors",
-                                                "/locations")
+                                                "/groups/locations")
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated())
