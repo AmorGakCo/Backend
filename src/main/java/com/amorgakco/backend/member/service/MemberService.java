@@ -2,7 +2,7 @@ package com.amorgakco.backend.member.service;
 
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.member.domain.Member;
-import com.amorgakco.backend.member.domain.SMSNotificationSetting;
+import com.amorgakco.backend.member.domain.SmsNotificationSetting;
 import com.amorgakco.backend.member.dto.AdditionalInfoRequest;
 import com.amorgakco.backend.member.repository.MemberRepository;
 
@@ -20,8 +20,8 @@ public class MemberService {
     @Transactional
     public void updateAdditionalInfo(final AdditionalInfoRequest request, final Long memberId) {
         final Member member = getMember(memberId);
-        final SMSNotificationSetting smsNotificationSetting =
-                SMSNotificationSetting.valueOf(request.smsNotificationSetting());
+        final SmsNotificationSetting smsNotificationSetting =
+                SmsNotificationSetting.valueOf(request.smsNotificationSetting());
         member.validateAndUpdateAdditionalInfo(
                 request.githubUrl(), request.phoneNumber(), smsNotificationSetting);
     }

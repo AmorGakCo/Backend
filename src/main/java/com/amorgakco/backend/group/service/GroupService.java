@@ -55,10 +55,10 @@ public class GroupService {
     @Transactional
     public void delete(final Long hostId, final Long groupId) {
         final Group group = getGroup(groupId);
-        if (group.isGroupHost(hostId)) {
-            groupRepository.delete(group);
+        if (group.isNotGroupHost(hostId)) {
+            throw IllegalAccessException.noAuthorityForGroup();
         }
-        throw IllegalAccessException.noAuthorityForGroup();
+        groupRepository.delete(group);
     }
 
     public Group getGroup(final Long groupId) {

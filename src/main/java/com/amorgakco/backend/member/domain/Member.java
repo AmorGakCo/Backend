@@ -30,7 +30,7 @@ public class Member extends BaseTime {
     private String githubUrl;
 
     @Enumerated(EnumType.STRING)
-    private SMSNotificationSetting smsNotificationSetting;
+    private SmsNotificationSetting smsNotificationSetting;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -48,7 +48,7 @@ public class Member extends BaseTime {
         this.nickname = nickname;
         this.roleNames.add(new Roles(Role.ROLE_MEMBER));
         this.point = 0;
-        this.smsNotificationSetting = SMSNotificationSetting.OFF;
+        this.smsNotificationSetting = SmsNotificationSetting.OFF;
     }
 
     public void updateNicknameAndImgUrl(final String nickname, final String imgUrl) {
@@ -59,7 +59,7 @@ public class Member extends BaseTime {
     public void validateAndUpdateAdditionalInfo(
             final String githubUrl,
             final String phoneNumber,
-            final SMSNotificationSetting setting) {
+            final SmsNotificationSetting setting) {
         validateGithubUrl(githubUrl);
         validatePhoneNumber(phoneNumber);
         this.githubUrl = githubUrl;

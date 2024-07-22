@@ -65,8 +65,8 @@ public class Group extends BaseTime {
         return participants.size() + 1;
     }
 
-    public boolean isGroupHost(final Long hostId) {
-        return host.getId().equals(hostId);
+    public boolean isNotGroupHost(final Long hostId) {
+        return !host.getId().equals(hostId);
     }
 
     public void verifyLocation(final Long memberId) {
@@ -75,6 +75,6 @@ public class Group extends BaseTime {
                         .filter(p -> p.getMember().getId().equals(memberId))
                         .findFirst()
                         .orElseThrow(ResourceNotFoundException::participantsNotFound);
-        participant.verified();
+        participant.verify();
     }
 }
