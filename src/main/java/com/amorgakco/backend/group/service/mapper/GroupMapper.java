@@ -3,7 +3,7 @@ package com.amorgakco.backend.group.service.mapper;
 import com.amorgakco.backend.group.domain.Duration;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.domain.Location;
-import com.amorgakco.backend.group.dto.GroupBasicInfoResponse;
+import com.amorgakco.backend.group.dto.GroupBasicResponse;
 import com.amorgakco.backend.group.dto.GroupLocation;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
 import com.amorgakco.backend.member.domain.Member;
@@ -30,10 +30,10 @@ public class GroupMapper {
                 .build();
     }
 
-    public GroupBasicInfoResponse toGroupBasicInfoResponse(final Group group) {
+    public GroupBasicResponse toGroupBasicInfoResponse(final Group group) {
         final Member host = group.getHost();
         final Duration duration = group.getDuration();
-        return GroupBasicInfoResponse.builder()
+        return GroupBasicResponse.builder()
                 .hostNickname(host.getNickname())
                 .hostPoint(host.getPoint())
                 .hostGitHubUrl(host.getGithubUrl())

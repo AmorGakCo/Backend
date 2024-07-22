@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 @Entity
 @Getter
@@ -64,20 +63,16 @@ public class Group extends BaseTime {
     }
 
     public boolean isNotGroupHost(final Long hostId) {
-        return !host.getId().equals(hostId);
+        return !host.isEquals(hostId);
     }
 
     public void verifyLocation(final double longitude, final double latitude, final Long memberId) {
         final Participants participant =
                 participants.stream()
-                        .filter(isParticipant(memberId))
+                        .filter(p -> p.isParticipant(memberId))
                         .findFirst()
                         .orElseThrow(ResourceNotFoundException::participantsNotFound);
         location.verify(longitude, latitude);
-        participant.changeVerificationStatus();
-    }
-
-    private Predicate<Participants> isParticipant(final Long memberId) {
-        return p -> p.getMember().getId().equals(memberId);
+        participant.verify();
     }
 }
