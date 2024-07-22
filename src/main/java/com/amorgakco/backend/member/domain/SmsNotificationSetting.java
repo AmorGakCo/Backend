@@ -1,6 +1,6 @@
 package com.amorgakco.backend.member.domain;
 
-public enum SMSNotificationSetting {
+public enum SmsNotificationSetting {
     ON,
     OFF
 }
