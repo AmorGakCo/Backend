@@ -35,6 +35,10 @@ public class Participants {
         this.locationVerificationStatus = LocationVerificationStatus.VERIFIED;
     }
 
+    public boolean isParticipant(final Long memberId) {
+        return member.isEquals(memberId);
+    }
+
     public void add(final Group group) {
         this.group = group;
     }
