@@ -1,6 +1,6 @@
 package com.amorgakco.backend.group.domain;
 
-public enum LocationVerifyStatus {
+public enum LocationVerificationStatus {
     UNVERIFIED,
     VERIFIED
 }

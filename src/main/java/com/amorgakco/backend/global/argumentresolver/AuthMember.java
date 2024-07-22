@@ -1,4 +1,4 @@
-package com.amorgakco.backend.global.config.argumentresolver;
+package com.amorgakco.backend.global.argumentresolver;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

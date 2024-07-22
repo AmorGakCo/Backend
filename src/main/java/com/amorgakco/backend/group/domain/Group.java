@@ -1,6 +1,7 @@
 package com.amorgakco.backend.group.domain;
 
 import com.amorgakco.backend.global.BaseTime;
+import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.member.domain.Member;
 
 import jakarta.persistence.*;
@@ -21,6 +22,9 @@ import java.util.List;
 @Table(name = "groups")
 public class Group extends BaseTime {
 
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    private final List<Participants> participants = new ArrayList<>();
+
     @Id @GeneratedValue private Long id;
     private String name;
     private String description;
@@ -33,9 +37,6 @@ public class Group extends BaseTime {
 
     @OneToOne(fetch = FetchType.LAZY)
     private Member host;
-
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private List<Participants> participants = new ArrayList<>();
 
     @Builder
     public Group(
@@ -62,5 +63,18 @@ public class Group extends BaseTime {
 
     public int getCurrentGroupSize() {
         return participants.size() + 1;
+    }
+
+    public boolean isNotGroupHost(final Long hostId) {
+        return !host.getId().equals(hostId);
+    }
+
+    public void verifyLocation(final Long memberId) {
+        final Participants participant =
+                participants.stream()
+                        .filter(p -> p.getMember().getId().equals(memberId))
+                        .findFirst()
+                        .orElseThrow(ResourceNotFoundException::participantsNotFound);
+        participant.verify();
     }
 }
