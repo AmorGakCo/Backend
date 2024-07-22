@@ -78,4 +78,8 @@ public class Member extends BaseTime {
             throw IllegalFormatException.invalidGithubUrl();
         }
     }
+
+    public boolean isEquals(final Long memberId) {
+        return this.id.equals(memberId);
+    }
 }

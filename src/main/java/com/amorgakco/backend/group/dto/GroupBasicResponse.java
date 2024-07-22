@@ -5,7 +5,7 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 
 @Builder
-public record GroupBasicInfoResponse(
+public record GroupBasicResponse(
         String hostNickname,
         String hostImgUrl,
         int hostPoint,
