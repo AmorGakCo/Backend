@@ -43,9 +43,8 @@ public class GroupController {
     public GroupSearchResponse getLocations(
             @RequestParam final double longitude,
             @RequestParam final double latitude,
-            @RequestParam final double width,
-            @RequestParam final double height) {
-        return groupService.getNearByGroups(width, height, longitude, latitude);
+            @RequestParam final double radius) {
+        return groupService.getNearByGroups(longitude, latitude, radius);
     }
 
     @PatchMapping("/participants")

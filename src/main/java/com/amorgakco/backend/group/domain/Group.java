@@ -11,10 +11,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import org.locationtech.jts.geom.Point;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 @Entity
 @Getter
@@ -32,11 +31,10 @@ public class Group extends BaseTime {
     private String address;
     @Embedded private Duration duration;
 
-    @Column(columnDefinition = "geometry(POINT, 4326)")
-    private Point location;
-
     @OneToOne(fetch = FetchType.LAZY)
     private Member host;
+
+    @Embedded private Location location;
 
     @Builder
     public Group(
@@ -44,7 +42,7 @@ public class Group extends BaseTime {
             final String description,
             final int groupCapacity,
             final Duration duration,
-            final Point location,
+            final Location location,
             final Member host,
             final String address) {
         this.name = name;
@@ -69,12 +67,17 @@ public class Group extends BaseTime {
         return !host.getId().equals(hostId);
     }
 
-    public void verifyLocation(final Long memberId) {
+    public void verifyLocation(final double longitude, final double latitude, final Long memberId) {
         final Participants participant =
                 participants.stream()
-                        .filter(p -> p.getMember().getId().equals(memberId))
+                        .filter(isParticipant(memberId))
                         .findFirst()
                         .orElseThrow(ResourceNotFoundException::participantsNotFound);
-        participant.verify();
+        location.verify(longitude, latitude);
+        participant.changeVerificationStatus();
+    }
+
+    private Predicate<Participants> isParticipant(final Long memberId) {
+        return p -> p.getMember().getId().equals(memberId);
     }
 }

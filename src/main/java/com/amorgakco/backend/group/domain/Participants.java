@@ -31,7 +31,7 @@ public class Participants {
         this.locationVerificationStatus = LocationVerificationStatus.UNVERIFIED;
     }
 
-    public void verify() {
+    public void changeVerificationStatus() {
         this.locationVerificationStatus = LocationVerificationStatus.VERIFIED;
     }
 
