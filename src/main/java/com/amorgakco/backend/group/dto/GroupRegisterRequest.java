@@ -1,9 +1,12 @@
 package com.amorgakco.backend.group.dto;
 
+import lombok.Builder;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
+@Builder
 public record GroupRegisterRequest(
         String name,
         String description,

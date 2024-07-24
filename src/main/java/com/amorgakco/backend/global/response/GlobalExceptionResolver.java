@@ -37,8 +37,8 @@ public class GlobalExceptionResolver {
     @ExceptionHandler(IllegalAccessException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse illegalAccess(final IllegalAccessException e) {
-        setCustomExceptionLog(e.getErrorcode());
-        return new ErrorResponse(e.getErrorcode());
+        setCustomExceptionLog(e.getErrorCode());
+        return new ErrorResponse(e.getErrorCode());
     }
 
     private void setCustomExceptionLog(final ErrorCode errorCode) {
@@ -48,13 +48,20 @@ public class GlobalExceptionResolver {
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse resourceNotFound(final ResourceNotFoundException e) {
-        setCustomExceptionLog(e.getErrorcode());
-        return new ErrorResponse(e.getErrorcode());
+        setCustomExceptionLog(e.getErrorCode());
+        return new ErrorResponse(e.getErrorCode());
     }
 
     @ExceptionHandler(IllegalTimeException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse tokenExpired(final IllegalTimeException e) {
+    public ErrorResponse invalidTime(final IllegalTimeException e) {
+        setCustomExceptionLog(e.getErrorCode());
+        return new ErrorResponse(e.getErrorCode());
+    }
+
+    @ExceptionHandler(JwtAuthenticationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse jwtAuthentication(final JwtAuthenticationException e) {
         setCustomExceptionLog(e.getErrorCode());
         return new ErrorResponse(e.getErrorCode());
     }

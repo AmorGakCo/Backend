@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.1'
     id 'io.spring.dependency-management' version '1.1.5'
+    id "org.asciidoctor.jvm.convert" version "3.3.2"
 }
 
 group = 'com.amorgakco'
@@ -17,6 +18,7 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    asciidoctorExt
 }
 
 repositories {
@@ -38,34 +40,28 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
-    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.hibernate:hibernate-spatial:6.5.2.Final'
+    implementation 'org.hibernate:hibernate-spatial:6.5.0.Final'
+    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+}
+ext {
+    snippetsDir = file('build/generated-snippets')
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
 
-compileJava {
-    options.compilerArgs += [
-            '--enable-preview',
-            '-Amapstruct.defaultComponentModel=spring'
-    ]
+test {
+    outputs.dir snippetsDir
 }
 
-compileTestJava {
-    options.compilerArgs += [
-            '--enable-preview',
-            '-Amapstruct.defaultComponentModel=spring'
-    ]
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
-    jvmArgs([
-            '--enable-preview',
-            '-Amapstruct.defaultComponentModel=spring'
-    ])
+asciidoctor {
+    inputs.dir snippetsDir
+    configurations 'asciidoctorExt'
+    dependsOn test
 }
