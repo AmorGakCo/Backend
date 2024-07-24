@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class IllegalAccessException extends IllegalStateException {
-    private final ErrorCode errorcode;
+    private final ErrorCode errorCode;
 
     public static IllegalAccessException tokenClaimDoesNotMatch() {
         return new IllegalAccessException(ErrorCode.TOKEN_CLAIM_NOT_MATCHED);

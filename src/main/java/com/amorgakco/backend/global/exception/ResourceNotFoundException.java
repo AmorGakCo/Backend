@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class ResourceNotFoundException extends NoSuchElementException {
-    private final ErrorCode errorcode;
+    private final ErrorCode errorCode;
 
     public static ResourceNotFoundException memberNotFound() {
         return new ResourceNotFoundException(ErrorCode.MEMBER_NOT_FOUND);
@@ -29,9 +29,5 @@ public class ResourceNotFoundException extends NoSuchElementException {
 
     public static ResourceNotFoundException participantsNotFound() {
         return new ResourceNotFoundException(ErrorCode.PARTICIPANTS_NOT_FOUND);
-    }
-
-    public static ResourceNotFoundException locationNotFound() {
-        return new ResourceNotFoundException(ErrorCode.LOCATION_NOT_FOUND);
     }
 }

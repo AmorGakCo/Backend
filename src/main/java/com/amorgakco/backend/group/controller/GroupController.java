@@ -30,7 +30,7 @@ public class GroupController {
 
     @GetMapping("/basic/{groupId}")
     public GroupBasicResponse getGroupBasicInfo(@PathVariable final Long groupId) {
-        return groupService.getBasicGroupInfo(groupId);
+        return groupService.getBasicGroup(groupId);
     }
 
     @DeleteMapping("/{groupId}")

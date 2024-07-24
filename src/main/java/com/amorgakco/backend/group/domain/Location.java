@@ -24,7 +24,7 @@ public class Location {
     // 탐색 허용 반경 : 3000m
     private static final double VALID_RADIUS_LIMIT = 3000;
 
-    @Column(columnDefinition = "geometry(POINT, 4326)")
+    @Column(columnDefinition = "geometry(POINT, 4326)", name = "point")
     private Point point;
 
     public Location(final Point point) {

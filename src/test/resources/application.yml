@@ -1,21 +1,16 @@
 spring:
-  config:
-    activate:
-      on-profile: dev
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/amorgakco
+    url: jdbc:postgresql://localhost:5432/amorgakco_test
     hikari:
       username: haechan
       password: 1234
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
     properties:
       hibernate:
         format_sql: true
-  data:
-    redis:
-      host: localhost
-      port: 6379
+      database-platform: org.hibernate.spatial.dialect.postgis.PostgisDialect
+    defer-datasource-initialization: true
