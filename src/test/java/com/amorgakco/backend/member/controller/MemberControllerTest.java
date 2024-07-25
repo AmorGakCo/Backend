@@ -43,15 +43,14 @@ class MemberControllerTest extends RestDocsTest {
                 mockMvc.perform(
                                 patch("/members")
                                         .contentType(MediaType.APPLICATION_JSON)
-                                        .content(toRequestBody(request))
-                                        .header(HEADER.getValue(), BEARER_WITH_TOKEN.getValue()))
+                                        .content(toRequestBody(request)))
                         // then
                         .andExpect(status().isNoContent());
         // docs
         actions.andDo(print())
                 .andDo(
                         document(
-                                "save or update member additional Information",
+                                "member-save-additional-info",
                                 getDocumentRequest(),
                                 getDocumentResponse()));
     }

@@ -7,7 +7,6 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -57,11 +56,7 @@ class JwtControllerTest extends RestDocsTest {
                         .andExpect(jsonPath("$.data.accessToken").value(NEW_ACCESS_TOKEN));
         // docs
         actions.andDo(print())
-                .andDo(
-                        document(
-                                "reissue access token",
-                                getDocumentRequest(),
-                                getDocumentResponse()));
+                .andDo(document("jwt-reissue", getDocumentRequest(), getDocumentResponse()));
     }
 
     @Test
@@ -84,7 +79,7 @@ class JwtControllerTest extends RestDocsTest {
         actions.andDo(print())
                 .andDo(
                         document(
-                                "reissue access token exception",
+                                "jwt-reissue-exception",
                                 getDocumentRequest(),
                                 getDocumentResponse()));
     }
@@ -98,12 +93,12 @@ class JwtControllerTest extends RestDocsTest {
         final ResultActions actions =
                 mockMvc.perform(
                                 delete("/token")
-                                        .header(AUTH_HEADER, INVALID_ACCESS_TOKEN)
+                                        .header(AUTH_HEADER, NEW_ACCESS_TOKEN)
                                         .cookie(cookie))
                         // then
                         .andExpect(status().isNoContent());
-        //docs
+        // docs
         actions.andDo(print())
-                .andDo(document("logout", getDocumentRequest(), getDocumentResponse()));
+                .andDo(document("jwt-logout", getDocumentRequest(), getDocumentResponse()));
     }
 }
