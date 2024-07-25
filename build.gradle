@@ -53,28 +53,7 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-//asciidoctor {
-//    configurations 'asciidoctorExt'
-//    dependsOn test
-//    sources {
-//        include("**/index.adoc")
-//    }
-//    baseDirFollowsSourceFile()
-//}
-
-//tasks.register('copyApiDocument', Copy) {
-//    dependsOn asciidoctor
-//    doFirst {
-//        delete file('src/main/resources/static/docs')
-//    }
-//    inputs.dir snippetsDir
-//    from file("build/docs/asciidoc")
-//    into file("src/main/resources/static/docs")
-//}
-//
-//build {
-//    dependsOn copyApiDocument
-//}
+// asciidoc setting
 
 ext {
     set('snippetsDir', file("build/generated-snippets"))
@@ -89,9 +68,11 @@ tasks.named('test') {
 }
 
 tasks.named('asciidoctor') {
+    configurations 'asciidoctorExt'
     doFirst {
         delete(docsOutputDir)
         delete(projectDocsDir)
+        delete(deployDocsDir)
     }
     sources {
         include("**/index.adoc")
@@ -110,3 +91,5 @@ tasks.named('asciidoctor') {
         }
     }
 }
+
+// asciidoc setting end

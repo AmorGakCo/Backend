@@ -4,6 +4,10 @@
 :toc: left
 :toclevels: 4
 
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+
 == Jwt
 
 === 로그인
