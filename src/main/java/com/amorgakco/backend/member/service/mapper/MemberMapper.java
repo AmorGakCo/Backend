@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MemberMapper {
 
-    public Member toMember(final Oauth2UserInfo oauth2UserInfo){
+    public Member toMember(final Oauth2UserInfo oauth2UserInfo) {
         return Member.builder()
                 .oauth2Provider(oauth2UserInfo.oauth2Provider())
                 .oauth2Id(oauth2UserInfo.oauth2Id())
