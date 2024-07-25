@@ -5,6 +5,10 @@
 :toclevel: 2
 :sectlinks:
 
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+
 = AmorGakCo API: 위치기반 모각코 모임 서비스
 
 == 인증

@@ -4,6 +4,10 @@
 :toc: left
 :toclevels: 4
 
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+
 == Member
 
 === 추가 정보 입력
