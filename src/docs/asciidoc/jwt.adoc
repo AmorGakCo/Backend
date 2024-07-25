@@ -1,0 +1,38 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+
+== Jwt
+
+=== 로그인
+
+=== Request
+
+[source]
+----
+http://localhost:8080/oauth2/authorization/kakao
+----
+
+=== Response
+
+리프레쉬 토큰은 쿠키에 액세스 토큰은 바디로 응답합니다.
+
+=== 액세스 토큰 재발급
+
+재발급 시 리프레쉬 토큰은 쿠키로 액세스 토큰은 헤더에 같이 요청해야 합니다.
+
+만료된 액세스 토큰은 정보를 검증하기위해 사용됩니다.
+
+operation::jwt-reissue[snippets='http-request,http-response']
+
+=== 액세스 토큰 재발급 예외
+
+operation::jwt-reissue-exception[snippets='http-request,http-response']
+
+=== 로그아웃
+
+operation::jwt-logout[snippets='http-request,http-response']
+
+

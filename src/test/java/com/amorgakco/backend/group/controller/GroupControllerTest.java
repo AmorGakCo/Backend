@@ -6,13 +6,16 @@ import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.amorgakco.backend.docs.RestDocsTest;
-import com.amorgakco.backend.fixture.AccessToken;
 import com.amorgakco.backend.global.IdResponse;
 import com.amorgakco.backend.global.exception.ErrorCode;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
@@ -50,9 +53,6 @@ class GroupControllerTest extends RestDocsTest {
         final ResultActions actions =
                 mockMvc.perform(
                                 post("/groups")
-                                        .header(
-                                                AccessToken.HEADER.getValue(),
-                                                AccessToken.BEARER_WITH_TOKEN.getValue())
                                         .contentType(MediaType.APPLICATION_JSON)
                                         .content(toRequestBody(request)))
                         // then
@@ -60,7 +60,7 @@ class GroupControllerTest extends RestDocsTest {
                         .andExpect(jsonPath("$.data.id").value("1"));
         // docs
         actions.andDo(print())
-                .andDo(document("register group", getDocumentRequest(), getDocumentResponse()));
+                .andDo(document("group-register", getDocumentRequest(), getDocumentResponse()));
     }
 
     private GroupRegisterRequest.GroupRegisterRequestBuilder createGroupRegisterRequest() {
@@ -89,9 +89,6 @@ class GroupControllerTest extends RestDocsTest {
         final ResultActions actions =
                 mockMvc.perform(
                                 post("/groups")
-                                        .header(
-                                                AccessToken.HEADER.getValue(),
-                                                AccessToken.BEARER_WITH_TOKEN.getValue())
                                         .contentType(MediaType.APPLICATION_JSON)
                                         .content(toRequestBody(request)))
                         // then
@@ -101,7 +98,7 @@ class GroupControllerTest extends RestDocsTest {
         actions.andDo(print())
                 .andDo(
                         document(
-                                "maximum duration exception",
+                                "group-register-max-duration-exception",
                                 getDocumentRequest(),
                                 getDocumentResponse()));
     }
@@ -120,9 +117,6 @@ class GroupControllerTest extends RestDocsTest {
         final ResultActions actions =
                 mockMvc.perform(
                                 post("/groups")
-                                        .header(
-                                                AccessToken.HEADER.getValue(),
-                                                AccessToken.BEARER_WITH_TOKEN.getValue())
                                         .contentType(MediaType.APPLICATION_JSON)
                                         .content(toRequestBody(request)))
                         // then
@@ -132,7 +126,7 @@ class GroupControllerTest extends RestDocsTest {
         actions.andDo(print())
                 .andDo(
                         document(
-                                "minimum duration exception",
+                                "group-register-min-duration-exception",
                                 getDocumentRequest(),
                                 getDocumentResponse()));
     }
@@ -152,9 +146,6 @@ class GroupControllerTest extends RestDocsTest {
         final ResultActions actions =
                 mockMvc.perform(
                                 post("/groups")
-                                        .header(
-                                                AccessToken.HEADER.getValue(),
-                                                AccessToken.BEARER_WITH_TOKEN.getValue())
                                         .contentType(MediaType.APPLICATION_JSON)
                                         .content(toRequestBody(request)))
                         // then
@@ -166,7 +157,7 @@ class GroupControllerTest extends RestDocsTest {
         actions.andDo(print())
                 .andDo(
                         document(
-                                "begin time end time sequence exception",
+                                "group-register-time-exception",
                                 getDocumentRequest(),
                                 getDocumentResponse()));
     }
@@ -186,9 +177,10 @@ class GroupControllerTest extends RestDocsTest {
         actions.andDo(print())
                 .andDo(
                         document(
-                                "get basic group information",
+                                "group-get-basic",
                                 getDocumentRequest(),
-                                getDocumentResponse()));
+                                getDocumentResponse(),
+                                pathParameters(parameterWithName("groupId").description("그룹 ID"))));
     }
 
     private GroupBasicResponse.GroupBasicResponseBuilder createGroupBasicResponse() {
@@ -213,7 +205,12 @@ class GroupControllerTest extends RestDocsTest {
                         .andExpect(status().isNoContent());
         // docs
         actions.andDo(print())
-                .andDo(document("delete group", getDocumentRequest(), getDocumentResponse()));
+                .andDo(
+                        document(
+                                "group-delete",
+                                getDocumentRequest(),
+                                getDocumentResponse(),
+                                pathParameters(parameterWithName("groupId").description("그룹 ID"))));
     }
 
     @Test
@@ -229,9 +226,10 @@ class GroupControllerTest extends RestDocsTest {
         actions.andDo(print())
                 .andDo(
                         document(
-                                "delete group exception",
+                                "group-delete-host-exception",
                                 getDocumentRequest(),
-                                getDocumentResponse()));
+                                getDocumentResponse(),
+                                pathParameters(parameterWithName("groupId").description("그룹 ID"))));
     }
 
     @Test
@@ -250,7 +248,15 @@ class GroupControllerTest extends RestDocsTest {
                         .andExpect(status().isOk());
         // docs
         actions.andDo(print())
-                .andDo(document("get nearby groups", getDocumentRequest(), getDocumentResponse()));
+                .andDo(
+                        document(
+                                "group-get-nearby",
+                                getDocumentRequest(),
+                                getDocumentResponse(),
+                                queryParameters(
+                                        parameterWithName("longitude").description("경도"),
+                                        parameterWithName("latitude").description("위도"),
+                                        parameterWithName("radius").description("반지름 [단위:m]"))));
     }
 
     private GroupSearchResponse.GroupSearchResponseBuilder createGroupSearchResponse() {
