@@ -48,27 +48,65 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
 }
-ext {
-    snippetsDir = file('build/generated-snippets')
-}
 
 tasks.named('test') {
     useJUnitPlatform()
 }
 
-tasks.register('copyDocument', Copy) { // build/docs 문서를 resources에 복사
-    dependsOn asciidoctor
+//asciidoctor {
+//    configurations 'asciidoctorExt'
+//    dependsOn test
+//    sources {
+//        include("**/index.adoc")
+//    }
+//    baseDirFollowsSourceFile()
+//}
 
-    from file("build/docs/asciidoc")
-    into file("src/main/resources/static/docs")
+//tasks.register('copyApiDocument', Copy) {
+//    dependsOn asciidoctor
+//    doFirst {
+//        delete file('src/main/resources/static/docs')
+//    }
+//    inputs.dir snippetsDir
+//    from file("build/docs/asciidoc")
+//    into file("src/main/resources/static/docs")
+//}
+//
+//build {
+//    dependsOn copyApiDocument
+//}
+
+ext {
+    set('snippetsDir', file("build/generated-snippets"))
+    set('docsOutputDir', file("build/docs/asciidoc"))
+    set('projectDocsDir', file("src/main/resources/static/docs"))
+    set('deployDocsDir', file("docs"))
 }
 
-test {
+tasks.named('test') {
+    doFirst { delete(snippetsDir) }
     outputs.dir snippetsDir
 }
 
-asciidoctor {
+tasks.named('asciidoctor') {
+    doFirst {
+        delete(docsOutputDir)
+        delete(projectDocsDir)
+    }
+    sources {
+        include("**/index.adoc")
+    }
+    baseDirFollowsSourceFile()
     inputs.dir snippetsDir
-    configurations 'asciidoctorExt'
     dependsOn test
+    doLast {
+        copy {
+            from docsOutputDir
+            into projectDocsDir
+        }
+        copy {
+            from docsOutputDir
+            into deployDocsDir
+        }
+    }
 }
