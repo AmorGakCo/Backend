@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Duration {
+    private static final int MAX_DURATION = 8;
+    private static final int MIN_DURATION = 1;
     private LocalDateTime beginAt;
     private LocalDateTime endAt;
 
@@ -27,10 +29,10 @@ public class Duration {
         if (beginAt.isAfter(endAt)) {
             throw IllegalTimeException.startTimeAfterEndTime();
         }
-        if (endAt.getHour() - beginAt.getHour() > 12) {
+        if (endAt.getHour() - beginAt.getHour() > MAX_DURATION) {
             throw IllegalTimeException.maxDuration();
         }
-        if (endAt.getHour() - beginAt.getHour() < 1) {
+        if (endAt.getHour() - beginAt.getHour() < MIN_DURATION) {
             throw IllegalTimeException.minDuration();
         }
     }
