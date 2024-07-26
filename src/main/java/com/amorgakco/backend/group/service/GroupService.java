@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,7 +63,7 @@ public class GroupService {
                 .orElseThrow(ResourceNotFoundException::groupNotFound);
     }
 
-    public GroupBasicResponse getBasicGroupInfo(final Long groupId) {
+    public GroupBasicResponse getBasicGroup(final Long groupId) {
         final Group group =
                 groupRepository
                         .findByIdWithHost(groupId)
@@ -74,7 +75,10 @@ public class GroupService {
             final double longitude, final double latitude, final double radius) {
         final Location location = createLocation(longitude, latitude);
         final double validRadius = location.validateAndGetRadius(radius);
-        return groupRepository.findByLocationWithRadius(location.getPoint(), validRadius).stream()
+        final Point point = location.getPoint();
+        return groupRepository
+                .findByLocationWithRadius(point.getX(), point.getY(), validRadius)
+                .stream()
                 .map(groupMapper::toGroupLocation)
                 .collect(
                         Collectors.collectingAndThen(

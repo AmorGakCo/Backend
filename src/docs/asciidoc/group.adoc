@@ -1,0 +1,43 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+
+== Group
+
+=== 그룹 등록
+
+operation::group-register[snippets='http-request,http-response']
+
+=== 그룹 등록 예외: 최대 모임 지속 시간 8시간
+
+operation::group-register-max-duration-exception[snippets='http-request,http-response']
+
+=== 그룹 등록 예외: 최소 모임 지속 시간 1시간
+
+operation::group-register-min-duration-exception[snippets='http-request,http-response']
+
+=== 그룹 등록 예외: 시작 시간이 종료 시간보다 늦는 경우
+
+operation::group-register-time-exception[snippets='http-request,http-response']
+
+=== 그룹 단건 조회
+
+operation::group-get-basic[snippets='path-parameters,http-request,http-response']
+
+=== 주변 그룹 조회
+
+operation::group-get-nearby[snippets='query-parameters,http-request,http-response']
+
+=== 그룹 삭제
+
+operation::group-delete[snippets='path-parameters,http-request,http-response']
+
+=== 그룹 삭제 예외
+
+operation::group-delete-host-exception[snippets='path-parameters,http-request,http-response']

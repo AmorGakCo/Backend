@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.1'
     id 'io.spring.dependency-management' version '1.1.5'
+    id "org.asciidoctor.jvm.convert" version "3.3.2"
 }
 
 group = 'com.amorgakco'
@@ -17,6 +18,7 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    asciidoctorExt
 }
 
 repositories {
@@ -38,34 +40,56 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
-    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.hibernate:hibernate-spatial:6.5.2.Final'
+    implementation 'org.hibernate:hibernate-spatial:6.5.0.Final'
+    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
 
-compileJava {
-    options.compilerArgs += [
-            '--enable-preview',
-            '-Amapstruct.defaultComponentModel=spring'
-    ]
-}
+// asciidoc setting
 
-compileTestJava {
-    options.compilerArgs += [
-            '--enable-preview',
-            '-Amapstruct.defaultComponentModel=spring'
-    ]
+ext {
+    set('snippetsDir', file("build/generated-snippets"))
+    set('docsOutputDir', file("build/docs/asciidoc"))
+    set('projectDocsDir', file("src/main/resources/static/docs"))
+    set('deployDocsDir', file("docs"))
 }
 
 tasks.named('test') {
-    useJUnitPlatform()
-    jvmArgs([
-            '--enable-preview',
-            '-Amapstruct.defaultComponentModel=spring'
-    ])
+    doFirst { delete(snippetsDir) }
+    outputs.dir snippetsDir
 }
+
+tasks.named('asciidoctor') {
+    configurations 'asciidoctorExt'
+    doFirst {
+        delete(docsOutputDir)
+        delete(projectDocsDir)
+        delete(deployDocsDir)
+    }
+    sources {
+        include("**/index.adoc")
+    }
+    baseDirFollowsSourceFile()
+    inputs.dir snippetsDir
+    dependsOn test
+    doLast {
+        copy {
+            from docsOutputDir
+            into projectDocsDir
+        }
+        copy {
+            from docsOutputDir
+            into deployDocsDir
+        }
+    }
+}
+
+// asciidoc setting end
