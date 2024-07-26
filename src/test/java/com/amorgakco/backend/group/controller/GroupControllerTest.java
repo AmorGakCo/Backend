@@ -48,16 +48,16 @@ class GroupControllerTest extends RestDocsTest {
     void registerGroup() throws Exception {
         // given
         final GroupRegisterRequest request = createGroupRegisterRequest().build();
-        given(groupService.register(request, 1L)).willReturn(new IdResponse(1L));
+        final Long hostId = 1L;
+        given(groupService.register(request, hostId)).willReturn(new IdResponse(1L));
         // when
         final ResultActions actions =
                 mockMvc.perform(
-                                post("/groups")
-                                        .contentType(MediaType.APPLICATION_JSON)
-                                        .content(toRequestBody(request)))
-                        // then
-                        .andExpect(status().isCreated())
-                        .andExpect(jsonPath("$.data.id").value("1"));
+                        post("/groups")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(toRequestBody(request)));
+        // then
+        actions.andExpect(status().isCreated()).andExpect(jsonPath("$.data.id").value("1"));
         // docs
         actions.andDo(print())
                 .andDo(document("group-register", getDocumentRequest(), getDocumentResponse()));
@@ -84,16 +84,17 @@ class GroupControllerTest extends RestDocsTest {
                         .beginAt(LocalDateTime.now())
                         .endAt(LocalDateTime.now().plusHours(8))
                         .build();
-        given(groupService.register(request, 1L)).willThrow(IllegalTimeException.maxDuration());
+        final Long hostId = 1L;
+        given(groupService.register(request, hostId)).willThrow(IllegalTimeException.maxDuration());
         // when
         final ResultActions actions =
                 mockMvc.perform(
-                                post("/groups")
-                                        .contentType(MediaType.APPLICATION_JSON)
-                                        .content(toRequestBody(request)))
-                        // then
-                        .andExpect(status().isBadRequest())
-                        .andExpect(jsonPath("$.code").value(ErrorCode.MAX_DURATION.getCode()));
+                        post("/groups")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(toRequestBody(request)));
+        // then
+        actions.andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(ErrorCode.MAX_DURATION.getCode()));
         // docs
         actions.andDo(print())
                 .andDo(
@@ -112,16 +113,17 @@ class GroupControllerTest extends RestDocsTest {
                         .beginAt(LocalDateTime.now())
                         .endAt(LocalDateTime.now().plusMinutes(30))
                         .build();
-        given(groupService.register(request, 1L)).willThrow(IllegalTimeException.minDuration());
+        final Long hostId = 1L;
+        given(groupService.register(request, hostId)).willThrow(IllegalTimeException.minDuration());
         // when
         final ResultActions actions =
                 mockMvc.perform(
-                                post("/groups")
-                                        .contentType(MediaType.APPLICATION_JSON)
-                                        .content(toRequestBody(request)))
-                        // then
-                        .andExpect(status().isBadRequest())
-                        .andExpect(jsonPath("$.code").value(ErrorCode.MIN_DURATION.getCode()));
+                        post("/groups")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(toRequestBody(request)));
+        // then
+        actions.andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(ErrorCode.MIN_DURATION.getCode()));
         // docs
         actions.andDo(print())
                 .andDo(
@@ -140,19 +142,18 @@ class GroupControllerTest extends RestDocsTest {
                         .beginAt(LocalDateTime.now())
                         .endAt(LocalDateTime.now().minusHours(3))
                         .build();
-        given(groupService.register(request, 1L))
+        final Long hostId = 1L;
+        given(groupService.register(request, hostId))
                 .willThrow(IllegalTimeException.startTimeAfterEndTime());
         // when
         final ResultActions actions =
                 mockMvc.perform(
-                                post("/groups")
-                                        .contentType(MediaType.APPLICATION_JSON)
-                                        .content(toRequestBody(request)))
-                        // then
-                        .andExpect(status().isBadRequest())
-                        .andExpect(
-                                jsonPath("$.code")
-                                        .value(ErrorCode.START_TIME_AFTER_ENT_TIME.getCode()));
+                        post("/groups")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(toRequestBody(request)));
+        // then
+        actions.andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(ErrorCode.START_TIME_AFTER_ENT_TIME.getCode()));
         // docs
         actions.andDo(print())
                 .andDo(
@@ -167,12 +168,12 @@ class GroupControllerTest extends RestDocsTest {
     void getBasicGroup() throws Exception {
         // given
         final GroupBasicResponse response = createGroupBasicResponse().build();
-        given(groupService.getBasicGroup(1L)).willReturn(response);
+        final Long groupId = 1L;
+        given(groupService.getBasicGroup(groupId)).willReturn(response);
         // when
-        final ResultActions actions =
-                mockMvc.perform(get("/groups/basic/{groupId}", 1L))
-                        // then
-                        .andExpect(status().isOk());
+        final ResultActions actions = mockMvc.perform(get("/groups/basic/{groupId}", 1L));
+        // then
+        actions.andExpect(status().isOk());
         // docs
         actions.andDo(print())
                 .andDo(
@@ -199,10 +200,9 @@ class GroupControllerTest extends RestDocsTest {
     @DisplayName("그룹 삭제 응답을 받을 수 있다.")
     void deleteGroup() throws Exception {
         // when
-        final ResultActions actions =
-                mockMvc.perform(delete("/groups/{groupId}", 1L))
-                        // then
-                        .andExpect(status().isNoContent());
+        final ResultActions actions = mockMvc.perform(delete("/groups/{groupId}", 1L));
+        // then
+        actions.andExpect(status().isNoContent());
         // docs
         actions.andDo(print())
                 .andDo(
@@ -218,10 +218,9 @@ class GroupControllerTest extends RestDocsTest {
     void validateGroupHostDeletion() throws Exception {
         // when
         doThrow(IllegalAccessException.noAuthorityForGroup()).when(groupService).delete(1L, 1L);
-        final ResultActions actions =
-                mockMvc.perform(delete("/groups/{groupId}", 1L))
-                        // then
-                        .andExpect(status().isBadRequest());
+        final ResultActions actions = mockMvc.perform(delete("/groups/{groupId}", 1L));
+        // then
+        actions.andExpect(status().isBadRequest());
         // docs
         actions.andDo(print())
                 .andDo(
@@ -237,15 +236,18 @@ class GroupControllerTest extends RestDocsTest {
     void getNearByGroups() throws Exception {
         // when
         final GroupSearchResponse response = createGroupSearchResponse().build();
-        given(groupService.getNearByGroups(126.9769117, 37.572389, 500)).willReturn(response);
+        final double longitude = 126.9769117;
+        final double latitude = 37.572389;
+        final double radius = 500;
+        given(groupService.getNearByGroups(longitude, latitude, radius)).willReturn(response);
         final ResultActions actions =
                 mockMvc.perform(
-                                get("/groups/locations")
-                                        .queryParam("longitude", "126.9769117")
-                                        .queryParam("latitude", "37.572389")
-                                        .queryParam("radius", "500"))
-                        // then
-                        .andExpect(status().isOk());
+                        get("/groups/locations")
+                                .queryParam("longitude", "126.9769117")
+                                .queryParam("latitude", "37.572389")
+                                .queryParam("radius", "500"));
+        // then
+        actions.andExpect(status().isOk());
         // docs
         actions.andDo(print())
                 .andDo(
