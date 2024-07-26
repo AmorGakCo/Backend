@@ -4,8 +4,8 @@ import static com.amorgakco.backend.docs.ApiDocsUtils.*;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -48,12 +48,10 @@ class JwtControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
                 mockMvc.perform(
-                                get("/token")
-                                        .header(AUTH_HEADER, OLD_ACCESS_TOKEN)
-                                        .cookie(oldCookie))
-                        // then
-                        .andExpect(status().isOk())
-                        .andExpect(jsonPath("$.data.accessToken").value(NEW_ACCESS_TOKEN));
+                        post("/token").header(AUTH_HEADER, OLD_ACCESS_TOKEN).cookie(oldCookie));
+        // then
+        actions.andExpect(status().isCreated())
+                .andExpect(jsonPath("$.data.accessToken").value(NEW_ACCESS_TOKEN));
         // docs
         actions.andDo(print())
                 .andDo(document("jwt-reissue", getDocumentRequest(), getDocumentResponse()));
@@ -69,12 +67,10 @@ class JwtControllerTest extends RestDocsTest {
                 .willThrow(JwtAuthenticationException.checkYourToken());
         final ResultActions actions =
                 mockMvc.perform(
-                                get("/token")
-                                        .header(AUTH_HEADER, INVALID_ACCESS_TOKEN)
-                                        .cookie(cookie))
-                        // then
-                        .andExpect(status().isBadRequest())
-                        .andExpect(jsonPath("$.code").value(ErrorCode.CHECK_YOUR_TOKEN.getCode()));
+                        post("/token").header(AUTH_HEADER, INVALID_ACCESS_TOKEN).cookie(cookie));
+        // then
+        actions.andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(ErrorCode.CHECK_YOUR_TOKEN.getCode()));
         // docs
         actions.andDo(print())
                 .andDo(
@@ -92,11 +88,9 @@ class JwtControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
                 mockMvc.perform(
-                                delete("/token")
-                                        .header(AUTH_HEADER, NEW_ACCESS_TOKEN)
-                                        .cookie(cookie))
-                        // then
-                        .andExpect(status().isNoContent());
+                        delete("/token").header(AUTH_HEADER, NEW_ACCESS_TOKEN).cookie(cookie));
+        // then
+        actions.andExpect(status().isNoContent());
         // docs
         actions.andDo(print())
                 .andDo(document("jwt-logout", getDocumentRequest(), getDocumentResponse()));

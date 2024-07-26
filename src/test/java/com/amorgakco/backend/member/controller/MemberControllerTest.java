@@ -41,11 +41,11 @@ class MemberControllerTest extends RestDocsTest {
         final ResultActions actions =
                 // when
                 mockMvc.perform(
-                                patch("/members")
-                                        .contentType(MediaType.APPLICATION_JSON)
-                                        .content(toRequestBody(request)))
-                        // then
-                        .andExpect(status().isNoContent());
+                        patch("/members")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(toRequestBody(request)));
+        // then
+        actions.andExpect(status().isNoContent());
         // docs
         actions.andDo(print())
                 .andDo(
