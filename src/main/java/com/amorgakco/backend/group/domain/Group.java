@@ -2,6 +2,7 @@ package com.amorgakco.backend.group.domain;
 
 import com.amorgakco.backend.global.BaseTime;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
+import com.amorgakco.backend.group.domain.location.Location;
 import com.amorgakco.backend.member.domain.Member;
 
 import jakarta.persistence.*;
