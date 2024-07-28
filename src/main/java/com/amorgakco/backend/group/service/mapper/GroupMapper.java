@@ -2,7 +2,7 @@ package com.amorgakco.backend.group.service.mapper;
 
 import com.amorgakco.backend.group.domain.Duration;
 import com.amorgakco.backend.group.domain.Group;
-import com.amorgakco.backend.group.domain.Location;
+import com.amorgakco.backend.group.domain.location.Location;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
 import com.amorgakco.backend.group.dto.GroupLocation;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
