@@ -8,8 +8,6 @@ import java.time.LocalDateTime;
 public record GroupBasicResponse(
         String hostNickname,
         String hostImgUrl,
-        int hostPoint,
-        String hostGitHubUrl,
         LocalDateTime beginAt,
         LocalDateTime endAt,
         int groupCapacity,

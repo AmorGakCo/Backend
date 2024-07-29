@@ -27,7 +27,11 @@ public class Location {
         this.point = point;
     }
 
-    public void verify(final double longitude, final double latitude) {}
+    public boolean isNotInBoundary(final double longitude, final double latitude) {
+        final double distance =
+                LocationCalculator.getDistance(point.getX(), point.getY(), longitude, latitude);
+        return distance > VERIFICATION_RADIUS_LIMIT;
+    }
 
     public double validateAndGetRadius(final double radius) {
         return Math.min(radius, VALID_RADIUS_LIMIT);

@@ -191,7 +191,6 @@ class GroupControllerTest extends RestDocsTest {
                 .address("seoul")
                 .hostImgUrl("http://fakeImgUrl")
                 .currentParticipants(2)
-                .hostPoint(100)
                 .beginAt(LocalDateTime.now())
                 .endAt(LocalDateTime.now().plusHours(3));
     }

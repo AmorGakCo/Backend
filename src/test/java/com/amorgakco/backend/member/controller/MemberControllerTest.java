@@ -27,7 +27,7 @@ class MemberControllerTest extends RestDocsTest {
     @MockBean MemberService memberService;
 
     @Test
-    @DisplayName("깃헙아이디,전화번호,SMS수신여부를 설정할 수 있다")
+    @DisplayName("깃헙아이디,전화번호,SMS 수신여부, 위치를 설정할 수 있다")
     @WithMockMember
     void saveOrUpdateAdditionalInfo() throws Exception {
         // given
@@ -36,6 +36,8 @@ class MemberControllerTest extends RestDocsTest {
                         .githubUrl("https://github/songhaechan")
                         .phoneNumber("01012341234")
                         .smsNotificationSetting("off")
+                        .latitude(37.3243)
+                        .longitude(128.3245)
                         .build();
 
         final ResultActions actions =
