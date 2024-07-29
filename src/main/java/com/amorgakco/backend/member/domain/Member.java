@@ -8,6 +8,8 @@ import jakarta.persistence.*;
 
 import lombok.*;
 
+import org.locationtech.jts.geom.Point;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,12 +27,15 @@ public class Member extends BaseTime {
     private String oauth2Id;
     private String imgUrl;
     private String nickname;
-    private Integer point;
+    private Integer mogakcoTemperature;
     private String phoneNumber;
     private String githubUrl;
 
     @Enumerated(EnumType.STRING)
     private SmsNotificationSetting smsNotificationSetting;
+
+    @Column(columnDefinition = "geometry(POINT, 4326)", name = "point")
+    private Point point;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -47,7 +52,7 @@ public class Member extends BaseTime {
         this.imgUrl = imgUrl;
         this.nickname = nickname;
         this.roleNames.add(new Roles(Role.ROLE_MEMBER));
-        this.point = 0;
+        this.mogakcoTemperature = 0;
         this.smsNotificationSetting = SmsNotificationSetting.OFF;
     }
 
@@ -59,23 +64,25 @@ public class Member extends BaseTime {
     public void validateAndUpdateAdditionalInfo(
             final String githubUrl,
             final String phoneNumber,
-            final SmsNotificationSetting setting) {
+            final SmsNotificationSetting setting,
+            final Point point) {
         validateGithubUrl(githubUrl);
         validatePhoneNumber(phoneNumber);
         this.githubUrl = githubUrl;
         this.phoneNumber = phoneNumber;
         this.smsNotificationSetting = setting;
+        this.point = point;
     }
 
-    public void validateGithubUrl(final String githubUrl) {
-        if (!githubUrl.startsWith(HTTPS_GITHUB_PREFIX) || !githubUrl.startsWith(GITHUB_PREFIX)) {
-            throw IllegalFormatException.dashNotAllowed();
+    private void validateGithubUrl(final String githubUrl) {
+        if (!githubUrl.startsWith(GITHUB_PREFIX) && !githubUrl.startsWith(HTTPS_GITHUB_PREFIX)) {
+            throw IllegalFormatException.invalidGithubUrl();
         }
     }
 
-    public void validatePhoneNumber(final String phoneNumber) {
+    private void validatePhoneNumber(final String phoneNumber) {
         if (phoneNumber.contains("-")) {
-            throw IllegalFormatException.invalidGithubUrl();
+            throw IllegalFormatException.dashNotAllowed();
         }
     }
 

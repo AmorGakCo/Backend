@@ -35,8 +35,6 @@ public class GroupMapper {
         final Duration duration = group.getDuration();
         return GroupBasicResponse.builder()
                 .hostNickname(host.getNickname())
-                .hostPoint(host.getPoint())
-                .hostGitHubUrl(host.getGithubUrl())
                 .hostImgUrl(host.getImgUrl())
                 .address(group.getAddress())
                 .groupCapacity(group.getGroupCapacity())

@@ -30,7 +30,7 @@ class GroupTest {
     }
 
     @Test
-    @DisplayName("그룹 참여자가 아닌 멤버는 위치인증을 실패한다.")
+    @DisplayName("모각코 참여자가 아닌 멤버는 위치인증을 실패한다.")
     void validateParticipants() {
         // given
         final Member host = TestMemberFactory.create(1L);
@@ -50,12 +50,12 @@ class GroupTest {
         final Participants participants = TestParticipantsFactory.create(member);
         group.addParticipants(participants);
         // when
-        assertThatThrownBy(() -> group.verifyLocation(126.97573, 37.5703, 2L))
+        assertThatThrownBy(() -> group.verifyLocation(126.9754143, 37.57071, 2L))
                 .isInstanceOf(IllegalAccessException.class);
     }
 
     @Test
-    @DisplayName("모임 위치에서 50m 안에서는 위치인증을 성공한다.")
+    @DisplayName("위치인증에 성공하면 참여자의 상태가 VERIFIED로 변경된다.")
     void validateLocation() {
         // given
         final Member host = TestMemberFactory.create(1L);
@@ -64,7 +64,24 @@ class GroupTest {
         final Participants participants = TestParticipantsFactory.create(member);
         group.addParticipants(participants);
         // when
-        group.verifyLocation(126.9757323, 37.570382, 2L);
+        group.verifyLocation(126.9745357, 37.570387, 2L);
         // then
+        assertThat(participants.getLocationVerificationStatus())
+                .isEqualTo(LocationVerificationStatus.VERIFIED);
+    }
+
+    @Test
+    @DisplayName("이미 인증한 회원은 다시 인증할 수 없다.")
+    void duplicatedVerification() {
+        // given
+        final Member host = TestMemberFactory.create(1L);
+        final Group group = TestGroupFactory.create(host);
+        final Member member = TestMemberFactory.create(2L);
+        final Participants participants = TestParticipantsFactory.create(member);
+        group.addParticipants(participants);
+        group.verifyLocation(126.9745357, 37.570387, 2L);
+        // when&then
+        assertThatThrownBy(() -> group.verifyLocation(126.9745357, 37.570387, 2L))
+                .isInstanceOf(IllegalAccessException.class);
     }
 }

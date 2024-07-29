@@ -31,6 +31,10 @@ public class Participants {
         this.locationVerificationStatus = LocationVerificationStatus.UNVERIFIED;
     }
 
+    public boolean isVerified() {
+        return this.locationVerificationStatus.equals(LocationVerificationStatus.VERIFIED);
+    }
+
     public void verify() {
         this.locationVerificationStatus = LocationVerificationStatus.VERIFIED;
     }

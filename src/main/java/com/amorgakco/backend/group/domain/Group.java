@@ -1,6 +1,7 @@
 package com.amorgakco.backend.group.domain;
 
 import com.amorgakco.backend.global.BaseTime;
+import com.amorgakco.backend.global.exception.IllegalAccessException;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.location.Location;
 import com.amorgakco.backend.member.domain.Member;
@@ -73,7 +74,12 @@ public class Group extends BaseTime {
                         .filter(p -> p.isParticipant(memberId))
                         .findFirst()
                         .orElseThrow(ResourceNotFoundException::participantsNotFound);
-        location.verify(longitude, latitude);
+        if (participant.isVerified()) {
+            throw IllegalAccessException.verificationDuplicated();
+        }
+        if (location.isNotInBoundary(longitude, latitude)) {
+            throw IllegalAccessException.verificationFailed();
+        }
         participant.verify();
     }
 }
