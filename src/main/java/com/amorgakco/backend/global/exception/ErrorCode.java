@@ -13,7 +13,7 @@ public enum ErrorCode {
     CANNOT_PARSE_TOKEN("103", "식별할 수 없는 액세스토큰입니다."),
     REFRESH_TOKEN_NOT_FOUND("104", "리프레쉬 토큰을 찾을 수 없습니다."),
     ACCESS_TOKEN_NOT_FOUND("105", "헤더에서 액세스 토큰을 찾을 수 없습니다."),
-    CHECK_YOUR_TOKEN("106", "액세스 토큰과 리프레쉬 토큰을 다시 확인바랍니다."),
+    LOGIN_AGAIN("106", "다시 로그인해주세요."),
 
     // Member Error Code
     MEMBER_NOT_FOUND("201", "존재하지 않는 회원입니다."),

@@ -1,6 +1,5 @@
 package com.amorgakco.backend.fixture.member;
 
-import com.amorgakco.backend.fixture.group.TestMember;
 import com.amorgakco.backend.global.oauth.provider.Oauth2Provider;
 import com.amorgakco.backend.member.domain.Member;
 
