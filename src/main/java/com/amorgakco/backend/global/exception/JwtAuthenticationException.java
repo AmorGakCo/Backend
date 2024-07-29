@@ -21,7 +21,7 @@ public class JwtAuthenticationException extends IllegalStateException {
         return new JwtAuthenticationException(ErrorCode.MEMBER_NOT_FOUND);
     }
 
-    public static JwtAuthenticationException checkYourToken() {
-        return new JwtAuthenticationException(ErrorCode.CHECK_YOUR_TOKEN);
+    public static JwtAuthenticationException loginAgain() {
+        return new JwtAuthenticationException(ErrorCode.LOGIN_AGAIN);
     }
 }

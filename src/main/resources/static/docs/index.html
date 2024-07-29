@@ -502,15 +502,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /groups HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 240
+Content-Length: 241
 Host: localhost:8080
 
 {
   "name" : "amorgakco",
   "description" : "coding",
   "groupCapacity" : 3,
-  "beginAt" : "2024-07-26T20:34:43.91041",
-  "endAt" : "2024-07-26T23:34:43.910415",
+  "beginAt" : "2024-07-29T21:32:28.109309",
+  "endAt" : "2024-07-30T00:32:28.109314",
   "latitude" : 37.572389,
   "longitude" : 126.9769117,
   "address" : "seoul"
@@ -552,8 +552,8 @@ Host: localhost:8080
   "name" : "amorgakco",
   "description" : "coding",
   "groupCapacity" : 3,
-  "beginAt" : "2024-07-26T20:34:43.94315",
-  "endAt" : "2024-07-27T04:34:43.943152",
+  "beginAt" : "2024-07-29T21:32:28.14106",
+  "endAt" : "2024-07-30T05:32:28.141062",
   "latitude" : 37.572389,
   "longitude" : 126.9769117,
   "address" : "seoul"
@@ -593,8 +593,8 @@ Host: localhost:8080
   "name" : "amorgakco",
   "description" : "coding",
   "groupCapacity" : 3,
-  "beginAt" : "2024-07-26T20:34:43.932235",
-  "endAt" : "2024-07-26T21:04:43.932237",
+  "beginAt" : "2024-07-29T21:32:28.129891",
+  "endAt" : "2024-07-29T22:02:28.129893",
   "latitude" : 37.572389,
   "longitude" : 126.9769117,
   "address" : "seoul"
@@ -634,8 +634,8 @@ Host: localhost:8080
   "name" : "amorgakco",
   "description" : "coding",
   "groupCapacity" : 3,
-  "beginAt" : "2024-07-26T20:34:43.845937",
-  "endAt" : "2024-07-26T17:34:43.845939",
+  "beginAt" : "2024-07-29T21:32:28.051978",
+  "endAt" : "2024-07-29T18:32:28.051981",
   "latitude" : 37.572389,
   "longitude" : 126.9769117,
   "address" : "seoul"
@@ -699,7 +699,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 368
+Content-Length: 317
 
 {
   "status" : "success",
@@ -707,10 +707,8 @@ Content-Length: 368
   "data" : {
     "hostNickname" : "nickname",
     "hostImgUrl" : "http://fakeImgUrl",
-    "hostPoint" : 100,
-    "hostGitHubUrl" : null,
-    "beginAt" : "2024-07-26T20:34:43.894179",
-    "endAt" : "2024-07-26T23:34:43.894186",
+    "beginAt" : "2024-07-29T21:32:28.096579",
+    "endAt" : "2024-07-30T00:32:28.096586",
     "groupCapacity" : 3,
     "currentParticipants" : 2,
     "address" : "seoul"
@@ -918,8 +916,7 @@ Content-Length: 101
 <h4 id="_액세스_토큰_재발급_http_request"><a class="link" href="#_액세스_토큰_재발급_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /token HTTP/1.1
-Authorization: old access token
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /token/1 HTTP/1.1
 Host: localhost:8080
 Cookie: refresh-token=old refresh token
 Content-Type: application/x-www-form-urlencoded</code></pre>
@@ -932,11 +929,11 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
 Content-Type: application/json;charset=UTF-8
-Content-Length: 104
+Content-Length: 106
 
 {
   "status" : "success",
-  "path" : "/token",
+  "path" : "/token/1",
   "data" : {
     "accessToken" : "new access token"
   }
@@ -951,8 +948,7 @@ Content-Length: 104
 <h4 id="_액세스_토큰_재발급_예외_http_request"><a class="link" href="#_액세스_토큰_재발급_예외_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /token HTTP/1.1
-Authorization: invalid access token
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /token/1 HTTP/1.1
 Host: localhost:8080
 Cookie: refresh-token=old refresh token
 Content-Type: application/x-www-form-urlencoded</code></pre>
@@ -965,12 +961,12 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 400 Bad Request
 Content-Type: application/json;charset=UTF-8
-Content-Length: 131
+Content-Length: 91
 
 {
   "status" : "failure",
   "code" : "106",
-  "message" : "액세스 토큰과 리프레쉬 토큰을 다시 확인바랍니다."
+  "message" : "다시 로그인해주세요."
 }</code></pre>
 </div>
 </div>
@@ -1011,13 +1007,15 @@ Cookie: refresh-token=old refresh token</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /members HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 117
+Content-Length: 167
 Host: localhost:8080
 
 {
   "githubUrl" : "https://github/songhaechan",
   "phoneNumber" : "01012341234",
-  "smsNotificationSetting" : "off"
+  "smsNotificationSetting" : "off",
+  "longitude" : 128.3245,
+  "latitude" : 37.3243
 }</code></pre>
 </div>
 </div>

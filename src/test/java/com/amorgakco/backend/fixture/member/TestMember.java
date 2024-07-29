@@ -1,4 +1,4 @@
-package com.amorgakco.backend.fixture.group;
+package com.amorgakco.backend.fixture.member;
 
 import com.amorgakco.backend.global.oauth.provider.Oauth2Provider;
 import com.amorgakco.backend.member.domain.Member;
@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 public class TestMember extends Member {
 
-    private Long id;
+    private final Long id;
 
     public TestMember(
             final Long id,

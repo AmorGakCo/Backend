@@ -2,7 +2,6 @@ package com.amorgakco.backend.member.controller;
 
 import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentRequest;
 import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
-import static com.amorgakco.backend.fixture.AccessToken.*;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
