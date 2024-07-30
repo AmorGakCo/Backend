@@ -1,5 +1,9 @@
 package com.amorgakco.backend.group.domain.location;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LocationCalculator {
 
     private static final double EARTH_RADIUS = 6371;

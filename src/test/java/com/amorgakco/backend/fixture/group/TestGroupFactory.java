@@ -13,36 +13,36 @@ import java.util.List;
 
 public class TestGroupFactory {
 
-    private static final double longitude = 126.9748397;
-    private static final double latitude = 37.5703901;
-    private static final int groupCapacity = 3;
-    private static final String address = "서울특별시 종로구 신문로1가 23";
-    private static final String description = "모각코 합시다.";
-    private static final String name = "AmorGakCo";
-    private static final LocalDateTime beginAt = LocalDateTime.now();
-    private static final LocalDateTime endAt = LocalDateTime.now().plusHours(3);
+    private static final double LONGITUDE = 126.9748397;
+    private static final double LATITUDE = 37.5703901;
+    private static final int GROUP_CAPACITY = 3;
+    private static final String ADDRESS = "서울특별시 종로구 신문로1가 23";
+    private static final String DESCRIPTION = "모각코 합시다.";
+    private static final String NAME = "AmorGakCo";
+    private static final LocalDateTime BEGIN_AT = LocalDateTime.now();
+    private static final LocalDateTime END_AT = LocalDateTime.now().plusHours(3);
 
     public static Group create(final Member host) {
         return Group.builder()
                 .host(host)
-                .groupCapacity(groupCapacity)
-                .location(TestLocationFactory.create(longitude, latitude))
+                .groupCapacity(GROUP_CAPACITY)
+                .location(TestLocationFactory.create(LONGITUDE, LATITUDE))
                 .duration(TestDurationFactory.create(3))
-                .description(description)
-                .name(name)
-                .address(address)
+                .description(DESCRIPTION)
+                .name(NAME)
+                .address(ADDRESS)
                 .build();
     }
 
     public static GroupRegisterRequest createGroupRegisterRequest(
             final LocalDateTime beginAt, final LocalDateTime endAt) {
         return GroupRegisterRequest.builder()
-                .groupCapacity(groupCapacity)
-                .address(address)
-                .longitude(longitude)
-                .latitude(latitude)
-                .name(name)
-                .description(description)
+                .groupCapacity(GROUP_CAPACITY)
+                .address(ADDRESS)
+                .longitude(LONGITUDE)
+                .latitude(LATITUDE)
+                .name(NAME)
+                .description(DESCRIPTION)
                 .beginAt(beginAt)
                 .endAt(endAt)
                 .build();
@@ -52,12 +52,12 @@ public class TestGroupFactory {
         final Member member = TestMemberFactory.create(1L);
         return GroupBasicResponse.builder()
                 .hostNickname(member.getNickname())
-                .groupCapacity(groupCapacity)
-                .address(address)
+                .groupCapacity(GROUP_CAPACITY)
+                .address(ADDRESS)
                 .hostImgUrl(member.getImgUrl())
                 .currentParticipants(3)
-                .beginAt(beginAt)
-                .endAt(endAt)
+                .beginAt(BEGIN_AT)
+                .endAt(END_AT)
                 .build();
     }
 
