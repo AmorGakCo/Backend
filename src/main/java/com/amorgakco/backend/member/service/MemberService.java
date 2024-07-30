@@ -25,7 +25,7 @@ public class MemberService {
     public void updateAdditionalInfo(final AdditionalInfoRequest request, final Long memberId) {
         final Member member = getMember(memberId);
         final SmsNotificationSetting smsNotificationSetting =
-                SmsNotificationSetting.valueOf(request.smsNotificationSetting());
+                SmsNotificationSetting.valueOf(request.smsNotificationSetting().toUpperCase());
         final Point point =
                 geometryFactory.createPoint(
                         new Coordinate(request.longitude(), request.latitude()));
