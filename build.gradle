@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '3.3.1'
     id 'io.spring.dependency-management' version '1.1.5'
     id "org.asciidoctor.jvm.convert" version "3.3.2"
+    id 'jacoco'
 }
 
 group = 'com.amorgakco'
@@ -51,6 +52,9 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+    doFirst { delete(snippetsDir) }
+    outputs.dir snippetsDir
+    finalizedBy 'jacocoTestReport'
 }
 
 // asciidoc setting
@@ -60,11 +64,6 @@ ext {
     set('docsOutputDir', file("build/docs/asciidoc"))
     set('projectDocsDir', file("src/main/resources/static/docs"))
     set('deployDocsDir', file("docs"))
-}
-
-tasks.named('test') {
-    doFirst { delete(snippetsDir) }
-    outputs.dir snippetsDir
 }
 
 tasks.named('asciidoctor') {
@@ -93,3 +92,19 @@ tasks.named('asciidoctor') {
 }
 
 // asciidoc setting end
+
+// jacoco setting
+
+ext {
+    set('jacocoDir', file("build/jacoco/index.html"))
+}
+
+jacoco {
+    toolVersion = "0.8.11"
+}
+
+jacocoTestReport {
+    reports {
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+}
