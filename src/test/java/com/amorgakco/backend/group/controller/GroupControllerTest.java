@@ -16,12 +16,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.amorgakco.backend.docs.RestDocsTest;
+import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.global.IdResponse;
 import com.amorgakco.backend.global.exception.ErrorCode;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
 import com.amorgakco.backend.global.exception.IllegalTimeException;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
-import com.amorgakco.backend.group.dto.GroupLocation;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
 import com.amorgakco.backend.group.dto.GroupSearchResponse;
 import com.amorgakco.backend.group.service.GroupService;
@@ -35,7 +35,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @WebMvcTest(GroupController.class)
 @WithMockMember
@@ -47,7 +46,10 @@ class GroupControllerTest extends RestDocsTest {
     @DisplayName("그룹을 생성 후 생성된 그룹 ID를 응답 받을 수 있다.")
     void registerGroup() throws Exception {
         // given
-        final GroupRegisterRequest request = createGroupRegisterRequest().build();
+        final LocalDateTime beginAt = LocalDateTime.now();
+        final LocalDateTime endAt = beginAt.plusHours(3);
+        final GroupRegisterRequest request =
+                TestGroupFactory.createGroupRegisterRequest(beginAt, endAt);
         final Long hostId = 1L;
         given(groupService.register(request, hostId)).willReturn(new IdResponse(1L));
         // when
@@ -63,27 +65,14 @@ class GroupControllerTest extends RestDocsTest {
                 .andDo(document("group-register", getDocumentRequest(), getDocumentResponse()));
     }
 
-    private GroupRegisterRequest.GroupRegisterRequestBuilder createGroupRegisterRequest() {
-        return GroupRegisterRequest.builder()
-                .groupCapacity(3)
-                .address("seoul")
-                .longitude(126.9769117)
-                .latitude(37.572389)
-                .name("amorgakco")
-                .description("coding")
-                .beginAt(LocalDateTime.now())
-                .endAt(LocalDateTime.now().plusHours(3));
-    }
-
     @Test
     @DisplayName("최대 모임지속 시간을 넘으면 예외를 응답을 받을 수 있다.")
     void validateMaxDuration() throws Exception {
         // given
+        final LocalDateTime beginAt = LocalDateTime.now();
+        final LocalDateTime endAt = beginAt.plusHours(8);
         final GroupRegisterRequest request =
-                createGroupRegisterRequest()
-                        .beginAt(LocalDateTime.now())
-                        .endAt(LocalDateTime.now().plusHours(8))
-                        .build();
+                TestGroupFactory.createGroupRegisterRequest(beginAt, endAt);
         final Long hostId = 1L;
         given(groupService.register(request, hostId)).willThrow(IllegalTimeException.maxDuration());
         // when
@@ -108,11 +97,10 @@ class GroupControllerTest extends RestDocsTest {
     @DisplayName("최소 모임지속 시간을 넘기지 않으면 예외를 응답을 받을 수 있다.")
     void validateMinDuration() throws Exception {
         // given
+        final LocalDateTime beginAt = LocalDateTime.now();
+        final LocalDateTime endAt = beginAt.plusMinutes(30);
         final GroupRegisterRequest request =
-                createGroupRegisterRequest()
-                        .beginAt(LocalDateTime.now())
-                        .endAt(LocalDateTime.now().plusMinutes(30))
-                        .build();
+                TestGroupFactory.createGroupRegisterRequest(beginAt, endAt);
         final Long hostId = 1L;
         given(groupService.register(request, hostId)).willThrow(IllegalTimeException.minDuration());
         // when
@@ -137,11 +125,10 @@ class GroupControllerTest extends RestDocsTest {
     @DisplayName("모임 종료 시간이 모임 시작 시간보다 빠르면 예외를 응답을 수 있다.")
     void validateBeginAndEndTime() throws Exception {
         // given
+        final LocalDateTime beginAt = LocalDateTime.now();
+        final LocalDateTime endAt = beginAt.minusHours(3);
         final GroupRegisterRequest request =
-                createGroupRegisterRequest()
-                        .beginAt(LocalDateTime.now())
-                        .endAt(LocalDateTime.now().minusHours(3))
-                        .build();
+                TestGroupFactory.createGroupRegisterRequest(beginAt, endAt);
         final Long hostId = 1L;
         given(groupService.register(request, hostId))
                 .willThrow(IllegalTimeException.startTimeAfterEndTime());
@@ -167,7 +154,7 @@ class GroupControllerTest extends RestDocsTest {
     @DisplayName("그룹 단건 조회 응답을 받을 수 있다.")
     void getBasicGroup() throws Exception {
         // given
-        final GroupBasicResponse response = createGroupBasicResponse().build();
+        final GroupBasicResponse response = TestGroupFactory.createGroupBasicResponse();
         final Long groupId = 1L;
         given(groupService.getBasicGroup(groupId)).willReturn(response);
         // when
@@ -182,18 +169,6 @@ class GroupControllerTest extends RestDocsTest {
                                 getDocumentRequest(),
                                 getDocumentResponse(),
                                 pathParameters(parameterWithName("groupId").description("그룹 ID"))));
-    }
-
-    private GroupBasicResponse.GroupBasicResponseBuilder createGroupBasicResponse() {
-        return GroupBasicResponse.builder()
-                .hostNickname("nickname")
-                .groupCapacity(3)
-                .address("seoul")
-                .hostImgUrl("http://fakeImgUrl")
-                .currentParticipants(2)
-                .hostPoint(100)
-                .beginAt(LocalDateTime.now())
-                .endAt(LocalDateTime.now().plusHours(3));
     }
 
     @Test
@@ -235,7 +210,7 @@ class GroupControllerTest extends RestDocsTest {
     @DisplayName("그룹들의 위치 정보를 응답 받을 수 있다.")
     void getNearByGroups() throws Exception {
         // when
-        final GroupSearchResponse response = createGroupSearchResponse().build();
+        final GroupSearchResponse response = TestGroupFactory.createGroupSearchResponse();
         final double longitude = 126.9769117;
         final double latitude = 37.572389;
         final double radius = 500;
@@ -259,14 +234,5 @@ class GroupControllerTest extends RestDocsTest {
                                         parameterWithName("longitude").description("경도"),
                                         parameterWithName("latitude").description("위도"),
                                         parameterWithName("radius").description("반지름 [단위:m]"))));
-    }
-
-    private GroupSearchResponse.GroupSearchResponseBuilder createGroupSearchResponse() {
-        return GroupSearchResponse.builder()
-                .locations(
-                        List.of(
-                                new GroupLocation(23.1111, 122.2222, 1L),
-                                new GroupLocation(12.1341, 123.2222, 2L),
-                                new GroupLocation(11.1111, 221.2222, 3L)));
     }
 }

@@ -5,7 +5,7 @@ import com.amorgakco.backend.global.exception.IllegalAccessException;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.Duration;
 import com.amorgakco.backend.group.domain.Group;
-import com.amorgakco.backend.group.domain.Location;
+import com.amorgakco.backend.group.domain.location.Location;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
 import com.amorgakco.backend.group.dto.GroupSearchResponse;
