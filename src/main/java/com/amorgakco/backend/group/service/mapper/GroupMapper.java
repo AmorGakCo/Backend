@@ -2,7 +2,7 @@ package com.amorgakco.backend.group.service.mapper;
 
 import com.amorgakco.backend.group.domain.Duration;
 import com.amorgakco.backend.group.domain.Group;
-import com.amorgakco.backend.group.domain.Location;
+import com.amorgakco.backend.group.domain.location.Location;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
 import com.amorgakco.backend.group.dto.GroupLocation;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
@@ -35,8 +35,6 @@ public class GroupMapper {
         final Duration duration = group.getDuration();
         return GroupBasicResponse.builder()
                 .hostNickname(host.getNickname())
-                .hostPoint(host.getPoint())
-                .hostGitHubUrl(host.getGithubUrl())
                 .hostImgUrl(host.getImgUrl())
                 .address(group.getAddress())
                 .groupCapacity(group.getGroupCapacity())

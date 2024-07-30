@@ -16,11 +16,11 @@ public class ResourceNotFoundException extends NoSuchElementException {
     }
 
     public static ResourceNotFoundException groupNotFound() {
-        return new ResourceNotFoundException(ErrorCode.MEMBER_NOT_FOUND);
+        return new ResourceNotFoundException(ErrorCode.GROUP_NOT_FOUND);
     }
 
     public static ResourceNotFoundException refreshTokenNotFound() {
-        return new ResourceNotFoundException(ErrorCode.MEMBER_NOT_FOUND);
+        return new ResourceNotFoundException(ErrorCode.REFRESH_TOKEN_NOT_FOUND);
     }
 
     public static ResourceNotFoundException accessTokenNotFound() {

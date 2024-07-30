@@ -13,7 +13,7 @@ public enum ErrorCode {
     CANNOT_PARSE_TOKEN("103", "식별할 수 없는 액세스토큰입니다."),
     REFRESH_TOKEN_NOT_FOUND("104", "리프레쉬 토큰을 찾을 수 없습니다."),
     ACCESS_TOKEN_NOT_FOUND("105", "헤더에서 액세스 토큰을 찾을 수 없습니다."),
-    CHECK_YOUR_TOKEN("106", "액세스 토큰과 리프레쉬 토큰을 다시 확인바랍니다."),
+    LOGIN_AGAIN("106", "다시 로그인해주세요."),
 
     // Member Error Code
     MEMBER_NOT_FOUND("201", "존재하지 않는 회원입니다."),
@@ -28,7 +28,8 @@ public enum ErrorCode {
     NO_AUTHORITY_FOR_GROUP("305", "그룹에대한 권한이 없습니다."),
     VERIFICATION_FAILED("306", "모임 장소를 인증할 수 없습니다."),
     PARTICIPANTS_NOT_FOUND("307", "모각코 참여자가 아닙니다."),
-    LOCATION_NOT_FOUND("308", "주변 모각코가 존재하지 않습니다.");
+    LOCATION_NOT_FOUND("308", "주변 모각코가 존재하지 않습니다."),
+    VERIFICATION_DUPLICATED("309", "이미 인증이 완료된 회원입니다.");
 
     private final String code;
     private final String message;

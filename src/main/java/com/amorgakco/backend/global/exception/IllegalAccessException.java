@@ -24,4 +24,8 @@ public class IllegalAccessException extends IllegalStateException {
     public static IllegalAccessException verificationFailed() {
         return new IllegalAccessException(ErrorCode.VERIFICATION_FAILED);
     }
+
+    public static IllegalAccessException verificationDuplicated() {
+        return new IllegalAccessException(ErrorCode.VERIFICATION_FAILED);
+    }
 }

@@ -37,8 +37,8 @@ public abstract class RestDocsTest {
 
     @BeforeEach
     public void setupMockMvc(
-            WebApplicationContext ctx,
-            RestDocumentationContextProvider restDocumentationContextProvider) {
+            final WebApplicationContext ctx,
+            final RestDocumentationContextProvider restDocumentationContextProvider) {
         mockMvc =
                 MockMvcBuilders.webAppContextSetup(ctx)
                         .apply(documentationConfiguration(restDocumentationContextProvider))
