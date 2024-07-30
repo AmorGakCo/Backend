@@ -10,11 +10,14 @@ import org.junit.jupiter.api.Test;
 
 public class LocationTest {
 
+    private static final double longitude = 126.9748397;
+    private static final double latitude = 37.5703901;
+
     @Test
     @DisplayName("인증 허용 범위 밖에서 위치를 인증하면 true를 반환한다.")
     void isNotInBoundary() {
         // given
-        final Location location = TestLocationFactory.create();
+        final Location location = TestLocationFactory.create(longitude, latitude);
         // when & then
         assertThat(location.isNotInBoundary(126.9754143, 37.57071)).isTrue();
     }
@@ -23,7 +26,7 @@ public class LocationTest {
     @DisplayName("인증 허용 범위 안에서 위치를 인증하면 false를 반환한다.")
     void isInBoundary() {
         // given
-        final Location location = TestLocationFactory.create();
+        final Location location = TestLocationFactory.create(longitude, latitude);
         // when & then
         assertThat(location.isNotInBoundary(126.9745357, 37.570387)).isFalse();
     }
@@ -33,7 +36,7 @@ public class LocationTest {
     void isNotInSearchBoundary() {
         // given
         final double requestRadius = 4000;
-        final Location location = TestLocationFactory.create();
+        final Location location = TestLocationFactory.create(longitude, latitude);
         // when & then
         assertThat(location.validateAndGetRadius(requestRadius)).isEqualTo(3000);
     }
@@ -43,7 +46,7 @@ public class LocationTest {
     void isInSearchBoundary() {
         // given
         final double requestRadius = 2500;
-        final Location location = TestLocationFactory.create();
+        final Location location = TestLocationFactory.create(longitude, latitude);
         // when & then
         assertThat(location.validateAndGetRadius(requestRadius)).isEqualTo(2500);
     }

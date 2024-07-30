@@ -9,8 +9,8 @@ public class TestLocationFactory {
 
     private static final GeometryFactory geometryFactory = new GeometryFactory();
 
-    public static Location create() {
+    public static Location create(final double longitude, final double latitude) {
         geometryFactory.createPoint();
-        return new Location(geometryFactory.createPoint(new Coordinate(126.9748397, 37.5703901)));
+        return new Location(geometryFactory.createPoint(new Coordinate(longitude, latitude)));
     }
 }

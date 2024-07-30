@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.amorgakco.backend.docs.RestDocsTest;
+import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.member.dto.AdditionalInfoRequest;
 import com.amorgakco.backend.member.service.MemberService;
 import com.amorgakco.backend.security.WithMockMember;
@@ -30,14 +31,7 @@ class MemberControllerTest extends RestDocsTest {
     @WithMockMember
     void saveOrUpdateAdditionalInfo() throws Exception {
         // given
-        final AdditionalInfoRequest request =
-                AdditionalInfoRequest.builder()
-                        .githubUrl("https://github/songhaechan")
-                        .phoneNumber("01012341234")
-                        .smsNotificationSetting("off")
-                        .latitude(37.3243)
-                        .longitude(128.3245)
-                        .build();
+        final AdditionalInfoRequest request = TestMemberFactory.createAdditionalInfoRequest("on");
 
         final ResultActions actions =
                 // when
