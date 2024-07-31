@@ -28,6 +28,6 @@ public class ResourceNotFoundException extends NoSuchElementException {
     }
 
     public static ResourceNotFoundException participantsNotFound() {
-        return new ResourceNotFoundException(ErrorCode.PARTICIPANTS_NOT_FOUND);
+        return new ResourceNotFoundException(ErrorCode.PARTICIPANT_NOT_FOUND);
     }
 }

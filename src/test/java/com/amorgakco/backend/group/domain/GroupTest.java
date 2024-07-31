@@ -21,8 +21,8 @@ class GroupTest {
         final Member host = TestMemberFactory.create(1L);
         final Group group = TestGroupFactory.create(host);
         final Member member = TestMemberFactory.create(2L);
-        final Participants participants = TestParticipantsFactory.create(member);
-        group.addParticipants(participants);
+        final Participant participant = TestParticipantsFactory.create(member);
+        group.addParticipants(participant);
         // when
         final int currentGroupSize = group.getCurrentGroupSize();
         // then
@@ -47,8 +47,8 @@ class GroupTest {
         final Member host = TestMemberFactory.create(1L);
         final Group group = TestGroupFactory.create(host);
         final Member member = TestMemberFactory.create(2L);
-        final Participants participants = TestParticipantsFactory.create(member);
-        group.addParticipants(participants);
+        final Participant participant = TestParticipantsFactory.create(member);
+        group.addParticipants(participant);
         // when
         assertThatThrownBy(() -> group.verifyLocation(126.9754143, 37.57071, 2L))
                 .isInstanceOf(IllegalAccessException.class);
@@ -61,12 +61,12 @@ class GroupTest {
         final Member host = TestMemberFactory.create(1L);
         final Group group = TestGroupFactory.create(host);
         final Member member = TestMemberFactory.create(2L);
-        final Participants participants = TestParticipantsFactory.create(member);
-        group.addParticipants(participants);
+        final Participant participant = TestParticipantsFactory.create(member);
+        group.addParticipants(participant);
         // when
         group.verifyLocation(126.9745357, 37.570387, 2L);
         // then
-        assertThat(participants.getLocationVerificationStatus())
+        assertThat(participant.getLocationVerificationStatus())
                 .isEqualTo(LocationVerificationStatus.VERIFIED);
     }
 
@@ -77,8 +77,8 @@ class GroupTest {
         final Member host = TestMemberFactory.create(1L);
         final Group group = TestGroupFactory.create(host);
         final Member member = TestMemberFactory.create(2L);
-        final Participants participants = TestParticipantsFactory.create(member);
-        group.addParticipants(participants);
+        final Participant participant = TestParticipantsFactory.create(member);
+        group.addParticipants(participant);
         group.verifyLocation(126.9745357, 37.570387, 2L);
         // when&then
         assertThatThrownBy(() -> group.verifyLocation(126.9745357, 37.570387, 2L))

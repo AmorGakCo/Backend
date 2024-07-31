@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.amorgakco.backend.docs.RestDocsTest;
 import com.amorgakco.backend.fixture.group.TestGroupFactory;
+import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.global.IdResponse;
 import com.amorgakco.backend.global.exception.ErrorCode;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
@@ -25,6 +26,7 @@ import com.amorgakco.backend.group.dto.GroupBasicResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
 import com.amorgakco.backend.group.dto.GroupSearchResponse;
 import com.amorgakco.backend.group.service.GroupService;
+import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.security.WithMockMember;
 
 import org.junit.jupiter.api.DisplayName;
@@ -50,8 +52,9 @@ class GroupControllerTest extends RestDocsTest {
         final LocalDateTime endAt = beginAt.plusHours(3);
         final GroupRegisterRequest request =
                 TestGroupFactory.createGroupRegisterRequest(beginAt, endAt);
-        final Long hostId = 1L;
-        given(groupService.register(request, hostId)).willReturn(new IdResponse(1L));
+        final Member host = TestMemberFactory.create(1L);
+        given(memberService.getMember(1L)).willReturn(host);
+        given(groupService.register(request, host)).willReturn(new IdResponse(1L));
         // when
         final ResultActions actions =
                 mockMvc.perform(
@@ -73,8 +76,9 @@ class GroupControllerTest extends RestDocsTest {
         final LocalDateTime endAt = beginAt.plusHours(8);
         final GroupRegisterRequest request =
                 TestGroupFactory.createGroupRegisterRequest(beginAt, endAt);
-        final Long hostId = 1L;
-        given(groupService.register(request, hostId)).willThrow(IllegalTimeException.maxDuration());
+        final Member host = TestMemberFactory.create(1L);
+        given(memberService.getMember(1L)).willReturn(host);
+        given(groupService.register(request, host)).willThrow(IllegalTimeException.maxDuration());
         // when
         final ResultActions actions =
                 mockMvc.perform(
@@ -101,8 +105,9 @@ class GroupControllerTest extends RestDocsTest {
         final LocalDateTime endAt = beginAt.plusMinutes(30);
         final GroupRegisterRequest request =
                 TestGroupFactory.createGroupRegisterRequest(beginAt, endAt);
-        final Long hostId = 1L;
-        given(groupService.register(request, hostId)).willThrow(IllegalTimeException.minDuration());
+        final Member host = TestMemberFactory.create(1L);
+        given(memberService.getMember(1L)).willReturn(host);
+        given(groupService.register(request, host)).willThrow(IllegalTimeException.minDuration());
         // when
         final ResultActions actions =
                 mockMvc.perform(
@@ -122,15 +127,16 @@ class GroupControllerTest extends RestDocsTest {
     }
 
     @Test
-    @DisplayName("모임 종료 시간이 모임 시작 시간보다 빠르면 예외를 응답을 수 있다.")
+    @DisplayName("모임 종료 시간이 모임 시작 시간보다 빠르면 예외를 응답한다.")
     void validateBeginAndEndTime() throws Exception {
         // given
         final LocalDateTime beginAt = LocalDateTime.now();
         final LocalDateTime endAt = beginAt.minusHours(3);
         final GroupRegisterRequest request =
                 TestGroupFactory.createGroupRegisterRequest(beginAt, endAt);
-        final Long hostId = 1L;
-        given(groupService.register(request, hostId))
+        final Member host = TestMemberFactory.create(1L);
+        given(memberService.getMember(1L)).willReturn(host);
+        given(groupService.register(request, host))
                 .willThrow(IllegalTimeException.startTimeAfterEndTime());
         // when
         final ResultActions actions =

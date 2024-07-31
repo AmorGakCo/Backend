@@ -1,6 +1,7 @@
 package com.amorgakco.backend.global.config;
 
 import com.amorgakco.backend.global.argumentresolver.AuthMemberArgumentResolver;
+import com.amorgakco.backend.global.argumentresolver.AuthMemberIdArgumentResolver;
 
 import lombok.RequiredArgsConstructor;
 
@@ -13,10 +14,12 @@ import java.util.List;
 @Configuration
 @RequiredArgsConstructor
 public class HandlerResolverConfig implements WebMvcConfigurer {
+    private final AuthMemberIdArgumentResolver authMemberIdArgumentResolver;
     private final AuthMemberArgumentResolver authMemberArgumentResolver;
 
     @Override
     public void addArgumentResolvers(final List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(authMemberIdArgumentResolver);
         resolvers.add(authMemberArgumentResolver);
     }
 }

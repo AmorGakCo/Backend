@@ -22,9 +22,6 @@ import java.util.List;
 @Table(name = "groups")
 public class Group extends BaseTime {
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private final List<Participants> participants = new ArrayList<>();
-
     @Id @GeneratedValue private Long id;
     private String name;
     private String description;
@@ -36,6 +33,9 @@ public class Group extends BaseTime {
     private Member host;
 
     @Embedded private Location location;
+
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    private List<Participant> participants = new ArrayList<>();
 
     @Builder
     public Group(
@@ -55,9 +55,31 @@ public class Group extends BaseTime {
         this.address = address;
     }
 
-    public void addParticipants(final Participants participants) {
-        this.participants.add(participants);
-        participants.add(this);
+    public synchronized void addParticipants(final Participant newParticipant) {
+        validateParticipation(newParticipant.getMemberId());
+        this.participants.add(newParticipant);
+        newParticipant.add(this);
+    }
+
+    public void validateParticipation(final Long memberId) {
+        validateDuplicatedParticipant(memberId);
+        validateGroupCapacity();
+    }
+
+    private void validateDuplicatedParticipant(final Long memberId) {
+        participants.stream()
+                .filter(p -> p.isParticipant(memberId))
+                .findAny()
+                .ifPresent(
+                        (p) -> {
+                            throw IllegalAccessException.duplicatedParticipant();
+                        });
+    }
+
+    private void validateGroupCapacity() {
+        if (groupCapacity == getCurrentGroupSize()) {
+            throw IllegalAccessException.exceedGroupCapacity();
+        }
     }
 
     public int getCurrentGroupSize() {
@@ -69,7 +91,7 @@ public class Group extends BaseTime {
     }
 
     public void verifyLocation(final double longitude, final double latitude, final Long memberId) {
-        final Participants participant =
+        final Participant participant =
                 participants.stream()
                         .filter(p -> p.isParticipant(memberId))
                         .findFirst()

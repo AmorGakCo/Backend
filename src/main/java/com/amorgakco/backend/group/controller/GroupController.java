@@ -2,11 +2,13 @@ package com.amorgakco.backend.group.controller;
 
 import com.amorgakco.backend.global.IdResponse;
 import com.amorgakco.backend.global.argumentresolver.AuthMember;
+import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
 import com.amorgakco.backend.group.dto.GroupSearchResponse;
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
 import com.amorgakco.backend.group.service.GroupService;
+import com.amorgakco.backend.member.domain.Member;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,8 +26,9 @@ public class GroupController {
     @ResponseStatus(HttpStatus.CREATED)
     public IdResponse register(
             @RequestBody final GroupRegisterRequest groupRegisterRequest,
-            @AuthMember final Long hostId) {
-        return groupService.register(groupRegisterRequest, hostId);
+            @AuthMember final Member host) {
+        IdResponse register = groupService.register(groupRegisterRequest, host);
+        return register;
     }
 
     @GetMapping("/basic/{groupId}")
@@ -35,7 +38,7 @@ public class GroupController {
 
     @DeleteMapping("/{groupId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@AuthMember final Long hostId, @PathVariable final Long groupId) {
+    public void delete(@AuthMemberId final Long hostId, @PathVariable final Long groupId) {
         groupService.delete(hostId, groupId);
     }
 
@@ -50,7 +53,7 @@ public class GroupController {
     @PatchMapping("/participants")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void verifyLocation(
-            @AuthMember final Long memberId,
+            @AuthMemberId final Long memberId,
             @RequestBody final LocationVerificationRequest request) {
         groupService.verifyParticipantLocation(request, memberId);
     }

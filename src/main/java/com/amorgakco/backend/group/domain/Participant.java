@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Participants {
+public class Participant {
 
     @Id @GeneratedValue private Long id;
 
@@ -26,7 +26,7 @@ public class Participants {
     @Enumerated(EnumType.STRING)
     private LocationVerificationStatus locationVerificationStatus;
 
-    public Participants(final Member member) {
+    public Participant(final Member member) {
         this.member = member;
         this.locationVerificationStatus = LocationVerificationStatus.UNVERIFIED;
     }
@@ -41,6 +41,10 @@ public class Participants {
 
     public boolean isParticipant(final Long memberId) {
         return member.isEquals(memberId);
+    }
+
+    public Long getMemberId() {
+        return member.getId();
     }
 
     public void add(final Group group) {

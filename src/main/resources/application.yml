@@ -5,5 +5,5 @@ spring:
   profiles:
     active: develop
     group:
-      develop: dev,oauth2,jwt
+      develop: dev,oauth2,jwt,sms
       production: oauth2,jwt
