@@ -48,6 +48,7 @@ dependencies {
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
+    implementation 'net.nurigo:sdk:4.3.0'
 }
 
 tasks.named('test') {

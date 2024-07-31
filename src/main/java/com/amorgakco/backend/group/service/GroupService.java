@@ -35,9 +35,8 @@ public class GroupService {
     private final MemberService memberService;
 
     @Transactional
-    public IdResponse register(final GroupRegisterRequest request, final Long hostId) {
+    public IdResponse register(final GroupRegisterRequest request, final Member host) {
         final Location location = createLocation(request.longitude(), request.latitude());
-        final Member host = memberService.getMember(hostId);
         final Duration duration = new Duration(request.beginAt(), request.endAt());
         final Group group = groupMapper.toGroup(host, request, location, duration);
         final Long groupId = groupRepository.save(group).getId();

@@ -9,10 +9,6 @@ import lombok.RequiredArgsConstructor;
 public class IllegalAccessException extends IllegalStateException {
     private final ErrorCode errorCode;
 
-    public static IllegalAccessException tokenClaimDoesNotMatch() {
-        return new IllegalAccessException(ErrorCode.TOKEN_CLAIM_NOT_MATCHED);
-    }
-
     public static IllegalAccessException refreshTokenRequired() {
         return new IllegalAccessException(ErrorCode.REFRESH_TOKEN_REQUIRED);
     }
@@ -27,5 +23,13 @@ public class IllegalAccessException extends IllegalStateException {
 
     public static IllegalAccessException verificationDuplicated() {
         return new IllegalAccessException(ErrorCode.VERIFICATION_FAILED);
+    }
+
+    public static IllegalAccessException duplicatedParticipant() {
+        return new IllegalAccessException(ErrorCode.PARTICIPANT_DUPLICATED);
+    }
+
+    public static IllegalAccessException exceedGroupCapacity() {
+        return new IllegalAccessException(ErrorCode.PARTICIPANT_DUPLICATED);
     }
 }
