@@ -8,6 +8,7 @@ build/
 src/main/resources/application-oauth2.yml
 src/main/resources/application-jwt.yml
 src/main/resources/application-sms.yml
+docker/
 
 
 ### STS ###

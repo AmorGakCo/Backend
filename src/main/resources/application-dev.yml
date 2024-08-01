@@ -6,7 +6,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/amorgakco
     hikari:
-      username: haechan
+      username: admin
       password: 1234
   jpa:
     show-sql: true
