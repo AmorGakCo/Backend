@@ -1,0 +1,26 @@
+name: AmorGakCo CI
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - run: chmod +x gradlew
+      - run: ./gradlew build
+      - name: 테스트 커버리지를 PR에 코멘트에 등록
+        id: jacoco
+        uses: madrapps/jacoco-report@v1.2
+        with:
+          title: 📝 테스트 커버리지 리포트입니다
+          paths: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 50
+          min-coverage-changed-files: 50

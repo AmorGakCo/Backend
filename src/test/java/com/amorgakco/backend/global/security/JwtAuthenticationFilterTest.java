@@ -1,4 +1,4 @@
-package com.amorgakco.backend.global.config.security;
+package com.amorgakco.backend.global.security;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;

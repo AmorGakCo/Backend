@@ -1,4 +1,4 @@
-package com.amorgakco.backend.global.config.security;
+package com.amorgakco.backend.global.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
