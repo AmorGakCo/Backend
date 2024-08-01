@@ -1,7 +1,11 @@
-package com.amorgakco.backend.global.config.security;
+package com.amorgakco.backend.global.config;
 
 import com.amorgakco.backend.global.oauth.handler.Oauth2SuccessHandler;
 import com.amorgakco.backend.global.oauth.service.Oauth2UserService;
+import com.amorgakco.backend.global.security.JwtAccessDeniedHandler;
+import com.amorgakco.backend.global.security.JwtAuthenticationEntryPoint;
+import com.amorgakco.backend.global.security.JwtAuthenticationFilter;
+import com.amorgakco.backend.global.security.JwtExceptionHandlingFilter;
 
 import lombok.RequiredArgsConstructor;
 

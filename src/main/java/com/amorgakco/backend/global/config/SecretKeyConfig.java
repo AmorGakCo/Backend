@@ -1,4 +1,4 @@
-package com.amorgakco.backend.global.config.security;
+package com.amorgakco.backend.global.config;
 
 import io.jsonwebtoken.security.Keys;
 
