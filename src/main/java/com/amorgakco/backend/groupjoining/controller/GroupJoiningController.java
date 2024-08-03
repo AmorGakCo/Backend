@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/groups/join")
+@RequestMapping("/groups")
 public class GroupJoiningController {
 
     private final GroupJoiningService groupJoiningService;
 
-    @PostMapping("/{groupId}")
+    @PostMapping("/{groupId}/joining")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void requestJoin(@PathVariable final Long groupId, @AuthMember final Member member) {
         groupJoiningService.requestJoin(groupId, member);
