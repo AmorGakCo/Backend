@@ -45,7 +45,7 @@ public class SecurityConfig {
                                                 "/favicon.ico",
                                                 "/errors",
                                                 "/groups/locations",
-                                                "/groups/join/")
+                                                "/groups/{groupId}/joining")
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated())
