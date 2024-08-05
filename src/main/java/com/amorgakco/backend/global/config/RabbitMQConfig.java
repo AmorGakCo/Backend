@@ -1,6 +1,9 @@
 package com.amorgakco.backend.global.config;
 
 import com.amorgakco.backend.global.properties.RabbitMQProperties;
+import com.amorgakco.backend.global.rabbitmq.ExchangeName;
+import com.amorgakco.backend.global.rabbitmq.QueueName;
+import com.amorgakco.backend.global.rabbitmq.RoutingKey;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,37 +29,31 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue fcmQueue() {
-        return new Queue("notification.fcm", true);
+        return new Queue(QueueName.FCM.getName(), true);
     }
 
     @Bean
     public Queue smsQueue() {
-        return new Queue("notification.sms", true);
-    }
-
-    @Bean
-    public Binding bindingFanoutSmsQueue(final DirectExchange exchange, final Queue smsQueue) {
-        return BindingBuilder.bind(smsQueue).to(exchange).with("notification.fanout");
+        return new Queue(QueueName.SMS.getName(), true);
     }
 
     @Bean
     public Binding bindingSmsQueue(final DirectExchange exchange, final Queue smsQueue) {
-        return BindingBuilder.bind(smsQueue).to(exchange).with("notification.sms");
-    }
-
-    @Bean
-    public Binding bindingFanoutFcmQueue(final DirectExchange exchange, final Queue fcmQueue) {
-        return BindingBuilder.bind(fcmQueue).to(exchange).with("notification.fanout");
+        return BindingBuilder.bind(smsQueue)
+                .to(exchange)
+                .with(RoutingKey.NOTIFICATION_SMS.getKey());
     }
 
     @Bean
     public Binding bindingFcmQueue(final DirectExchange exchange, final Queue fcmQueue) {
-        return BindingBuilder.bind(fcmQueue).to(exchange).with("notification.fcm");
+        return BindingBuilder.bind(fcmQueue)
+                .to(exchange)
+                .with(RoutingKey.NOTIFICATION_FCM.getKey());
     }
 
     @Bean
     public DirectExchange notificationExchange() {
-        return new DirectExchange("notification");
+        return new DirectExchange(ExchangeName.NOTIFICATION.getName());
     }
 
     @Bean

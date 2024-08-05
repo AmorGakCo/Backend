@@ -6,6 +6,9 @@ import com.amorgakco.backend.groupjoining.domain.GroupJoining;
 import com.amorgakco.backend.groupjoining.repository.GroupJoiningRepository;
 import com.amorgakco.backend.groupjoining.service.mapper.GroupJoiningMapper;
 import com.amorgakco.backend.member.domain.Member;
+import com.amorgakco.backend.notification.dto.NotificationRequest;
+import com.amorgakco.backend.notification.service.NotificationCreator;
+import com.amorgakco.backend.notification.service.NotificationPublisher;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,12 +23,17 @@ public class GroupJoiningService {
     private final GroupJoiningRepository groupJoiningRepository;
     private final GroupService groupService;
     private final GroupJoiningMapper groupJoiningMapper;
+    private final NotificationPublisher notificationPublisher;
 
     @Transactional
     public void requestJoin(final Long groupId, final Member newParticipant) {
         final Group group = groupService.getGroup(groupId);
+        final Member host = group.getHost();
         group.validateParticipation(newParticipant.getId());
         final GroupJoining groupJoining = groupJoiningMapper.toGroupJoining(group, newParticipant);
         groupJoiningRepository.save(groupJoining);
+        final NotificationRequest notificationRequest =
+                NotificationCreator.groupJoiningNotification(newParticipant, host);
+        notificationPublisher.sendSmsAndFcmWebPush(notificationRequest);
     }
 }

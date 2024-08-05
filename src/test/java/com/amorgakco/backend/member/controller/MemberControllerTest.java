@@ -27,7 +27,7 @@ class MemberControllerTest extends RestDocsTest {
     @WithMockMember
     void saveOrUpdateAdditionalInfo() throws Exception {
         // given
-        final AdditionalInfoRequest request = TestMemberFactory.createAdditionalInfoRequest("on");
+        final AdditionalInfoRequest request = TestMemberFactory.createAdditionalInfoRequest(true);
 
         final ResultActions actions =
                 // when

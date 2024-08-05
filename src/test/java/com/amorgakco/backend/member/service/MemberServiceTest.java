@@ -1,12 +1,10 @@
 package com.amorgakco.backend.member.service;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.member.domain.Member;
-import com.amorgakco.backend.member.domain.SmsNotificationSetting;
 import com.amorgakco.backend.member.dto.AdditionalInfoRequest;
 import com.amorgakco.backend.member.repository.MemberRepository;
 
@@ -29,14 +27,14 @@ class MemberServiceTest {
         // given
         final Member member = TestMemberFactory.create(1L);
         given(memberRepository.findByIdWithRoles(1L)).willReturn(Optional.of(member));
-        final AdditionalInfoRequest request = TestMemberFactory.createAdditionalInfoRequest("on");
+        final AdditionalInfoRequest request = TestMemberFactory.createAdditionalInfoRequest(true);
         // when
         memberService.updateAdditionalInfo(request, 1L);
         // then
         assertThat(member.getGithubUrl()).isEqualTo(request.githubUrl());
-        assertThat(member.getSmsNotificationSetting()).isEqualTo(SmsNotificationSetting.ON);
+        assertThat(member.isSmsNotificationSetting()).isTrue();
         assertThat(member.getPhoneNumber()).isEqualTo(request.phoneNumber());
-        assertThat(member.getPoint().getX()).isEqualTo(request.longitude());
-        assertThat(member.getPoint().getY()).isEqualTo(request.latitude());
+        assertThat(member.getLocation().getX()).isEqualTo(request.longitude());
+        assertThat(member.getLocation().getY()).isEqualTo(request.latitude());
     }
 }

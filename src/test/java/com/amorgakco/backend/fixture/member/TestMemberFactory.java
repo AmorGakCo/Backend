@@ -20,11 +20,11 @@ public class TestMemberFactory {
     }
 
     public static AdditionalInfoRequest createAdditionalInfoRequest(
-            final String smsNotificationSetting) {
+            final boolean smsNotificationSetting) {
         return AdditionalInfoRequest.builder()
                 .githubUrl(GITHUB_URL)
                 .phoneNumber(PHONE_NUMBER)
-                .smsNotificationSetting(smsNotificationSetting)
+                .smsNotificationSetting(true)
                 .latitude(LATITUDE)
                 .longitude(LONGITUDE)
                 .build();

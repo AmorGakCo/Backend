@@ -21,11 +21,10 @@ class MemberTest {
         final GeometryFactory geometryFactory = new GeometryFactory();
         final Point point = geometryFactory.createPoint(new Coordinate(128.3245, 37.3243));
         // when
-        member.validateAndUpdateAdditionalInfo(
-                "github.com/song", "01011112222", SmsNotificationSetting.ON, point);
+        member.validateAndUpdateAdditionalInfo("github.com/song", "01011112222", true, point);
         // then
-        assertThat(member.getPoint().getX()).isEqualTo(128.3245);
-        assertThat(member.getPoint().getY()).isEqualTo(37.3243);
+        assertThat(member.getLocation().getX()).isEqualTo(128.3245);
+        assertThat(member.getLocation().getY()).isEqualTo(37.3243);
         assertThat(member.getGithubUrl()).isEqualTo("github.com/song");
         assertThat(member.getPhoneNumber()).isEqualTo("01011112222");
     }
@@ -41,10 +40,7 @@ class MemberTest {
         assertThatThrownBy(
                         () ->
                                 member.validateAndUpdateAdditionalInfo(
-                                        "invalid.com",
-                                        "01011112222",
-                                        SmsNotificationSetting.ON,
-                                        point))
+                                        "invalid.com", "01011112222", true, point))
                 .isInstanceOf(IllegalFormatException.class);
     }
 
@@ -59,10 +55,7 @@ class MemberTest {
         assertThatThrownBy(
                         () ->
                                 member.validateAndUpdateAdditionalInfo(
-                                        "invalid.com",
-                                        "010-1111-2222",
-                                        SmsNotificationSetting.ON,
-                                        point))
+                                        "invalid.com", "010-1111-2222", true, point))
                 .isInstanceOf(IllegalFormatException.class);
     }
 }

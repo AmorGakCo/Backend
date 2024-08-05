@@ -5,9 +5,8 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public enum NotificationType {
-    SMS("sms"),
-    FCM("fcm");
+public enum NotificationTitle {
+    GROUP_JOINING_REQUEST("참여요청");
 
-    private final String type;
+    private final String title;
 }

@@ -1,5 +1,6 @@
 package com.amorgakco.backend.groupjoining.domain;
 
+import com.amorgakco.backend.global.BaseTime;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.domain.Participant;
 import com.amorgakco.backend.member.domain.Member;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class GroupJoining {
+public class GroupJoining extends BaseTime {
 
     @Id @GeneratedValue private Long id;
 

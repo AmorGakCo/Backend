@@ -1,4 +1,4 @@
-package com.amorgakco.backend.fcm.domain;
+package com.amorgakco.backend.fcmtoken.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
