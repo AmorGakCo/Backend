@@ -13,8 +13,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -35,45 +36,42 @@ public class Group extends BaseTime {
     @Embedded private Location location;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private final List<Participant> participants = new ArrayList<>();
+    private final Set<Participant> participants = new HashSet<>();
 
     @Builder
     public Group(
             final String name,
             final String description,
             final int groupCapacity,
-            final Duration duration,
+            final LocalDateTime beginAt,
+            final LocalDateTime endAt,
             final Location location,
             final Member host,
             final String address) {
         this.name = name;
         this.description = description;
         this.groupCapacity = groupCapacity;
-        this.duration = duration;
+        this.duration = new Duration(beginAt, endAt);
         this.location = location;
         this.host = host;
         this.address = address;
     }
 
-    public synchronized void addParticipants(final Participant newParticipant) {
-        validateParticipation(newParticipant.getMemberId());
+    public void addParticipants(final Participant newParticipant) {
+        validateParticipation(newParticipant);
         this.participants.add(newParticipant);
         newParticipant.add(this);
     }
 
-    public void validateParticipation(final Long memberId) {
-        validateDuplicatedParticipant(memberId);
+    public void validateParticipation(final Participant participant) {
+        validateDuplicatedParticipant(participant);
         validateGroupCapacity();
     }
 
-    private void validateDuplicatedParticipant(final Long memberId) {
-        participants.stream()
-                .filter(p -> p.isParticipant(memberId))
-                .findAny()
-                .ifPresent(
-                        (p) -> {
-                            throw IllegalAccessException.duplicatedParticipant();
-                        });
+    private void validateDuplicatedParticipant(final Participant participant) {
+        if (participants.contains(participant)) {
+            throw IllegalAccessException.duplicatedParticipant();
+        }
     }
 
     private void validateGroupCapacity() {

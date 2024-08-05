@@ -8,6 +8,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -49,5 +51,18 @@ public class Participant {
 
     public void add(final Group group) {
         this.group = group;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Participant that = (Participant) o;
+        return Objects.equals(getMember().getId(), that.getMember().getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getMember().getId());
     }
 }
