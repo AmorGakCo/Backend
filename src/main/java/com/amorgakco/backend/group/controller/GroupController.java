@@ -27,7 +27,7 @@ public class GroupController {
     public IdResponse register(
             @RequestBody final GroupRegisterRequest groupRegisterRequest,
             @AuthMember final Member host) {
-        IdResponse register = groupService.register(groupRegisterRequest, host);
+        final IdResponse register = groupService.register(groupRegisterRequest, host);
         return register;
     }
 
