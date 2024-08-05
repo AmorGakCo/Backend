@@ -3,6 +3,7 @@ package com.amorgakco.backend.groupjoining.service.mapper;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.groupjoining.domain.GroupJoining;
 import com.amorgakco.backend.member.domain.Member;
+
 import org.springframework.stereotype.Component;
 
 @Component
