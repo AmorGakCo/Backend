@@ -1,6 +1,6 @@
-package com.amorgakco.backend.fcm.repository;
+package com.amorgakco.backend.fcmtoken.repository;
 
-import com.amorgakco.backend.fcm.domain.FcmToken;
+import com.amorgakco.backend.fcmtoken.domain.FcmToken;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

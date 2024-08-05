@@ -30,12 +30,10 @@ public class Member extends BaseTime {
     private Integer mogakcoTemperature;
     private String phoneNumber;
     private String githubUrl;
+    private boolean smsNotificationSetting;
 
-    @Enumerated(EnumType.STRING)
-    private SmsNotificationSetting smsNotificationSetting;
-
-    @Column(columnDefinition = "geometry(POINT, 4326)", name = "point")
-    private Point point;
+    @Column(columnDefinition = "geometry(POINT, 4326)", name = "location")
+    private Point location;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -53,7 +51,7 @@ public class Member extends BaseTime {
         this.nickname = nickname;
         this.roleNames.add(new Roles(Role.ROLE_MEMBER));
         this.mogakcoTemperature = 0;
-        this.smsNotificationSetting = SmsNotificationSetting.OFF;
+        this.smsNotificationSetting = false;
     }
 
     public void updateNicknameAndImgUrl(final String nickname, final String imgUrl) {
@@ -64,14 +62,14 @@ public class Member extends BaseTime {
     public void validateAndUpdateAdditionalInfo(
             final String githubUrl,
             final String phoneNumber,
-            final SmsNotificationSetting setting,
-            final Point point) {
+            final boolean setting,
+            final Point location) {
         validateGithubUrl(githubUrl);
         validatePhoneNumber(phoneNumber);
         this.githubUrl = githubUrl;
         this.phoneNumber = phoneNumber;
         this.smsNotificationSetting = setting;
-        this.point = point;
+        this.location = location;
     }
 
     private void validateGithubUrl(final String githubUrl) {
@@ -88,5 +86,9 @@ public class Member extends BaseTime {
 
     public boolean isEquals(final Long memberId) {
         return this.id.equals(memberId);
+    }
+
+    public boolean isSmsNotificationActivated() {
+        return smsNotificationSetting;
     }
 }

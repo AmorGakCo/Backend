@@ -1,6 +1,6 @@
-package com.amorgakco.backend.fcm.controller;
+package com.amorgakco.backend.fcmtoken.controller;
 
-import com.amorgakco.backend.fcm.service.FcmTokenService;
+import com.amorgakco.backend.fcmtoken.service.FcmTokenService;
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
 
 import lombok.RequiredArgsConstructor;

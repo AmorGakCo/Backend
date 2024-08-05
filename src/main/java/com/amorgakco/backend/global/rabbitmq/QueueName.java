@@ -1,13 +1,13 @@
-package com.amorgakco.backend.notification.domain;
+package com.amorgakco.backend.global.rabbitmq;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public enum NotificationType {
+public enum QueueName {
     SMS("sms"),
     FCM("fcm");
 
-    private final String type;
+    private final String name;
 }

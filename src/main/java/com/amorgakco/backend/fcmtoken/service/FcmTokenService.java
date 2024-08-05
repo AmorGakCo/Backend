@@ -1,7 +1,7 @@
-package com.amorgakco.backend.fcm.service;
+package com.amorgakco.backend.fcmtoken.service;
 
-import com.amorgakco.backend.fcm.domain.FcmToken;
-import com.amorgakco.backend.fcm.repository.FcmTokenRepository;
+import com.amorgakco.backend.fcmtoken.domain.FcmToken;
+import com.amorgakco.backend.fcmtoken.repository.FcmTokenRepository;
 
 import lombok.RequiredArgsConstructor;
 
