@@ -117,7 +117,9 @@ jacocoTestReport {
                                         "com/amorgakco/backend/**/dto/**",
                                         "com/amorgakco/backend/**/mapper/**",
                                         "com/amorgakco/backend/global/oauth/**",
-                                        "com/amorgakco/backend/global/response/**"
+                                        "com/amorgakco/backend/global/response/**",
+                                        "com/amorgakco/backend/global/properties/**",
+                                        "com/amorgakco/backend/global/rabbitmq/**",
             ])
         }))
     }
