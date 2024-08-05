@@ -6,7 +6,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/amorgakco
     hikari:
-      username: haechan
+      username: admin
       password: 1234
   jpa:
     show-sql: true
@@ -19,3 +19,10 @@ spring:
     redis:
       host: localhost
       port: 6379
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "amdin"
+    password: "1234"
+
+fcm-secret-path: fcm-secret.json

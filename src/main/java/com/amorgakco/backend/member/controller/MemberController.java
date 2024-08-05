@@ -1,6 +1,6 @@
 package com.amorgakco.backend.member.controller;
 
-import com.amorgakco.backend.global.argumentresolver.AuthMember;
+import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
 import com.amorgakco.backend.member.dto.AdditionalInfoRequest;
 import com.amorgakco.backend.member.service.MemberService;
 
@@ -24,7 +24,7 @@ public class MemberController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateAdditionalInfo(
             @RequestBody final AdditionalInfoRequest additionalInfoRequest,
-            @AuthMember final Long memberId) {
+            @AuthMemberId final Long memberId) {
         memberService.updateAdditionalInfo(additionalInfoRequest, memberId);
     }
 }

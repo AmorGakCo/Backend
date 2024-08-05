@@ -6,6 +6,6 @@ import lombok.Builder;
 public record AdditionalInfoRequest(
         String githubUrl,
         String phoneNumber,
-        String smsNotificationSetting,
+        boolean smsNotificationSetting,
         double longitude,
         double latitude) {}

@@ -48,6 +48,9 @@ dependencies {
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
+    implementation 'net.nurigo:sdk:4.3.0'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation 'com.google.firebase:firebase-admin:9.3.0'
 }
 
 tasks.named('test') {
@@ -55,6 +58,7 @@ tasks.named('test') {
     doFirst { delete(snippetsDir) }
     outputs.dir snippetsDir
     finalizedBy 'jacocoTestReport'
+    finalizedBy 'asciidoctor'
 }
 
 // asciidoc setting
@@ -94,17 +98,51 @@ tasks.named('asciidoctor') {
 // asciidoc setting end
 
 // jacoco setting
-
-ext {
-    set('jacocoDir', file("build/jacoco/index.html"))
-}
-
 jacoco {
     toolVersion = "0.8.11"
 }
 
 jacocoTestReport {
+    dependsOn test
     reports {
-        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+        html.required = true
+        xml.required = true
+        csv.required = true
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: ["com/amorgakco/backend/BackendApplication.class",
+                                        "com/amorgakco/backend/global/config/**",
+                                        "com/amorgakco/backend/global/exception/**",
+                                        "com/amorgakco/backend/**/dto/**",
+                                        "com/amorgakco/backend/**/mapper/**",
+                                        "com/amorgakco/backend/global/oauth/**",
+                                        "com/amorgakco/backend/global/response/**",
+                                        "com/amorgakco/backend/global/properties/**",
+                                        "com/amorgakco/backend/global/rabbitmq/**",
+            ])
+        }))
+    }
+    finalizedBy 'jacocoTestCoverageVerification'
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            enabled = true
+            element = 'CLASS'
+
+            limit {
+                counter = 'METHOD'
+                value = 'COVEREDRATIO'
+                minimum = 0.00
+            }
+
+            limit {
+                counter = 'INSTRUCTION'
+                value = 'COVEREDRATIO'
+                minimum = 0.00
+            }
+        }
     }
 }
