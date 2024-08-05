@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.fixture.group.TestParticipantsFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
+import com.amorgakco.backend.global.exception.ErrorCode;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.member.domain.Member;
@@ -21,12 +22,27 @@ class GroupTest {
         final Member host = TestMemberFactory.create(1L);
         final Group group = TestGroupFactory.create(host);
         final Member member = TestMemberFactory.create(2L);
-        final Participants participants = TestParticipantsFactory.create(member);
-        group.addParticipants(participants);
+        final Participant participant = TestParticipantsFactory.create(member);
+        group.addParticipants(participant);
         // when
         final int currentGroupSize = group.getCurrentGroupSize();
         // then
         assertThat(currentGroupSize).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("참여자의 중복참여는 불가능하다")
+    void duplicateParticipation() {
+        // given
+        final Member host = TestMemberFactory.create(1L);
+        final Group group = TestGroupFactory.create(host);
+        final Participant participant = new Participant(TestMemberFactory.create(2L));
+        group.addParticipants(participant);
+        final Participant newParticipant = new Participant(TestMemberFactory.create(2L));
+        // when
+        assertThatThrownBy(() -> group.addParticipants(newParticipant))
+                .isInstanceOf(IllegalAccessException.class)
+                .hasFieldOrPropertyWithValue("errorCode", ErrorCode.PARTICIPANT_DUPLICATED);
     }
 
     @Test
@@ -47,8 +63,8 @@ class GroupTest {
         final Member host = TestMemberFactory.create(1L);
         final Group group = TestGroupFactory.create(host);
         final Member member = TestMemberFactory.create(2L);
-        final Participants participants = TestParticipantsFactory.create(member);
-        group.addParticipants(participants);
+        final Participant participant = TestParticipantsFactory.create(member);
+        group.addParticipants(participant);
         // when
         assertThatThrownBy(() -> group.verifyLocation(126.9754143, 37.57071, 2L))
                 .isInstanceOf(IllegalAccessException.class);
@@ -61,12 +77,12 @@ class GroupTest {
         final Member host = TestMemberFactory.create(1L);
         final Group group = TestGroupFactory.create(host);
         final Member member = TestMemberFactory.create(2L);
-        final Participants participants = TestParticipantsFactory.create(member);
-        group.addParticipants(participants);
+        final Participant participant = TestParticipantsFactory.create(member);
+        group.addParticipants(participant);
         // when
         group.verifyLocation(126.9745357, 37.570387, 2L);
         // then
-        assertThat(participants.getLocationVerificationStatus())
+        assertThat(participant.getLocationVerificationStatus())
                 .isEqualTo(LocationVerificationStatus.VERIFIED);
     }
 
@@ -77,8 +93,8 @@ class GroupTest {
         final Member host = TestMemberFactory.create(1L);
         final Group group = TestGroupFactory.create(host);
         final Member member = TestMemberFactory.create(2L);
-        final Participants participants = TestParticipantsFactory.create(member);
-        group.addParticipants(participants);
+        final Participant participant = TestParticipantsFactory.create(member);
+        group.addParticipants(participant);
         group.verifyLocation(126.9745357, 37.570387, 2L);
         // when&then
         assertThatThrownBy(() -> group.verifyLocation(126.9745357, 37.570387, 2L))

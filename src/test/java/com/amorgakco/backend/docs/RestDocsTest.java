@@ -3,7 +3,8 @@ package com.amorgakco.backend.docs;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-import com.amorgakco.backend.global.config.security.JwtAuthenticationFilter;
+import com.amorgakco.backend.global.security.JwtAuthenticationFilter;
+import com.amorgakco.backend.member.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -30,6 +31,7 @@ public abstract class RestDocsTest {
     @Autowired private ObjectMapper objectMapper;
     @MockBean private JwtAuthenticationFilter jwtAuthenticationFilter;
     @MockBean private JpaMetamodelMappingContext jpaMetamodelMappingContext;
+    @MockBean protected MemberService memberService;
 
     protected String toRequestBody(final Object value) throws JsonProcessingException {
         return objectMapper.writeValueAsString(value);

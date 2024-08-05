@@ -1,4 +1,4 @@
-package com.amorgakco.backend.global.config.security;
+package com.amorgakco.backend.global.security;
 
 import com.amorgakco.backend.jwt.service.JwtExtractor;
 import com.amorgakco.backend.jwt.service.JwtValidator;

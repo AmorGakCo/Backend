@@ -8,10 +8,12 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Participants {
+public class Participant {
 
     @Id @GeneratedValue private Long id;
 
@@ -26,7 +28,7 @@ public class Participants {
     @Enumerated(EnumType.STRING)
     private LocationVerificationStatus locationVerificationStatus;
 
-    public Participants(final Member member) {
+    public Participant(final Member member) {
         this.member = member;
         this.locationVerificationStatus = LocationVerificationStatus.UNVERIFIED;
     }
@@ -43,7 +45,24 @@ public class Participants {
         return member.isEquals(memberId);
     }
 
+    public Long getMemberId() {
+        return member.getId();
+    }
+
     public void add(final Group group) {
         this.group = group;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Participant that = (Participant) o;
+        return Objects.equals(getMember().getId(), that.getMember().getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getMember().getId());
     }
 }
