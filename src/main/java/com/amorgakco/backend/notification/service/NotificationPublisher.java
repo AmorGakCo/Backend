@@ -3,7 +3,10 @@ package com.amorgakco.backend.notification.service;
 import com.amorgakco.backend.fcmtoken.repository.FcmTokenRepository;
 import com.amorgakco.backend.global.rabbitmq.ExchangeName;
 import com.amorgakco.backend.global.rabbitmq.RoutingKey;
+import com.amorgakco.backend.notification.domain.Notification;
 import com.amorgakco.backend.notification.dto.NotificationRequest;
+import com.amorgakco.backend.notification.repository.NotificationRepository;
+import com.amorgakco.backend.notification.service.mapper.NotificationMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,6 +19,8 @@ public class NotificationPublisher {
 
     private final RabbitTemplate rabbitTemplate;
     private final FcmTokenRepository fcmTokenRepository;
+    private final NotificationRepository notificationRepository;
+    private final NotificationMapper notificationMapper;
 
     public void sendSmsAndFcmWebPush(final NotificationRequest request) {
         sendSms(request);
@@ -32,6 +37,8 @@ public class NotificationPublisher {
     }
 
     public void sendFcmWebPush(final NotificationRequest request) {
+        final Notification notification = notificationMapper.toNotification(request);
+        notificationRepository.save(notification);
         final Long receiverId = request.receiver().getId();
         fcmTokenRepository
                 .findById(receiverId.toString())

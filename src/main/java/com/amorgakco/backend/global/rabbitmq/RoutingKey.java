@@ -6,8 +6,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public enum RoutingKey {
-    NOTIFICATION_SMS("notification.sms"),
-    NOTIFICATION_FCM("notification.fcm");
+    DELIMITER("."),
+    NOTIFICATION_SMS(ExchangeName.NOTIFICATION.getName() + DELIMITER.key + QueueName.SMS.getName()),
+    NOTIFICATION_FCM(ExchangeName.NOTIFICATION.getName() + DELIMITER.key + QueueName.FCM.getName());
 
     private final String key;
 }

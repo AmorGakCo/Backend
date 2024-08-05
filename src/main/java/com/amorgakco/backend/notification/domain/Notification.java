@@ -25,9 +25,6 @@ public class Notification extends BaseTime {
     @Enumerated(EnumType.STRING)
     private NotificationTitle notificationTitle;
 
-    @Enumerated(EnumType.STRING)
-    private NotificationType notificationType;
-
     @OneToOne private Member sender;
     @OneToOne private Member receiver;
 
@@ -36,12 +33,10 @@ public class Notification extends BaseTime {
     @Builder
     public Notification(
             final NotificationTitle notificationTitle,
-            final NotificationType notificationType,
             final Member sender,
             final Member receiver,
             final String content) {
         this.notificationTitle = notificationTitle;
-        this.notificationType = notificationType;
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;

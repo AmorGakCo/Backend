@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.fixture.group.TestParticipantsFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
+import com.amorgakco.backend.global.exception.ErrorCode;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.member.domain.Member;
@@ -27,6 +28,21 @@ class GroupTest {
         final int currentGroupSize = group.getCurrentGroupSize();
         // then
         assertThat(currentGroupSize).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("참여자의 중복참여는 불가능하다")
+    void duplicateParticipation() {
+        // given
+        final Member host = TestMemberFactory.create(1L);
+        final Group group = TestGroupFactory.create(host);
+        final Participant participant = new Participant(TestMemberFactory.create(2L));
+        group.addParticipants(participant);
+        final Participant newParticipant = new Participant(TestMemberFactory.create(2L));
+        // when
+        assertThatThrownBy(() -> group.addParticipants(newParticipant))
+                .isInstanceOf(IllegalAccessException.class)
+                .hasFieldOrPropertyWithValue("errorCode", ErrorCode.PARTICIPANT_DUPLICATED);
     }
 
     @Test

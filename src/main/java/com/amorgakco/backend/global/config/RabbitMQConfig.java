@@ -57,7 +57,7 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    RabbitTemplate rabbitTemplate(
+    public RabbitTemplate rabbitTemplate(
             final ConnectionFactory connectionFactory, final MessageConverter messageConverter) {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(messageConverter);
@@ -68,14 +68,14 @@ public class RabbitMQConfig {
     public ConnectionFactory connectionFactory() {
         final CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
         connectionFactory.setHost(properties.host());
-        connectionFactory.setPort(Integer.parseInt(properties.port()));
+        connectionFactory.setPort(properties.port());
         connectionFactory.setUsername(properties.username());
         connectionFactory.setPassword(properties.password());
         return connectionFactory;
     }
 
     @Bean
-    MessageConverter messageConverter() {
+    public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
     }
 }

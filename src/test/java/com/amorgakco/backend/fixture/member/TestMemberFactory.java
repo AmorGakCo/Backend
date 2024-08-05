@@ -24,7 +24,7 @@ public class TestMemberFactory {
         return AdditionalInfoRequest.builder()
                 .githubUrl(GITHUB_URL)
                 .phoneNumber(PHONE_NUMBER)
-                .smsNotificationSetting(true)
+                .smsNotificationSetting(smsNotificationSetting)
                 .latitude(LATITUDE)
                 .longitude(LONGITUDE)
                 .build();

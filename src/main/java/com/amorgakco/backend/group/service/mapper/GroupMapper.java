@@ -15,16 +15,14 @@ import org.springframework.stereotype.Component;
 public class GroupMapper {
 
     public Group toGroup(
-            final Member host,
-            final GroupRegisterRequest groupRegisterRequest,
-            final Location location,
-            final Duration duration) {
+            final Member host, final GroupRegisterRequest request, final Location location) {
         return Group.builder()
-                .name(groupRegisterRequest.name())
-                .address(groupRegisterRequest.address())
-                .description(groupRegisterRequest.description())
-                .duration(duration)
-                .groupCapacity(groupRegisterRequest.groupCapacity())
+                .name(request.name())
+                .address(request.address())
+                .description(request.description())
+                .beginAt(request.beginAt())
+                .endAt(request.endAt())
+                .groupCapacity(request.groupCapacity())
                 .location(location)
                 .host(host)
                 .build();
