@@ -1,7 +1,7 @@
-package com.amorgakco.backend.notification.service.consumer.fcm;
+package com.amorgakco.backend.notification.infrastructure.consumer.fcm;
 
 import com.amorgakco.backend.fcmtoken.repository.FcmTokenRepository;
-import com.amorgakco.backend.notification.dto.NotificationRequest;
+import com.amorgakco.backend.notification.infrastructure.consumer.NotificationRequest;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.WebpushConfig;
 import com.google.firebase.messaging.WebpushNotification;
