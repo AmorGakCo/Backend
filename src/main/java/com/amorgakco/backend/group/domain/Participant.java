@@ -1,5 +1,7 @@
 package com.amorgakco.backend.group.domain;
 
+import com.amorgakco.backend.global.BaseTime;
+import com.amorgakco.backend.global.exception.IllegalAccessException;
 import com.amorgakco.backend.member.domain.Member;
 
 import jakarta.persistence.*;
@@ -13,7 +15,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Participant {
+public class Participant extends BaseTime {
 
     @Id @GeneratedValue private Long id;
 
@@ -33,12 +35,16 @@ public class Participant {
         this.locationVerificationStatus = LocationVerificationStatus.UNVERIFIED;
     }
 
-    public boolean isVerified() {
-        return this.locationVerificationStatus.equals(LocationVerificationStatus.VERIFIED);
+    public void verify(final double longitude, final double latitude) {
+        if (isVerified()) {
+            throw IllegalAccessException.verificationDuplicated();
+        }
+        group.verifyLocation(longitude, latitude);
+        this.locationVerificationStatus = LocationVerificationStatus.VERIFIED;
     }
 
-    public void verify() {
-        this.locationVerificationStatus = LocationVerificationStatus.VERIFIED;
+    public boolean isVerified() {
+        return this.locationVerificationStatus.equals(LocationVerificationStatus.VERIFIED);
     }
 
     public boolean isParticipant(final Long memberId) {

@@ -7,9 +7,9 @@ import com.amorgakco.backend.groupjoining.domain.GroupJoining;
 import com.amorgakco.backend.groupjoining.repository.GroupJoiningRepository;
 import com.amorgakco.backend.groupjoining.service.mapper.GroupJoiningMapper;
 import com.amorgakco.backend.member.domain.Member;
-import com.amorgakco.backend.notification.dto.NotificationRequest;
-import com.amorgakco.backend.notification.service.NotificationCreator;
-import com.amorgakco.backend.notification.service.NotificationPublisher;
+import com.amorgakco.backend.notification.infrastructure.NotificationPublisher;
+import com.amorgakco.backend.notification.infrastructure.consumer.NotificationCreator;
+import com.amorgakco.backend.notification.infrastructure.consumer.NotificationRequest;
 
 import lombok.RequiredArgsConstructor;
 

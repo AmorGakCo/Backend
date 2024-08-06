@@ -1,10 +1,10 @@
-package com.amorgakco.backend.notification.service;
+package com.amorgakco.backend.notification.infrastructure;
 
 import com.amorgakco.backend.fcmtoken.repository.FcmTokenRepository;
 import com.amorgakco.backend.global.rabbitmq.ExchangeName;
 import com.amorgakco.backend.global.rabbitmq.RoutingKey;
 import com.amorgakco.backend.notification.domain.Notification;
-import com.amorgakco.backend.notification.dto.NotificationRequest;
+import com.amorgakco.backend.notification.infrastructure.consumer.NotificationRequest;
 import com.amorgakco.backend.notification.repository.NotificationRepository;
 import com.amorgakco.backend.notification.service.mapper.NotificationMapper;
 

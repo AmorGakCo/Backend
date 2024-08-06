@@ -1,8 +1,7 @@
-package com.amorgakco.backend.notification.service;
+package com.amorgakco.backend.notification.infrastructure.consumer;
 
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.notification.domain.NotificationTitle;
-import com.amorgakco.backend.notification.dto.NotificationRequest;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

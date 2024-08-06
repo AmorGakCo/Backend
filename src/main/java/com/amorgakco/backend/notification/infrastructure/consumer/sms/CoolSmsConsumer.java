@@ -1,7 +1,7 @@
-package com.amorgakco.backend.notification.service.consumer.sms;
+package com.amorgakco.backend.notification.infrastructure.consumer.sms;
 
 import com.amorgakco.backend.member.domain.Member;
-import com.amorgakco.backend.notification.dto.NotificationRequest;
+import com.amorgakco.backend.notification.infrastructure.consumer.NotificationRequest;
 
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
