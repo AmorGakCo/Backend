@@ -1,7 +1,7 @@
 package com.amorgakco.backend.participant.repository;
 
-import com.amorgakco.backend.group.domain.Participant;
 import com.amorgakco.backend.member.domain.Member;
+import com.amorgakco.backend.participant.domain.Participant;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;

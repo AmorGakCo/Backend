@@ -4,6 +4,7 @@ import com.amorgakco.backend.global.BaseTime;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
 import com.amorgakco.backend.group.domain.location.Location;
 import com.amorgakco.backend.member.domain.Member;
+import com.amorgakco.backend.participant.domain.Participant;
 
 import jakarta.persistence.*;
 
@@ -22,17 +23,20 @@ import java.util.Set;
 @Table(name = "groups")
 public class Group extends BaseTime {
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private final Set<Participant> participants = new HashSet<>();
     @Id @GeneratedValue private Long id;
     private String name;
     private String description;
     private int groupCapacity;
     private String address;
     @Embedded private Duration duration;
+
     @OneToOne(fetch = FetchType.LAZY)
     private Member host;
+
     @Embedded private Location location;
+
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    private Set<Participant> participants = new HashSet<>();
 
     @Builder
     public Group(

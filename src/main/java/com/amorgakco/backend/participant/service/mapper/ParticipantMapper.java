@@ -1,7 +1,7 @@
 package com.amorgakco.backend.participant.service.mapper;
 
 import com.amorgakco.backend.group.domain.Group;
-import com.amorgakco.backend.group.domain.Participant;
+import com.amorgakco.backend.participant.domain.Participant;
 import com.amorgakco.backend.participant.dto.ParticipationHistory;
 import com.amorgakco.backend.participant.dto.ParticipationHistoryResponse;
 

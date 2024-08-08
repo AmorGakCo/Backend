@@ -1,4 +1,4 @@
-package com.amorgakco.backend.group.domain;
+package com.amorgakco.backend.participant.domain;
 
 public enum LocationVerificationStatus {
     UNVERIFIED,
