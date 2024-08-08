@@ -1,8 +1,7 @@
-package com.amorgakco.backend.groupjoining.domain;
+package com.amorgakco.backend.groupparticipation.domain;
 
 import com.amorgakco.backend.global.BaseTime;
 import com.amorgakco.backend.group.domain.Group;
-import com.amorgakco.backend.group.domain.Participant;
 import com.amorgakco.backend.member.domain.Member;
 
 import jakarta.persistence.Entity;
@@ -22,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class GroupJoining extends BaseTime {
+public class GroupParticipation extends BaseTime {
 
     @Id @GeneratedValue private Long id;
 
@@ -35,18 +34,12 @@ public class GroupJoining extends BaseTime {
     private Member member;
 
     @Enumerated(EnumType.STRING)
-    private JoiningStatus joiningStatus;
+    private ParticipationStatus participationStatus;
 
     @Builder
-    public GroupJoining(final Group group, final Member member) {
+    public GroupParticipation(final Group group, final Member member) {
         this.group = group;
         this.member = member;
-        this.joiningStatus = JoiningStatus.PENDING;
-    }
-
-    public void approve() {
-        final Participant participant = new Participant(member);
-        group.addParticipants(participant);
-        this.joiningStatus = JoiningStatus.APPROVED;
+        this.participationStatus = ParticipationStatus.PENDING;
     }
 }

@@ -1,7 +1,8 @@
-package com.amorgakco.backend.group.domain;
+package com.amorgakco.backend.participant.domain;
 
 import com.amorgakco.backend.global.BaseTime;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
+import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.member.domain.Member;
 
 import jakarta.persistence.*;
@@ -43,12 +44,8 @@ public class Participant extends BaseTime {
         this.locationVerificationStatus = LocationVerificationStatus.VERIFIED;
     }
 
-    public boolean isVerified() {
+    private boolean isVerified() {
         return this.locationVerificationStatus.equals(LocationVerificationStatus.VERIFIED);
-    }
-
-    public boolean isParticipant(final Long memberId) {
-        return member.isEquals(memberId);
     }
 
     public Long getMemberId() {

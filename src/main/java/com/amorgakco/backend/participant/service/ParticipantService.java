@@ -1,9 +1,9 @@
 package com.amorgakco.backend.participant.service;
 
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
-import com.amorgakco.backend.group.domain.Participant;
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
 import com.amorgakco.backend.member.domain.Member;
+import com.amorgakco.backend.participant.domain.Participant;
 import com.amorgakco.backend.participant.dto.ParticipationHistoryResponse;
 import com.amorgakco.backend.participant.repository.ParticipantRepository;
 import com.amorgakco.backend.participant.service.mapper.ParticipantMapper;
