@@ -2,7 +2,6 @@ package com.amorgakco.backend.participant.service;
 
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
-import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.participant.domain.Participant;
 import com.amorgakco.backend.participant.dto.ParticipationHistoryResponse;
 import com.amorgakco.backend.participant.repository.ParticipantRepository;
@@ -33,11 +32,11 @@ public class ParticipantService {
     }
 
     public ParticipationHistoryResponse getParticipationHistory(
-            final Member member, final Integer page) {
+            final Long memberId, final Integer page) {
         final PageRequest pageRequest =
                 PageRequest.of(page, PAGE_SIZE, Sort.by(Sort.Direction.DESC, "createdAt"));
         final Slice<Participant> participantSlice =
-                participantRepository.findByMember(member, pageRequest);
+                participantRepository.findByMember(memberId, pageRequest);
         return participantMapper.toParticipationHistoryResponse(participantSlice);
     }
 }

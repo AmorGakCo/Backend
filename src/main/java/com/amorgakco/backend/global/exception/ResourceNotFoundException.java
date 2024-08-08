@@ -23,10 +23,6 @@ public class ResourceNotFoundException extends NoSuchElementException {
         return new ResourceNotFoundException(ErrorCode.REFRESH_TOKEN_NOT_FOUND);
     }
 
-    public static ResourceNotFoundException accessTokenNotFound() {
-        return new ResourceNotFoundException(ErrorCode.ACCESS_TOKEN_NOT_FOUND);
-    }
-
     public static ResourceNotFoundException participantsNotFound() {
         return new ResourceNotFoundException(ErrorCode.PARTICIPANT_NOT_FOUND);
     }

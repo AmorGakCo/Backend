@@ -24,4 +24,8 @@ public class JwtAuthenticationException extends IllegalStateException {
     public static JwtAuthenticationException loginAgain() {
         return new JwtAuthenticationException(ErrorCode.LOGIN_AGAIN);
     }
+
+    public static JwtAuthenticationException accessTokenNotFound() {
+        return new JwtAuthenticationException(ErrorCode.ACCESS_TOKEN_NOT_FOUND);
+    }
 }

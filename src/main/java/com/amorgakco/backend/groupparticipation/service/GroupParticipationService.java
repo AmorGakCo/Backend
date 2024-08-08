@@ -27,11 +27,11 @@ public class GroupParticipationService {
     private final NotificationPublisher notificationPublisher;
 
     @Transactional
-    public void requestJoin(final Long groupId, final Member member) {
+    public void participate(final Long groupId, final Member member) {
         final Group group = groupService.getGroup(groupId);
         group.validateParticipation(new Participant(member));
         final GroupParticipation groupParticipation =
-                groupParticipationMapper.toGroupJoining(group, member);
+                groupParticipationMapper.toGroupParticipation(group, member);
         groupParticiaptionRepository.save(groupParticipation);
         final NotificationRequest notificationRequest =
                 NotificationCreator.groupJoiningNotification(member, group.getHost());

@@ -6,7 +6,7 @@ import static org.mockito.BDDMockito.*;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.fixture.security.TestSecretKey;
 import com.amorgakco.backend.global.exception.ErrorCode;
-import com.amorgakco.backend.global.exception.ResourceNotFoundException;
+import com.amorgakco.backend.global.exception.JwtAuthenticationException;
 import com.amorgakco.backend.global.oauth.MemberPrincipal;
 import com.amorgakco.backend.jwt.service.JwtCreator;
 import com.amorgakco.backend.jwt.service.JwtExtractor;
@@ -46,7 +46,7 @@ class JwtAuthenticationFilterTest {
                         () ->
                                 jwtAuthenticationFilter.doFilterInternal(
                                         request, response, new DummyFilterChain()))
-                .isInstanceOf(ResourceNotFoundException.class)
+                .isInstanceOf(JwtAuthenticationException.class)
                 .hasFieldOrPropertyWithValue("errorCode", ErrorCode.ACCESS_TOKEN_NOT_FOUND);
     }
 

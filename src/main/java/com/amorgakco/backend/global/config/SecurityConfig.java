@@ -40,12 +40,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         request ->
                                 request.requestMatchers(
-                                                "/logout",
-                                                "/token",
-                                                "/favicon.ico",
-                                                "/errors",
+                                                "/token/**",
                                                 "/groups/locations",
-                                                "/groups/**/joining",
                                                 "/groups/detail/**",
                                                 "/groups/basic/**")
                                         .permitAll()

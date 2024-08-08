@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class GroupParticipationMapper {
 
-    public GroupParticipation toGroupJoining(final Group group, final Member newParticipant) {
+    public GroupParticipation toGroupParticipation(final Group group, final Member newParticipant) {
         return GroupParticipation.builder().group(group).member(newParticipant).build();
     }
 }

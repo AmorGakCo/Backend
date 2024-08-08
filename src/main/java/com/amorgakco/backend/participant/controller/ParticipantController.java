@@ -1,9 +1,7 @@
 package com.amorgakco.backend.participant.controller;
 
-import com.amorgakco.backend.global.argumentresolver.AuthMember;
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
-import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.participant.dto.ParticipationHistoryResponse;
 import com.amorgakco.backend.participant.service.ParticipantService;
 
@@ -33,9 +31,9 @@ public class ParticipantController {
         participantService.verifyParticipantLocation(request, memberId);
     }
 
-    @GetMapping("/history")
+    @GetMapping("/histories")
     public ParticipationHistoryResponse getParticipationHistory(
-            @RequestParam final Integer page, @AuthMember final Member member) {
-        return participantService.getParticipationHistory(member, page);
+            @RequestParam final Integer page, @AuthMemberId final Long memberId) {
+        return participantService.getParticipationHistory(memberId, page);
     }
 }
