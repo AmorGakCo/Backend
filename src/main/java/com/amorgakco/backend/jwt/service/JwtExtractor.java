@@ -1,20 +1,20 @@
 package com.amorgakco.backend.jwt.service;
 
-import com.amorgakco.backend.global.exception.JwtAuthenticationException;
-
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
+import java.util.Optional;
 
 @Component
 public class JwtExtractor {
     private static final String TOKEN_PREFIX = "Bearer ";
     private static final int TOKEN_PREFIX_LENGTH = TOKEN_PREFIX.length();
 
-    public String extractAccessToken(final String accessTokenWithBearer) {
+    public Optional<String> extractAccessToken(final String accessTokenWithBearer) {
         if (StringUtils.hasText(accessTokenWithBearer)
                 && accessTokenWithBearer.startsWith(TOKEN_PREFIX)) {
-            return accessTokenWithBearer.substring(TOKEN_PREFIX_LENGTH);
+            return Optional.of(accessTokenWithBearer.substring(TOKEN_PREFIX_LENGTH));
         }
-        throw JwtAuthenticationException.accessTokenNotFound();
+        return Optional.empty();
     }
 }
