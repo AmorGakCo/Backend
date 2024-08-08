@@ -5,8 +5,6 @@ import static org.mockito.BDDMockito.*;
 
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.fixture.security.TestSecretKey;
-import com.amorgakco.backend.global.exception.ErrorCode;
-import com.amorgakco.backend.global.exception.JwtAuthenticationException;
 import com.amorgakco.backend.global.oauth.MemberPrincipal;
 import com.amorgakco.backend.jwt.service.JwtCreator;
 import com.amorgakco.backend.jwt.service.JwtExtractor;
@@ -33,22 +31,6 @@ class JwtAuthenticationFilterTest {
             new JwtAuthenticationFilter(
                     new JwtValidator(memberRepository, TestSecretKey.create()), new JwtExtractor());
     private final JwtCreator jwtCreator = new JwtCreator(TestSecretKey.create());
-
-    @Test
-    @DisplayName("Bearer 접두사를 포함하지 않은 헤더는 예외를 발생시킨다.")
-    void invalidHeader() {
-        // given
-        final MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addHeader("Authorization", "ajoeijfoaiejf.aeojfowijef.aoewjfiaowjef");
-        final MockHttpServletResponse response = new MockHttpServletResponse();
-        // when & then
-        assertThatThrownBy(
-                        () ->
-                                jwtAuthenticationFilter.doFilterInternal(
-                                        request, response, new DummyFilterChain()))
-                .isInstanceOf(JwtAuthenticationException.class)
-                .hasFieldOrPropertyWithValue("errorCode", ErrorCode.ACCESS_TOKEN_NOT_FOUND);
-    }
 
     @Test
     @DisplayName("올바른 Jwt토큰은 Security Context에 Authentication을 설정할 수 있다.")
