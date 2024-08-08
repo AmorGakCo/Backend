@@ -32,9 +32,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             final FilterChain filterChain)
             throws ServletException, IOException {
         final String accessTokenWithBearer = request.getHeader(AUTHORIZATION_HEADER);
-        final String token = jwtExtractor.extractAccessToken(accessTokenWithBearer);
-        final Authentication authentication = jwtValidator.getAuthentication(token);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        jwtExtractor
+                .extractAccessToken(accessTokenWithBearer)
+                .ifPresent(
+                        token -> {
+                            final Authentication authentication =
+                                    jwtValidator.getAuthentication(token);
+                            SecurityContextHolder.getContext().setAuthentication(authentication);
+                        });
         filterChain.doFilter(request, response);
     }
 }
