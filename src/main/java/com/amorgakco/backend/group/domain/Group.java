@@ -36,7 +36,7 @@ public class Group extends BaseTime {
     @Embedded private Location location;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private Set<Participant> participants = new HashSet<>();
+    private final Set<Participant> participants = new HashSet<>();
 
     @Builder
     public Group(
