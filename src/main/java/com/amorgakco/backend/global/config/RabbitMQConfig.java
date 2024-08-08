@@ -47,15 +47,8 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Queue smsQueue() {
-        return new Queue(QueueName.SMS.getName(), true);
-    }
-
-    @Bean
-    public Binding bindingSmsQueue() {
-        return BindingBuilder.bind(smsQueue())
-                .to(notificationExchange())
-                .with(RoutingKey.NOTIFICATION_SMS.getKey());
+    public DirectExchange notificationExchange() {
+        return new DirectExchange(ExchangeName.NOTIFICATION.getName());
     }
 
     @Bean
@@ -66,8 +59,15 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public DirectExchange notificationExchange() {
-        return new DirectExchange(ExchangeName.NOTIFICATION.getName());
+    public Binding bindingSmsQueue() {
+        return BindingBuilder.bind(smsQueue())
+                .to(notificationExchange())
+                .with(RoutingKey.NOTIFICATION_SMS.getKey());
+    }
+
+    @Bean
+    public Queue smsQueue() {
+        return new Queue(QueueName.SMS.getName(), true);
     }
 
     @Bean

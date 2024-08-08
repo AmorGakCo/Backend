@@ -28,10 +28,10 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 public abstract class RestDocsTest {
 
     protected MockMvc mockMvc;
+    @MockBean protected MemberService memberService;
     @Autowired private ObjectMapper objectMapper;
     @MockBean private JwtAuthenticationFilter jwtAuthenticationFilter;
     @MockBean private JpaMetamodelMappingContext jpaMetamodelMappingContext;
-    @MockBean protected MemberService memberService;
 
     protected String toRequestBody(final Object value) throws JsonProcessingException {
         return objectMapper.writeValueAsString(value);

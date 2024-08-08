@@ -26,14 +26,14 @@ public class TestParticipantFactory {
                 .build();
     }
 
-    private static List<ParticipationHistory> activatedGroups() {
-        return List.of(
-                participationHistory(4L), participationHistory(5L), participationHistory(6L));
-    }
-
     private static List<ParticipationHistory> inactivatedGroups() {
         return List.of(
                 participationHistory(1L), participationHistory(2L), participationHistory(3L));
+    }
+
+    private static List<ParticipationHistory> activatedGroups() {
+        return List.of(
+                participationHistory(4L), participationHistory(5L), participationHistory(6L));
     }
 
     private static ParticipationHistory participationHistory(final Long groupId) {

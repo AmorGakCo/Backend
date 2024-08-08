@@ -64,7 +64,7 @@ public class TestGroupFactory {
                 .build();
     }
 
-    public static GroupDetailResponse groupDetailResponse(){
+    public static GroupDetailResponse groupDetailResponse() {
         return GroupDetailResponse.builder()
                 .host(groupMember(1L))
                 .description(DESCRIPTION)
@@ -74,11 +74,11 @@ public class TestGroupFactory {
                 .beginAt(BEGIN_AT)
                 .longitude(LONGITUDE)
                 .latitude(LATITUDE)
-                .groupMembers(List.of(groupMember(2L),groupMember(3L)))
+                .groupMembers(List.of(groupMember(2L), groupMember(3L)))
                 .build();
     }
 
-    private static GroupMember groupMember(final Long memberId){
+    private static GroupMember groupMember(final Long memberId) {
         final Member member = TestMemberFactory.create(memberId);
         return GroupMember.builder()
                 .memberId(member.getId())
