@@ -5,16 +5,16 @@ import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.amorgakco.backend.docs.RestDocsTest;
-import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.fixture.participant.TestParticipantFactory;
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
-import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.participant.dto.ParticipationHistoryResponse;
 import com.amorgakco.backend.participant.service.ParticipantService;
 import com.amorgakco.backend.security.WithMockMember;
@@ -36,14 +36,15 @@ class ParticipantControllerTest extends RestDocsTest {
     @WithMockMember
     void getMemberPrivate() throws Exception {
         // given
-        final Member member = TestMemberFactory.create(1L);
+        final Long memberId = 1L;
+        final Integer page = 0;
         final ParticipationHistoryResponse participationHistoryResponse =
                 TestParticipantFactory.participationHistoryResponse();
-        given(participantService.getParticipationHistory(member, 0))
+        given(participantService.getParticipationHistory(memberId, page))
                 .willReturn(participationHistoryResponse);
         // when
         final ResultActions actions =
-                mockMvc.perform(get("/participants/history").queryParam("page", "0"));
+                mockMvc.perform(get("/participants/histories").queryParam("page", "0"));
         // then
         actions.andExpect(status().isOk());
         // docs
@@ -52,7 +53,8 @@ class ParticipantControllerTest extends RestDocsTest {
                         document(
                                 "participation-history",
                                 getDocumentRequest(),
-                                getDocumentResponse()));
+                                getDocumentResponse(),
+                                queryParameters(parameterWithName("page").description("페이지 번호"))));
     }
 
     @Test

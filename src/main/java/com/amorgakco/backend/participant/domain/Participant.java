@@ -48,10 +48,6 @@ public class Participant extends BaseTime {
         return this.locationVerificationStatus.equals(LocationVerificationStatus.VERIFIED);
     }
 
-    public Long getMemberId() {
-        return member.getId();
-    }
-
     public void add(final Group group) {
         this.group = group;
     }

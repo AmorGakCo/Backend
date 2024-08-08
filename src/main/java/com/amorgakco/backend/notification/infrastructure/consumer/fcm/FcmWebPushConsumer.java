@@ -17,7 +17,7 @@ public class FcmWebPushConsumer {
 
     private final FcmTokenRepository fcmTokenRepository;
 
-    @RabbitListener(queues = "notification.fcm")
+    @RabbitListener(queues = "fcm")
     public void send(final NotificationRequest request) {
         fcmTokenRepository
                 .findById(request.receiver().getId().toString())

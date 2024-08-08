@@ -20,9 +20,9 @@ public class GroupParticipationController {
 
     private final GroupParticipationService groupParticipationService;
 
-    @PostMapping("/{groupId}/joining")
+    @PostMapping("/{groupId}/participation")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void requestJoin(@PathVariable final Long groupId, @AuthMember final Member member) {
-        groupParticipationService.requestJoin(groupId, member);
+    public void participate(@PathVariable final Long groupId, @AuthMember final Member member) {
+        groupParticipationService.participate(groupId, member);
     }
 }

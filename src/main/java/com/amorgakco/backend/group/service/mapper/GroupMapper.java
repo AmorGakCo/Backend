@@ -36,6 +36,7 @@ public class GroupMapper {
 
     public GroupMember toGroupMember(final Member member) {
         return GroupMember.builder()
+                .memberId(member.getId())
                 .githubUrl(member.getGithubUrl())
                 .moGakCoTemperature(member.getMoGakCoTemperature())
                 .nickname(member.getNickname())

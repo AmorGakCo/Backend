@@ -25,7 +25,7 @@ public class CoolSmsConsumer implements SmsSender {
     }
 
     @Override
-    @RabbitListener(queues = "notification.sms")
+    @RabbitListener(queues = "sms")
     public void send(final NotificationRequest request) {
         final Message message = createMessage(request);
         messageService.sendOne(new SingleMessageSendingRequest(message));

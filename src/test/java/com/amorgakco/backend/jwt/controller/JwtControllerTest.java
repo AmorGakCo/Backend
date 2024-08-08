@@ -42,8 +42,9 @@ class JwtControllerTest extends RestDocsTest {
     @DisplayName("새로운 액세스 토큰을 응답받을 수 있다.")
     void reissueAccessToken() throws Exception {
         // given
+        final String memberId = "1";
         final MemberJwt memberJwt = new MemberJwt(NEW_ACCESS_TOKEN, NEW_REFRESH_TOKEN);
-        given(jwtService.reissue(OLD_REFRESH_TOKEN, "1")).willReturn(memberJwt);
+        given(jwtService.reissue(OLD_REFRESH_TOKEN, memberId)).willReturn(memberJwt);
         final Cookie oldCookie = new Cookie(COOKIE_NAME, OLD_REFRESH_TOKEN);
         // when
         final ResultActions actions =

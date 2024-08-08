@@ -14,6 +14,7 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -28,6 +29,19 @@ public class RabbitMQConfig {
     private final RabbitMQProperties properties;
 
     @Bean
+    public RabbitAdmin rabbitAdmin(final ConnectionFactory connectionFactory) {
+        final RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory);
+
+        rabbitAdmin.declareQueue(fcmQueue());
+        rabbitAdmin.declareExchange(notificationExchange());
+        rabbitAdmin.declareBinding(bindingFcmQueue());
+        rabbitAdmin.declareBinding(bindingSmsQueue());
+        rabbitAdmin.declareQueue(smsQueue());
+
+        return rabbitAdmin;
+    }
+
+    @Bean
     public Queue fcmQueue() {
         return new Queue(QueueName.FCM.getName(), true);
     }
@@ -38,16 +52,16 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Binding bindingSmsQueue(final DirectExchange exchange, final Queue smsQueue) {
-        return BindingBuilder.bind(smsQueue)
-                .to(exchange)
+    public Binding bindingSmsQueue() {
+        return BindingBuilder.bind(smsQueue())
+                .to(notificationExchange())
                 .with(RoutingKey.NOTIFICATION_SMS.getKey());
     }
 
     @Bean
-    public Binding bindingFcmQueue(final DirectExchange exchange, final Queue fcmQueue) {
-        return BindingBuilder.bind(fcmQueue)
-                .to(exchange)
+    public Binding bindingFcmQueue() {
+        return BindingBuilder.bind(fcmQueue())
+                .to(notificationExchange())
                 .with(RoutingKey.NOTIFICATION_FCM.getKey());
     }
 

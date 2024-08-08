@@ -53,9 +53,10 @@ class MemberControllerTest extends RestDocsTest {
     @WithMockMember
     void getMemberPrivate() throws Exception {
         // given
+        final Long memberId = 1L;
         final PrivateMemberResponse privateMemberResponse =
                 TestMemberFactory.privateMemberResponse();
-        given(memberService.getPrivateMember(1L)).willReturn(privateMemberResponse);
+        given(memberService.getPrivateMember(memberId)).willReturn(privateMemberResponse);
         // when
         final ResultActions actions = mockMvc.perform(get("/members/private"));
         // then

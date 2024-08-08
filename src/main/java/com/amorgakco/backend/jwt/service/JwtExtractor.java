@@ -1,6 +1,6 @@
 package com.amorgakco.backend.jwt.service;
 
-import com.amorgakco.backend.global.exception.ResourceNotFoundException;
+import com.amorgakco.backend.global.exception.JwtAuthenticationException;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -15,6 +15,6 @@ public class JwtExtractor {
                 && accessTokenWithBearer.startsWith(TOKEN_PREFIX)) {
             return accessTokenWithBearer.substring(TOKEN_PREFIX_LENGTH);
         }
-        throw ResourceNotFoundException.accessTokenNotFound();
+        throw JwtAuthenticationException.accessTokenNotFound();
     }
 }
