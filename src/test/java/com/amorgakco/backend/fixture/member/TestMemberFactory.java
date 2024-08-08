@@ -3,6 +3,7 @@ package com.amorgakco.backend.fixture.member;
 import com.amorgakco.backend.global.oauth.provider.Oauth2Provider;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.dto.AdditionalInfoRequest;
+import com.amorgakco.backend.member.dto.PrivateMemberResponse;
 
 public class TestMemberFactory {
 
@@ -14,6 +15,7 @@ public class TestMemberFactory {
     private static final String PHONE_NUMBER = "01012345678";
     private static final double LONGITUDE = 128.3245;
     private static final double LATITUDE = 37.3243;
+    private static final Integer MOGAKCO_TEMPERATURE = 50;
 
     public static Member create(final Long id) {
         return new TestMember(id, OAUTH2_PROVIDER, OAUTH2_ID, IMG_URL, NICKNAME);
@@ -27,6 +29,15 @@ public class TestMemberFactory {
                 .smsNotificationSetting(smsNotificationSetting)
                 .latitude(LATITUDE)
                 .longitude(LONGITUDE)
+                .build();
+    }
+
+    public static PrivateMemberResponse privateMemberResponse() {
+        return PrivateMemberResponse.builder()
+                .githubUrl(GITHUB_URL)
+                .phoneNumber(PHONE_NUMBER)
+                .moGakCoTemperature(MOGAKCO_TEMPERATURE)
+                .smsNotificationSetting(true)
                 .build();
     }
 }

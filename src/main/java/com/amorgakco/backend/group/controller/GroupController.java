@@ -4,9 +4,9 @@ import com.amorgakco.backend.global.IdResponse;
 import com.amorgakco.backend.global.argumentresolver.AuthMember;
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
+import com.amorgakco.backend.group.dto.GroupDetailResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
 import com.amorgakco.backend.group.dto.GroupSearchResponse;
-import com.amorgakco.backend.group.dto.LocationVerificationRequest;
 import com.amorgakco.backend.group.service.GroupService;
 import com.amorgakco.backend.member.domain.Member;
 
@@ -27,13 +27,17 @@ public class GroupController {
     public IdResponse register(
             @RequestBody final GroupRegisterRequest groupRegisterRequest,
             @AuthMember final Member host) {
-        final IdResponse register = groupService.register(groupRegisterRequest, host);
-        return register;
+        return groupService.register(groupRegisterRequest, host);
     }
 
     @GetMapping("/basic/{groupId}")
-    public GroupBasicResponse getGroupBasicInfo(@PathVariable final Long groupId) {
+    public GroupBasicResponse getGroupBasic(@PathVariable final Long groupId) {
         return groupService.getBasicGroup(groupId);
+    }
+
+    @GetMapping("/detail/{groupId}")
+    public GroupDetailResponse getGroupDetail(@PathVariable final Long groupId) {
+        return groupService.getDetailGroup(groupId);
     }
 
     @DeleteMapping("/{groupId}")
@@ -48,13 +52,5 @@ public class GroupController {
             @RequestParam final double latitude,
             @RequestParam final double radius) {
         return groupService.getNearByGroups(longitude, latitude, radius);
-    }
-
-    @PatchMapping("/participants")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void verifyLocation(
-            @AuthMemberId final Long memberId,
-            @RequestBody final LocationVerificationRequest request) {
-        groupService.verifyParticipantLocation(request, memberId);
     }
 }

@@ -451,13 +451,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_group">Group</a>
 <ul class="sectlevel2">
 <li><a href="#_그룹_등록">그룹 등록</a></li>
-<li><a href="#_그룹_등록_예외_최대_모임_지속_시간_8시간">그룹 등록 예외: 최대 모임 지속 시간 8시간</a></li>
-<li><a href="#_그룹_등록_예외_최소_모임_지속_시간_1시간">그룹 등록 예외: 최소 모임 지속 시간 1시간</a></li>
-<li><a href="#_그룹_등록_예외_시작_시간이_종료_시간보다_늦는_경우">그룹 등록 예외: 시작 시간이 종료 시간보다 늦는 경우</a></li>
-<li><a href="#_그룹_단건_조회">그룹 단건 조회</a></li>
+<li><a href="#_그룹_단건_조회_모달창용">그룹 단건 조회 [모달창용]</a></li>
+<li><a href="#_그룹_단건_조회_상세페이지용">그룹 단건 조회 [상세페이지용]</a></li>
 <li><a href="#_주변_그룹_조회">주변 그룹 조회</a></li>
 <li><a href="#_그룹_삭제">그룹 삭제</a></li>
-<li><a href="#_그룹_삭제_예외">그룹 삭제 예외</a></li>
 </ul>
 </li>
 <li><a href="#_jwt">Jwt</a>
@@ -473,6 +470,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_member">Member</a>
 <ul class="sectlevel2">
 <li><a href="#_추가_정보_입력">추가 정보 입력</a></li>
+<li><a href="#_개인_정보">개인 정보</a></li>
 </ul>
 </li>
 </ul>
@@ -487,7 +485,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 아래 두 API는 인증 없이 접근이 가능합니다.</p>
 </div>
 <div class="paragraph">
-<p><a href="#_주변_그룹_조회">주변 그룹 조회</a> <a href="#_그룹_단건_조회">그룹 단건 조회</a></p>
+<p><a href="#_주변_그룹_조회">주변 그룹 조회</a></p>
 </div>
 </div>
 </div>
@@ -509,8 +507,8 @@ Host: localhost:8080
   "name" : "AmorGakCo",
   "description" : "모각코 합시다.",
   "groupCapacity" : 3,
-  "beginAt" : "2024-08-05T20:42:22.183395",
-  "endAt" : "2024-08-05T23:42:22.183395",
+  "beginAt" : "2024-08-08T21:09:24.527872",
+  "endAt" : "2024-08-09T00:09:24.527872",
   "latitude" : 37.5703901,
   "longitude" : 126.9748397,
   "address" : "서울특별시 종로구 신문로1가 23"
@@ -538,132 +536,9 @@ Content-Length: 79
 </div>
 </div>
 <div class="sect2">
-<h3 id="_그룹_등록_예외_최대_모임_지속_시간_8시간"><a class="link" href="#_그룹_등록_예외_최대_모임_지속_시간_8시간">그룹 등록 예외: 최대 모임 지속 시간 8시간</a></h3>
+<h3 id="_그룹_단건_조회_모달창용"><a class="link" href="#_그룹_단건_조회_모달창용">그룹 단건 조회 [모달창용]</a></h3>
 <div class="sect3">
-<h4 id="_그룹_등록_예외_최대_모임_지속_시간_8시간_http_request"><a class="link" href="#_그룹_등록_예외_최대_모임_지속_시간_8시간_http_request">HTTP request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /groups HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Content-Length: 293
-Host: localhost:8080
-
-{
-  "name" : "AmorGakCo",
-  "description" : "모각코 합시다.",
-  "groupCapacity" : 3,
-  "beginAt" : "2024-08-05T20:42:22.229125",
-  "endAt" : "2024-08-06T04:42:22.229125",
-  "latitude" : 37.5703901,
-  "longitude" : 126.9748397,
-  "address" : "서울특별시 종로구 신문로1가 23"
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_그룹_등록_예외_최대_모임_지속_시간_8시간_http_response"><a class="link" href="#_그룹_등록_예외_최대_모임_지속_시간_8시간_http_response">HTTP response</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-Content-Length: 121
-
-{
-  "status" : "failure",
-  "code" : "303",
-  "message" : "모임 지속 시간은 8시간을 넘을 수 없습니다."
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_그룹_등록_예외_최소_모임_지속_시간_1시간"><a class="link" href="#_그룹_등록_예외_최소_모임_지속_시간_1시간">그룹 등록 예외: 최소 모임 지속 시간 1시간</a></h3>
-<div class="sect3">
-<h4 id="_그룹_등록_예외_최소_모임_지속_시간_1시간_http_request"><a class="link" href="#_그룹_등록_예외_최소_모임_지속_시간_1시간_http_request">HTTP request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /groups HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Content-Length: 293
-Host: localhost:8080
-
-{
-  "name" : "AmorGakCo",
-  "description" : "모각코 합시다.",
-  "groupCapacity" : 3,
-  "beginAt" : "2024-08-05T20:42:22.215181",
-  "endAt" : "2024-08-05T21:12:22.215181",
-  "latitude" : 37.5703901,
-  "longitude" : 126.9748397,
-  "address" : "서울특별시 종로구 신문로1가 23"
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_그룹_등록_예외_최소_모임_지속_시간_1시간_http_response"><a class="link" href="#_그룹_등록_예외_최소_모임_지속_시간_1시간_http_response">HTTP response</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-Content-Length: 121
-
-{
-  "status" : "failure",
-  "code" : "304",
-  "message" : "모임 지속 시간은 1시간 이상 되어야 합니다."
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_그룹_등록_예외_시작_시간이_종료_시간보다_늦는_경우"><a class="link" href="#_그룹_등록_예외_시작_시간이_종료_시간보다_늦는_경우">그룹 등록 예외: 시작 시간이 종료 시간보다 늦는 경우</a></h3>
-<div class="sect3">
-<h4 id="_그룹_등록_예외_시작_시간이_종료_시간보다_늦는_경우_http_request"><a class="link" href="#_그룹_등록_예외_시작_시간이_종료_시간보다_늦는_경우_http_request">HTTP request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /groups HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Content-Length: 293
-Host: localhost:8080
-
-{
-  "name" : "AmorGakCo",
-  "description" : "모각코 합시다.",
-  "groupCapacity" : 3,
-  "beginAt" : "2024-08-05T20:42:22.065807",
-  "endAt" : "2024-08-05T17:42:22.065807",
-  "latitude" : 37.5703901,
-  "longitude" : 126.9748397,
-  "address" : "서울특별시 종로구 신문로1가 23"
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_그룹_등록_예외_시작_시간이_종료_시간보다_늦는_경우_http_response"><a class="link" href="#_그룹_등록_예외_시작_시간이_종료_시간보다_늦는_경우_http_response">HTTP response</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-Content-Length: 121
-
-{
-  "status" : "failure",
-  "code" : "302",
-  "message" : "시작시간이 종료시간보다 늦을 수 없습니다."
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_그룹_단건_조회"><a class="link" href="#_그룹_단건_조회">그룹 단건 조회</a></h3>
-<div class="sect3">
-<h4 id="_그룹_단건_조회_path_parameters"><a class="link" href="#_그룹_단건_조회_path_parameters">Path parameters</a></h4>
+<h4 id="_그룹_단건_조회_모달창용_path_parameters"><a class="link" href="#_그룹_단건_조회_모달창용_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /groups/basic/{groupId}</caption>
 <colgroup>
@@ -685,7 +560,7 @@ Content-Length: 121
 </table>
 </div>
 <div class="sect3">
-<h4 id="_그룹_단건_조회_http_request"><a class="link" href="#_그룹_단건_조회_http_request">HTTP request</a></h4>
+<h4 id="_그룹_단건_조회_모달창용_http_request"><a class="link" href="#_그룹_단건_조회_모달창용_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /groups/basic/1 HTTP/1.1
@@ -694,12 +569,12 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_그룹_단건_조회_http_response"><a class="link" href="#_그룹_단건_조회_http_response">HTTP response</a></h4>
+<h4 id="_그룹_단건_조회_모달창용_http_response"><a class="link" href="#_그룹_단건_조회_모달창용_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 358
+Content-Length: 359
 
 {
   "status" : "success",
@@ -707,11 +582,111 @@ Content-Length: 358
   "data" : {
     "hostNickname" : "아모르겠고",
     "hostImgUrl" : "https://fakeimg",
-    "beginAt" : "2024-08-05T20:42:22.065876",
-    "endAt" : "2024-08-05T23:42:22.06588",
+    "beginAt" : "2024-08-08T21:09:24.390893",
+    "endAt" : "2024-08-09T00:09:24.390898",
     "groupCapacity" : 3,
     "currentParticipants" : 3,
     "address" : "서울특별시 종로구 신문로1가 23"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_그룹_단건_조회_상세페이지용"><a class="link" href="#_그룹_단건_조회_상세페이지용">그룹 단건 조회 [상세페이지용]</a></h3>
+<div class="sect3">
+<h4 id="_그룹_단건_조회_상세페이지용_path_parameters"><a class="link" href="#_그룹_단건_조회_상세페이지용_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /groups/detail/{groupId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>groupId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">그룹 ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_그룹_단건_조회_상세페이지용_path_parameters"><a class="link" href="#_그룹_단건_조회_상세페이지용_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. /groups/detail/{groupId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>groupId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">그룹 ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_그룹_단건_조회_상세페이지용_http_request"><a class="link" href="#_그룹_단건_조회_상세페이지용_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /groups/detail/1 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_그룹_단건_조회_상세페이지용_http_response"><a class="link" href="#_그룹_단건_조회_상세페이지용_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 880
+
+{
+  "status" : "success",
+  "path" : "/groups/detail/1",
+  "data" : {
+    "host" : {
+      "memberId" : 1,
+      "imgUrl" : "https://fakeimg",
+      "nickname" : "아모르겠고",
+      "moGakCoTemperature" : 0,
+      "githubUrl" : null
+    },
+    "name" : "AmorGakCo",
+    "description" : "모각코 합시다.",
+    "address" : "서울특별시 종로구 신문로1가 23",
+    "longitude" : 126.9748397,
+    "latitude" : 37.5703901,
+    "beginAt" : "2024-08-08T21:09:24.390893",
+    "endAt" : "2024-08-09T00:09:24.390898",
+    "groupMembers" : [ {
+      "memberId" : 2,
+      "imgUrl" : "https://fakeimg",
+      "nickname" : "아모르겠고",
+      "moGakCoTemperature" : 0,
+      "githubUrl" : null
+    }, {
+      "memberId" : 3,
+      "imgUrl" : "https://fakeimg",
+      "nickname" : "아모르겠고",
+      "moGakCoTemperature" : 0,
+      "githubUrl" : null
+    } ]
   }
 }</code></pre>
 </div>
@@ -831,56 +806,6 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_그룹_삭제_예외"><a class="link" href="#_그룹_삭제_예외">그룹 삭제 예외</a></h3>
-<div class="sect3">
-<h4 id="_그룹_삭제_예외_path_parameters"><a class="link" href="#_그룹_삭제_예외_path_parameters">Path parameters</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /groups/{groupId}</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>groupId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">그룹 ID</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_그룹_삭제_예외_http_request"><a class="link" href="#_그룹_삭제_예외_http_request">HTTP request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /groups/1 HTTP/1.1
-Host: localhost:8080</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_그룹_삭제_예외_http_response"><a class="link" href="#_그룹_삭제_예외_http_response">HTTP response</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-Content-Length: 101
-
-{
-  "status" : "failure",
-  "code" : "305",
-  "message" : "그룹에대한 권한이 없습니다."
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -960,6 +885,9 @@ Content-Length: 106
 </div>
 <div class="sect2">
 <h3 id="_액세스_토큰_재발급_예외"><a class="link" href="#_액세스_토큰_재발급_예외">액세스 토큰 재발급 예외</a></h3>
+<div class="paragraph">
+<p>리프레쉬 토큰이 만료된 경우 액세스 토큰 재발급이 불가능하기 때문에 다시 로그인해야합니다.</p>
+</div>
 <div class="sect3">
 <h4 id="_액세스_토큰_재발급_예외_http_request"><a class="link" href="#_액세스_토큰_재발급_예외_http_request">HTTP request</a></h4>
 <div class="listingblock">
@@ -1045,13 +973,46 @@ Host: localhost:8080
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_개인_정보"><a class="link" href="#_개인_정보">개인 정보</a></h3>
+<div class="sect3">
+<h4 id="_개인_정보_http_request"><a class="link" href="#_개인_정보_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /members/private HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_개인_정보_http_response"><a class="link" href="#_개인_정보_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 225
+
+{
+  "status" : "success",
+  "path" : "/members/private",
+  "data" : {
+    "smsNotificationSetting" : true,
+    "githubUrl" : "https://github/songhaechan",
+    "phoneNumber" : "01012345678",
+    "moGakCoTemperature" : 50
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-08-01 14:59:14 +0900
+Last updated 2024-08-08 18:07:32 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

@@ -22,7 +22,7 @@ public class IllegalAccessException extends IllegalStateException {
     }
 
     public static IllegalAccessException verificationDuplicated() {
-        return new IllegalAccessException(ErrorCode.VERIFICATION_FAILED);
+        return new IllegalAccessException(ErrorCode.VERIFICATION_DUPLICATED);
     }
 
     public static IllegalAccessException duplicatedParticipant() {

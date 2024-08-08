@@ -1,0 +1,15 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+
+== Notification
+
+=== 알림 내역 조회
+
+operation::notifications[snippets='query-parameters,http-request,http-response']

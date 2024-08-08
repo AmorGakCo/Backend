@@ -22,7 +22,7 @@ spring:
   rabbitmq:
     host: "localhost"
     port: 5672
-    username: "amdin"
-    password: "1234"
+    username: "guest"
+    password: "guest"
 
 fcm-secret-path: fcm-secret.json

@@ -3,6 +3,7 @@ package com.amorgakco.backend.member.controller;
 import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentRequest;
 import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
 
+import static org.mockito.BDDMockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -11,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.amorgakco.backend.docs.RestDocsTest;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.member.dto.AdditionalInfoRequest;
+import com.amorgakco.backend.member.dto.PrivateMemberResponse;
 import com.amorgakco.backend.security.WithMockMember;
 
 import org.junit.jupiter.api.DisplayName;
@@ -44,5 +46,23 @@ class MemberControllerTest extends RestDocsTest {
                                 "member-save-additional-info",
                                 getDocumentRequest(),
                                 getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("회원의 개인정보를 응답받을 수 있다.")
+    @WithMockMember
+    void getMemberPrivate() throws Exception {
+        // given
+        final Long memberId = 1L;
+        final PrivateMemberResponse privateMemberResponse =
+                TestMemberFactory.privateMemberResponse();
+        given(memberService.getPrivateMember(memberId)).willReturn(privateMemberResponse);
+        // when
+        final ResultActions actions = mockMvc.perform(get("/members/private"));
+        // then
+        actions.andExpect(status().isOk());
+        // docs
+        actions.andDo(print())
+                .andDo(document("member-private", getDocumentRequest(), getDocumentResponse()));
     }
 }

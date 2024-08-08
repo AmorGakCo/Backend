@@ -6,9 +6,9 @@ import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.domain.location.Location;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
+import com.amorgakco.backend.group.dto.GroupDetailResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
 import com.amorgakco.backend.group.dto.GroupSearchResponse;
-import com.amorgakco.backend.group.dto.LocationVerificationRequest;
 import com.amorgakco.backend.group.repository.GroupRepository;
 import com.amorgakco.backend.group.service.mapper.GroupMapper;
 import com.amorgakco.backend.member.domain.Member;
@@ -58,6 +58,11 @@ public class GroupService {
                 .orElseThrow(ResourceNotFoundException::groupNotFound);
     }
 
+    public GroupDetailResponse getDetailGroup(final Long groupId) {
+        final Group group = getGroup(groupId);
+        return groupMapper.toGroupDetailResponse(group);
+    }
+
     public GroupBasicResponse getBasicGroup(final Long groupId) {
         final Group group =
                 groupRepository
@@ -78,14 +83,5 @@ public class GroupService {
                 .collect(
                         Collectors.collectingAndThen(
                                 Collectors.toList(), GroupSearchResponse::new));
-    }
-
-    public void verifyParticipantLocation(
-            final LocationVerificationRequest request, final Long memberId) {
-        final Group group =
-                groupRepository
-                        .findByIdWithParticipants(request.groupId())
-                        .orElseThrow(ResourceNotFoundException::groupNotFound);
-        group.verifyLocation(request.longitude(), request.latitude(), memberId);
     }
 }

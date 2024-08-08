@@ -27,7 +27,7 @@ public class Member extends BaseTime {
     private String oauth2Id;
     private String imgUrl;
     private String nickname;
-    private Integer mogakcoTemperature;
+    private Integer moGakCoTemperature;
     private String phoneNumber;
     private String githubUrl;
     private boolean smsNotificationSetting;
@@ -50,7 +50,7 @@ public class Member extends BaseTime {
         this.imgUrl = imgUrl;
         this.nickname = nickname;
         this.roleNames.add(new Roles(Role.ROLE_MEMBER));
-        this.mogakcoTemperature = 0;
+        this.moGakCoTemperature = 0;
         this.smsNotificationSetting = false;
     }
 

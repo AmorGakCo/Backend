@@ -29,6 +29,8 @@ operation::jwt-reissue[snippets='path-parameters,http-request,http-response']
 
 === 액세스 토큰 재발급 예외
 
+리프레쉬 토큰이 만료된 경우 액세스 토큰 재발급이 불가능하기 때문에 다시 로그인해야합니다.
+
 operation::jwt-reissue-exception[snippets='http-request,http-response']
 
 === 로그아웃

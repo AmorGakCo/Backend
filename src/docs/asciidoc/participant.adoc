@@ -1,0 +1,30 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+
+== Participant
+
+=== 참여자 위치 인증
+
+operation::participation-location-verification[snippets='http-request,http-response']
+
+=== 참여자의 모각코 참여 내역
+
+해당 API는 페이징을 통해 데이터를 제공합니다.
+
+시작 페이지는 0부터 시작하며 서버 내부에서 한 페이지에 10개의 데이터를 응답합니다.
+
+다음 데이터는 더보기 버튼을 이용해 페이지 번호를 증가시켜 요청하면 됩니다.(일반적인 번호를 눌러 페이지를 선택하는 방식이 아닙니다.)
+
+operation::participation-history[snippets='query-parameters,http-request,http-response']
+
+
+
+
+

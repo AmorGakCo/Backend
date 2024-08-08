@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/fcm")
+@RequestMapping("/fcm-tokens")
 public class FcmTokenController {
 
     private final FcmTokenService fcmTokenService;
