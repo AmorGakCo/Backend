@@ -3,7 +3,7 @@ package com.amorgakco.backend.groupparticipation.service;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.service.GroupService;
 import com.amorgakco.backend.groupparticipation.domain.GroupParticipation;
-import com.amorgakco.backend.groupparticipation.repository.GroupParticiaptionRepository;
+import com.amorgakco.backend.groupparticipation.repository.GroupParticipationRepository;
 import com.amorgakco.backend.groupparticipation.service.mapper.GroupParticipationMapper;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.notification.infrastructure.NotificationPublisher;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class GroupParticipationService {
 
-    private final GroupParticiaptionRepository groupParticiaptionRepository;
+    private final GroupParticipationRepository groupParticipationRepository;
     private final GroupService groupService;
     private final GroupParticipationMapper groupParticipationMapper;
     private final NotificationPublisher notificationPublisher;
@@ -32,7 +32,7 @@ public class GroupParticipationService {
         group.validateParticipation(new Participant(member));
         final GroupParticipation groupParticipation =
                 groupParticipationMapper.toGroupParticipation(group, member);
-        groupParticiaptionRepository.save(groupParticipation);
+        groupParticipationRepository.save(groupParticipation);
         final NotificationRequest notificationRequest =
                 NotificationCreator.groupJoiningNotification(member, group.getHost());
         notificationPublisher.sendSmsAndFcmWebPush(notificationRequest);
