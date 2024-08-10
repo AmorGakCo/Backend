@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Long> {
-    @Query("select g from Group g join fetch g.host where g.id = :groupId ")
+    @Query("select g from Group g join fetch g.host where g.id = :groupId")
     Optional<Group> findByIdWithHost(Long groupId);
 
     @Query(
@@ -20,7 +20,4 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
                             + "ST_DWithin(g.point,ST_SetSRID(ST_Point(:longitude,:latitude),4326),:radius,false)=true",
             nativeQuery = true)
     List<Group> findByLocationWithRadius(double longitude, double latitude, double radius);
-
-    @Query("select g from Group g join fetch g.participants where g.id=:groupId")
-    Optional<Group> findByIdWithParticipants(Long groupId);
 }

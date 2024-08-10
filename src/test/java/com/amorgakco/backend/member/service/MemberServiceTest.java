@@ -7,6 +7,7 @@ import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.dto.AdditionalInfoRequest;
 import com.amorgakco.backend.member.repository.MemberRepository;
+import com.amorgakco.backend.member.service.mapper.MemberMapper;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,8 +19,9 @@ class MemberServiceTest {
 
     private final MemberRepository memberRepository = mock(MemberRepository.class);
     private final GeometryFactory geometryFactory = new GeometryFactory();
+    private final MemberMapper memberMapper = new MemberMapper();
     private final MemberService memberService =
-            new MemberService(memberRepository, geometryFactory);
+            new MemberService(memberRepository, geometryFactory, memberMapper);
 
     @Test
     @DisplayName("멤버의 추가정보를 입력할 수 있다.")

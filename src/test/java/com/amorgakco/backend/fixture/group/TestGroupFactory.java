@@ -3,7 +3,9 @@ package com.amorgakco.backend.fixture.group;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
+import com.amorgakco.backend.group.dto.GroupDetailResponse;
 import com.amorgakco.backend.group.dto.GroupLocation;
+import com.amorgakco.backend.group.dto.GroupMember;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
 import com.amorgakco.backend.group.dto.GroupSearchResponse;
 import com.amorgakco.backend.member.domain.Member;
@@ -35,7 +37,7 @@ public class TestGroupFactory {
                 .build();
     }
 
-    public static GroupRegisterRequest createGroupRegisterRequest(
+    public static GroupRegisterRequest groupRegisterRequest(
             final LocalDateTime beginAt, final LocalDateTime endAt) {
         return GroupRegisterRequest.builder()
                 .groupCapacity(GROUP_CAPACITY)
@@ -49,7 +51,7 @@ public class TestGroupFactory {
                 .build();
     }
 
-    public static GroupBasicResponse createGroupBasicResponse() {
+    public static GroupBasicResponse groupBasicResponse() {
         final Member member = TestMemberFactory.create(1L);
         return GroupBasicResponse.builder()
                 .hostNickname(member.getNickname())
@@ -62,7 +64,32 @@ public class TestGroupFactory {
                 .build();
     }
 
-    public static GroupSearchResponse createGroupSearchResponse() {
+    public static GroupDetailResponse groupDetailResponse() {
+        return GroupDetailResponse.builder()
+                .host(groupMember(1L))
+                .description(DESCRIPTION)
+                .name(NAME)
+                .address(ADDRESS)
+                .endAt(END_AT)
+                .beginAt(BEGIN_AT)
+                .longitude(LONGITUDE)
+                .latitude(LATITUDE)
+                .groupMembers(List.of(groupMember(2L), groupMember(3L)))
+                .build();
+    }
+
+    private static GroupMember groupMember(final Long memberId) {
+        final Member member = TestMemberFactory.create(memberId);
+        return GroupMember.builder()
+                .memberId(member.getId())
+                .imgUrl(member.getImgUrl())
+                .nickname(member.getNickname())
+                .moGakCoTemperature(member.getMoGakCoTemperature())
+                .githubUrl(member.getGithubUrl())
+                .build();
+    }
+
+    public static GroupSearchResponse groupSearchResponse() {
         return GroupSearchResponse.builder()
                 .locations(
                         List.of(

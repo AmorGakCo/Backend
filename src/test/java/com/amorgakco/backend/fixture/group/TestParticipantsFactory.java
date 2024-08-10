@@ -1,7 +1,7 @@
 package com.amorgakco.backend.fixture.group;
 
-import com.amorgakco.backend.group.domain.Participant;
 import com.amorgakco.backend.member.domain.Member;
+import com.amorgakco.backend.participant.domain.Participant;
 
 public class TestParticipantsFactory {
 

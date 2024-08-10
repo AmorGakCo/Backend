@@ -11,8 +11,10 @@ import java.util.Optional;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
+    @Query(
+            "select m from Member m join fetch m.roleNames where m.oauth2Provider =:provider and m.oauth2Id =:id")
     Optional<Member> findByOauth2ProviderAndOauth2Id(Oauth2Provider provider, String id);
 
-    @Query("select m from Member m join fetch m.roleNames")
+    @Query("select m from Member m join fetch m.roleNames where m.id =:memberId")
     Optional<Member> findByIdWithRoles(Long memberId);
 }
