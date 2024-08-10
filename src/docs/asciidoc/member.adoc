@@ -14,7 +14,7 @@ endif::[]
 
 operation::member-save-additional-info[snippets='http-request,http-response']
 
-=== 개인 정보
+=== 개인 정보 조회
 
 operation::member-private[snippets='http-request,http-response']
 
