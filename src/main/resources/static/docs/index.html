@@ -457,6 +457,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_그룹_삭제">그룹 삭제</a></li>
 </ul>
 </li>
+<li><a href="#_groupparticipation">GroupParticipation</a>
+<ul class="sectlevel2">
+<li><a href="#_그룹_참여">그룹 참여</a></li>
+</ul>
+</li>
+<li><a href="#_participant">Participant</a>
+<ul class="sectlevel2">
+<li><a href="#_참여자_위치_인증">참여자 위치 인증</a></li>
+<li><a href="#_참여자의_모각코_참여_내역">참여자의 모각코 참여 내역</a></li>
+</ul>
+</li>
 <li><a href="#_jwt">Jwt</a>
 <ul class="sectlevel2">
 <li><a href="#_로그인">로그인</a></li>
@@ -470,7 +481,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_member">Member</a>
 <ul class="sectlevel2">
 <li><a href="#_추가_정보_입력">추가 정보 입력</a></li>
-<li><a href="#_개인_정보">개인 정보</a></li>
+<li><a href="#_개인_정보_조회">개인 정보 조회</a></li>
+</ul>
+</li>
+<li><a href="#_notification">Notification</a>
+<ul class="sectlevel2">
+<li><a href="#_알림_내역_조회">알림 내역 조회</a></li>
 </ul>
 </li>
 </ul>
@@ -507,8 +523,8 @@ Host: localhost:8080
   "name" : "AmorGakCo",
   "description" : "모각코 합시다.",
   "groupCapacity" : 3,
-  "beginAt" : "2024-08-08T21:09:24.527872",
-  "endAt" : "2024-08-09T00:09:24.527872",
+  "beginAt" : "2024-08-10T11:55:35.417282",
+  "endAt" : "2024-08-10T14:55:35.417282",
   "latitude" : 37.5703901,
   "longitude" : 126.9748397,
   "address" : "서울특별시 종로구 신문로1가 23"
@@ -582,8 +598,8 @@ Content-Length: 359
   "data" : {
     "hostNickname" : "아모르겠고",
     "hostImgUrl" : "https://fakeimg",
-    "beginAt" : "2024-08-08T21:09:24.390893",
-    "endAt" : "2024-08-09T00:09:24.390898",
+    "beginAt" : "2024-08-10T11:55:35.293837",
+    "endAt" : "2024-08-10T14:55:35.293844",
     "groupCapacity" : 3,
     "currentParticipants" : 3,
     "address" : "서울특별시 종로구 신문로1가 23"
@@ -672,8 +688,8 @@ Content-Length: 880
     "address" : "서울특별시 종로구 신문로1가 23",
     "longitude" : 126.9748397,
     "latitude" : 37.5703901,
-    "beginAt" : "2024-08-08T21:09:24.390893",
-    "endAt" : "2024-08-09T00:09:24.390898",
+    "beginAt" : "2024-08-10T11:55:35.293837",
+    "endAt" : "2024-08-10T14:55:35.293844",
     "groupMembers" : [ {
       "memberId" : 2,
       "imgUrl" : "https://fakeimg",
@@ -802,6 +818,187 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_groupparticipation"><a class="link" href="#_groupparticipation">GroupParticipation</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_그룹_참여"><a class="link" href="#_그룹_참여">그룹 참여</a></h3>
+<div class="sect3">
+<h4 id="_그룹_참여_path_parameters"><a class="link" href="#_그룹_참여_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /groups/{groupId}/participation</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>groupId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">그룹 ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_그룹_참여_http_request"><a class="link" href="#_그룹_참여_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /groups/1/participation HTTP/1.1
+Host: localhost:8080
+Content-Type: application/x-www-form-urlencoded</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_그룹_참여_http_response"><a class="link" href="#_그룹_참여_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_participant"><a class="link" href="#_participant">Participant</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_참여자_위치_인증"><a class="link" href="#_참여자_위치_인증">참여자 위치 인증</a></h3>
+<div class="sect3">
+<h4 id="_참여자_위치_인증_http_request"><a class="link" href="#_참여자_위치_인증_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /participants/locations HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 75
+Host: localhost:8080
+
+{
+  "groupId" : 1,
+  "latitude" : 37.5703901,
+  "longitude" : 126.9748397
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_참여자_위치_인증_http_response"><a class="link" href="#_참여자_위치_인증_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_참여자의_모각코_참여_내역"><a class="link" href="#_참여자의_모각코_참여_내역">참여자의 모각코 참여 내역</a></h3>
+<div class="paragraph">
+<p>해당 API는 페이징을 통해 데이터를 제공합니다.</p>
+</div>
+<div class="paragraph">
+<p>시작 페이지는 0부터 시작하며 서버 내부에서 한 페이지에 10개의 데이터를 응답합니다.</p>
+</div>
+<div class="paragraph">
+<p>다음 데이터는 더보기 버튼을 이용해 페이지 번호를 증가시켜 요청하면 됩니다.(일반적인 번호를 눌러 페이지를 선택하는 방식이 아닙니다.)</p>
+</div>
+<div class="sect3">
+<h4 id="_참여자의_모각코_참여_내역_query_parameters"><a class="link" href="#_참여자의_모각코_참여_내역_query_parameters">Query parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 번호</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_참여자의_모각코_참여_내역_http_request"><a class="link" href="#_참여자의_모각코_참여_내역_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /participants/histories?page=0 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_참여자의_모각코_참여_내역_http_response"><a class="link" href="#_참여자의_모각코_참여_내역_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 1489
+
+{
+  "status" : "success",
+  "path" : "/participants/histories",
+  "data" : {
+    "page" : 0,
+    "elementSize" : 6,
+    "hasNext" : false,
+    "activatedGroup" : [ {
+      "groupId" : 4,
+      "name" : "AmorGakCo",
+      "address" : "서울특별시 종로구 신문로1가 23",
+      "beginAt" : "2024-08-10T11:55:36.905644",
+      "endAt" : "2024-08-10T14:55:36.905651"
+    }, {
+      "groupId" : 5,
+      "name" : "AmorGakCo",
+      "address" : "서울특별시 종로구 신문로1가 23",
+      "beginAt" : "2024-08-10T11:55:36.905644",
+      "endAt" : "2024-08-10T14:55:36.905651"
+    }, {
+      "groupId" : 6,
+      "name" : "AmorGakCo",
+      "address" : "서울특별시 종로구 신문로1가 23",
+      "beginAt" : "2024-08-10T11:55:36.905644",
+      "endAt" : "2024-08-10T14:55:36.905651"
+    } ],
+    "InactivatedGroup" : [ {
+      "groupId" : 1,
+      "name" : "AmorGakCo",
+      "address" : "서울특별시 종로구 신문로1가 23",
+      "beginAt" : "2024-08-10T11:55:36.905644",
+      "endAt" : "2024-08-10T14:55:36.905651"
+    }, {
+      "groupId" : 2,
+      "name" : "AmorGakCo",
+      "address" : "서울특별시 종로구 신문로1가 23",
+      "beginAt" : "2024-08-10T11:55:36.905644",
+      "endAt" : "2024-08-10T14:55:36.905651"
+    }, {
+      "groupId" : 3,
+      "name" : "AmorGakCo",
+      "address" : "서울특별시 종로구 신문로1가 23",
+      "beginAt" : "2024-08-10T11:55:36.905644",
+      "endAt" : "2024-08-10T14:55:36.905651"
+    } ]
+  }
+}</code></pre>
 </div>
 </div>
 </div>
@@ -974,9 +1171,9 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect2">
-<h3 id="_개인_정보"><a class="link" href="#_개인_정보">개인 정보</a></h3>
+<h3 id="_개인_정보_조회"><a class="link" href="#_개인_정보_조회">개인 정보 조회</a></h3>
 <div class="sect3">
-<h4 id="_개인_정보_http_request"><a class="link" href="#_개인_정보_http_request">HTTP request</a></h4>
+<h4 id="_개인_정보_조회_http_request"><a class="link" href="#_개인_정보_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /members/private HTTP/1.1
@@ -985,7 +1182,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_개인_정보_http_response"><a class="link" href="#_개인_정보_http_response">HTTP response</a></h4>
+<h4 id="_개인_정보_조회_http_response"><a class="link" href="#_개인_정보_조회_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1008,11 +1205,79 @@ Content-Length: 225
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_notification"><a class="link" href="#_notification">Notification</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_알림_내역_조회"><a class="link" href="#_알림_내역_조회">알림 내역 조회</a></h3>
+<div class="sect3">
+<h4 id="_알림_내역_조회_query_parameters"><a class="link" href="#_알림_내역_조회_query_parameters">Query parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 번호</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_알림_내역_조회_http_request"><a class="link" href="#_알림_내역_조회_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /notification?page=0 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_알림_내역_조회_http_response"><a class="link" href="#_알림_내역_조회_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 547
+
+{
+  "status" : "success",
+  "path" : "/notification",
+  "data" : {
+    "page" : 0,
+    "elementSize" : 3,
+    "hasNext" : false,
+    "notificationMessages" : [ {
+      "title" : "참여요청",
+      "content" : "아모르겠고님 께서 모각코에 참여하길 원합니다."
+    }, {
+      "title" : "참여요청",
+      "content" : "아모르겠고님 께서 모각코에 참여하길 원합니다."
+    }, {
+      "title" : "참여요청",
+      "content" : "아모르겠고님 께서 모각코에 참여하길 원합니다."
+    } ]
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-08-08 18:07:32 +0900
+Last updated 2024-08-10 11:55:08 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

@@ -20,6 +20,12 @@ endif::[]
 
 include::group.adoc[]
 
+include::groupParticipation.adoc[]
+
+include::participant.adoc[]
+
 include::jwt.adoc[]
 
 include::member.adoc[]
+
+include::notification.adoc[]
