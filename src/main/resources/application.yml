@@ -3,7 +3,8 @@ server:
 
 spring:
   profiles:
-    active: develop
+    active: local
     group:
-      develop: dev,oauth2,jwt,sms
-      production: oauth2,jwt
+      local: local,oauth2,jwt,notification
+      dev: dev,oauth2,jwt,notification
+      prod: oauth2,jwt

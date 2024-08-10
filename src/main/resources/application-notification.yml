@@ -1,0 +1,9 @@
+spring:
+  config:
+    activate:
+      on-profile: notification
+api-key: NCS7Z7Y2GDC7Y2XT
+api-secret: NQPNAB0QDORF9JNOG3SBOCQXIHUOICKM
+server-phone-number: "01087796871"
+slack-url: "https://hooks.slack.com/services/"
+slack-secret: "T07GS1LMCBT/B07GDBNGC66/y5G0D76OkQ8jBzQ0FwBY2Fwq"

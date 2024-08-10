@@ -33,10 +33,10 @@ public class RabbitMQConfig {
         final RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory);
 
         rabbitAdmin.declareQueue(fcmQueue());
+        rabbitAdmin.declareQueue(smsQueue());
         rabbitAdmin.declareExchange(notificationExchange());
         rabbitAdmin.declareBinding(bindingFcmQueue());
         rabbitAdmin.declareBinding(bindingSmsQueue());
-        rabbitAdmin.declareQueue(smsQueue());
 
         return rabbitAdmin;
     }
