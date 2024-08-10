@@ -2,6 +2,7 @@ package com.amorgakco.backend.notification.infrastructure.consumer.fcm;
 
 import com.amorgakco.backend.fcmtoken.repository.FcmTokenRepository;
 import com.amorgakco.backend.notification.infrastructure.consumer.NotificationRequest;
+import com.amorgakco.backend.notification.infrastructure.consumer.slack.SlackSender;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.WebpushConfig;
 import com.google.firebase.messaging.WebpushNotification;
@@ -16,17 +17,19 @@ import org.springframework.stereotype.Component;
 public class FcmWebPushConsumer {
 
     private final FcmTokenRepository fcmTokenRepository;
+    private final SlackSender slackSender;
 
     @RabbitListener(queues = "fcm")
     public void send(final NotificationRequest request) {
-        fcmTokenRepository
-                .findById(request.receiver().getId().toString())
-                .ifPresent(
-                        token ->
-                                createMessage(
-                                        token.getToken(),
-                                        request.notificationTitle().getTitle(),
-                                        request.content()));
+        slackSender.sendNotification(request);
+        //        fcmTokenRepository
+        //                .findById(request.receiver().getId().toString())
+        //                .ifPresent(
+        //                        token ->
+        //                                createMessage(
+        //                                        token.getToken(),
+        //                                        request.notificationTitle().getTitle(),
+        //                                        request.content()));
     }
 
     public Message createMessage(final String token, final String title, final String content) {
