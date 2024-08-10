@@ -3,7 +3,9 @@ package com.amorgakco.backend.member.service;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.dto.AdditionalInfoRequest;
+import com.amorgakco.backend.member.dto.PrivateMemberResponse;
 import com.amorgakco.backend.member.repository.MemberRepository;
+import com.amorgakco.backend.member.service.mapper.MemberMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final GeometryFactory geometryFactory;
+    private final MemberMapper memberMapper;
 
     @Transactional
     public void updateAdditionalInfo(final AdditionalInfoRequest request, final Long memberId) {
@@ -37,5 +40,10 @@ public class MemberService {
         return memberRepository
                 .findByIdWithRoles(memberId)
                 .orElseThrow(ResourceNotFoundException::memberNotFound);
+    }
+
+    public PrivateMemberResponse getPrivateMember(final Long memberId) {
+        final Member member = getMember(memberId);
+        return memberMapper.toPrivateMemberResponse(member);
     }
 }

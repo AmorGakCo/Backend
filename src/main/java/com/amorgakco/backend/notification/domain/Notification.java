@@ -6,6 +6,7 @@ import com.amorgakco.backend.member.domain.Member;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
@@ -25,8 +26,11 @@ public class Notification extends BaseTime {
     @Enumerated(EnumType.STRING)
     private NotificationTitle notificationTitle;
 
-    @OneToOne private Member sender;
-    @OneToOne private Member receiver;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Member sender;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Member receiver;
 
     private String content;
 

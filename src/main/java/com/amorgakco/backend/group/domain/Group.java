@@ -2,9 +2,9 @@ package com.amorgakco.backend.group.domain;
 
 import com.amorgakco.backend.global.BaseTime;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
-import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.location.Location;
 import com.amorgakco.backend.member.domain.Member;
+import com.amorgakco.backend.participant.domain.Participant;
 
 import jakarta.persistence.*;
 
@@ -88,18 +88,17 @@ public class Group extends BaseTime {
         return !host.isEquals(hostId);
     }
 
-    public void verifyLocation(final double longitude, final double latitude, final Long memberId) {
-        final Participant participant =
-                participants.stream()
-                        .filter(p -> p.isParticipant(memberId))
-                        .findFirst()
-                        .orElseThrow(ResourceNotFoundException::participantsNotFound);
-        if (participant.isVerified()) {
-            throw IllegalAccessException.verificationDuplicated();
-        }
+    public void verifyLocation(final double longitude, final double latitude) {
         if (location.isNotInBoundary(longitude, latitude)) {
             throw IllegalAccessException.verificationFailed();
         }
-        participant.verify();
+    }
+
+    public boolean isInactivatedGroup() {
+        return duration.getEndAt().isBefore(LocalDateTime.now());
+    }
+
+    public boolean isActivatedGroup() {
+        return duration.getEndAt().isAfter(LocalDateTime.now());
     }
 }
