@@ -4,7 +4,7 @@ spring:
       on-profile: dev
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://db:5432/amorgakco
+    url: jdbc:postgresql://localhost:5432/amorgakco
     hikari:
       username: admin
       password: 1234
@@ -17,10 +17,10 @@ spring:
         format_sql: true
   data:
     redis:
-      host: redis
+      host: localhost
       port: 6379
   rabbitmq:
-    host: rabbitmq
+    host: localhost
     port: 5672
     username: "guest"
     password: "guest"
