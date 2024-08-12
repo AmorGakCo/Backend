@@ -20,7 +20,7 @@ public class JwtCookieLoader {
     private ResponseCookie makeCookie(final String token) {
         return ResponseCookie.from(REFRESH_TOKEN_COOKIE_NAME, token)
                 .maxAge(COOKIE_AGE_SECONDS)
-                .secure(true)
+                .secure(false)
                 .httpOnly(true)
                 .path("/")
                 .build();
