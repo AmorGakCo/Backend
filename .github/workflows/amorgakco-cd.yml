@@ -1,0 +1,21 @@
+name: AmorGakCo CD
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ssh access
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{secrets.GCP_HOST}}
+          username: ${{secrets.GCP_USERNAME}}
+          key: ${{secrets.GCP_SECRET}}
+          script: |
+            cd Backend
+            git pull
+            sudo docker-compose down -v
+            sudo docker-compose up -d --build
