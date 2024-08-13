@@ -39,14 +39,16 @@ public class NotificationPublisher {
     public void sendFcmWebPush(final NotificationRequest request) {
         final Notification notification = notificationMapper.toNotification(request);
         notificationRepository.save(notification);
-        final Long receiverId = request.receiver().getId();
-        fcmTokenRepository
-                .findById(receiverId.toString())
-                .ifPresent(
-                        token ->
-                                rabbitTemplate.convertAndSend(
-                                        ExchangeName.NOTIFICATION.getName(),
-                                        RoutingKey.NOTIFICATION_FCM.getKey(),
-                                        request));
+        rabbitTemplate.convertAndSend(
+                ExchangeName.NOTIFICATION.getName(), RoutingKey.NOTIFICATION_FCM.getKey(), request);
+        //        final Long receiverId = request.receiver().getId();
+        //        fcmTokenRepository
+        //                .findById(receiverId.toString())
+        //                .ifPresent(
+        //                        token ->
+        //                                rabbitTemplate.convertAndSend(
+        //                                        ExchangeName.NOTIFICATION.getName(),
+        //                                        RoutingKey.NOTIFICATION_FCM.getKey(),
+        //                                        request));
     }
 }
