@@ -21,7 +21,7 @@ http://localhost:8080/oauth2/authorization/kakao
 
 === 액세스 토큰 재발급
 
-operation::jwt-reissue[snippets='path-parameters,http-request,http-response']
+operation::jwt-reissue[snippets='http-request,http-response']
 
 === 액세스 토큰 재발급 예외
 
