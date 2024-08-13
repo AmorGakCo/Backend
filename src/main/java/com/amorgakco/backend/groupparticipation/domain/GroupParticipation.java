@@ -1,8 +1,10 @@
 package com.amorgakco.backend.groupparticipation.domain;
 
 import com.amorgakco.backend.global.BaseTime;
+import com.amorgakco.backend.global.exception.IllegalAccessException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.member.domain.Member;
+import com.amorgakco.backend.participant.domain.Participant;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -31,7 +33,7 @@ public class GroupParticipation extends BaseTime {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
-    private Member member;
+    private Member participant;
 
     @Enumerated(EnumType.STRING)
     private ParticipationStatus participationStatus;
@@ -39,7 +41,22 @@ public class GroupParticipation extends BaseTime {
     @Builder
     public GroupParticipation(final Group group, final Member member) {
         this.group = group;
-        this.member = member;
+        this.participant = member;
         this.participationStatus = ParticipationStatus.PENDING;
+    }
+
+    public void approve(final Member host) {
+        if (group.isNotGroupHost(host.getId())) {
+            throw IllegalAccessException.noAuthorityForGroup();
+        }
+        participationStatus = ParticipationStatus.APPROVED;
+        group.addParticipants(new Participant(participant));
+    }
+
+    public void reject(final Member host) {
+        if (group.isNotGroupHost(host.getId())) {
+            throw IllegalAccessException.noAuthorityForGroup();
+        }
+        participationStatus = ParticipationStatus.REJECTED;
     }
 }

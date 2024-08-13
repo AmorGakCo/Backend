@@ -4,6 +4,7 @@ import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentRequest;
 import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
@@ -40,6 +41,49 @@ class GroupParticipationControllerTest extends RestDocsTest {
                                 "groups-participation",
                                 getDocumentRequest(),
                                 getDocumentResponse(),
-                                pathParameters(parameterWithName("groupId").description("그룹 ID"))));
+                                pathParameters(
+                                        parameterWithName("groupId").description("참여할 그룹 ID"))));
+    }
+
+    @Test
+    @DisplayName("그룹 참여를 허가할 수 있다.")
+    @WithMockMember
+    void approveParticipation() throws Exception {
+        // when
+        final ResultActions actions =
+                mockMvc.perform(post("/groups/{groupId}/participation/{memberId}", 1L, 2L));
+        // then
+        actions.andExpect(status().isCreated());
+        // docs
+        actions.andDo(print())
+                .andDo(
+                        document(
+                                "groups-participation-approve",
+                                getDocumentRequest(),
+                                getDocumentResponse(),
+                                pathParameters(
+                                        parameterWithName("groupId").description("참여할 그룹 ID"),
+                                        parameterWithName("memberId").description("참여 요청 회원 ID"))));
+    }
+
+    @Test
+    @DisplayName("그룹 참여를 거절할 수 있다.")
+    @WithMockMember
+    void rejectParticipation() throws Exception {
+        // when
+        final ResultActions actions =
+                mockMvc.perform(patch("/groups/{groupId}/participation/{memberId}", 1L, 2L));
+        // then
+        actions.andExpect(status().isOk());
+        // docs
+        actions.andDo(print())
+                .andDo(
+                        document(
+                                "groups-participation-reject",
+                                getDocumentRequest(),
+                                getDocumentResponse(),
+                                pathParameters(
+                                        parameterWithName("groupId").description("참여할 그룹 ID"),
+                                        parameterWithName("memberId").description("참여 요청 회원 ID"))));
     }
 }
