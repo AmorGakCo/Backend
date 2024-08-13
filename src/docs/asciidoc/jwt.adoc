@@ -10,16 +10,12 @@ endif::[]
 
 == Jwt
 
-=== 로그인
-
-=== Request
+=== 소셜 로그인
 
 [source]
 ----
 http://localhost:8080/oauth2/authorization/kakao
 ----
-
-=== Response
 
 리프레쉬 토큰은 쿠키로, 액세스 토큰은 바디로 응답합니다.
 
