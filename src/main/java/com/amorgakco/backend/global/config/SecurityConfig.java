@@ -43,7 +43,9 @@ public class SecurityConfig {
                                                 "/token/**",
                                                 "/groups/locations",
                                                 "/groups/detail/**",
-                                                "/groups/basic/**")
+                                                "/groups/basic/**",
+                                                "/groups/locations",
+                                                "/favicon.ico")
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated())
