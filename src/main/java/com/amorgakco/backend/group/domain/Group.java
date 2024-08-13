@@ -30,7 +30,7 @@ public class Group extends BaseTime {
     private String address;
     @Embedded private Duration duration;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member host;
 
     @Embedded private Location location;
