@@ -62,6 +62,6 @@ public class GroupParticipationService {
         final NotificationRequest notificationRequest =
                 NotificationCreator.participationRejectNotification(
                         host, groupParticipation.getParticipant());
-        notificationPublisher.sendSms(notificationRequest);
+        notificationPublisher.sendFcmWebPush(notificationRequest);
     }
 }
