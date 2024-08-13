@@ -18,7 +18,7 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/token")
+@RequestMapping("/tokens")
 public class JwtController {
 
     private final JwtService jwtService;
