@@ -523,8 +523,8 @@ Host: localhost:8080
   "name" : "AmorGakCo",
   "description" : "모각코 합시다.",
   "groupCapacity" : 3,
-  "beginAt" : "2024-08-10T11:55:35.417282",
-  "endAt" : "2024-08-10T14:55:35.417282",
+  "beginAt" : "2024-08-13T16:26:52.175398",
+  "endAt" : "2024-08-13T19:26:52.175398",
   "latitude" : 37.5703901,
   "longitude" : 126.9748397,
   "address" : "서울특별시 종로구 신문로1가 23"
@@ -598,8 +598,8 @@ Content-Length: 359
   "data" : {
     "hostNickname" : "아모르겠고",
     "hostImgUrl" : "https://fakeimg",
-    "beginAt" : "2024-08-10T11:55:35.293837",
-    "endAt" : "2024-08-10T14:55:35.293844",
+    "beginAt" : "2024-08-13T16:26:52.062734",
+    "endAt" : "2024-08-13T19:26:52.062738",
     "groupCapacity" : 3,
     "currentParticipants" : 3,
     "address" : "서울특별시 종로구 신문로1가 23"
@@ -688,8 +688,8 @@ Content-Length: 880
     "address" : "서울특별시 종로구 신문로1가 23",
     "longitude" : 126.9748397,
     "latitude" : 37.5703901,
-    "beginAt" : "2024-08-10T11:55:35.293837",
-    "endAt" : "2024-08-10T14:55:35.293844",
+    "beginAt" : "2024-08-13T16:26:52.062734",
+    "endAt" : "2024-08-13T19:26:52.062738",
     "groupMembers" : [ {
       "memberId" : 2,
       "imgUrl" : "https://fakeimg",
@@ -963,39 +963,39 @@ Content-Length: 1489
       "groupId" : 4,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-10T11:55:36.905644",
-      "endAt" : "2024-08-10T14:55:36.905651"
+      "beginAt" : "2024-08-13T16:26:53.193915",
+      "endAt" : "2024-08-13T19:26:53.193921"
     }, {
       "groupId" : 5,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-10T11:55:36.905644",
-      "endAt" : "2024-08-10T14:55:36.905651"
+      "beginAt" : "2024-08-13T16:26:53.193915",
+      "endAt" : "2024-08-13T19:26:53.193921"
     }, {
       "groupId" : 6,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-10T11:55:36.905644",
-      "endAt" : "2024-08-10T14:55:36.905651"
+      "beginAt" : "2024-08-13T16:26:53.193915",
+      "endAt" : "2024-08-13T19:26:53.193921"
     } ],
     "InactivatedGroup" : [ {
       "groupId" : 1,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-10T11:55:36.905644",
-      "endAt" : "2024-08-10T14:55:36.905651"
+      "beginAt" : "2024-08-13T16:26:53.193915",
+      "endAt" : "2024-08-13T19:26:53.193921"
     }, {
       "groupId" : 2,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-10T11:55:36.905644",
-      "endAt" : "2024-08-10T14:55:36.905651"
+      "beginAt" : "2024-08-13T16:26:53.193915",
+      "endAt" : "2024-08-13T19:26:53.193921"
     }, {
       "groupId" : 3,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-10T11:55:36.905644",
-      "endAt" : "2024-08-10T14:55:36.905651"
+      "beginAt" : "2024-08-13T16:26:53.193915",
+      "endAt" : "2024-08-13T19:26:53.193921"
     } ]
   }
 }</code></pre>
@@ -1031,7 +1031,7 @@ Content-Length: 1489
 <div class="sect3">
 <h4 id="_액세스_토큰_재발급_path_parameters"><a class="link" href="#_액세스_토큰_재발급_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /token/{memberId}</caption>
+<caption class="title">Table 1. /tokens/{memberId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1054,7 +1054,7 @@ Content-Length: 1489
 <h4 id="_액세스_토큰_재발급_http_request"><a class="link" href="#_액세스_토큰_재발급_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /token/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /tokens/1 HTTP/1.1
 Host: localhost:8080
 Cookie: refresh-token=old refresh token
 Content-Type: application/x-www-form-urlencoded</code></pre>
@@ -1067,11 +1067,11 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
 Content-Type: application/json;charset=UTF-8
-Content-Length: 106
+Content-Length: 107
 
 {
   "status" : "success",
-  "path" : "/token/1",
+  "path" : "/tokens/1",
   "data" : {
     "accessToken" : "new access token"
   }
@@ -1089,7 +1089,7 @@ Content-Length: 106
 <h4 id="_액세스_토큰_재발급_예외_http_request"><a class="link" href="#_액세스_토큰_재발급_예외_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /token/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /tokens/1 HTTP/1.1
 Host: localhost:8080
 Cookie: refresh-token=old refresh token
 Content-Type: application/x-www-form-urlencoded</code></pre>
@@ -1119,7 +1119,7 @@ Content-Length: 91
 <h4 id="_로그아웃_http_request"><a class="link" href="#_로그아웃_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /token HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /tokens HTTP/1.1
 Authorization: new access token
 Host: localhost:8080
 Cookie: refresh-token=old refresh token</code></pre>
@@ -1235,7 +1235,7 @@ Content-Length: 225
 <h4 id="_알림_내역_조회_http_request"><a class="link" href="#_알림_내역_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /notification?page=0 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /notifications?page=0 HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1246,11 +1246,11 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 547
+Content-Length: 548
 
 {
   "status" : "success",
-  "path" : "/notification",
+  "path" : "/notifications",
   "data" : {
     "page" : 0,
     "elementSize" : 3,
