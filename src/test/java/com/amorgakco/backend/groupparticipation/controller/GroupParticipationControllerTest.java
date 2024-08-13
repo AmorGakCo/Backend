@@ -33,7 +33,7 @@ class GroupParticipationControllerTest extends RestDocsTest {
         // when
         final ResultActions actions = mockMvc.perform(post("/groups/{groupId}/participation", 1L));
         // then
-        actions.andExpect(status().isNoContent());
+        actions.andExpect(status().isCreated());
         // docs
         actions.andDo(print())
                 .andDo(
@@ -74,7 +74,7 @@ class GroupParticipationControllerTest extends RestDocsTest {
         final ResultActions actions =
                 mockMvc.perform(patch("/groups/{groupId}/participation/{memberId}", 1L, 2L));
         // then
-        actions.andExpect(status().isOk());
+        actions.andExpect(status().isNoContent());
         // docs
         actions.andDo(print())
                 .andDo(

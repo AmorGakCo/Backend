@@ -22,7 +22,7 @@ public class GroupParticipationController {
     private final GroupParticipationService groupParticipationService;
 
     @PostMapping("/{groupId}/participation")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.CREATED)
     public void participate(@PathVariable final Long groupId, @AuthMember final Member member) {
         groupParticipationService.participate(groupId, member);
     }
@@ -37,6 +37,7 @@ public class GroupParticipationController {
     }
 
     @PatchMapping("/{groupId}/participation/{memberId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void reject(
             @PathVariable final Long groupId,
             @PathVariable final Long memberId,

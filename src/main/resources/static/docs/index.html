@@ -523,8 +523,8 @@ Host: localhost:8080
   "name" : "AmorGakCo",
   "description" : "모각코 합시다.",
   "groupCapacity" : 3,
-  "beginAt" : "2024-08-13T18:34:11.950328",
-  "endAt" : "2024-08-13T21:34:11.950328",
+  "beginAt" : "2024-08-13T18:48:11.966078",
+  "endAt" : "2024-08-13T21:48:11.966078",
   "latitude" : 37.5703901,
   "longitude" : 126.9748397,
   "address" : "서울특별시 종로구 신문로1가 23"
@@ -598,8 +598,8 @@ Content-Length: 359
   "data" : {
     "hostNickname" : "아모르겠고",
     "hostImgUrl" : "https://fakeimg",
-    "beginAt" : "2024-08-13T18:34:11.801268",
-    "endAt" : "2024-08-13T21:34:11.801272",
+    "beginAt" : "2024-08-13T18:48:11.841294",
+    "endAt" : "2024-08-13T21:48:11.841298",
     "groupCapacity" : 3,
     "currentParticipants" : 3,
     "address" : "서울특별시 종로구 신문로1가 23"
@@ -688,8 +688,8 @@ Content-Length: 880
     "address" : "서울특별시 종로구 신문로1가 23",
     "longitude" : 126.9748397,
     "latitude" : 37.5703901,
-    "beginAt" : "2024-08-13T18:34:11.801268",
-    "endAt" : "2024-08-13T21:34:11.801272",
+    "beginAt" : "2024-08-13T18:48:11.841294",
+    "endAt" : "2024-08-13T21:48:11.841298",
     "groupMembers" : [ {
       "memberId" : 2,
       "imgUrl" : "https://fakeimg",
@@ -865,7 +865,7 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <h4 id="_그룹_참여_http_response"><a class="link" href="#_그룹_참여_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created</code></pre>
 </div>
 </div>
 </div>
@@ -958,15 +958,7 @@ Host: localhost:8080</code></pre>
 <h4 id="_그룹_참여_거절_http_response"><a class="link" href="#_그룹_참여_거절_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-Content-Length: 83
-
-{
-  "status" : "success",
-  "path" : "/groups/1/participation/2",
-  "data" : null
-}</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content</code></pre>
 </div>
 </div>
 </div>
@@ -1064,39 +1056,39 @@ Content-Length: 1489
       "groupId" : 4,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-13T18:34:13.591298",
-      "endAt" : "2024-08-13T21:34:13.591306"
+      "beginAt" : "2024-08-13T18:48:13.180316",
+      "endAt" : "2024-08-13T21:48:13.180324"
     }, {
       "groupId" : 5,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-13T18:34:13.591298",
-      "endAt" : "2024-08-13T21:34:13.591306"
+      "beginAt" : "2024-08-13T18:48:13.180316",
+      "endAt" : "2024-08-13T21:48:13.180324"
     }, {
       "groupId" : 6,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-13T18:34:13.591298",
-      "endAt" : "2024-08-13T21:34:13.591306"
+      "beginAt" : "2024-08-13T18:48:13.180316",
+      "endAt" : "2024-08-13T21:48:13.180324"
     } ],
     "InactivatedGroup" : [ {
       "groupId" : 1,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-13T18:34:13.591298",
-      "endAt" : "2024-08-13T21:34:13.591306"
+      "beginAt" : "2024-08-13T18:48:13.180316",
+      "endAt" : "2024-08-13T21:48:13.180324"
     }, {
       "groupId" : 2,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-13T18:34:13.591298",
-      "endAt" : "2024-08-13T21:34:13.591306"
+      "beginAt" : "2024-08-13T18:48:13.180316",
+      "endAt" : "2024-08-13T21:48:13.180324"
     }, {
       "groupId" : 3,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-13T18:34:13.591298",
-      "endAt" : "2024-08-13T21:34:13.591306"
+      "beginAt" : "2024-08-13T18:48:13.180316",
+      "endAt" : "2024-08-13T21:48:13.180324"
     } ]
   }
 }</code></pre>
