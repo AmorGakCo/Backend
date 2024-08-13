@@ -15,6 +15,10 @@ public class ResourceNotFoundException extends NoSuchElementException {
         return new ResourceNotFoundException(ErrorCode.MEMBER_NOT_FOUND);
     }
 
+    public static ResourceNotFoundException participationNotFound() {
+        return new ResourceNotFoundException(ErrorCode.PARTICIPATION_NOT_FOUND);
+    }
+
     public static ResourceNotFoundException groupNotFound() {
         return new ResourceNotFoundException(ErrorCode.GROUP_NOT_FOUND);
     }
