@@ -24,14 +24,11 @@ public class JwtService {
     private final JwtCreator jwtCreator;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    public MemberJwt reissue(final String refreshToken, final String requestMemberId) {
+    public MemberJwt reissue(final String refreshToken) {
         final RefreshToken savedRefreshToken = findRefreshTokenFromRedis(refreshToken);
         final String savedMemberId = savedRefreshToken.getMemberId();
-        if (jwtValidator.areBothNotEqual(savedMemberId, requestMemberId)) {
-            throw JwtAuthenticationException.loginAgain();
-        }
         refreshTokenRepository.delete(savedRefreshToken);
-        return createAndSaveMemberToken(requestMemberId);
+        return createAndSaveMemberToken(savedMemberId);
     }
 
     private RefreshToken findRefreshTokenFromRedis(final String token) {

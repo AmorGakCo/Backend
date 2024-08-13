@@ -24,13 +24,12 @@ public class JwtController {
     private final JwtService jwtService;
     private final JwtCookieLoader jwtCookieLoader;
 
-    @PostMapping("/{memberId}")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public AccessTokenResponse reissueAccessToken(
             @CookieValue(value = "refresh-token") final String refreshToken,
-            @PathVariable final String memberId,
             final HttpServletResponse response) {
-        final MemberJwt memberJwt = jwtService.reissue(refreshToken, memberId);
+        final MemberJwt memberJwt = jwtService.reissue(refreshToken);
         jwtCookieLoader.loadCookie(response, memberJwt.refreshToken());
         return new AccessTokenResponse(memberJwt.accessToken());
     }

@@ -5,8 +5,6 @@ import static com.amorgakco.backend.docs.ApiDocsUtils.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -42,25 +40,17 @@ class JwtControllerTest extends RestDocsTest {
     @DisplayName("새로운 액세스 토큰을 응답받을 수 있다.")
     void reissueAccessToken() throws Exception {
         // given
-        final String memberId = "1";
         final MemberJwt memberJwt = new MemberJwt(NEW_ACCESS_TOKEN, NEW_REFRESH_TOKEN);
-        given(jwtService.reissue(OLD_REFRESH_TOKEN, memberId)).willReturn(memberJwt);
+        given(jwtService.reissue(OLD_REFRESH_TOKEN)).willReturn(memberJwt);
         final Cookie oldCookie = new Cookie(COOKIE_NAME, OLD_REFRESH_TOKEN);
         // when
-        final ResultActions actions =
-                mockMvc.perform(post("/tokens/{memberId}", "1").cookie(oldCookie));
+        final ResultActions actions = mockMvc.perform(post("/tokens", "1").cookie(oldCookie));
         // then
         actions.andExpect(status().isCreated())
                 .andExpect(jsonPath("$.data.accessToken").value(NEW_ACCESS_TOKEN));
         // docs
         actions.andDo(print())
-                .andDo(
-                        document(
-                                "jwt-reissue",
-                                getDocumentRequest(),
-                                getDocumentResponse(),
-                                pathParameters(
-                                        parameterWithName("memberId").description("회원 ID"))));
+                .andDo(document("jwt-reissue", getDocumentRequest(), getDocumentResponse()));
     }
 
     @Test
@@ -69,10 +59,9 @@ class JwtControllerTest extends RestDocsTest {
         // given
         final Cookie cookie = new Cookie(COOKIE_NAME, OLD_REFRESH_TOKEN);
         // when
-        given(jwtService.reissue(OLD_REFRESH_TOKEN, "1"))
+        given(jwtService.reissue(OLD_REFRESH_TOKEN))
                 .willThrow(JwtAuthenticationException.loginAgain());
-        final ResultActions actions =
-                mockMvc.perform(post("/tokens/{memberId}", "1").cookie(cookie));
+        final ResultActions actions = mockMvc.perform(post("/tokens", "1").cookie(cookie));
         // then
         actions.andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value(ErrorCode.LOGIN_AGAIN.getCode()));
@@ -82,9 +71,7 @@ class JwtControllerTest extends RestDocsTest {
                         document(
                                 "jwt-reissue-exception",
                                 getDocumentRequest(),
-                                getDocumentResponse(),
-                                pathParameters(
-                                        parameterWithName("memberId").description("회원 ID"))));
+                                getDocumentResponse()));
     }
 
     @Test
