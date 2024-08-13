@@ -6,6 +6,7 @@ build/
 !**/src/test/**/build/
 .DS_Store
 src/main/resources/application-oauth2.yml
+src/main/resources/application-oauth2local.yml
 src/main/resources/application-jwt.yml
 src/main/resources/application-notification.yml
 src/main/resources/fcm-secret.json

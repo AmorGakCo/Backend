@@ -5,6 +5,6 @@ spring:
   profiles:
     active: local
     group:
-      local: local,oauth2,jwt,notification
+      local: local,oauth2local,jwt,notification
       dev: dev,oauth2,jwt,notification
       prod: oauth2,jwt
