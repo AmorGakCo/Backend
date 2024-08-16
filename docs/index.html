@@ -523,8 +523,8 @@ Host: localhost:8080
   "name" : "AmorGakCo",
   "description" : "모각코 합시다.",
   "groupCapacity" : 3,
-  "beginAt" : "2024-08-13T18:48:11.966078",
-  "endAt" : "2024-08-13T21:48:11.966078",
+  "beginAt" : "2024-08-16T13:32:03.925336",
+  "endAt" : "2024-08-16T16:32:03.925336",
   "latitude" : 37.5703901,
   "longitude" : 126.9748397,
   "address" : "서울특별시 종로구 신문로1가 23"
@@ -537,6 +537,9 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
 Content-Length: 79
 
@@ -589,6 +592,9 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
 Content-Length: 359
 
@@ -598,8 +604,8 @@ Content-Length: 359
   "data" : {
     "hostNickname" : "아모르겠고",
     "hostImgUrl" : "https://fakeimg",
-    "beginAt" : "2024-08-13T18:48:11.841294",
-    "endAt" : "2024-08-13T21:48:11.841298",
+    "beginAt" : "2024-08-16T13:32:03.788965",
+    "endAt" : "2024-08-16T16:32:03.788969",
     "groupCapacity" : 3,
     "currentParticipants" : 3,
     "address" : "서울특별시 종로구 신문로1가 23"
@@ -669,6 +675,9 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
 Content-Length: 880
 
@@ -688,8 +697,8 @@ Content-Length: 880
     "address" : "서울특별시 종로구 신문로1가 23",
     "longitude" : 126.9748397,
     "latitude" : 37.5703901,
-    "beginAt" : "2024-08-13T18:48:11.841294",
-    "endAt" : "2024-08-13T21:48:11.841298",
+    "beginAt" : "2024-08-16T13:32:03.788965",
+    "endAt" : "2024-08-16T16:32:03.788969",
     "groupMembers" : [ {
       "memberId" : 2,
       "imgUrl" : "https://fakeimg",
@@ -754,6 +763,9 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
 Content-Length: 358
 
@@ -817,7 +829,10 @@ Host: localhost:8080</code></pre>
 <h4 id="_그룹_삭제_http_response"><a class="link" href="#_그룹_삭제_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
@@ -865,7 +880,10 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <h4 id="_그룹_참여_http_response"><a class="link" href="#_그룹_참여_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
@@ -912,7 +930,10 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <h4 id="_그룹_참여_허가_http_response"><a class="link" href="#_그룹_참여_허가_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
@@ -958,7 +979,10 @@ Host: localhost:8080</code></pre>
 <h4 id="_그룹_참여_거절_http_response"><a class="link" href="#_그룹_참여_거절_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
@@ -991,7 +1015,10 @@ Host: localhost:8080
 <h4 id="_참여자_위치_인증_http_response"><a class="link" href="#_참여자_위치_인증_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
@@ -1042,6 +1069,9 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
 Content-Length: 1489
 
@@ -1056,39 +1086,39 @@ Content-Length: 1489
       "groupId" : 4,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-13T18:48:13.180316",
-      "endAt" : "2024-08-13T21:48:13.180324"
+      "beginAt" : "2024-08-16T13:32:05.277747",
+      "endAt" : "2024-08-16T16:32:05.277754"
     }, {
       "groupId" : 5,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-13T18:48:13.180316",
-      "endAt" : "2024-08-13T21:48:13.180324"
+      "beginAt" : "2024-08-16T13:32:05.277747",
+      "endAt" : "2024-08-16T16:32:05.277754"
     }, {
       "groupId" : 6,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-13T18:48:13.180316",
-      "endAt" : "2024-08-13T21:48:13.180324"
+      "beginAt" : "2024-08-16T13:32:05.277747",
+      "endAt" : "2024-08-16T16:32:05.277754"
     } ],
     "InactivatedGroup" : [ {
       "groupId" : 1,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-13T18:48:13.180316",
-      "endAt" : "2024-08-13T21:48:13.180324"
+      "beginAt" : "2024-08-16T13:32:05.277747",
+      "endAt" : "2024-08-16T16:32:05.277754"
     }, {
       "groupId" : 2,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-13T18:48:13.180316",
-      "endAt" : "2024-08-13T21:48:13.180324"
+      "beginAt" : "2024-08-16T13:32:05.277747",
+      "endAt" : "2024-08-16T16:32:05.277754"
     }, {
       "groupId" : 3,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-13T18:48:13.180316",
-      "endAt" : "2024-08-13T21:48:13.180324"
+      "beginAt" : "2024-08-16T13:32:05.277747",
+      "endAt" : "2024-08-16T16:32:05.277754"
     } ]
   }
 }</code></pre>
@@ -1130,6 +1160,9 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
 Content-Length: 105
 
@@ -1165,6 +1198,9 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 400 Bad Request
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
 Content-Length: 91
 
@@ -1194,7 +1230,10 @@ Cookie: refresh-token=old refresh token</code></pre>
 <h4 id="_로그아웃_http_response"><a class="link" href="#_로그아웃_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
@@ -1229,7 +1268,10 @@ Host: localhost:8080
 <h4 id="_추가_정보_입력_http_response"><a class="link" href="#_추가_정보_입력_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
@@ -1250,6 +1292,9 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
 Content-Length: 225
 
@@ -1309,6 +1354,9 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
 Content-Length: 548
 
@@ -1341,7 +1389,7 @@ Content-Length: 548
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-08-13 16:28:38 +0900
+Last updated 2024-08-15 17:38:37 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
