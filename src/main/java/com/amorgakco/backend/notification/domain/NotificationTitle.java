@@ -6,7 +6,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public enum NotificationTitle {
-    GROUP_JOINING_REQUEST("참여요청");
+    PARTICIPATION_REQUEST("참여 요청"),
+    PARTICIPATION_APPROVED("참여 허가"),
+    PARTICIPATION_REJECTED("참여 거절");
 
     private final String title;
 }

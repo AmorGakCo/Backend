@@ -460,6 +460,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_groupparticipation">GroupParticipation</a>
 <ul class="sectlevel2">
 <li><a href="#_그룹_참여">그룹 참여</a></li>
+<li><a href="#_그룹_참여_허가">그룹 참여 허가</a></li>
+<li><a href="#_그룹_참여_거절">그룹 참여 거절</a></li>
 </ul>
 </li>
 <li><a href="#_participant">Participant</a>
@@ -470,9 +472,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_jwt">Jwt</a>
 <ul class="sectlevel2">
-<li><a href="#_로그인">로그인</a></li>
-<li><a href="#_request">Request</a></li>
-<li><a href="#_response">Response</a></li>
+<li><a href="#_소셜_로그인">소셜 로그인</a></li>
 <li><a href="#_액세스_토큰_재발급">액세스 토큰 재발급</a></li>
 <li><a href="#_액세스_토큰_재발급_예외">액세스 토큰 재발급 예외</a></li>
 <li><a href="#_로그아웃">로그아웃</a></li>
@@ -501,7 +501,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 아래 두 API는 인증 없이 접근이 가능합니다.</p>
 </div>
 <div class="paragraph">
-<p><a href="#_주변_그룹_조회">주변 그룹 조회</a></p>
+<p><a href="#_주변_그룹_조회">주변 그룹 조회</a> <a href="#_그룹_단건_조회_모달창용">그룹 단건 조회 [모달창용]</a> <a href="#_그룹_단건_조회_상세페이지용">그룹 단건 조회 [상세페이지용]</a></p>
 </div>
 </div>
 </div>
@@ -523,8 +523,8 @@ Host: localhost:8080
   "name" : "AmorGakCo",
   "description" : "모각코 합시다.",
   "groupCapacity" : 3,
-  "beginAt" : "2024-08-10T11:55:35.417282",
-  "endAt" : "2024-08-10T14:55:35.417282",
+  "beginAt" : "2024-08-16T13:32:03.925336",
+  "endAt" : "2024-08-16T16:32:03.925336",
   "latitude" : 37.5703901,
   "longitude" : 126.9748397,
   "address" : "서울특별시 종로구 신문로1가 23"
@@ -537,6 +537,9 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
 Content-Length: 79
 
@@ -589,6 +592,9 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
 Content-Length: 359
 
@@ -598,8 +604,8 @@ Content-Length: 359
   "data" : {
     "hostNickname" : "아모르겠고",
     "hostImgUrl" : "https://fakeimg",
-    "beginAt" : "2024-08-10T11:55:35.293837",
-    "endAt" : "2024-08-10T14:55:35.293844",
+    "beginAt" : "2024-08-16T13:32:03.788965",
+    "endAt" : "2024-08-16T16:32:03.788969",
     "groupCapacity" : 3,
     "currentParticipants" : 3,
     "address" : "서울특별시 종로구 신문로1가 23"
@@ -669,6 +675,9 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
 Content-Length: 880
 
@@ -688,8 +697,8 @@ Content-Length: 880
     "address" : "서울특별시 종로구 신문로1가 23",
     "longitude" : 126.9748397,
     "latitude" : 37.5703901,
-    "beginAt" : "2024-08-10T11:55:35.293837",
-    "endAt" : "2024-08-10T14:55:35.293844",
+    "beginAt" : "2024-08-16T13:32:03.788965",
+    "endAt" : "2024-08-16T16:32:03.788969",
     "groupMembers" : [ {
       "memberId" : 2,
       "imgUrl" : "https://fakeimg",
@@ -754,6 +763,9 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
 Content-Length: 358
 
@@ -817,7 +829,10 @@ Host: localhost:8080</code></pre>
 <h4 id="_그룹_삭제_http_response"><a class="link" href="#_그룹_삭제_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
@@ -846,7 +861,7 @@ Host: localhost:8080</code></pre>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>groupId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">그룹 ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">참여할 그룹 ID</p></td>
 </tr>
 </tbody>
 </table>
@@ -865,7 +880,109 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <h4 id="_그룹_참여_http_response"><a class="link" href="#_그룹_참여_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_그룹_참여_허가"><a class="link" href="#_그룹_참여_허가">그룹 참여 허가</a></h3>
+<div class="sect3">
+<h4 id="_그룹_참여_허가_path_parameters"><a class="link" href="#_그룹_참여_허가_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /groups/{groupId}/participation/{memberId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>groupId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">참여할 그룹 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>memberId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">참여 요청 회원 ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_그룹_참여_허가_http_request"><a class="link" href="#_그룹_참여_허가_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /groups/1/participation/2 HTTP/1.1
+Host: localhost:8080
+Content-Type: application/x-www-form-urlencoded</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_그룹_참여_허가_http_response"><a class="link" href="#_그룹_참여_허가_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_그룹_참여_거절"><a class="link" href="#_그룹_참여_거절">그룹 참여 거절</a></h3>
+<div class="sect3">
+<h4 id="_그룹_참여_거절_path_parameters"><a class="link" href="#_그룹_참여_거절_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /groups/{groupId}/participation/{memberId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>groupId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">참여할 그룹 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>memberId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">참여 요청 회원 ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_그룹_참여_거절_http_request"><a class="link" href="#_그룹_참여_거절_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /groups/1/participation/2 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_그룹_참여_거절_http_response"><a class="link" href="#_그룹_참여_거절_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
@@ -898,7 +1015,10 @@ Host: localhost:8080
 <h4 id="_참여자_위치_인증_http_response"><a class="link" href="#_참여자_위치_인증_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
@@ -949,6 +1069,9 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
 Content-Length: 1489
 
@@ -963,39 +1086,39 @@ Content-Length: 1489
       "groupId" : 4,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-10T11:55:36.905644",
-      "endAt" : "2024-08-10T14:55:36.905651"
+      "beginAt" : "2024-08-16T13:32:05.277747",
+      "endAt" : "2024-08-16T16:32:05.277754"
     }, {
       "groupId" : 5,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-10T11:55:36.905644",
-      "endAt" : "2024-08-10T14:55:36.905651"
+      "beginAt" : "2024-08-16T13:32:05.277747",
+      "endAt" : "2024-08-16T16:32:05.277754"
     }, {
       "groupId" : 6,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-10T11:55:36.905644",
-      "endAt" : "2024-08-10T14:55:36.905651"
+      "beginAt" : "2024-08-16T13:32:05.277747",
+      "endAt" : "2024-08-16T16:32:05.277754"
     } ],
     "InactivatedGroup" : [ {
       "groupId" : 1,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-10T11:55:36.905644",
-      "endAt" : "2024-08-10T14:55:36.905651"
+      "beginAt" : "2024-08-16T13:32:05.277747",
+      "endAt" : "2024-08-16T16:32:05.277754"
     }, {
       "groupId" : 2,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-10T11:55:36.905644",
-      "endAt" : "2024-08-10T14:55:36.905651"
+      "beginAt" : "2024-08-16T13:32:05.277747",
+      "endAt" : "2024-08-16T16:32:05.277754"
     }, {
       "groupId" : 3,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-10T11:55:36.905644",
-      "endAt" : "2024-08-10T14:55:36.905651"
+      "beginAt" : "2024-08-16T13:32:05.277747",
+      "endAt" : "2024-08-16T16:32:05.277754"
     } ]
   }
 }</code></pre>
@@ -1009,19 +1132,12 @@ Content-Length: 1489
 <h2 id="_jwt"><a class="link" href="#_jwt">Jwt</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_로그인"><a class="link" href="#_로그인">로그인</a></h3>
-
-</div>
-<div class="sect2">
-<h3 id="_request"><a class="link" href="#_request">Request</a></h3>
+<h3 id="_소셜_로그인"><a class="link" href="#_소셜_로그인">소셜 로그인</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-none hljs">http://localhost:8080/oauth2/authorization/kakao</code></pre>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_response"><a class="link" href="#_response">Response</a></h3>
 <div class="paragraph">
 <p>리프레쉬 토큰은 쿠키로, 액세스 토큰은 바디로 응답합니다.</p>
 </div>
@@ -1029,32 +1145,10 @@ Content-Length: 1489
 <div class="sect2">
 <h3 id="_액세스_토큰_재발급"><a class="link" href="#_액세스_토큰_재발급">액세스 토큰 재발급</a></h3>
 <div class="sect3">
-<h4 id="_액세스_토큰_재발급_path_parameters"><a class="link" href="#_액세스_토큰_재발급_path_parameters">Path parameters</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /token/{memberId}</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>memberId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">회원 ID</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
 <h4 id="_액세스_토큰_재발급_http_request"><a class="link" href="#_액세스_토큰_재발급_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /token/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /tokens HTTP/1.1
 Host: localhost:8080
 Cookie: refresh-token=old refresh token
 Content-Type: application/x-www-form-urlencoded</code></pre>
@@ -1066,12 +1160,15 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 106
+Content-Length: 105
 
 {
   "status" : "success",
-  "path" : "/token/1",
+  "path" : "/tokens",
   "data" : {
     "accessToken" : "new access token"
   }
@@ -1089,7 +1186,7 @@ Content-Length: 106
 <h4 id="_액세스_토큰_재발급_예외_http_request"><a class="link" href="#_액세스_토큰_재발급_예외_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /token/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /tokens HTTP/1.1
 Host: localhost:8080
 Cookie: refresh-token=old refresh token
 Content-Type: application/x-www-form-urlencoded</code></pre>
@@ -1101,6 +1198,9 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 400 Bad Request
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
 Content-Length: 91
 
@@ -1119,7 +1219,7 @@ Content-Length: 91
 <h4 id="_로그아웃_http_request"><a class="link" href="#_로그아웃_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /token HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /tokens HTTP/1.1
 Authorization: new access token
 Host: localhost:8080
 Cookie: refresh-token=old refresh token</code></pre>
@@ -1130,7 +1230,10 @@ Cookie: refresh-token=old refresh token</code></pre>
 <h4 id="_로그아웃_http_response"><a class="link" href="#_로그아웃_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
@@ -1165,7 +1268,10 @@ Host: localhost:8080
 <h4 id="_추가_정보_입력_http_response"><a class="link" href="#_추가_정보_입력_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers</code></pre>
 </div>
 </div>
 </div>
@@ -1186,6 +1292,9 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
 Content-Length: 225
 
@@ -1235,7 +1344,7 @@ Content-Length: 225
 <h4 id="_알림_내역_조회_http_request"><a class="link" href="#_알림_내역_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /notification?page=0 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /notifications?page=0 HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1245,25 +1354,28 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 547
+Content-Length: 548
 
 {
   "status" : "success",
-  "path" : "/notification",
+  "path" : "/notifications",
   "data" : {
     "page" : 0,
     "elementSize" : 3,
     "hasNext" : false,
     "notificationMessages" : [ {
-      "title" : "참여요청",
-      "content" : "아모르겠고님 께서 모각코에 참여하길 원합니다."
+      "title" : "참여 요청",
+      "content" : "아모르겠고님께서 모각코에 참여하길 원합니다."
     }, {
-      "title" : "참여요청",
-      "content" : "아모르겠고님 께서 모각코에 참여하길 원합니다."
+      "title" : "참여 요청",
+      "content" : "아모르겠고님께서 모각코에 참여하길 원합니다."
     }, {
-      "title" : "참여요청",
-      "content" : "아모르겠고님 께서 모각코에 참여하길 원합니다."
+      "title" : "참여 요청",
+      "content" : "아모르겠고님께서 모각코에 참여하길 원합니다."
     } ]
   }
 }</code></pre>
@@ -1277,7 +1389,7 @@ Content-Length: 547
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-08-10 11:55:08 +0900
+Last updated 2024-08-15 17:38:37 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
