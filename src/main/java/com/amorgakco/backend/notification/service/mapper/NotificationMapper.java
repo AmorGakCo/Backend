@@ -17,7 +17,7 @@ public class NotificationMapper {
             final Slice<Notification> notificationSlice) {
         return NotificationMessageResponse.builder()
                 .page(notificationSlice.getNumber())
-                .elementSize(notificationSlice.getSize())
+                .elementSize(notificationSlice.getContent().size())
                 .hasNext(notificationSlice.hasNext())
                 .notificationMessages(getNotificationMessages(notificationSlice.getContent()))
                 .build();

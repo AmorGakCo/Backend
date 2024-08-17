@@ -4,8 +4,8 @@ import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.notification.dto.NotificationMessage;
 import com.amorgakco.backend.notification.dto.NotificationMessageResponse;
-import com.amorgakco.backend.notification.infrastructure.consumer.NotificationCreator;
 import com.amorgakco.backend.notification.infrastructure.consumer.NotificationRequest;
+import com.amorgakco.backend.notification.service.NotificationCreator;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class TestNotificationFactory {
         final Member sender = TestMemberFactory.create(1L);
         final Member receiver = TestMemberFactory.create(2L);
         final NotificationRequest request =
-                NotificationCreator.groupJoiningNotification(sender, receiver);
+                NotificationCreator.participationNotification(sender, receiver);
         return NotificationMessage.builder()
                 .content(request.content())
                 .title(request.notificationTitle().getTitle())

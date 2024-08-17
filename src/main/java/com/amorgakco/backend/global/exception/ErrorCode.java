@@ -31,7 +31,8 @@ public enum ErrorCode {
     LOCATION_NOT_FOUND("308", "주변 모각코가 존재하지 않습니다."),
     VERIFICATION_DUPLICATED("309", "이미 인증이 완료된 회원입니다."),
     PARTICIPANT_DUPLICATED("310", "중복된 회원입니다."),
-    EXCEED_GROUP_CAPACITY("311", "그룹 수용 인원을 초과합니다.");
+    EXCEED_GROUP_CAPACITY("311", "그룹 수용 인원을 초과합니다."),
+    PARTICIPATION_NOT_FOUND("312", "참여 요청을 조회할 수 없습니다.");
 
     private final String code;
     private final String message;
