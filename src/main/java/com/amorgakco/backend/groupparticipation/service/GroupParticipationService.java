@@ -8,8 +8,8 @@ import com.amorgakco.backend.groupparticipation.repository.GroupParticipationRep
 import com.amorgakco.backend.groupparticipation.service.mapper.GroupParticipationMapper;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.notification.infrastructure.NotificationPublisher;
-import com.amorgakco.backend.notification.infrastructure.consumer.NotificationCreator;
 import com.amorgakco.backend.notification.infrastructure.consumer.NotificationRequest;
+import com.amorgakco.backend.notification.service.NotificationCreator;
 import com.amorgakco.backend.participant.domain.Participant;
 
 import lombok.RequiredArgsConstructor;

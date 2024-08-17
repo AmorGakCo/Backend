@@ -4,8 +4,8 @@ import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.notification.dto.NotificationMessage;
 import com.amorgakco.backend.notification.dto.NotificationMessageResponse;
-import com.amorgakco.backend.notification.infrastructure.consumer.NotificationCreator;
 import com.amorgakco.backend.notification.infrastructure.consumer.NotificationRequest;
+import com.amorgakco.backend.notification.service.NotificationCreator;
 
 import java.util.List;
 
