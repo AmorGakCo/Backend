@@ -52,8 +52,11 @@ public class SecurityConfig {
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2Login(
                         oauth ->
-                                oauth.userInfoEndpoint(c -> c.userService(oauth2UserService))
-                                        .successHandler(oauth2SuccessHandler))
+                        {
+                            oauth.userInfoEndpoint(c -> c.userService(oauth2UserService))
+                                    .successHandler(oauth2SuccessHandler);
+                            oauth.authorizationEndpoint(c->c.baseUri("/api/auth/callback"));
+                        })
                 .addFilterBefore(
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtExceptionHandlingFilter, JwtAuthenticationFilter.class)
