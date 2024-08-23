@@ -1,15 +1,14 @@
 package com.amorgakco.backend.group.domain.location;
 
-import jakarta.persistence.Column;
+import com.google.common.geometry.S2CellId;
+import com.google.common.geometry.S2LatLng;
+import com.google.common.geometry.S2Point;
+
 import jakarta.persistence.Embeddable;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import org.locationtech.jts.geom.Point;
-
-import java.awt.*;
 
 @Getter
 @Embeddable
@@ -20,16 +19,20 @@ public class Location {
     // 탐색 허용 반경 : 3000m
     private static final double VALID_RADIUS_LIMIT = 3000;
 
-    @Column(columnDefinition = "geometry(POINT, 4326)", name = "point")
-    private Point point;
+    private String cellToken;
+    private double longitude;
+    private double latitude;
 
-    public Location(final Point point) {
-        this.point = point;
+    public Location(final double longitude, final double latitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        final S2Point point = S2LatLng.fromDegrees(latitude, longitude).toPoint();
+        this.cellToken = S2CellId.fromPoint(point).toToken();
     }
 
     public boolean isNotInBoundary(final double longitude, final double latitude) {
         final double distance =
-                LocationCalculator.getDistance(point.getX(), point.getY(), longitude, latitude);
+                LocationCalculator.getDistance(this.longitude, this.latitude, longitude, latitude);
         return distance > VERIFICATION_RADIUS_LIMIT;
     }
 

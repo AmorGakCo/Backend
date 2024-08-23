@@ -20,7 +20,7 @@ import java.util.Set;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "groups")
+@Table(name = "groups", indexes = @Index(name = "idx_cell_token", columnList = "cell_token"))
 public class Group extends BaseTime {
 
     @Id @GeneratedValue private Long id;
@@ -45,14 +45,15 @@ public class Group extends BaseTime {
             final int groupCapacity,
             final LocalDateTime beginAt,
             final LocalDateTime endAt,
-            final Location location,
+            final double longitude,
+            final double latitude,
             final Member host,
             final String address) {
         this.name = name;
         this.description = description;
         this.groupCapacity = groupCapacity;
         this.duration = new Duration(beginAt, endAt);
-        this.location = location;
+        this.location = new Location(longitude, latitude);
         this.host = host;
         this.address = address;
     }

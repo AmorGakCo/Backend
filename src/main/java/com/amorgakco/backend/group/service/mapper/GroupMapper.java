@@ -2,7 +2,6 @@ package com.amorgakco.backend.group.service.mapper;
 
 import com.amorgakco.backend.group.domain.Duration;
 import com.amorgakco.backend.group.domain.Group;
-import com.amorgakco.backend.group.domain.location.Location;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
 import com.amorgakco.backend.group.dto.GroupDetailResponse;
 import com.amorgakco.backend.group.dto.GroupLocation;
@@ -10,7 +9,6 @@ import com.amorgakco.backend.group.dto.GroupMember;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
 import com.amorgakco.backend.member.domain.Member;
 
-import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,8 +26,8 @@ public class GroupMapper {
                 .description(group.getDescription())
                 .beginAt(group.getDuration().getBeginAt())
                 .endAt(group.getDuration().getEndAt())
-                .latitude(group.getLocation().getPoint().getY())
-                .longitude(group.getLocation().getPoint().getY())
+                .latitude(group.getLocation().getLatitude())
+                .longitude(group.getLocation().getLongitude())
                 .groupMembers(groupMembers)
                 .build();
     }
@@ -44,8 +42,7 @@ public class GroupMapper {
                 .build();
     }
 
-    public Group toGroup(
-            final Member host, final GroupRegisterRequest request, final Location location) {
+    public Group toGroup(final Member host, final GroupRegisterRequest request) {
         return Group.builder()
                 .name(request.name())
                 .address(request.address())
@@ -53,7 +50,8 @@ public class GroupMapper {
                 .beginAt(request.beginAt())
                 .endAt(request.endAt())
                 .groupCapacity(request.groupCapacity())
-                .location(location)
+                .longitude(request.longitude())
+                .latitude(request.latitude())
                 .host(host)
                 .build();
     }
@@ -73,10 +71,9 @@ public class GroupMapper {
     }
 
     public GroupLocation toGroupLocation(final Group group) {
-        final Point point = group.getLocation().getPoint();
         return GroupLocation.builder()
-                .longitude(point.getX())
-                .latitude(point.getY())
+                .longitude(group.getLocation().getLongitude())
+                .latitude(group.getLocation().getLatitude())
                 .groupId(group.getId())
                 .build();
     }
