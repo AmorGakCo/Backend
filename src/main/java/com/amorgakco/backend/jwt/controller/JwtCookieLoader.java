@@ -9,20 +9,29 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtCookieLoader {
 
-    private static final int COOKIE_AGE_SECONDS = 604800;
-    private static final String REFRESH_TOKEN_COOKIE_NAME = "refresh-token";
+    private static final int REFRESH_COOKIE_AGE_SECONDS = 604800;
+    private static final int ACCESS_COOKIE_AGE_SECONDS = 180;
+    private static final String REFRESH_COOKIE_NAME = "refresh-token";
+    private static final String ACCESS_COOKIE_NAME = "access-token";
 
-    public void loadCookie(final HttpServletResponse response, final String refreshToken) {
-        final ResponseCookie refreshTokenCookie = makeCookie(refreshToken);
+    public void loadCookies(
+            final HttpServletResponse response,
+            final String refreshToken,
+            final String accessToken) {
+        final ResponseCookie refreshTokenCookie =
+                makeCookie(REFRESH_COOKIE_NAME, REFRESH_COOKIE_AGE_SECONDS, refreshToken);
+        final ResponseCookie accessTokenCookie =
+                makeCookie(ACCESS_COOKIE_NAME, ACCESS_COOKIE_AGE_SECONDS, accessToken);
         response.setHeader(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString());
+        response.setHeader(HttpHeaders.SET_COOKIE, accessTokenCookie.toString());
     }
 
-    private ResponseCookie makeCookie(final String token) {
-        return ResponseCookie.from(REFRESH_TOKEN_COOKIE_NAME, token)
-                .maxAge(COOKIE_AGE_SECONDS)
+    private ResponseCookie makeCookie(
+            final String cookieName, final int cookieAge, final String token) {
+        return ResponseCookie.from(cookieName, token)
+                .maxAge(cookieAge)
                 .secure(false)
                 .httpOnly(true)
-                .path("/")
                 .build();
     }
 }
