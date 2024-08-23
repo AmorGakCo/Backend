@@ -7,6 +7,7 @@ import com.amorgakco.backend.group.dto.GroupBasicResponse;
 import com.amorgakco.backend.group.dto.GroupDetailResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
 import com.amorgakco.backend.group.dto.GroupSearchResponse;
+import com.amorgakco.backend.group.dto.LocationSearchRequest;
 import com.amorgakco.backend.group.service.GroupService;
 import com.amorgakco.backend.member.domain.Member;
 
@@ -48,9 +49,7 @@ public class GroupController {
 
     @GetMapping("/locations")
     public GroupSearchResponse getLocations(
-            @RequestParam final double longitude,
-            @RequestParam final double latitude,
-            @RequestParam final double radius) {
-        return groupService.getNearByGroups(longitude, latitude, radius);
+            @ModelAttribute final LocationSearchRequest locationSearchRequest) {
+        return groupService.getNearByGroups(locationSearchRequest);
     }
 }
