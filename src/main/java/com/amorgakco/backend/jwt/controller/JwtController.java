@@ -30,7 +30,7 @@ public class JwtController {
             @CookieValue(value = "refresh-token") final String refreshToken,
             final HttpServletResponse response) {
         final MemberJwt memberJwt = jwtService.reissue(refreshToken);
-        jwtCookieLoader.loadCookie(response, memberJwt.refreshToken());
+        jwtCookieLoader.loadCookies(response, memberJwt.refreshToken(), memberJwt.accessToken());
         return new AccessTokenResponse(memberJwt.accessToken());
     }
 
