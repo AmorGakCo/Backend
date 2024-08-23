@@ -20,7 +20,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class JwtService {
     private final JwtProperties jwtProperties;
-    private final JwtValidator jwtValidator;
     private final JwtCreator jwtCreator;
     private final RefreshTokenRepository refreshTokenRepository;
 
