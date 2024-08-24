@@ -1,7 +1,7 @@
 package com.amorgakco.backend.jwt.controller;
 
 import com.amorgakco.backend.jwt.dto.AccessTokenResponse;
-import com.amorgakco.backend.jwt.dto.MemberJwt;
+import com.amorgakco.backend.jwt.dto.MemberTokens;
 import com.amorgakco.backend.jwt.service.JwtService;
 
 import jakarta.servlet.http.Cookie;
@@ -29,9 +29,9 @@ public class JwtController {
     public AccessTokenResponse reissueAccessToken(
             @CookieValue(value = "refresh-token") final String refreshToken,
             final HttpServletResponse response) {
-        final MemberJwt memberJwt = jwtService.reissue(refreshToken);
-        jwtCookieLoader.loadCookies(response, memberJwt.refreshToken(), memberJwt.accessToken());
-        return new AccessTokenResponse(memberJwt.accessToken());
+        final MemberTokens memberTokens = jwtService.reissue(refreshToken);
+        jwtCookieLoader.loadCookie(response, memberTokens.refreshToken());
+        return new AccessTokenResponse(memberTokens.accessToken());
     }
 
     @DeleteMapping

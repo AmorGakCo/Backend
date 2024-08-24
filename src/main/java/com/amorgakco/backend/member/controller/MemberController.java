@@ -2,12 +2,14 @@ package com.amorgakco.backend.member.controller;
 
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
 import com.amorgakco.backend.member.dto.AdditionalInfoRequest;
+import com.amorgakco.backend.member.dto.LoginResponse;
 import com.amorgakco.backend.member.dto.PrivateMemberResponse;
 import com.amorgakco.backend.member.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
 
     private final MemberService memberService;
+
+    @GetMapping("/login")
+    public LoginResponse login(@CookieValue(name = "refresh-token") final String refreshToken) {
+        return memberService.login(refreshToken);
+    }
 
     @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)

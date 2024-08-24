@@ -1,8 +1,11 @@
 package com.amorgakco.backend.member.service;
 
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
+import com.amorgakco.backend.jwt.dto.MemberAccessToken;
+import com.amorgakco.backend.jwt.service.JwtService;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.dto.AdditionalInfoRequest;
+import com.amorgakco.backend.member.dto.LoginResponse;
 import com.amorgakco.backend.member.dto.PrivateMemberResponse;
 import com.amorgakco.backend.member.repository.MemberRepository;
 import com.amorgakco.backend.member.service.mapper.MemberMapper;
@@ -22,6 +25,14 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final GeometryFactory geometryFactory;
     private final MemberMapper memberMapper;
+    private final JwtService jwtService;
+
+    public LoginResponse login(final String refreshToken) {
+        final MemberAccessToken memberAccessToken =
+                jwtService.createMemberAccessToken(refreshToken);
+        final Member member = getMember(Long.parseLong(memberAccessToken.memberId()));
+        return memberMapper.toLoginResponse(member, memberAccessToken.accessToken());
+    }
 
     @Transactional
     public void updateAdditionalInfo(final AdditionalInfoRequest request, final Long memberId) {
