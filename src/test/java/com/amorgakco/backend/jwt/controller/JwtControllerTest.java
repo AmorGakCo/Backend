@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.amorgakco.backend.docs.RestDocsTest;
 import com.amorgakco.backend.global.exception.ErrorCode;
 import com.amorgakco.backend.global.exception.JwtAuthenticationException;
-import com.amorgakco.backend.jwt.dto.MemberJwt;
+import com.amorgakco.backend.jwt.dto.MemberTokens;
 import com.amorgakco.backend.jwt.service.JwtService;
 
 import jakarta.servlet.http.Cookie;
@@ -40,8 +40,8 @@ class JwtControllerTest extends RestDocsTest {
     @DisplayName("새로운 액세스 토큰을 응답받을 수 있다.")
     void reissueAccessToken() throws Exception {
         // given
-        final MemberJwt memberJwt = new MemberJwt(NEW_ACCESS_TOKEN, NEW_REFRESH_TOKEN);
-        given(jwtService.reissue(OLD_REFRESH_TOKEN)).willReturn(memberJwt);
+        final MemberTokens memberTokens = new MemberTokens(NEW_ACCESS_TOKEN, NEW_REFRESH_TOKEN);
+        given(jwtService.reissue(OLD_REFRESH_TOKEN)).willReturn(memberTokens);
         final Cookie oldCookie = new Cookie(COOKIE_NAME, OLD_REFRESH_TOKEN);
         // when
         final ResultActions actions = mockMvc.perform(post("/tokens", "1").cookie(oldCookie));

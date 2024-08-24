@@ -3,7 +3,8 @@ package com.amorgakco.backend.jwt.service;
 import com.amorgakco.backend.global.exception.*;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
 import com.amorgakco.backend.jwt.domain.RefreshToken;
-import com.amorgakco.backend.jwt.dto.MemberJwt;
+import com.amorgakco.backend.jwt.dto.MemberAccessToken;
+import com.amorgakco.backend.jwt.dto.MemberTokens;
 import com.amorgakco.backend.jwt.repository.RefreshTokenRepository;
 
 import jakarta.servlet.http.Cookie;
@@ -23,24 +24,37 @@ public class JwtService {
     private final JwtCreator jwtCreator;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    public MemberJwt reissue(final String refreshToken) {
-        final RefreshToken savedRefreshToken = findRefreshTokenFromRedis(refreshToken);
+    public MemberTokens reissue(final String refreshToken) {
+        final RefreshToken savedRefreshToken = findByRefreshToken(refreshToken);
         final String savedMemberId = savedRefreshToken.getMemberId();
         refreshTokenRepository.delete(savedRefreshToken);
-        return createAndSaveMemberToken(savedMemberId);
+        return createAndSaveMemberTokens(savedMemberId);
     }
 
-    private RefreshToken findRefreshTokenFromRedis(final String token) {
+    private RefreshToken findByRefreshToken(final String token) {
         return refreshTokenRepository
                 .findById(token)
                 .orElseThrow(ResourceNotFoundException::refreshTokenNotFound);
     }
 
-    public MemberJwt createAndSaveMemberToken(final String memberId) {
+    public MemberTokens createAndSaveMemberTokens(final String memberId) {
         final String accessToken = jwtCreator.create(memberId, jwtProperties.accessExpiration());
         final String refreshToken = jwtCreator.create(memberId, jwtProperties.refreshExpiration());
         refreshTokenRepository.save(new RefreshToken(refreshToken, memberId));
-        return new MemberJwt(accessToken, refreshToken);
+        return new MemberTokens(accessToken, refreshToken);
+    }
+
+    public String createAndSaveRefreshToken(final String memberId) {
+        final String refreshToken = jwtCreator.create(memberId, jwtProperties.refreshExpiration());
+        refreshTokenRepository.save(new RefreshToken(refreshToken, memberId));
+        return refreshToken;
+    }
+
+    public MemberAccessToken createMemberAccessToken(final String refreshToken) {
+        final RefreshToken token = findByRefreshToken(refreshToken);
+        final String memberId = token.getMemberId();
+        final String accessToken = jwtCreator.create(memberId, jwtProperties.accessExpiration());
+        return new MemberAccessToken(accessToken, memberId);
     }
 
     public void logout(final Optional<Cookie> cookie) {
