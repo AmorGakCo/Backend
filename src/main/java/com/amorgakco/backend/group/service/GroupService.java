@@ -7,22 +7,14 @@ import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
 import com.amorgakco.backend.group.dto.GroupDetailResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
-import com.amorgakco.backend.group.dto.GroupSearchResponse;
-import com.amorgakco.backend.group.dto.LocationSearchRequest;
 import com.amorgakco.backend.group.repository.GroupRepository;
 import com.amorgakco.backend.group.service.mapper.GroupMapper;
 import com.amorgakco.backend.member.domain.Member;
 
-import com.google.common.geometry.S2CellUnion;
-import com.google.common.geometry.S2LatLng;
-import com.google.common.geometry.S2LatLngRect;
-import com.google.common.geometry.S2RegionCoverer;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -64,23 +56,5 @@ public class GroupService {
                         .findByIdWithHost(groupId)
                         .orElseThrow(ResourceNotFoundException::groupNotFound);
         return groupMapper.toGroupBasicInfoResponse(group);
-    }
-
-    public GroupSearchResponse getNearByGroups(final LocationSearchRequest request) {
-        S2LatLngRect s2LatLngRect =
-                S2LatLngRect.fromPointPair(
-                        S2LatLng.fromDegrees(37.5972353, 127.0859765),
-                        S2LatLng.fromDegrees(37.462507, 126.9261294));
-        S2RegionCoverer coverer =
-                S2RegionCoverer.builder().setMinLevel(14).setMaxLevel(14).setMaxCells(10).build();
-        S2CellUnion covering = coverer.getCovering(s2LatLngRect);
-
-        return groupRepository
-                .findByLocationWithRadius(point.getX(), point.getY(), validRadius)
-                .stream()
-                .map(groupMapper::toGroupLocation)
-                .collect(
-                        Collectors.collectingAndThen(
-                                Collectors.toList(), GroupSearchResponse::new));
     }
 }

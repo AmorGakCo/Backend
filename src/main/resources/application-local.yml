@@ -3,11 +3,10 @@ spring:
     activate:
       on-profile: local
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/amorgakco
-    hikari:
-      username: admin
-      password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/amorgakco
+    username: root
+    password: 1234
   jpa:
     show-sql: true
     hibernate:

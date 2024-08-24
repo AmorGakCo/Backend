@@ -9,12 +9,12 @@ import com.amorgakco.backend.member.dto.LoginResponse;
 import com.amorgakco.backend.member.dto.PrivateMemberResponse;
 import com.amorgakco.backend.member.repository.MemberRepository;
 import com.amorgakco.backend.member.service.mapper.MemberMapper;
+import com.google.common.geometry.S2CellId;
+import com.google.common.geometry.S2LatLng;
+import com.google.common.geometry.S2Point;
 
 import lombok.RequiredArgsConstructor;
 
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class MemberService {
     private final MemberRepository memberRepository;
-    private final GeometryFactory geometryFactory;
     private final MemberMapper memberMapper;
     private final JwtService jwtService;
 
@@ -37,14 +36,17 @@ public class MemberService {
     @Transactional
     public void updateAdditionalInfo(final AdditionalInfoRequest request, final Long memberId) {
         final Member member = getMember(memberId);
-        final Point location =
-                geometryFactory.createPoint(
-                        new Coordinate(request.longitude(), request.latitude()));
+        final String memberCellToken = createMemberCellToken(request.latitude(), request.longitude());
         member.validateAndUpdateAdditionalInfo(
                 request.githubUrl(),
                 request.phoneNumber(),
                 request.smsNotificationSetting(),
-                location);
+                memberCellToken);
+    }
+
+    private String createMemberCellToken(final double latitude, final double longitude){
+        final S2Point point = S2LatLng.fromDegrees(latitude, latitude).toPoint();
+        return S2CellId.fromPoint(point).parent(14).toToken();
     }
 
     public Member getMember(final Long memberId) {

@@ -2,7 +2,6 @@ package com.amorgakco.backend.group.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
-import com.amorgakco.backend.fixture.group.TestLocationFactory;
 import com.amorgakco.backend.group.domain.location.Location;
 
 import org.junit.jupiter.api.DisplayName;

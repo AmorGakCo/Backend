@@ -8,8 +8,6 @@ import jakarta.persistence.*;
 
 import lombok.*;
 
-import org.locationtech.jts.geom.Point;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,9 +29,7 @@ public class Member extends BaseTime {
     private String phoneNumber;
     private String githubUrl;
     private boolean smsNotificationSetting;
-
-    @Column(columnDefinition = "geometry(POINT, 4326)", name = "location")
-    private Point location;
+    private String cellToken;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -63,13 +59,13 @@ public class Member extends BaseTime {
             final String githubUrl,
             final String phoneNumber,
             final boolean setting,
-            final Point location) {
+            final String cellToken) {
         validateGithubUrl(githubUrl);
         validatePhoneNumber(phoneNumber);
         this.githubUrl = githubUrl;
         this.phoneNumber = phoneNumber;
         this.smsNotificationSetting = setting;
-        this.location = location;
+        this.cellToken = cellToken;
     }
 
     private void validateGithubUrl(final String githubUrl) {
