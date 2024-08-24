@@ -20,7 +20,9 @@ import java.util.Set;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "groups", indexes = @Index(name = "idx_cell_token", columnList = "cell_token"))
+@Table(
+        name = "amorgakco_group",
+        indexes = @Index(name = "idx_cell_token", columnList = "cell_token"))
 public class Group extends BaseTime {
 
     @Id @GeneratedValue private Long id;
