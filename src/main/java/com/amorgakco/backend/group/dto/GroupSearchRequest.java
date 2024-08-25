@@ -1,6 +1,9 @@
 package com.amorgakco.backend.group.dto;
 
-public record LocationSearchRequest(
+import lombok.Builder;
+
+@Builder
+public record GroupSearchRequest(
         double southWestLat,
         double southWestLon,
         double northEastLat,
