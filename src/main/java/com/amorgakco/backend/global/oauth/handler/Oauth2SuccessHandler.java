@@ -1,7 +1,6 @@
 package com.amorgakco.backend.global.oauth.handler;
 
 import com.amorgakco.backend.jwt.controller.JwtCookieLoader;
-import com.amorgakco.backend.jwt.dto.MemberJwt;
 import com.amorgakco.backend.jwt.service.JwtProperties;
 import com.amorgakco.backend.jwt.service.JwtService;
 
@@ -30,8 +29,8 @@ public class Oauth2SuccessHandler implements AuthenticationSuccessHandler {
             final HttpServletResponse response,
             final Authentication authentication)
             throws IOException {
-        final MemberJwt memberJwt = jwtService.createAndSaveMemberToken(authentication.getName());
-        jwtCookieLoader.loadCookies(response, memberJwt.refreshToken(), memberJwt.accessToken());
+        final String refreshToken = jwtService.createAndSaveRefreshToken(authentication.getName());
+        jwtCookieLoader.loadCookie(response, refreshToken);
         response.sendRedirect(jwtProperties.frontUrl());
     }
 }

@@ -2,12 +2,21 @@ package com.amorgakco.backend.member.service.mapper;
 
 import com.amorgakco.backend.global.oauth.userinfo.Oauth2UserInfo;
 import com.amorgakco.backend.member.domain.Member;
+import com.amorgakco.backend.member.dto.LoginResponse;
 import com.amorgakco.backend.member.dto.PrivateMemberResponse;
 
 import org.springframework.stereotype.Component;
 
 @Component
 public class MemberMapper {
+
+    public LoginResponse toLoginResponse(final Member member, final String accessToken) {
+        return LoginResponse.builder()
+                .accessToken(accessToken)
+                .imgUrl(member.getImgUrl())
+                .nickname(member.getNickname())
+                .build();
+    }
 
     public Member toMember(final Oauth2UserInfo oauth2UserInfo) {
         return Member.builder()
