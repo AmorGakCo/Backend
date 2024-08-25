@@ -1,5 +1,6 @@
 package com.amorgakco.backend.member.service;
 
+import com.amorgakco.backend.global.GoogleS2Const;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.jwt.dto.MemberAccessToken;
 import com.amorgakco.backend.jwt.service.JwtService;
@@ -36,7 +37,8 @@ public class MemberService {
     @Transactional
     public void updateAdditionalInfo(final AdditionalInfoRequest request, final Long memberId) {
         final Member member = getMember(memberId);
-        final String memberCellToken = createMemberCellToken(request.latitude(), request.longitude());
+        final String memberCellToken =
+                createMemberCellToken(request.latitude(), request.longitude());
         member.validateAndUpdateAdditionalInfo(
                 request.githubUrl(),
                 request.phoneNumber(),
@@ -44,9 +46,9 @@ public class MemberService {
                 memberCellToken);
     }
 
-    private String createMemberCellToken(final double latitude, final double longitude){
-        final S2Point point = S2LatLng.fromDegrees(latitude, latitude).toPoint();
-        return S2CellId.fromPoint(point).parent(14).toToken();
+    private String createMemberCellToken(final double latitude, final double longitude) {
+        final S2Point point = S2LatLng.fromDegrees(latitude, longitude).toPoint();
+        return S2CellId.fromPoint(point).parent(GoogleS2Const.S2_CELL_LEVEL.getValue()).toToken();
     }
 
     public Member getMember(final Long memberId) {

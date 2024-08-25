@@ -1,5 +1,6 @@
 package com.amorgakco.backend.group.service;
 
+import com.amorgakco.backend.global.GoogleS2Const;
 import com.amorgakco.backend.group.dto.GroupSearchRequest;
 import com.amorgakco.backend.group.dto.GroupSearchResponse;
 import com.amorgakco.backend.group.repository.GroupRepository;
@@ -21,7 +22,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class S2GroupLocationService implements GroupLocationService {
 
-    private static final int S2_CELL_LEVEL = 14;
     private final GroupRepository groupRepository;
     private final GroupMapper groupMapper;
 
@@ -29,8 +29,8 @@ public class S2GroupLocationService implements GroupLocationService {
         final S2LatLngRect s2LatLngRect = getRectangleRegion(request);
         final S2RegionCoverer coverer =
                 S2RegionCoverer.builder()
-                        .setMinLevel(S2_CELL_LEVEL)
-                        .setMaxLevel(S2_CELL_LEVEL)
+                        .setMinLevel(GoogleS2Const.S2_CELL_LEVEL.getValue())
+                        .setMaxLevel(GoogleS2Const.S2_CELL_LEVEL.getValue())
                         .build();
         final ArrayList<S2CellId> cellIds = new ArrayList<>();
         coverer.getCovering(s2LatLngRect, cellIds);
