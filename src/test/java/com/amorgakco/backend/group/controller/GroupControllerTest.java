@@ -10,7 +10,6 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
-import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -25,7 +24,6 @@ import com.amorgakco.backend.global.exception.IllegalTimeException;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
 import com.amorgakco.backend.group.dto.GroupDetailResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
-import com.amorgakco.backend.group.dto.GroupSearchResponse;
 import com.amorgakco.backend.group.service.GroupService;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.security.WithMockMember;
@@ -228,35 +226,5 @@ class GroupControllerTest extends RestDocsTest {
                                 getDocumentRequest(),
                                 getDocumentResponse(),
                                 pathParameters(parameterWithName("groupId").description("그룹 ID"))));
-    }
-
-    @Test
-    @DisplayName("그룹들의 위치 정보를 응답 받을 수 있다.")
-    void getNearByGroups() throws Exception {
-        // when
-        final GroupSearchResponse response = TestGroupFactory.groupSearchResponse();
-        final double longitude = 126.9769117;
-        final double latitude = 37.572389;
-        final double radius = 500;
-        given(groupService.getNearByGroups(longitude, latitude, radius)).willReturn(response);
-        final ResultActions actions =
-                mockMvc.perform(
-                        get("/groups/locations")
-                                .queryParam("longitude", "126.9769117")
-                                .queryParam("latitude", "37.572389")
-                                .queryParam("radius", "500"));
-        // then
-        actions.andExpect(status().isOk());
-        // docs
-        actions.andDo(print())
-                .andDo(
-                        document(
-                                "group-get-nearby",
-                                getDocumentRequest(),
-                                getDocumentResponse(),
-                                queryParameters(
-                                        parameterWithName("longitude").description("경도"),
-                                        parameterWithName("latitude").description("위도"),
-                                        parameterWithName("radius").description("반지름 [단위:m]"))));
     }
 }

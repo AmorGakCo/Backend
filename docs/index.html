@@ -523,8 +523,8 @@ Host: localhost:8080
   "name" : "AmorGakCo",
   "description" : "모각코 합시다.",
   "groupCapacity" : 3,
-  "beginAt" : "2024-08-16T13:32:03.925336",
-  "endAt" : "2024-08-16T16:32:03.925336",
+  "beginAt" : "2024-08-25T11:51:04.251728",
+  "endAt" : "2024-08-25T14:51:04.251728",
   "latitude" : 37.5703901,
   "longitude" : 126.9748397,
   "address" : "서울특별시 종로구 신문로1가 23"
@@ -604,8 +604,8 @@ Content-Length: 359
   "data" : {
     "hostNickname" : "아모르겠고",
     "hostImgUrl" : "https://fakeimg",
-    "beginAt" : "2024-08-16T13:32:03.788965",
-    "endAt" : "2024-08-16T16:32:03.788969",
+    "beginAt" : "2024-08-25T11:51:04.101337",
+    "endAt" : "2024-08-25T14:51:04.101342",
     "groupCapacity" : 3,
     "currentParticipants" : 3,
     "address" : "서울특별시 종로구 신문로1가 23"
@@ -697,8 +697,8 @@ Content-Length: 880
     "address" : "서울특별시 종로구 신문로1가 23",
     "longitude" : 126.9748397,
     "latitude" : 37.5703901,
-    "beginAt" : "2024-08-16T13:32:03.788965",
-    "endAt" : "2024-08-16T16:32:03.788969",
+    "beginAt" : "2024-08-25T11:51:04.101337",
+    "endAt" : "2024-08-25T14:51:04.101342",
     "groupMembers" : [ {
       "memberId" : 2,
       "imgUrl" : "https://fakeimg",
@@ -735,16 +735,28 @@ Content-Length: 880
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>longitude</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">경도</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>southWestLat</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">지도 남서쪽 위도</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>latitude</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">위도</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>southWestLon</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">지도 남서쪽 경도</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>radius</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">반지름 [단위:m]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>northEastLat</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">지도 북동쪽 위도</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>northEastLon</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">지도 북동쪽 경도</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>centerLat</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">지도 중앙 위도</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>centerLon</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">지도 중앙 경도</p></td>
 </tr>
 </tbody>
 </table>
@@ -753,7 +765,7 @@ Content-Length: 880
 <h4 id="_주변_그룹_조회_http_request"><a class="link" href="#_주변_그룹_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /groups/locations?longitude=126.9769117&amp;latitude=37.572389&amp;radius=500 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /groups/locations?southWestLat=37.50242&amp;southWestLon=127.0167&amp;northEastLat=37.52911&amp;northEastLon=127.0439&amp;centerLat=37.5162149&amp;centerLon=127.0195806 HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1073,7 +1085,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1489
+Content-Length: 1483
 
 {
   "status" : "success",
@@ -1086,39 +1098,39 @@ Content-Length: 1489
       "groupId" : 4,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-16T13:32:05.277747",
-      "endAt" : "2024-08-16T16:32:05.277754"
+      "beginAt" : "2024-08-25T11:51:06.07031",
+      "endAt" : "2024-08-25T14:51:06.070315"
     }, {
       "groupId" : 5,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-16T13:32:05.277747",
-      "endAt" : "2024-08-16T16:32:05.277754"
+      "beginAt" : "2024-08-25T11:51:06.07031",
+      "endAt" : "2024-08-25T14:51:06.070315"
     }, {
       "groupId" : 6,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-16T13:32:05.277747",
-      "endAt" : "2024-08-16T16:32:05.277754"
+      "beginAt" : "2024-08-25T11:51:06.07031",
+      "endAt" : "2024-08-25T14:51:06.070315"
     } ],
     "InactivatedGroup" : [ {
       "groupId" : 1,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-16T13:32:05.277747",
-      "endAt" : "2024-08-16T16:32:05.277754"
+      "beginAt" : "2024-08-25T11:51:06.07031",
+      "endAt" : "2024-08-25T14:51:06.070315"
     }, {
       "groupId" : 2,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-16T13:32:05.277747",
-      "endAt" : "2024-08-16T16:32:05.277754"
+      "beginAt" : "2024-08-25T11:51:06.07031",
+      "endAt" : "2024-08-25T14:51:06.070315"
     }, {
       "groupId" : 3,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-08-16T13:32:05.277747",
-      "endAt" : "2024-08-16T16:32:05.277754"
+      "beginAt" : "2024-08-25T11:51:06.07031",
+      "endAt" : "2024-08-25T14:51:06.070315"
     } ]
   }
 }</code></pre>
@@ -1358,7 +1370,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 548
+Content-Length: 551
 
 {
   "status" : "success",
@@ -1369,13 +1381,13 @@ Content-Length: 548
     "hasNext" : false,
     "notificationMessages" : [ {
       "title" : "참여 요청",
-      "content" : "아모르겠고님께서 모각코에 참여하길 원합니다."
+      "content" : "아모르겠고 님께서 모각코에 참여하길 원합니다."
     }, {
       "title" : "참여 요청",
-      "content" : "아모르겠고님께서 모각코에 참여하길 원합니다."
+      "content" : "아모르겠고 님께서 모각코에 참여하길 원합니다."
     }, {
       "title" : "참여 요청",
-      "content" : "아모르겠고님께서 모각코에 참여하길 원합니다."
+      "content" : "아모르겠고 님께서 모각코에 참여하길 원합니다."
     } ]
   }
 }</code></pre>
