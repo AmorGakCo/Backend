@@ -4,12 +4,12 @@ import static org.assertj.core.api.Assertions.*;
 
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.global.exception.IllegalFormatException;
+import com.google.common.geometry.S2CellId;
+import com.google.common.geometry.S2LatLng;
+import com.google.common.geometry.S2Point;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.Point;
 
 class MemberTest {
 
@@ -18,13 +18,12 @@ class MemberTest {
     void updateAddtionalInfo() {
         // given
         final Member member = TestMemberFactory.create(1L);
-        final GeometryFactory geometryFactory = new GeometryFactory();
-        final Point point = geometryFactory.createPoint(new Coordinate(128.3245, 37.3243));
+        final S2Point point = S2LatLng.fromDegrees(37.3243, 128.3245).toPoint();
+        final String cellToken = S2CellId.fromPoint(point).parent(14).toToken();
         // when
-        member.validateAndUpdateAdditionalInfo("github.com/song", "01011112222", true, point);
+        member.validateAndUpdateAdditionalInfo("github.com/song", "01011112222", true, cellToken);
         // then
-        assertThat(member.getLocation().getX()).isEqualTo(128.3245);
-        assertThat(member.getLocation().getY()).isEqualTo(37.3243);
+        assertThat(member.getCellToken()).isEqualTo(cellToken);
         assertThat(member.getGithubUrl()).isEqualTo("github.com/song");
         assertThat(member.getPhoneNumber()).isEqualTo("01011112222");
     }
@@ -34,13 +33,13 @@ class MemberTest {
     void validateGithubAddress() {
         // given
         final Member member = TestMemberFactory.create(1L);
-        final GeometryFactory geometryFactory = new GeometryFactory();
-        final Point point = geometryFactory.createPoint(new Coordinate(128.3245, 37.3243));
+        final S2Point point = S2LatLng.fromDegrees(37.3243, 128.3245).toPoint();
+        final String cellToken = S2CellId.fromPoint(point).parent(14).toToken();
         // when & then
         assertThatThrownBy(
                         () ->
                                 member.validateAndUpdateAdditionalInfo(
-                                        "invalid.com", "01011112222", true, point))
+                                        "invalid.com", "01011112222", true, cellToken))
                 .isInstanceOf(IllegalFormatException.class);
     }
 
@@ -49,13 +48,13 @@ class MemberTest {
     void validatePhoneNumber() {
         // given
         final Member member = TestMemberFactory.create(1L);
-        final GeometryFactory geometryFactory = new GeometryFactory();
-        final Point point = geometryFactory.createPoint(new Coordinate(128.3245, 37.3243));
+        final S2Point point = S2LatLng.fromDegrees(37.3243, 128.3245).toPoint();
+        final String cellToken = S2CellId.fromPoint(point).parent(14).toToken();
         // when & then
         assertThatThrownBy(
                         () ->
                                 member.validateAndUpdateAdditionalInfo(
-                                        "invalid.com", "010-1111-2222", true, point))
+                                        "invalid.com", "010-1111-2222", true, cellToken))
                 .isInstanceOf(IllegalFormatException.class);
     }
 }

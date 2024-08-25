@@ -1,7 +1,7 @@
 package com.amorgakco.backend.group.controller;
 
+import com.amorgakco.backend.group.dto.GroupSearchRequest;
 import com.amorgakco.backend.group.dto.GroupSearchResponse;
-import com.amorgakco.backend.group.dto.LocationSearchRequest;
 import com.amorgakco.backend.group.service.GroupLocationService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class GroupLocationController {
 
     @GetMapping("/locations")
     public GroupSearchResponse getLocations(
-            @ModelAttribute final LocationSearchRequest locationSearchRequest) {
-        return groupLocationService.getNearByGroups(locationSearchRequest);
+            @ModelAttribute final GroupSearchRequest groupSearchRequest) {
+        return groupLocationService.getNearByGroups(groupSearchRequest);
     }
 }

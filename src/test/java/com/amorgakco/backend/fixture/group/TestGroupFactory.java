@@ -7,6 +7,7 @@ import com.amorgakco.backend.group.dto.GroupDetailResponse;
 import com.amorgakco.backend.group.dto.GroupLocation;
 import com.amorgakco.backend.group.dto.GroupMember;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
+import com.amorgakco.backend.group.dto.GroupSearchRequest;
 import com.amorgakco.backend.group.dto.GroupSearchResponse;
 import com.amorgakco.backend.member.domain.Member;
 
@@ -97,6 +98,17 @@ public class TestGroupFactory {
                                 new GroupLocation(23.1111, 122.2222, 1L),
                                 new GroupLocation(12.1341, 123.2222, 2L),
                                 new GroupLocation(11.1111, 221.2222, 3L)))
+                .build();
+    }
+
+    public static GroupSearchRequest groupSearchRequest() {
+        return GroupSearchRequest.builder()
+                .centerLat(37.5162149)
+                .centerLon(127.0195806)
+                .northEastLat(37.52911)
+                .northEastLon(127.0439)
+                .southWestLat(37.50242)
+                .southWestLon(127.0167)
                 .build();
     }
 }

@@ -3,6 +3,7 @@ package com.amorgakco.backend.fixture.member;
 import com.amorgakco.backend.global.oauth.provider.Oauth2Provider;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.dto.AdditionalInfoRequest;
+import com.amorgakco.backend.member.dto.LoginResponse;
 import com.amorgakco.backend.member.dto.PrivateMemberResponse;
 
 public class TestMemberFactory {
@@ -38,6 +39,14 @@ public class TestMemberFactory {
                 .phoneNumber(PHONE_NUMBER)
                 .moGakCoTemperature(MOGAKCO_TEMPERATURE)
                 .smsNotificationSetting(true)
+                .build();
+    }
+
+    public static LoginResponse loginResponse() {
+        return LoginResponse.builder()
+                .nickname(NICKNAME)
+                .imgUrl(IMG_URL)
+                .accessToken("access-token")
                 .build();
     }
 }

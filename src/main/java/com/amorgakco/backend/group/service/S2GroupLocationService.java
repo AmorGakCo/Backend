@@ -1,7 +1,7 @@
 package com.amorgakco.backend.group.service;
 
+import com.amorgakco.backend.group.dto.GroupSearchRequest;
 import com.amorgakco.backend.group.dto.GroupSearchResponse;
-import com.amorgakco.backend.group.dto.LocationSearchRequest;
 import com.amorgakco.backend.group.repository.GroupRepository;
 import com.amorgakco.backend.group.service.mapper.GroupMapper;
 import com.google.common.geometry.S2CellId;
@@ -25,7 +25,7 @@ public class S2GroupLocationService implements GroupLocationService {
     private final GroupRepository groupRepository;
     private final GroupMapper groupMapper;
 
-    public GroupSearchResponse getNearByGroups(final LocationSearchRequest request) {
+    public GroupSearchResponse getNearByGroups(final GroupSearchRequest request) {
         final S2LatLngRect s2LatLngRect = getRectangleRegion(request);
         final S2RegionCoverer coverer =
                 S2RegionCoverer.builder()
@@ -46,7 +46,7 @@ public class S2GroupLocationService implements GroupLocationService {
                                 Collectors.toList(), GroupSearchResponse::new));
     }
 
-    private S2LatLngRect getRectangleRegion(final LocationSearchRequest request) {
+    private S2LatLngRect getRectangleRegion(final GroupSearchRequest request) {
         return S2LatLngRect.fromPointPair(
                 S2LatLng.fromDegrees(request.southWestLat(), request.southWestLon()),
                 S2LatLng.fromDegrees(request.northEastLat(), request.northEastLon()));
