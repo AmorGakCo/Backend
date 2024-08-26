@@ -35,7 +35,14 @@ public class S2GroupLocationService implements GroupLocationService {
         final ArrayList<S2CellId> cellIds = new ArrayList<>();
         coverer.getCovering(s2LatLngRect, cellIds);
         final List<String> cellTokens = cellIds.stream().map(S2CellId::toToken).toList();
+        System.out.println("cellTokens = " + cellTokens);
         return findCells(cellTokens);
+    }
+
+    private S2LatLngRect getRectangleRegion(final GroupSearchRequest request) {
+        return S2LatLngRect.fromPointPair(
+                S2LatLng.fromDegrees(request.southWestLat(), request.southWestLon()),
+                S2LatLng.fromDegrees(request.northEastLat(), request.northEastLon()));
     }
 
     private GroupSearchResponse findCells(final List<String> cellTokens) {
@@ -44,11 +51,5 @@ public class S2GroupLocationService implements GroupLocationService {
                 .collect(
                         Collectors.collectingAndThen(
                                 Collectors.toList(), GroupSearchResponse::new));
-    }
-
-    private S2LatLngRect getRectangleRegion(final GroupSearchRequest request) {
-        return S2LatLngRect.fromPointPair(
-                S2LatLng.fromDegrees(request.southWestLat(), request.southWestLon()),
-                S2LatLng.fromDegrees(request.northEastLat(), request.northEastLon()));
     }
 }

@@ -10,10 +10,6 @@ endif::[]
 
 == Member
 
-=== 로그인
-
-operation::member-login[snippets='http-request,http-response']
-
 === 추가 정보 입력
 
 operation::member-save-additional-info[snippets='http-request,http-response']
