@@ -3,7 +3,6 @@ package com.amorgakco.backend.jwt.service;
 import com.amorgakco.backend.global.exception.*;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
 import com.amorgakco.backend.jwt.domain.RefreshToken;
-import com.amorgakco.backend.jwt.dto.MemberAccessToken;
 import com.amorgakco.backend.jwt.dto.MemberTokens;
 import com.amorgakco.backend.jwt.repository.RefreshTokenRepository;
 
@@ -42,19 +41,6 @@ public class JwtService {
         final String refreshToken = jwtCreator.create(memberId, jwtProperties.refreshExpiration());
         refreshTokenRepository.save(new RefreshToken(refreshToken, memberId));
         return new MemberTokens(accessToken, refreshToken);
-    }
-
-    public String createAndSaveRefreshToken(final String memberId) {
-        final String refreshToken = jwtCreator.create(memberId, jwtProperties.refreshExpiration());
-        refreshTokenRepository.save(new RefreshToken(refreshToken, memberId));
-        return refreshToken;
-    }
-
-    public MemberAccessToken createMemberAccessToken(final String refreshToken) {
-        final RefreshToken token = findByRefreshToken(refreshToken);
-        final String memberId = token.getMemberId();
-        final String accessToken = jwtCreator.create(memberId, jwtProperties.accessExpiration());
-        return new MemberAccessToken(accessToken, memberId);
     }
 
     public void logout(final Optional<Cookie> cookie) {

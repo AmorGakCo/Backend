@@ -1,7 +1,6 @@
-package com.amorgakco.backend.global.response;
+package com.amorgakco.backend.global.exception;
 
-import com.amorgakco.backend.global.exception.*;
-import com.amorgakco.backend.global.exception.IllegalAccessException;
+import com.amorgakco.backend.global.response.ErrorResponse;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -62,6 +61,13 @@ public class GlobalExceptionResolver {
     @ExceptionHandler(JwtAuthenticationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse jwtAuthentication(final JwtAuthenticationException e) {
+        setCustomExceptionLog(e.getErrorCode());
+        return new ErrorResponse(e.getErrorCode());
+    }
+
+    @ExceptionHandler(InvalidOauth2ProviderException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse invalidOauth2Provider(final InvalidOauth2ProviderException e) {
         setCustomExceptionLog(e.getErrorCode());
         return new ErrorResponse(e.getErrorCode());
     }

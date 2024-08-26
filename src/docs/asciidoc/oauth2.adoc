@@ -1,0 +1,24 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+
+== Oauth2
+
+=== Login Redirect Url
+
+소셜 로그인 사의 로그인 페이지를 리다이렉트하는 API입니다.
+
+operation::oauth2-redirect[snippets='path-parameters,http-request,http-response']
+
+=== Login
+
+사용자가 소셜로그인을 완료한 뒤 소셜로그인 사에서 발급한 Authroization Code로 서버측 사용자 인증을 시작합니다.
+
+operation::oauth2-login[snippets='path-parameters,query-parameters,http-request,http-response']
+

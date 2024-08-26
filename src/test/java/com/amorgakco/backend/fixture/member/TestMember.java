@@ -1,7 +1,7 @@
 package com.amorgakco.backend.fixture.member;
 
-import com.amorgakco.backend.global.oauth.provider.Oauth2Provider;
 import com.amorgakco.backend.member.domain.Member;
+import com.amorgakco.backend.member.domain.Oauth2ProviderType;
 
 import lombok.Getter;
 
@@ -12,11 +12,11 @@ public class TestMember extends Member {
 
     public TestMember(
             final Long id,
-            final Oauth2Provider oauth2Provider,
+            final Oauth2ProviderType oauth2ProviderType,
             final String oauth2Id,
             final String imgUrl,
             final String nickname) {
-        super(oauth2Provider, oauth2Id, imgUrl, nickname);
+        super(oauth2ProviderType, oauth2Id, imgUrl, nickname);
         this.id = id;
     }
 
