@@ -49,10 +49,9 @@ public class Member extends BaseTime {
         this.smsNotificationSetting = false;
     }
 
-    public Member updateNicknameAndImgUrl(final String nickname, final String imgUrl) {
+    public void updateNicknameAndImgUrl(final String nickname, final String imgUrl) {
         this.nickname = nickname;
         this.imgUrl = imgUrl;
-        return this;
     }
 
     public void validateAndUpdateAdditionalInfo(
