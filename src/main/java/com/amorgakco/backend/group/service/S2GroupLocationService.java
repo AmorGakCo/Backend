@@ -38,17 +38,17 @@ public class S2GroupLocationService implements GroupLocationService {
         return findCells(cellTokens);
     }
 
+    private S2LatLngRect getRectangleRegion(final GroupSearchRequest request) {
+        return S2LatLngRect.fromPointPair(
+                S2LatLng.fromDegrees(request.southWestLat(), request.southWestLon()),
+                S2LatLng.fromDegrees(request.northEastLat(), request.northEastLon()));
+    }
+
     private GroupSearchResponse findCells(final List<String> cellTokens) {
         return groupRepository.findByCellToken(cellTokens).stream()
                 .map(groupMapper::toGroupLocation)
                 .collect(
                         Collectors.collectingAndThen(
                                 Collectors.toList(), GroupSearchResponse::new));
-    }
-
-    private S2LatLngRect getRectangleRegion(final GroupSearchRequest request) {
-        return S2LatLngRect.fromPointPair(
-                S2LatLng.fromDegrees(request.southWestLat(), request.southWestLon()),
-                S2LatLng.fromDegrees(request.northEastLat(), request.northEastLon()));
     }
 }

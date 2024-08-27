@@ -25,20 +25,17 @@ import java.util.Set;
         indexes = @Index(name = "idx_cell_token", columnList = "cell_token"))
 public class Group extends BaseTime {
 
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    private final Set<Participant> participants = new HashSet<>();
     @Id @GeneratedValue private Long id;
     private String name;
     private String description;
     private int groupCapacity;
     private String address;
     @Embedded private Duration duration;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Member host;
-
     @Embedded private Location location;
-
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private final Set<Participant> participants = new HashSet<>();
 
     @Builder
     public Group(
