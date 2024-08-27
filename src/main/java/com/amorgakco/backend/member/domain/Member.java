@@ -2,7 +2,6 @@ package com.amorgakco.backend.member.domain;
 
 import com.amorgakco.backend.global.BaseTime;
 import com.amorgakco.backend.global.exception.IllegalFormatException;
-import com.amorgakco.backend.global.oauth.provider.Oauth2Provider;
 
 import jakarta.persistence.*;
 
@@ -20,7 +19,7 @@ public class Member extends BaseTime {
     @Id @GeneratedValue private Long id;
 
     @Enumerated(EnumType.STRING)
-    private Oauth2Provider oauth2Provider;
+    private Oauth2ProviderType oauth2ProviderType;
 
     private String oauth2Id;
     private String imgUrl;
@@ -37,11 +36,11 @@ public class Member extends BaseTime {
 
     @Builder
     public Member(
-            final Oauth2Provider oauth2Provider,
+            final Oauth2ProviderType oauth2ProviderType,
             final String oauth2Id,
             final String imgUrl,
             final String nickname) {
-        this.oauth2Provider = oauth2Provider;
+        this.oauth2ProviderType = oauth2ProviderType;
         this.oauth2Id = oauth2Id;
         this.imgUrl = imgUrl;
         this.nickname = nickname;

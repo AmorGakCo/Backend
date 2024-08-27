@@ -14,6 +14,7 @@ public enum ErrorCode {
     REFRESH_TOKEN_NOT_FOUND("104", "리프레쉬 토큰을 찾을 수 없습니다."),
     ACCESS_TOKEN_NOT_FOUND("105", "헤더에서 액세스 토큰을 찾을 수 없습니다."),
     LOGIN_AGAIN("106", "다시 로그인해주세요."),
+    CAN_NOT_FIND_OAUTH2_PROVIDER("107", "지원하지 않는 소셜로그인입니다."),
 
     // Member Error Code
     MEMBER_NOT_FOUND("201", "존재하지 않는 회원입니다."),

@@ -1,8 +1,8 @@
 package com.amorgakco.backend.global.config;
 
-import com.amorgakco.backend.global.properties.RabbitMQProperties;
 import com.amorgakco.backend.global.rabbitmq.ExchangeName;
 import com.amorgakco.backend.global.rabbitmq.QueueName;
+import com.amorgakco.backend.global.rabbitmq.RabbitMQProperties;
 import com.amorgakco.backend.global.rabbitmq.RoutingKey;
 
 import lombok.RequiredArgsConstructor;
@@ -47,6 +47,11 @@ public class RabbitMQConfig {
     }
 
     @Bean
+    public Queue smsQueue() {
+        return new Queue(QueueName.SMS.getName(), true);
+    }
+
+    @Bean
     public DirectExchange notificationExchange() {
         return new DirectExchange(ExchangeName.NOTIFICATION.getName());
     }
@@ -63,11 +68,6 @@ public class RabbitMQConfig {
         return BindingBuilder.bind(smsQueue())
                 .to(notificationExchange())
                 .with(RoutingKey.NOTIFICATION_SMS.getKey());
-    }
-
-    @Bean
-    public Queue smsQueue() {
-        return new Queue(QueueName.SMS.getName(), true);
     }
 
     @Bean

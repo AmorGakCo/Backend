@@ -1,4 +1,4 @@
-package com.amorgakco.backend.global.properties;
+package com.amorgakco.backend.global.rabbitmq;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

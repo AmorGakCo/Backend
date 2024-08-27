@@ -12,11 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.amorgakco.backend.docs.RestDocsTest;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.member.dto.AdditionalInfoRequest;
-import com.amorgakco.backend.member.dto.LoginResponse;
 import com.amorgakco.backend.member.dto.PrivateMemberResponse;
 import com.amorgakco.backend.security.WithMockMember;
-
-import jakarta.servlet.http.Cookie;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -67,24 +64,5 @@ class MemberControllerTest extends RestDocsTest {
         // docs
         actions.andDo(print())
                 .andDo(document("member-private", getDocumentRequest(), getDocumentResponse()));
-    }
-
-    @Test
-    @DisplayName("리프레쉬 토큰으로 액세스토큰과 닉네임,이미지를 응답받아 로그인할 수 있다.")
-    @WithMockMember
-    void memberLogin() throws Exception {
-        // given
-        final Long memberId = 1L;
-        final String refreshToken = "jfieoajefoa.wefwaefewaf.awefawef";
-        final Cookie cookie = new Cookie("refresh-token", refreshToken);
-        final LoginResponse loginResponse = TestMemberFactory.loginResponse();
-        given(memberService.login(refreshToken)).willReturn(loginResponse);
-        // when
-        final ResultActions actions = mockMvc.perform(get("/members/login").cookie(cookie));
-        // then
-        actions.andExpect(status().isOk());
-        // docs
-        actions.andDo(print())
-                .andDo(document("member-login", getDocumentRequest(), getDocumentResponse()));
     }
 }
