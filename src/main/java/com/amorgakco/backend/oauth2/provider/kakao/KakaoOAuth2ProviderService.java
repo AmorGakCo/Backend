@@ -6,6 +6,7 @@ import com.amorgakco.backend.oauth2.provider.Oauth2Member;
 import com.amorgakco.backend.oauth2.provider.Oauth2ProviderService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -13,6 +14,7 @@ import org.springframework.util.MultiValueMap;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class KakaoOAuth2ProviderService implements Oauth2ProviderService {
 
     private static final String GRANT_TYPE = "grant_type";
@@ -41,6 +43,7 @@ public class KakaoOAuth2ProviderService implements Oauth2ProviderService {
         final KakaoAuthorization kakaoAuthorization =
                 kakaoRestClient.getKakaoAccessToken(requestParams(authCode));
         final String accessToken = kakaoAuthorization.accessToken();
+        log.info("access {}", accessToken);
         final KakaoMemberResponse kakaoMember =
                 kakaoRestClient.getKakaoMember(BEARER + accessToken);
         return kakaoMember.toOauth2Member();

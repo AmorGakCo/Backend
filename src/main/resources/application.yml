@@ -8,5 +8,3 @@ spring:
       local: local,oauth2,jwt,notification
       dev: dev,oauth2,jwt,notification
       prod: oauth2,jwt
-  jackson:
-    property-naming-strategy: SNAKE_CASE
