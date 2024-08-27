@@ -26,22 +26,21 @@ public class MemberService {
 
     @Transactional
     public Long updateOrSave(final Oauth2Member oauth2Member) {
-        final Member member =
-                memberRepository
-                        .findByOauth2ProviderAndOauth2Id(
-                                oauth2Member.oauth2ProviderType(), oauth2Member.oauth2Id())
-                        .map(m -> this.updateMember(m, oauth2Member))
-                        .orElseGet(() -> this.createMember(oauth2Member));
-        return member.getId();
+        return memberRepository
+                .findByOauth2ProviderAndOauth2Id(
+                        oauth2Member.oauth2ProviderType(), oauth2Member.oauth2Id())
+                .map(
+                        existingMember -> {
+                            existingMember.updateNicknameAndImgUrl(
+                                    oauth2Member.nickname(), oauth2Member.imgUrl());
+                            return existingMember.getId();
+                        })
+                .orElseGet(() -> createMember(oauth2Member));
     }
 
-    private Member updateMember(final Member member, final Oauth2Member oauth2Member) {
-        return member.updateNicknameAndImgUrl(oauth2Member.nickname(), oauth2Member.imgUrl());
-    }
-
-    private Member createMember(final Oauth2Member oauth2Member) {
+    private Long createMember(final Oauth2Member oauth2Member) {
         final Member newMember = memberMapper.toMember(oauth2Member);
-        return memberRepository.save(newMember);
+        return memberRepository.save(newMember).getId();
     }
 
     @Transactional

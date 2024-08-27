@@ -12,12 +12,12 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-public class Oauth2ProviderComposite {
-    private final Map<Oauth2ProviderType, Oauth2ProviderService> urlProviders;
+public class Oauth2ProviderSelector {
+    private final Map<Oauth2ProviderType, Oauth2ProviderService> providerServices;
 
-    public Oauth2ProviderComposite(final Set<Oauth2ProviderService> urlProviders) {
-        this.urlProviders =
-                urlProviders.stream()
+    public Oauth2ProviderSelector(final Set<Oauth2ProviderService> providerServices) {
+        this.providerServices =
+                providerServices.stream()
                         .collect(
                                 Collectors.toMap(
                                         Oauth2ProviderService::getOauth2ProviderType,
@@ -25,7 +25,7 @@ public class Oauth2ProviderComposite {
     }
 
     public Oauth2ProviderService getProvider(final Oauth2ProviderType oauth2ProviderType) {
-        return Optional.ofNullable(urlProviders.get(oauth2ProviderType))
+        return Optional.ofNullable(providerServices.get(oauth2ProviderType))
                 .orElseThrow(InvalidOauth2ProviderException::invalidOauth2Provider);
     }
 }

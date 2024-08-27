@@ -1,5 +1,6 @@
 package com.amorgakco.backend.oauth2.provider.kakao;
 
+import com.amorgakco.backend.global.config.KakaoRedirectionLoginUrl;
 import com.amorgakco.backend.member.domain.Oauth2ProviderType;
 import com.amorgakco.backend.oauth2.provider.Oauth2Member;
 import com.amorgakco.backend.oauth2.provider.Oauth2ProviderService;
@@ -9,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
 @RequiredArgsConstructor
@@ -17,15 +17,14 @@ public class KakaoOAuth2ProviderService implements Oauth2ProviderService {
 
     private static final String GRANT_TYPE = "grant_type";
     private static final String AUTHORIZATION_CODE = "authorization_code";
-    private static final String RESPONSE_TYPE = "response_type";
     private static final String CODE = "code";
     private static final String CLIENT_ID = "client_id";
     private static final String REDIRECT_URI = "redirect_uri";
-    private static final String SCOPE = "scope";
-    private static final String DELIMITER = ",";
     private static final String BEARER = "Bearer ";
+
     private final KakaoRestClient kakaoRestClient;
     private final KakaoOauth2Properties kakaoOauth2Properties;
+    private final KakaoRedirectionLoginUrl kakaoRedirectionLoginUrl;
 
     @Override
     public Oauth2ProviderType getOauth2ProviderType() {
@@ -34,12 +33,7 @@ public class KakaoOAuth2ProviderService implements Oauth2ProviderService {
 
     @Override
     public String getRedirectionLoginUrl() {
-        return UriComponentsBuilder.fromUriString(kakaoOauth2Properties.loginUri())
-                .queryParam(RESPONSE_TYPE, CODE)
-                .queryParam(CLIENT_ID, kakaoOauth2Properties.clientId())
-                .queryParam(REDIRECT_URI, kakaoOauth2Properties.redirectUri())
-                .queryParam(SCOPE, String.join(DELIMITER, kakaoOauth2Properties.scope()))
-                .toUriString();
+        return kakaoRedirectionLoginUrl.redirectionUrl();
     }
 
     @Override

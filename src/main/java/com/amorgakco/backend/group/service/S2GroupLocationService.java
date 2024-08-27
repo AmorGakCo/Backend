@@ -35,7 +35,6 @@ public class S2GroupLocationService implements GroupLocationService {
         final ArrayList<S2CellId> cellIds = new ArrayList<>();
         coverer.getCovering(s2LatLngRect, cellIds);
         final List<String> cellTokens = cellIds.stream().map(S2CellId::toToken).toList();
-        System.out.println("cellTokens = " + cellTokens);
         return findCells(cellTokens);
     }
 
