@@ -1,12 +1,11 @@
 package com.amorgakco.backend.group.service.search;
 
-import com.google.common.geometry.S2Cell;
+import com.amorgakco.backend.group.dto.GroupSearchRequest;
 
 import java.util.List;
 
-public interface GroupSearchStrategy {
+public abstract class GroupSearchStrategy {
+    abstract boolean isValid(double diagonalSize);
 
-    boolean supports();
-
-    List<S2Cell> getCells();
+    abstract List<String> getTokens(GroupSearchRequest request);
 }
