@@ -33,7 +33,8 @@ public enum ErrorCode {
     VERIFICATION_DUPLICATED("309", "이미 인증이 완료된 회원입니다."),
     PARTICIPANT_DUPLICATED("310", "중복된 회원입니다."),
     EXCEED_GROUP_CAPACITY("311", "그룹 수용 인원을 초과합니다."),
-    PARTICIPATION_NOT_FOUND("312", "참여 요청을 조회할 수 없습니다.");
+    PARTICIPATION_NOT_FOUND("312", "참여 요청을 조회할 수 없습니다."),
+    INVALID_DIAGONAL_DISTANCE("313", "잘못된 그룹 검색 요청입니다. 위도 경도를 확인해주세요.");
 
     private final String code;
     private final String message;
