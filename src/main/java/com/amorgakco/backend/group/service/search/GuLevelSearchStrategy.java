@@ -1,18 +1,16 @@
 package com.amorgakco.backend.group.service.search;
 
-import com.amorgakco.backend.group.dto.GroupSearchRequest;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
+@Component
+public class GuLevelSearchStrategy extends GroupSearchStrategy {
 
-public class GuLevelSearchStrategy implements GroupSearchStrategy {
+    private static final double MAX_DISTANCE = 14200;
+    private static final double MIN_DISTANCE = 7500;
 
     @Override
     public boolean isValid(final double diagonalSize) {
-        return false;
-    }
-
-    @Override
-    public List<String> getTokens(final GroupSearchRequest request) {
-        return null;
+        return DiagonalDistanceConst.MIN_DISTANCE.getValue() < diagonalSize
+                && diagonalSize <= DiagonalDistanceConst.MAX_DISTANCE.getValue();
     }
 }
