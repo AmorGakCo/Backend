@@ -3,7 +3,6 @@ package com.amorgakco.backend.group.controller;
 import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentRequest;
 import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -35,7 +34,7 @@ class GroupLocationControllerTest extends RestDocsTest {
         // when
         final GroupSearchResponse response = TestGroupFactory.groupSearchResponse();
         final GroupSearchRequest request = TestGroupFactory.groupSearchRequest();
-        given(groupLocationService.getNearByGroups(request)).willReturn(response);
+        given(groupLocationService.findGroups(request)).willReturn(response);
         final ResultActions actions =
                 mockMvc.perform(
                         get("/groups/locations")
