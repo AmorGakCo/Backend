@@ -4,5 +4,5 @@ import com.amorgakco.backend.group.dto.GroupSearchRequest;
 import com.amorgakco.backend.group.dto.GroupSearchResponse;
 
 public interface GroupLocationService {
-    GroupSearchResponse getNearByGroups(final GroupSearchRequest request);
+    GroupSearchResponse findGroups(final GroupSearchRequest request);
 }
