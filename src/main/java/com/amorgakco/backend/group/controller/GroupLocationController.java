@@ -21,6 +21,6 @@ public class GroupLocationController {
     @GetMapping("/locations")
     public GroupSearchResponse getLocations(
             @ModelAttribute final GroupSearchRequest groupSearchRequest) {
-        return groupLocationService.getNearByGroups(groupSearchRequest);
+        return groupLocationService.findGroups(groupSearchRequest);
     }
 }
