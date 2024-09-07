@@ -20,7 +20,7 @@ public abstract class GroupSearchStrategy {
                 S2LatLng.fromDegrees(request.northEastLat(), request.northEastLon()));
     }
 
-    public final List<String> getCoveringCells(final GroupSearchRequest request) {
+    protected final List<String> getCoveringCells(final GroupSearchRequest request) {
         final S2LatLngRect rectangle = createRectangle(request);
         final S2RegionCoverer coverer =
                 S2RegionCoverer.builder()
