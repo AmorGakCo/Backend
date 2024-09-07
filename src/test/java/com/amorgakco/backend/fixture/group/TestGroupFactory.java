@@ -111,4 +111,37 @@ public class TestGroupFactory {
                 .southWestLon(127.0167)
                 .build();
     }
+
+    public static GroupSearchRequest cityLevelGroupSearchRequest() {
+        return new GroupSearchRequest(
+                37.48695173821273,
+                126.86109360313715,
+                37.60407395278887,
+                127.06381467289712,
+                37.554498367410076,
+                126.97758064203596);
+    }
+    ;
+
+    public static GroupSearchRequest dongLevelGroupSearchRequest() {
+        return new GroupSearchRequest(
+                37.56914134233172,
+                126.95299050188105,
+                37.57671468451652,
+                126.96786094808684,
+                37.56826582236329,
+                126.97879899797212);
+    }
+    ;
+
+    public static GroupSearchRequest guLevelGroupSearchRequest() {
+        return new GroupSearchRequest(
+                37.504004613572235,
+                126.90304310147118,
+                37.55796032104298,
+                127.00112045387941,
+                37.56826582236329,
+                126.97879899797212);
+    }
+    ;
 }
