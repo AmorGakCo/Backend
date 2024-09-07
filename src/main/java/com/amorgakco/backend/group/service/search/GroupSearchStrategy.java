@@ -34,6 +34,10 @@ public abstract class GroupSearchStrategy {
 
     public List<String> selectCellTokens(final GroupSearchRequest request) {
         final List<String> cellTokens = getCoveringCells(request);
+        return findHalfOfCells(cellTokens);
+    }
+
+    private List<String> findHalfOfCells(final List<String> cellTokens) {
         return IntStream.range(0, cellTokens.size() - 1)
                 .filter(i -> i % 2 == 0)
                 .mapToObj(cellTokens::get)
