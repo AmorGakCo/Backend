@@ -1,10 +1,10 @@
 package com.amorgakco.backend.group.service.search;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public enum DiagonalDistanceConst {
     MAX_DISTANCE(14200),
     MIN_DISTANCE(7500);
