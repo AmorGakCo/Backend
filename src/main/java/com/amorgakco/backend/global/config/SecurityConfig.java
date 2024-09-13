@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         request ->
                                 request.requestMatchers(
-                                                "/token/**",
+                                                "/tokens/**",
                                                 "/oauth2/**",
                                                 "/groups/locations",
                                                 "/groups/detail/**",
