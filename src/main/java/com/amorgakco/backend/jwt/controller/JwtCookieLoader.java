@@ -22,6 +22,7 @@ public class JwtCookieLoader {
                 .maxAge(REFRESH_COOKIE_AGE_SECONDS)
                 .secure(true)
                 .httpOnly(true)
+                .sameSite("none")
                 .path("/")
                 .build();
     }
