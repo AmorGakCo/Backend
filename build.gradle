@@ -53,6 +53,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'com.google.firebase:firebase-admin:9.3.0'
     implementation 'com.google.geometry:s2-geometry:2.0.0'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
 }
 
 tasks.named('test') {

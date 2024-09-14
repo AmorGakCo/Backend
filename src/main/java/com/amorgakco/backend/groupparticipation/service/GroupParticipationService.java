@@ -41,10 +41,7 @@ public class GroupParticipationService {
 
     @Transactional
     public void approve(final Long groupId, final Long memberId, final Member host) {
-        final GroupParticipation groupParticipation =
-                groupParticipationRepository
-                        .findByGroupIdAndMemberId(groupId, memberId)
-                        .orElseThrow(ResourceNotFoundException::participationNotFound);
+        final GroupParticipation groupParticipation = getGroupParticipation(groupId, memberId);
         groupParticipation.approve(host);
         final NotificationRequest notificationRequest =
                 NotificationCreator.participationApproveNotification(
@@ -54,14 +51,17 @@ public class GroupParticipationService {
 
     @Transactional
     public void reject(final Long groupId, final Long memberId, final Member host) {
-        final GroupParticipation groupParticipation =
-                groupParticipationRepository
-                        .findByGroupIdAndMemberId(groupId, memberId)
-                        .orElseThrow(ResourceNotFoundException::participationNotFound);
+        final GroupParticipation groupParticipation = getGroupParticipation(groupId, memberId);
         groupParticipation.reject(host);
         final NotificationRequest notificationRequest =
                 NotificationCreator.participationRejectNotification(
                         host, groupParticipation.getParticipant());
         notificationPublisher.sendFcmWebPush(notificationRequest);
+    }
+
+    private GroupParticipation getGroupParticipation(final Long groupId, final Long memberId) {
+        return groupParticipationRepository
+                .findByGroupIdAndMemberId(groupId, memberId)
+                .orElseThrow(ResourceNotFoundException::participationNotFound);
     }
 }
