@@ -4,19 +4,19 @@ import com.amorgakco.backend.global.security.JwtAccessDeniedHandler;
 import com.amorgakco.backend.global.security.JwtAuthenticationEntryPoint;
 import com.amorgakco.backend.global.security.JwtAuthenticationFilter;
 import com.amorgakco.backend.global.security.JwtExceptionHandlingFilter;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@Configuration
 @RequiredArgsConstructor
+@Configuration
+@EnableWebSecurity(debug = true)
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -41,7 +41,8 @@ public class SecurityConfig {
                                                 "/groups/basic/**",
                                                 "/groups/locations",
                                                 "/members/login",
-                                                "/favicon.ico")
+                                                "/favicon.ico",
+                                                "/error")
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated())

@@ -1,12 +1,11 @@
 package com.amorgakco.backend.global.exception;
 
 import com.amorgakco.backend.global.response.ErrorResponse;
-
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -20,6 +19,13 @@ public class GlobalExceptionResolver {
     public ErrorResponse unauthorized(final AuthenticationException e) {
         setExceptionLog(e.getMessage());
         return new ErrorResponse(e.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse checkParameter(final MethodArgumentNotValidException e) {
+        setExceptionLog(e.getMessage());
+        return new ErrorResponse(ErrorCode.NOT_VALID_ARGUMENT);
     }
 
     private void setExceptionLog(final String message) {

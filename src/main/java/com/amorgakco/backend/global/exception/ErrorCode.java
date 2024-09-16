@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public enum ErrorCode {
+    // Global Error Code
+    NOT_VALID_ARGUMENT("001", "잘못된 입력입니다. 입력 파라미터를 다시 확인해주세요."),
+
     // Auth Error Code
     ACCESS_TOKEN_EXPIRED("100", "액세스 토큰이 만료됐습니다."),
     REFRESH_TOKEN_REQUIRED("101", "리프레쉬 토큰을 쿠키에서 찾을 수 없습니다."),
