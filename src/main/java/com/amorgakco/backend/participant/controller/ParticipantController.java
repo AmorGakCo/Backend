@@ -5,10 +5,8 @@ import com.amorgakco.backend.group.dto.LocationVerificationRequest;
 import com.amorgakco.backend.participant.dto.ParticipationHistoryResponse;
 import com.amorgakco.backend.participant.dto.TardinessRequest;
 import com.amorgakco.backend.participant.service.ParticipantService;
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,8 +48,8 @@ public class ParticipantController {
     @PostMapping("/groups/{groupId}/tardiness")
     public void tardy(
             @PathVariable final Long groupId,
-            @AuthMemberId final Long memberId,
+//            @AuthMemberId final Long memberId,
             @RequestBody @Valid final TardinessRequest tardinessRequest) {
-        participantService.tardy(groupId, memberId, tardinessRequest);
+        participantService.tardy(groupId, 1L, tardinessRequest);
     }
 }

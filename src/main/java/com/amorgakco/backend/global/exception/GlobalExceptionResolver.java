@@ -5,10 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.Objects;
 
 @RestControllerAdvice
 @Slf4j
@@ -25,7 +28,11 @@ public class GlobalExceptionResolver {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse checkParameter(final MethodArgumentNotValidException e) {
         setExceptionLog(e.getMessage());
-        return new ErrorResponse(ErrorCode.NOT_VALID_ARGUMENT);
+        FieldError fieldError = e.getBindingResult().getFieldError();
+        if (Objects.isNull(fieldError)) {
+            return new ErrorResponse("잘못된 입력입니다.");
+        }
+        return new ErrorResponse(fieldError.getDefaultMessage());
     }
 
     private void setExceptionLog(final String message) {
