@@ -42,8 +42,7 @@ public class SecurityConfig {
                                                 "/groups/locations",
                                                 "/members/login",
                                                 "/favicon.ico",
-                                                "/error",
-                                                "/participants/**")
+                                                "/error")
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated())

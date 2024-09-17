@@ -23,6 +23,9 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND("201", "존재하지 않는 회원입니다."),
     DASH_NOT_ALLOWED("202", "전화번호에 '-'를 포함할 수 없습니다."),
     INVALID_GITHUB_URL("203", "부적절한 github 주소입니다."),
+    CAN_NOT_EXCEED_POSITIVE_100("204", "모각코 온도는 100도를 넘을 수 없습니다."),
+    CAN_NOT_UNDER_NEGATIVE_100("204", "모각코 온도는 -100도 보다 낮을 수 없습니다."),
+
 
     // Group Error Code
     GROUP_NOT_FOUND("301", "존재하지 않는 그룹입니다."),
@@ -37,7 +40,8 @@ public enum ErrorCode {
     PARTICIPANT_DUPLICATED("310", "중복된 회원입니다."),
     EXCEED_GROUP_CAPACITY("311", "그룹 수용 인원을 초과합니다."),
     PARTICIPATION_NOT_FOUND("312", "참여 요청을 조회할 수 없습니다."),
-    INVALID_DIAGONAL_DISTANCE("313", "잘못된 그룹 검색 요청입니다. 위도 경도를 확인해주세요.");
+    INVALID_DIAGONAL_DISTANCE("313", "잘못된 그룹 검색 요청입니다. 위도 경도를 확인해주세요."),
+    NOT_SAME_GROUP_PARTICIPANT("314", "동일한 그룹 내의 참여자끼리 온도를 변경할 수 있습니다.");
 
     private final String code;
     private final String message;

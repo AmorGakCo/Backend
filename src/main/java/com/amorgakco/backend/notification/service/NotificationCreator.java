@@ -3,7 +3,6 @@ package com.amorgakco.backend.notification.service;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.notification.domain.NotificationTitle;
 import com.amorgakco.backend.notification.infrastructure.consumer.NotificationRequest;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +14,7 @@ public class NotificationCreator {
     private static final String PARTICIPATION_REJECT = "%s 님께서 %s 님의 모각코 참여를 거절했습니다.";
     private static final String PARTICIPATION_WITHDRAW = "%s 님께서 모각코를 탈퇴하셨습니다.";
     private static final String PARTICIPATION_TARDINESS = "%s 님께서 모각코에 %d분 지각 알림을 보냈습니다.";
+    private static final String LOCATION_VERIFICATION_SUCCESS = "모든 참여자가 위치 인증에 성공해 모각코 온도가 상승합니다.";
 
     public static NotificationRequest participationNotification(
             final Member sender, final Member receiver) {
@@ -61,6 +61,16 @@ public class NotificationCreator {
     }
 
     public static NotificationRequest tardinessNotification(
+            final Member participant, final Member host, final Integer minute) {
+        return NotificationRequest.builder()
+                .sender(participant)
+                .receiver(host)
+                .notificationTitle(NotificationTitle.PARTICIPATION_TARDINESS)
+                .content(PARTICIPATION_TARDINESS.formatted(participant.getNickname(), minute))
+                .build();
+    }
+
+    public static NotificationRequest locationVerificationSuccess(
             final Member participant, final Member host, final Integer minute) {
         return NotificationRequest.builder()
                 .sender(participant)

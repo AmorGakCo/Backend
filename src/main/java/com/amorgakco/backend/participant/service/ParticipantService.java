@@ -1,6 +1,7 @@
 package com.amorgakco.backend.participant.service;
 
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
+import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
 import com.amorgakco.backend.group.service.GroupService;
 import com.amorgakco.backend.member.domain.Member;
@@ -12,9 +13,7 @@ import com.amorgakco.backend.participant.dto.ParticipationHistoryResponse;
 import com.amorgakco.backend.participant.dto.TardinessRequest;
 import com.amorgakco.backend.participant.repository.ParticipantRepository;
 import com.amorgakco.backend.participant.service.mapper.ParticipantMapper;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
@@ -37,6 +36,14 @@ public class ParticipantService {
             final LocationVerificationRequest request, final Long memberId) {
         final Participant participant = getParticipant(request.groupId(), memberId);
         participant.verify(request.longitude(), request.latitude());
+        if (isEveryParticipantsVerified(participant)) {
+            notificationPublisher.sendFcmWebPush();
+        }
+    }
+
+    private boolean isEveryParticipantsVerified(final Participant participant) {
+        final Group group = participant.getGroup();
+        return group.isEveryParticipantsVerified();
     }
 
     public ParticipationHistoryResponse getParticipationHistory(
@@ -63,7 +70,7 @@ public class ParticipantService {
         final Participant participant = getParticipant(groupId, memberId);
         final Member host = groupService.getGroup(groupId).getHost();
         final NotificationRequest notificationRequest =
-                NotificationCreator.tardinessNotification(participant.getMember(), host,request.minute());
+                NotificationCreator.tardinessNotification(participant.getMember(), host, request.minute());
         notificationPublisher.sendFcmWebPush(notificationRequest);
     }
 
@@ -71,5 +78,19 @@ public class ParticipantService {
         return participantRepository
                 .findByGroupAndMember(groupId, memberId)
                 .orElseThrow(ResourceNotFoundException::participantsNotFound);
+    }
+
+    @Transactional
+    public Integer upTemperature(final Long groupId, final Long requestMemberId, final Long targetMemberId) {
+        final Participant requestParticipant = getParticipant(groupId, requestMemberId);
+        final Participant targetParticipant = getParticipant(groupId, targetMemberId);
+        return targetParticipant.upTemperature(requestParticipant);
+    }
+
+    @Transactional
+    public Integer downTemperature(final Long groupId, final Long requestMemberId, final Long targetMemberId) {
+        final Participant requestParticipant = getParticipant(groupId, requestMemberId);
+        final Participant targetParticipant = getParticipant(groupId, targetMemberId);
+        return targetParticipant.downTemperature(requestParticipant);
     }
 }

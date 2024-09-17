@@ -48,8 +48,26 @@ public class ParticipantController {
     @PostMapping("/groups/{groupId}/tardiness")
     public void tardy(
             @PathVariable final Long groupId,
-//            @AuthMemberId final Long memberId,
+            @AuthMemberId final Long memberId,
             @RequestBody @Valid final TardinessRequest tardinessRequest) {
-        participantService.tardy(groupId, 1L, tardinessRequest);
+        participantService.tardy(groupId, memberId, tardinessRequest);
+    }
+
+    @PatchMapping("/{targetMemberId}/groups/{groupId}/temperature-up")
+    public Integer upTemperature(
+            @PathVariable final Long targetMemberId,
+            @PathVariable final Long groupId,
+            @AuthMemberId final Long requestMemberId
+    ) {
+        return participantService.upTemperature(groupId, requestMemberId, targetMemberId);
+    }
+
+    @PatchMapping("/{targetMemberId}/groups/{groupId}/temperature-down")
+    public Integer downTemperature(
+            @PathVariable final Long targetMemberId,
+            @PathVariable final Long groupId,
+            @AuthMemberId final Long requestMemberId
+    ) {
+        return participantService.downTemperature(groupId, requestMemberId, targetMemberId);
     }
 }
