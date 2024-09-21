@@ -7,6 +7,7 @@ import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.repository.MemberRepository;
 import com.amorgakco.backend.participant.domain.Participant;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +29,8 @@ class ParticipantServiceTest {
 
 
     @Test
-    void multithreadTest() throws InterruptedException {
+    @DisplayName("멀티 스레드 환경에서 온도를 상승시킨 횟수 만큼 온도가 상승돼야한다.")
+    void moGakCoTemperatureConcurrencyTest() throws InterruptedException {
         Member member1 = memberRepository.save(Member.builder().nickname("member1").build());
         Member member2 = memberRepository.save(Member.builder().nickname("member2").build());
         Group group = TestGroupFactory.create(member1);

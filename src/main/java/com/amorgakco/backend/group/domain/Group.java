@@ -68,7 +68,7 @@ public class Group extends BaseTime {
         this.groupCapacity = groupCapacity;
         this.duration = new Duration(beginAt, endAt);
         this.location = new Location(longitude, latitude);
-        this.participants.add(new Participant(host));
+        addParticipants(new Participant(host));
         this.host = host;
         this.address = address;
     }
