@@ -1,0 +1,11 @@
+spring:
+  config:
+    activate:
+      on-profile: oauth2
+oauth2:
+  kakao:
+    login-uri: https://kauth.kakao.com/oauth/authorize
+    client-id: c5385a27a6da4f63771dcaf2c216e2a3
+    client-secret: p94D1f2BhKTMUnH4kvxgprKR3tLV73gp
+    scope: profile_nickname, profile_image
+    redirect-uri: http://localhost:3000/redirected/kakao

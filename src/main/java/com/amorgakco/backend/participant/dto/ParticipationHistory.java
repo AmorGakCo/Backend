@@ -6,4 +6,5 @@ import java.time.LocalDateTime;
 
 @Builder
 public record ParticipationHistory(
-        Long groupId, String name, String address, LocalDateTime beginAt, LocalDateTime endAt) {}
+        Long groupId, String name, String address, LocalDateTime beginAt, LocalDateTime endAt) {
+}

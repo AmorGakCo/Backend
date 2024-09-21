@@ -12,7 +12,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Version;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -46,12 +45,9 @@ public class Member extends BaseTime {
     private boolean smsNotificationSetting;
     private String cellToken;
 
-    @Version
-    private Integer version;
-
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private List<Roles> roleNames = new ArrayList<>();
+    private final List<Roles> roleNames = new ArrayList<>();
 
     @Builder
     public Member(
@@ -102,14 +98,14 @@ public class Member extends BaseTime {
         if (moGakCoTemperature + 1 > MAX_MOGAKCO_TEMPERATURE) {
             throw IllegalAccessException.canNotExceedPositive100();
         }
-        return moGakCoTemperature++;
+        return ++moGakCoTemperature;
     }
 
     public Integer downMoGakCoTemperature() {
         if (moGakCoTemperature - 1 < MIN_MOGAKCO_TEMPERATURE) {
             throw IllegalAccessException.canNotUnderNegative100();
         }
-        return moGakCoTemperature--;
+        return --moGakCoTemperature;
     }
 
     public boolean isEquals(final Long memberId) {

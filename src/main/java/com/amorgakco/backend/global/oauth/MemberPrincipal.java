@@ -1,9 +1,7 @@
 package com.amorgakco.backend.global.oauth;
 
 import com.amorgakco.backend.member.domain.Roles;
-
 import lombok.Getter;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;

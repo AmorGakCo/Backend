@@ -1,12 +1,11 @@
 package com.amorgakco.backend.participant.service;
 
+import com.amorgakco.backend.global.config.redisson.Lock;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
 import com.amorgakco.backend.group.service.GroupService;
-import com.amorgakco.backend.member.domain.Member;
-import com.amorgakco.backend.notification.infrastructure.NotificationPublisher;
-import com.amorgakco.backend.notification.infrastructure.consumer.NotificationRequest;
+import com.amorgakco.backend.notification.infrastructure.NotificationPublisherFacade;
 import com.amorgakco.backend.notification.service.NotificationCreator;
 import com.amorgakco.backend.participant.domain.Participant;
 import com.amorgakco.backend.participant.dto.ParticipationHistoryResponse;
@@ -22,30 +21,28 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class ParticipantService {
 
     private static final Integer PAGE_SIZE = 10;
     private final ParticipantRepository participantRepository;
     private final ParticipantMapper participantMapper;
     private final GroupService groupService;
-    private final NotificationPublisher notificationPublisher;
+    private final NotificationPublisherFacade notificationPublisherFacade;
 
     @Transactional
     public void verifyParticipantLocation(
             final LocationVerificationRequest request, final Long memberId) {
         final Participant participant = getParticipant(request.groupId(), memberId);
         participant.verify(request.longitude(), request.latitude());
-        if (isEveryParticipantsVerified(participant)) {
-            notificationPublisher.sendFcmWebPush();
-        }
     }
 
-    private boolean isEveryParticipantsVerified(final Participant participant) {
-        final Group group = participant.getGroup();
-        return group.isEveryParticipantsVerified();
+    public Participant getParticipant(final Long groupId, final Long memberId) {
+        return participantRepository
+                .findByGroupAndMember(groupId, memberId)
+                .orElseThrow(ResourceNotFoundException::participantsNotFound);
     }
 
+    @Transactional(readOnly = true)
     public ParticipationHistoryResponse getParticipationHistory(
             final Long memberId, final Integer page) {
         final PageRequest pageRequest =
@@ -59,35 +56,34 @@ public class ParticipantService {
     public void withdraw(final Long groupId, final Long memberId) {
         final Participant participant = getParticipant(groupId, memberId);
         participantRepository.delete(participant);
-        final Member host = groupService.getGroup(groupId).getHost();
-        final NotificationRequest notificationRequest =
-                NotificationCreator.withdrawNotification(participant.getMember(), host);
-        notificationPublisher.sendFcmWebPush(notificationRequest);
+        final Group group = groupService.getGroup(groupId);
+        notificationPublisherFacade.send(NotificationCreator.withdraw(
+                participant.getMember(),
+                group.getHost(),
+                group.getName()
+        ));
     }
 
     @Transactional
-    public void tardy(final Long groupId, final Long memberId, final TardinessRequest request) {
+    public void tardy(final Long groupId, final Long memberId, final TardinessRequest tardinessRequest) {
         final Participant participant = getParticipant(groupId, memberId);
-        final Member host = groupService.getGroup(groupId).getHost();
-        final NotificationRequest notificationRequest =
-                NotificationCreator.tardinessNotification(participant.getMember(), host, request.minute());
-        notificationPublisher.sendFcmWebPush(notificationRequest);
+        final Group group = groupService.getGroup(groupId);
+        notificationPublisherFacade.send(NotificationCreator.tardy(
+                participant.getMember(),
+                group.getHost(),
+                group.getName(),
+                tardinessRequest.minute()
+        ));
     }
 
-    private Participant getParticipant(final Long groupId, final Long memberId) {
-        return participantRepository
-                .findByGroupAndMember(groupId, memberId)
-                .orElseThrow(ResourceNotFoundException::participantsNotFound);
-    }
-
-    @Transactional
+    @Lock(key = "#targetMemberId")
     public Integer upTemperature(final Long groupId, final Long requestMemberId, final Long targetMemberId) {
         final Participant requestParticipant = getParticipant(groupId, requestMemberId);
         final Participant targetParticipant = getParticipant(groupId, targetMemberId);
         return targetParticipant.upTemperature(requestParticipant);
     }
 
-    @Transactional
+    @Lock(key = "#targetMemberId")
     public Integer downTemperature(final Long groupId, final Long requestMemberId, final Long targetMemberId) {
         final Participant requestParticipant = getParticipant(groupId, requestMemberId);
         final Participant targetParticipant = getParticipant(groupId, targetMemberId);

@@ -3,14 +3,12 @@ package com.amorgakco.backend.global.config;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 
 @Component
 public class FcmInitializer {

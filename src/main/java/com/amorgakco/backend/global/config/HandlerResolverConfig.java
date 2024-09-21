@@ -2,9 +2,7 @@ package com.amorgakco.backend.global.config;
 
 import com.amorgakco.backend.global.argumentresolver.AuthMemberArgumentResolver;
 import com.amorgakco.backend.global.argumentresolver.AuthMemberIdArgumentResolver;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

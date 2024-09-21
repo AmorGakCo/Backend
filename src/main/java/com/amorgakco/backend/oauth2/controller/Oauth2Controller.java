@@ -7,11 +7,8 @@ import com.amorgakco.backend.member.domain.Oauth2ProviderType;
 import com.amorgakco.backend.oauth2.dto.Oauth2LoginResponse;
 import com.amorgakco.backend.oauth2.dto.Oauth2MemberResponse;
 import com.amorgakco.backend.oauth2.service.Oauth2Service;
-
 import jakarta.servlet.http.HttpServletResponse;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

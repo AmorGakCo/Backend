@@ -3,9 +3,7 @@ package com.amorgakco.backend.group.controller;
 import com.amorgakco.backend.group.dto.GroupSearchRequest;
 import com.amorgakco.backend.group.dto.GroupSearchResponse;
 import com.amorgakco.backend.group.service.GroupLocationService;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;

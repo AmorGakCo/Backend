@@ -10,6 +10,8 @@ src/main/resources/application-oauth2local.yml
 src/main/resources/application-jwt.yml
 src/main/resources/application-notification.yml
 src/main/resources/fcm-secret.json
+src/test/resources/application-test.yml
+
 docker/
 .docker-conf/
 

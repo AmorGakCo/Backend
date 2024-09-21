@@ -11,4 +11,5 @@ public record KakaoAuthorization(
         Integer expiresIn,
         String refreshToken,
         Integer refreshTokenExpiresIn,
-        String scope) {}
+        String scope) {
+}

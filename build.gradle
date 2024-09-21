@@ -54,6 +54,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-admin:9.3.0'
     implementation 'com.google.geometry:s2-geometry:2.0.0'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
+    runtimeOnly 'com.h2database:h2'
+    implementation 'org.redisson:redisson-spring-boot-starter:3.18.0'
 }
 
 tasks.named('test') {

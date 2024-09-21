@@ -24,6 +24,10 @@ public class GlobalExceptionResolver {
         return new ErrorResponse(e.getMessage());
     }
 
+    private void setExceptionLog(final String message) {
+        log.error("Error Message : {}", message);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse checkParameter(final MethodArgumentNotValidException e) {
@@ -33,10 +37,6 @@ public class GlobalExceptionResolver {
             return new ErrorResponse("잘못된 입력입니다.");
         }
         return new ErrorResponse(fieldError.getDefaultMessage());
-    }
-
-    private void setExceptionLog(final String message) {
-        log.error("Error Message : {}", message);
     }
 
     @ExceptionHandler(AccessDeniedException.class)

@@ -90,13 +90,6 @@ public class Group extends BaseTime {
         }
     }
 
-    public boolean isEveryParticipantsVerified() {
-        long verifiedParticipants = participants.stream()
-                .filter(p -> p.getLocationVerificationStatus().equals(LocationVerificationStatus.VERIFIED))
-                .count();
-        return verifiedParticipants==participants.size();
-    }
-
     private void validateGroupCapacity() {
         if (groupCapacity==getCurrentGroupSize()) {
             throw IllegalAccessException.exceedGroupCapacity();
@@ -104,7 +97,14 @@ public class Group extends BaseTime {
     }
 
     public int getCurrentGroupSize() {
-        return participants.size() + 1;
+        return participants.size();
+    }
+
+    public boolean isEveryParticipantsVerified() {
+        long verifiedParticipants = participants.stream()
+                .filter(p -> p.getLocationVerificationStatus().equals(LocationVerificationStatus.VERIFIED))
+                .count();
+        return verifiedParticipants==participants.size();
     }
 
     public boolean isNotGroupHost(final Long hostId) {

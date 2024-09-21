@@ -2,9 +2,7 @@ package com.amorgakco.backend.fcmtoken.controller;
 
 import com.amorgakco.backend.fcmtoken.service.FcmTokenService;
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

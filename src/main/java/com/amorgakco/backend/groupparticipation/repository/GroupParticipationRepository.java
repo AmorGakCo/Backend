@@ -1,7 +1,6 @@
 package com.amorgakco.backend.groupparticipation.repository;
 
 import com.amorgakco.backend.groupparticipation.domain.GroupParticipation;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
