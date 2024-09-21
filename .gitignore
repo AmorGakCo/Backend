@@ -12,6 +12,11 @@ src/main/resources/application-notification.yml
 src/main/resources/fcm-secret.json
 src/test/resources/application-test.yml
 
+src/test/resources/application-oauth2.yml
+src/test/resources/application-jwt.yml
+src/test/resources/application-notification.yml
+src/test/resources/fcm-secret.json
+
 docker/
 .docker-conf/
 
