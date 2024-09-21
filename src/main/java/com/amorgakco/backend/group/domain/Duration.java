@@ -1,9 +1,7 @@
 package com.amorgakco.backend.group.domain;
 
 import com.amorgakco.backend.global.exception.IllegalTimeException;
-
 import jakarta.persistence.Embeddable;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

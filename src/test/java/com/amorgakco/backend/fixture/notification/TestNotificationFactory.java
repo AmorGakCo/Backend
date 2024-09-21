@@ -26,10 +26,10 @@ public class TestNotificationFactory {
         final Member sender = TestMemberFactory.create(1L);
         final Member receiver = TestMemberFactory.create(2L);
         final NotificationRequest request =
-                NotificationCreator.participationNotification(sender, receiver);
+                NotificationCreator.participationRequest(sender, receiver, "mogakco");
         return NotificationMessage.builder()
                 .content(request.content())
-                .title(request.notificationTitle().getTitle())
+                .title(request.title())
                 .build();
     }
 }

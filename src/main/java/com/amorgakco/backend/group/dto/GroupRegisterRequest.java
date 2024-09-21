@@ -1,7 +1,6 @@
 package com.amorgakco.backend.group.dto;
 
 import lombok.Builder;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -15,4 +14,5 @@ public record GroupRegisterRequest(
         @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm:ss") LocalDateTime endAt,
         double latitude,
         double longitude,
-        String address) {}
+        String address) {
+}

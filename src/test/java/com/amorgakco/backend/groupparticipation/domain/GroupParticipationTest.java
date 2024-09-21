@@ -1,13 +1,12 @@
 package com.amorgakco.backend.groupparticipation.domain;
 
-import static org.assertj.core.api.Assertions.*;
-
 import com.amorgakco.backend.fixture.groupparticipation.TestGroupParticipationFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.member.domain.Member;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class GroupParticipationTest {
 

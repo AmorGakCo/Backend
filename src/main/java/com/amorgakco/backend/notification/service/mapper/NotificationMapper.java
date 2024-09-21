@@ -4,7 +4,6 @@ import com.amorgakco.backend.notification.domain.Notification;
 import com.amorgakco.backend.notification.dto.NotificationMessage;
 import com.amorgakco.backend.notification.dto.NotificationMessageResponse;
 import com.amorgakco.backend.notification.infrastructure.consumer.NotificationRequest;
-
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Component;
 
@@ -30,16 +29,16 @@ public class NotificationMapper {
 
     private NotificationMessage toNotificationMessage(final Notification notification) {
         return NotificationMessage.builder()
-                .title(notification.getNotificationTitle().getTitle())
+                .title(notification.getTitle())
                 .content(notification.getContent())
                 .build();
     }
 
     public Notification toNotification(final NotificationRequest request) {
         return Notification.builder()
+                .title(request.title())
+                .sendingType(request.sendingType())
                 .receiver(request.receiver())
-                .sender(request.sender())
-                .notificationTitle(request.notificationTitle())
                 .content(request.content())
                 .build();
     }

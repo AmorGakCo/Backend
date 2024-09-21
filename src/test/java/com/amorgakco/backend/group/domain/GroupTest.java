@@ -1,7 +1,5 @@
 package com.amorgakco.backend.group.domain;
 
-import static org.assertj.core.api.Assertions.*;
-
 import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.fixture.group.TestParticipantsFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
@@ -9,9 +7,11 @@ import com.amorgakco.backend.global.exception.ErrorCode;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.participant.domain.Participant;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class GroupTest {
 
@@ -22,12 +22,13 @@ class GroupTest {
         final Member host = TestMemberFactory.create(1L);
         final Group group = TestGroupFactory.create(host);
         final Member member = TestMemberFactory.create(2L);
+        final int expectGroupSize = 2;
         final Participant participant = TestParticipantsFactory.create(member);
         group.addParticipants(participant);
         // when
         final int currentGroupSize = group.getCurrentGroupSize();
         // then
-        assertThat(currentGroupSize).isEqualTo(2);
+        assertThat(currentGroupSize).isEqualTo(expectGroupSize);
     }
 
     @Test

@@ -1,11 +1,21 @@
 package com.amorgakco.backend.member.domain;
 
 import com.amorgakco.backend.global.BaseTime;
+import com.amorgakco.backend.global.exception.IllegalAccessException;
 import com.amorgakco.backend.global.exception.IllegalFormatException;
-
-import jakarta.persistence.*;
-
-import lombok.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +26,12 @@ import java.util.List;
 public class Member extends BaseTime {
     private static final String HTTPS_GITHUB_PREFIX = "https://github";
     private static final String GITHUB_PREFIX = "github";
-    @Id @GeneratedValue private Long id;
+    private static final Integer MAX_MOGAKCO_TEMPERATURE = 100;
+    private static final Integer MIN_MOGAKCO_TEMPERATURE = -100;
+
+    @Id
+    @GeneratedValue
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     private Oauth2ProviderType oauth2ProviderType;
@@ -32,7 +47,7 @@ public class Member extends BaseTime {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private List<Roles> roleNames = new ArrayList<>();
+    private final List<Roles> roleNames = new ArrayList<>();
 
     @Builder
     public Member(
@@ -77,6 +92,20 @@ public class Member extends BaseTime {
         if (phoneNumber.contains("-")) {
             throw IllegalFormatException.dashNotAllowed();
         }
+    }
+
+    public Integer upMoGakCoTemperature() {
+        if (moGakCoTemperature + 1 > MAX_MOGAKCO_TEMPERATURE) {
+            throw IllegalAccessException.canNotExceedPositive100();
+        }
+        return ++moGakCoTemperature;
+    }
+
+    public Integer downMoGakCoTemperature() {
+        if (moGakCoTemperature - 1 < MIN_MOGAKCO_TEMPERATURE) {
+            throw IllegalAccessException.canNotUnderNegative100();
+        }
+        return --moGakCoTemperature;
     }
 
     public boolean isEquals(final Long memberId) {

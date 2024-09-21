@@ -4,10 +4,8 @@ import com.amorgakco.backend.global.config.KakaoRedirectionLoginUrl;
 import com.amorgakco.backend.member.domain.Oauth2ProviderType;
 import com.amorgakco.backend.oauth2.provider.Oauth2Member;
 import com.amorgakco.backend.oauth2.provider.Oauth2ProviderService;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;

@@ -1,3 +1,4 @@
 package com.amorgakco.backend.global;
 
-public record IdResponse(Long id) {}
+public record IdResponse(Long id) {
+}

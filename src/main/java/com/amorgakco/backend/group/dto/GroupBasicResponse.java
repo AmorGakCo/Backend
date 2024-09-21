@@ -12,4 +12,5 @@ public record GroupBasicResponse(
         LocalDateTime endAt,
         int groupCapacity,
         int currentParticipants,
-        String address) {}
+        String address) {
+}

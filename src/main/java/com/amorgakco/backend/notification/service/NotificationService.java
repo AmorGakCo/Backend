@@ -4,9 +4,7 @@ import com.amorgakco.backend.notification.domain.Notification;
 import com.amorgakco.backend.notification.dto.NotificationMessageResponse;
 import com.amorgakco.backend.notification.repository.NotificationRepository;
 import com.amorgakco.backend.notification.service.mapper.NotificationMapper;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;

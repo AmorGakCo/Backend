@@ -14,10 +14,9 @@ import java.util.stream.IntStream;
 public abstract class GroupSearchStrategy {
     public abstract boolean isValid(double diagonalSize);
 
-    public S2LatLngRect createRectangle(final GroupSearchRequest request) {
-        return S2LatLngRect.fromPointPair(
-                S2LatLng.fromDegrees(request.southWestLat(), request.southWestLon()),
-                S2LatLng.fromDegrees(request.northEastLat(), request.northEastLon()));
+    public List<String> selectCellTokens(final GroupSearchRequest request) {
+        final List<String> cellTokens = getCoveringCells(request);
+        return findHalfOfCells(cellTokens);
     }
 
     protected final List<String> getCoveringCells(final GroupSearchRequest request) {
@@ -32,15 +31,16 @@ public abstract class GroupSearchStrategy {
         return cellIds.stream().map(S2CellId::toToken).toList();
     }
 
-    public List<String> selectCellTokens(final GroupSearchRequest request) {
-        final List<String> cellTokens = getCoveringCells(request);
-        return findHalfOfCells(cellTokens);
-    }
-
     private List<String> findHalfOfCells(final List<String> cellTokens) {
         return IntStream.range(0, cellTokens.size() - 1)
-                .filter(i -> i % 2 == 0)
+                .filter(i -> i % 2==0)
                 .mapToObj(cellTokens::get)
                 .toList();
+    }
+
+    public S2LatLngRect createRectangle(final GroupSearchRequest request) {
+        return S2LatLngRect.fromPointPair(
+                S2LatLng.fromDegrees(request.southWestLat(), request.southWestLon()),
+                S2LatLng.fromDegrees(request.northEastLat(), request.northEastLon()));
     }
 }

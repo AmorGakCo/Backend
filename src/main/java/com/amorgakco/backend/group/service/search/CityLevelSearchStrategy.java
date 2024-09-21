@@ -3,7 +3,6 @@ package com.amorgakco.backend.group.service.search;
 import com.amorgakco.backend.group.dto.GroupSearchRequest;
 import com.google.common.geometry.S2LatLng;
 import com.google.common.geometry.S2LatLngRect;
-
 import org.springframework.stereotype.Component;
 
 @Component

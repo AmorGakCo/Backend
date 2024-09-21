@@ -5,4 +5,5 @@ import lombok.Builder;
 import java.util.List;
 
 @Builder
-public record GroupSearchResponse(List<GroupLocation> locations) {}
+public record GroupSearchResponse(List<GroupLocation> locations) {
+}

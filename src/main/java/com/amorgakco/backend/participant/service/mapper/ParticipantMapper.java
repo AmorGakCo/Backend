@@ -4,7 +4,6 @@ import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.participant.domain.Participant;
 import com.amorgakco.backend.participant.dto.ParticipationHistory;
 import com.amorgakco.backend.participant.dto.ParticipationHistoryResponse;
-
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Component;
 

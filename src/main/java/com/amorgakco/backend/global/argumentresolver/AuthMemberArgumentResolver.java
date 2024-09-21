@@ -3,9 +3,7 @@ package com.amorgakco.backend.global.argumentresolver;
 import com.amorgakco.backend.global.oauth.MemberPrincipal;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.service.MemberService;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;

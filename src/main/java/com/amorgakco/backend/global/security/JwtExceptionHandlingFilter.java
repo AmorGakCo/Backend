@@ -3,14 +3,11 @@ package com.amorgakco.backend.global.security;
 import com.amorgakco.backend.global.exception.JwtAuthenticationException;
 import com.amorgakco.backend.global.response.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 

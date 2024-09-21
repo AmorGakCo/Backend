@@ -2,7 +2,6 @@ package com.amorgakco.backend.oauth2.provider;
 
 import com.amorgakco.backend.global.exception.InvalidOauth2ProviderException;
 import com.amorgakco.backend.member.domain.Oauth2ProviderType;
-
 import org.springframework.stereotype.Component;
 
 import java.util.Map;

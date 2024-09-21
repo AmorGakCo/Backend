@@ -2,7 +2,6 @@ package com.amorgakco.backend.member.repository;
 
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.domain.Oauth2ProviderType;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

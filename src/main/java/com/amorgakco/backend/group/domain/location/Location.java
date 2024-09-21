@@ -4,9 +4,7 @@ import com.amorgakco.backend.global.GoogleS2Const;
 import com.google.common.geometry.S2CellId;
 import com.google.common.geometry.S2LatLng;
 import com.google.common.geometry.S2Point;
-
 import jakarta.persistence.Embeddable;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
