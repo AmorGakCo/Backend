@@ -1,9 +1,0 @@
-jwt:
-  secret-key: c28xOTJuZ2tlbGZrYW8xa2Rtdm5hbHNrZW1jawefwefeaxb2VrYW9qZWVmYXdla2xmYWx3ZWsxbWFla2ZsYWtlZms=
-  access-expiration: 7200000
-  refresh-expiration: 1209600000
-  front-url: "http://localhost:3000/login-success"
-spring:
-  config:
-    activate:
-      on-profile: jwt
