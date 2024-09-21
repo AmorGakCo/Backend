@@ -48,7 +48,6 @@ class ParticipantServiceTest {
                     participantService.upTemperature(1L, 1L, 2L);
                     successCount.incrementAndGet();
                 } catch (Exception e) {
-                    System.out.println("e.getMessage() = " + e.getMessage());
                     failCount.incrementAndGet();
                 } finally {
                     latch.countDown();
@@ -62,6 +61,7 @@ class ParticipantServiceTest {
 
         Member member = memberRepository.findById(2L).get();
         Integer moGakCoTemperature = member.getMoGakCoTemperature();
+        System.out.println("moGakCoTemperature = " + moGakCoTemperature);
         Assertions.assertThat(moGakCoTemperature).isEqualTo(memberCount);
     }
 }
