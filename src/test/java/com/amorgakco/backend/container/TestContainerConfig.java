@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.testcontainers.utility.DockerImageName;
 
+
 public class TestContainerConfig
         implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
@@ -18,7 +19,6 @@ public class TestContainerConfig
 
     @Override
     public void initialize(final ConfigurableApplicationContext applicationContext) {
-
         TestPropertyValues.of(
                         "spring.data.redis.host=" + REDIS_CONTAINER.getHost(),
                         "spring.data.redis.port=" + REDIS_CONTAINER.getFirstMappedPort())
