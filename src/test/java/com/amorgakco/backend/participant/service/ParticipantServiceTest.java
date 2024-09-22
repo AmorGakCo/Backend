@@ -17,7 +17,6 @@ import org.springframework.test.context.ContextConfiguration;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @SpringBootTest
 @ContextConfiguration(initializers = {TestContainerConfig.class})
@@ -29,6 +28,12 @@ class ParticipantServiceTest {
     private MemberRepository memberRepository;
     @Autowired
     private GroupRepository groupRepository;
+
+    @Test
+    @DisplayName("")
+    void test() {
+        Member member1 = memberRepository.save(Member.builder().nickname("member1").build());
+    }
 
 
     @Test
@@ -44,16 +49,12 @@ class ParticipantServiceTest {
 
         ExecutorService executorService = Executors.newFixedThreadPool(memberCount);
         CountDownLatch latch = new CountDownLatch(memberCount);
-        AtomicInteger successCount = new AtomicInteger();
-        AtomicInteger failCount = new AtomicInteger();
 
         for (int i = 0; i < memberCount; i++) {
             executorService.execute(() -> {
                 try {
                     participantService.upTemperature(1L, 1L, 2L);
-                    successCount.incrementAndGet();
                 } catch (Exception e) {
-                    failCount.incrementAndGet();
                 } finally {
                     latch.countDown();
                 }
@@ -61,12 +62,9 @@ class ParticipantServiceTest {
         }
 
         latch.await();
-        System.out.println("failCount = " + failCount);
-        System.out.println("successCount = " + successCount);
 
         Member member = memberRepository.findById(2L).get();
         Integer moGakCoTemperature = member.getMoGakCoTemperature();
-        System.out.println("moGakCoTemperature = " + moGakCoTemperature);
         Assertions.assertThat(moGakCoTemperature).isEqualTo(memberCount);
     }
 }
