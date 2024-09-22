@@ -1,5 +1,6 @@
 package com.amorgakco.backend.participant.service;
 
+import com.amorgakco.backend.container.TestContainerConfig;
 import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.repository.GroupRepository;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -18,6 +20,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @SpringBootTest
+@ContextConfiguration(initializers = {TestContainerConfig.class})
 class ParticipantServiceTest {
 
     @Autowired
