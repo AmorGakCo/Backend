@@ -1,5 +1,6 @@
 package com.amorgakco.backend.participant.service;
 
+import com.amorgakco.backend.container.TestContainerConfig;
 import com.amorgakco.backend.group.repository.GroupRepository;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.repository.MemberRepository;
@@ -7,9 +8,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
 @SpringBootTest
-//@ContextConfiguration(initializers = {TestContainerConfig.class})
+@ContextConfiguration(initializers = {TestContainerConfig.class})
 class ParticipantServiceTest {
 
     @Autowired
