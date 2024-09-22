@@ -21,8 +21,8 @@ jobs:
           echo "${{ secrets.FCM_SECRET }}" | base64 -d > ./src/test/resources/fcm-secret.json
           echo "${{ secrets.APPLICATION_NOTIFICATION }}" > ./src/test/resources/application-notification.yml
           echo "${{ secrets.APPLICATION_JWT }}" > ./src/main/resources/application-jwt.yml
+          echo "${{ secrets.FCM_SECRET }}" | base64 -d > ./src/test/resources/fcm-secret.json
           echo "${{ secrets.APPLICATION_OAUTH2 }}" > ./src/main/resources/application-oauth2.yml
-          echo "${{ secrets.FCM_SECRET }}" | base64 -d > ./src/main/resources/fcm-secret.json
           echo "${{ secrets.APPLICATION_NOTIFICATION }}" > ./src/main/resources/application-notification.yml
       - run: chmod +x gradlew
       - run: ./gradlew build
