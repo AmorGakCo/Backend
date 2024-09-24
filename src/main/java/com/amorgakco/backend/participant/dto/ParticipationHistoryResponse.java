@@ -10,4 +10,5 @@ public record ParticipationHistoryResponse(
         int elementSize,
         boolean hasNext,
         List<ParticipationHistory> activatedGroup,
-        List<ParticipationHistory> InactivatedGroup) {}
+        List<ParticipationHistory> InactivatedGroup) {
+}

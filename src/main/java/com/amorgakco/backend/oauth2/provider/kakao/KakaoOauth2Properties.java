@@ -8,4 +8,5 @@ public record KakaoOauth2Properties(
         String redirectUri,
         String clientId,
         String clientSecret,
-        String[] scope) {}
+        String[] scope) {
+}

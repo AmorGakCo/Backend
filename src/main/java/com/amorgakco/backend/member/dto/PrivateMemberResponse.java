@@ -7,4 +7,5 @@ public record PrivateMemberResponse(
         boolean smsNotificationSetting,
         String githubUrl,
         String phoneNumber,
-        Integer moGakCoTemperature) {}
+        Integer moGakCoTemperature) {
+}

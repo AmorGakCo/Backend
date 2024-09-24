@@ -5,9 +5,7 @@ import com.amorgakco.backend.group.dto.GroupSearchResponse;
 import com.amorgakco.backend.group.repository.GroupRepository;
 import com.amorgakco.backend.group.service.mapper.GroupMapper;
 import com.amorgakco.backend.group.service.search.S2CellSearch;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
 
 import java.util.List;

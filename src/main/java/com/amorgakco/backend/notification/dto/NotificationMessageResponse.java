@@ -9,4 +9,5 @@ public record NotificationMessageResponse(
         int page,
         int elementSize,
         boolean hasNext,
-        List<NotificationMessage> notificationMessages) {}
+        List<NotificationMessage> notificationMessages) {
+}

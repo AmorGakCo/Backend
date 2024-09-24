@@ -19,9 +19,9 @@ public class LocationCalculator {
         final double haversine =
                 Math.sin(deltaLatitude / 2) * Math.sin(deltaLatitude / 2)
                         + Math.cos(Math.toRadians(sourceLatitude))
-                                * Math.cos(Math.toRadians(targetLatitude))
-                                * Math.sin(deltaLongitude / 2)
-                                * Math.sin(deltaLatitude / 2);
+                        * Math.cos(Math.toRadians(targetLatitude))
+                        * Math.sin(deltaLongitude / 2)
+                        * Math.sin(deltaLatitude / 2);
         return EARTH_RADIUS
                 * 2
                 * Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine))

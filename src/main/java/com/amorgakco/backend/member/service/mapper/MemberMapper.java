@@ -3,7 +3,6 @@ package com.amorgakco.backend.member.service.mapper;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.dto.PrivateMemberResponse;
 import com.amorgakco.backend.oauth2.provider.Oauth2Member;
-
 import org.springframework.stereotype.Component;
 
 @Component

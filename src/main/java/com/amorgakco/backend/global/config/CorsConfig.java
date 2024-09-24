@@ -1,7 +1,6 @@
 package com.amorgakco.backend.global.config;
 
 import com.google.common.net.HttpHeaders;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

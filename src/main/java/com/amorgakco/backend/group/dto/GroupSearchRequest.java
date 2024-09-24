@@ -9,4 +9,5 @@ public record GroupSearchRequest(
         double northEastLat,
         double northEastLon,
         double centerLat,
-        double centerLon) {}
+        double centerLon) {
+}

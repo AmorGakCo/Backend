@@ -8,7 +8,6 @@ import com.amorgakco.backend.group.dto.GroupLocation;
 import com.amorgakco.backend.group.dto.GroupMember;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
 import com.amorgakco.backend.member.domain.Member;
-
 import org.springframework.stereotype.Component;
 
 import java.util.List;

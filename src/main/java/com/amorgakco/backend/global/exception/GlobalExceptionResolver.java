@@ -1,15 +1,17 @@
 package com.amorgakco.backend.global.exception;
 
 import com.amorgakco.backend.global.response.ErrorResponse;
-
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.Objects;
 
 @RestControllerAdvice
 @Slf4j
@@ -24,6 +26,17 @@ public class GlobalExceptionResolver {
 
     private void setExceptionLog(final String message) {
         log.error("Error Message : {}", message);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse checkParameter(final MethodArgumentNotValidException e) {
+        setExceptionLog(e.getMessage());
+        FieldError fieldError = e.getBindingResult().getFieldError();
+        if (Objects.isNull(fieldError)) {
+            return new ErrorResponse("잘못된 입력입니다.");
+        }
+        return new ErrorResponse(fieldError.getDefaultMessage());
     }
 
     @ExceptionHandler(AccessDeniedException.class)

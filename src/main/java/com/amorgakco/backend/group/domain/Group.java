@@ -4,10 +4,19 @@ import com.amorgakco.backend.global.BaseTime;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
 import com.amorgakco.backend.group.domain.location.Location;
 import com.amorgakco.backend.member.domain.Member;
+import com.amorgakco.backend.participant.domain.LocationVerificationStatus;
 import com.amorgakco.backend.participant.domain.Participant;
-
-import jakarta.persistence.*;
-
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,15 +36,22 @@ public class Group extends BaseTime {
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private final Set<Participant> participants = new HashSet<>();
-    @Id @GeneratedValue private Long id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private String description;
     private int groupCapacity;
     private String address;
-    @Embedded private Duration duration;
+    @Embedded
+    private Duration duration;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Member host;
-    @Embedded private Location location;
+
+    @Embedded
+    private Location location;
 
     @Builder
     public Group(
@@ -53,6 +69,7 @@ public class Group extends BaseTime {
         this.groupCapacity = groupCapacity;
         this.duration = new Duration(beginAt, endAt);
         this.location = new Location(longitude, latitude);
+        addParticipants(new Participant(host));
         this.host = host;
         this.address = address;
     }
@@ -75,13 +92,20 @@ public class Group extends BaseTime {
     }
 
     private void validateGroupCapacity() {
-        if (groupCapacity == getCurrentGroupSize()) {
+        if (groupCapacity==getCurrentGroupSize()) {
             throw IllegalAccessException.exceedGroupCapacity();
         }
     }
 
     public int getCurrentGroupSize() {
-        return participants.size() + 1;
+        return participants.size();
+    }
+
+    public boolean isEveryParticipantsVerified() {
+        long verifiedParticipants = participants.stream()
+                .filter(p -> p.getLocationVerificationStatus().equals(LocationVerificationStatus.VERIFIED))
+                .count();
+        return verifiedParticipants==participants.size();
     }
 
     public boolean isNotGroupHost(final Long hostId) {

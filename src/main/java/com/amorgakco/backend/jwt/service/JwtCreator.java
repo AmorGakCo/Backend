@@ -1,14 +1,11 @@
 package com.amorgakco.backend.jwt.service;
 
 import io.jsonwebtoken.Jwts;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-
 import javax.crypto.SecretKey;
+import java.util.Date;
 
 @Component
 @RequiredArgsConstructor

@@ -6,9 +6,7 @@ import com.amorgakco.backend.oauth2.dto.Oauth2MemberResponse;
 import com.amorgakco.backend.oauth2.provider.Oauth2Member;
 import com.amorgakco.backend.oauth2.provider.Oauth2ProviderSelector;
 import com.amorgakco.backend.oauth2.provider.Oauth2ProviderService;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
 
 @Service

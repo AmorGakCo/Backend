@@ -2,7 +2,6 @@ package com.amorgakco.backend.oauth2.converter;
 
 import com.amorgakco.backend.global.exception.InvalidOauth2ProviderException;
 import com.amorgakco.backend.member.domain.Oauth2ProviderType;
-
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

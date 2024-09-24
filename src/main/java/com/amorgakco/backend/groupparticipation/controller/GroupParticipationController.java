@@ -1,11 +1,10 @@
 package com.amorgakco.backend.groupparticipation.controller;
 
 import com.amorgakco.backend.global.argumentresolver.AuthMember;
+import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
 import com.amorgakco.backend.groupparticipation.service.GroupParticipationService;
 import com.amorgakco.backend.member.domain.Member;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,8 +22,8 @@ public class GroupParticipationController {
 
     @PostMapping("/{groupId}/participation")
     @ResponseStatus(HttpStatus.CREATED)
-    public void participate(@PathVariable final Long groupId, @AuthMember final Member member) {
-        groupParticipationService.participate(groupId, member);
+    public void participate(@PathVariable final Long groupId, @AuthMemberId final Long memberId) {
+        groupParticipationService.participate(groupId, memberId);
     }
 
     @PostMapping("/{groupId}/participation/{memberId}")
@@ -41,7 +40,7 @@ public class GroupParticipationController {
     public void reject(
             @PathVariable final Long groupId,
             @PathVariable final Long memberId,
-            @AuthMember final Member host) {
-        groupParticipationService.reject(groupId, memberId, host);
+            @AuthMemberId final Long hostId) {
+        groupParticipationService.reject(groupId, memberId, hostId);
     }
 }

@@ -36,4 +36,16 @@ public class IllegalAccessException extends IllegalStateException {
     public static IllegalAccessException invalidDiagonalDistance() {
         return new IllegalAccessException(ErrorCode.INVALID_DIAGONAL_DISTANCE);
     }
+
+    public static IllegalAccessException notSameGroupParticipant() {
+        return new IllegalAccessException(ErrorCode.NOT_SAME_GROUP_PARTICIPANT);
+    }
+
+    public static IllegalAccessException canNotExceedPositive100() {
+        return new IllegalAccessException(ErrorCode.CAN_NOT_EXCEED_POSITIVE_100);
+    }
+
+    public static IllegalAccessException canNotUnderNegative100() {
+        return new IllegalAccessException(ErrorCode.CAN_NOT_UNDER_NEGATIVE_100);
+    }
 }

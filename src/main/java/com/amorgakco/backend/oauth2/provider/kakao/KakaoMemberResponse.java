@@ -17,8 +17,10 @@ public record KakaoMemberResponse(Long id, KakaoAccount kakaoAccount) {
     }
 
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-    public record KakaoAccount(Profile profile) {}
+    public record KakaoAccount(Profile profile) {
+    }
 
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-    public record Profile(String nickname, String profileImageUrl) {}
+    public record Profile(String nickname, String profileImageUrl) {
+    }
 }

@@ -8,4 +8,5 @@ public record AdditionalInfoRequest(
         String phoneNumber,
         boolean smsNotificationSetting,
         double longitude,
-        double latitude) {}
+        double latitude) {
+}

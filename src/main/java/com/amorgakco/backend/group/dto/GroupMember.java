@@ -8,4 +8,5 @@ public record GroupMember(
         String imgUrl,
         String nickname,
         Integer moGakCoTemperature,
-        String githubUrl) {}
+        String githubUrl) {
+}

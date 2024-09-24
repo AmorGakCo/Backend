@@ -18,7 +18,7 @@ public class TestGroupFactory {
 
     private static final double LONGITUDE = 126.9748397;
     private static final double LATITUDE = 37.5703901;
-    private static final int GROUP_CAPACITY = 3;
+    private static final int GROUP_CAPACITY = 4;
     private static final String ADDRESS = "서울특별시 종로구 신문로1가 23";
     private static final String DESCRIPTION = "모각코 합시다.";
     private static final String NAME = "AmorGakCo";
@@ -121,6 +121,7 @@ public class TestGroupFactory {
                 37.554498367410076,
                 126.97758064203596);
     }
+
     ;
 
     public static GroupSearchRequest dongLevelGroupSearchRequest() {
@@ -132,6 +133,7 @@ public class TestGroupFactory {
                 37.56826582236329,
                 126.97879899797212);
     }
+
     ;
 
     public static GroupSearchRequest guLevelGroupSearchRequest() {
@@ -143,5 +145,6 @@ public class TestGroupFactory {
                 37.56826582236329,
                 126.97879899797212);
     }
+
     ;
 }
