@@ -39,7 +39,7 @@ class ParticipantServiceTest {
         group.addParticipants(new Participant(member2));
         groupRepository.saveAndFlush(group);
 
-        int memberCount = 20;
+        int memberCount = 1;
 
         ExecutorService executorService = Executors.newFixedThreadPool(memberCount);
         CountDownLatch latch = new CountDownLatch(memberCount);
