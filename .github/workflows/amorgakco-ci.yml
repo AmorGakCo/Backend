@@ -25,7 +25,7 @@ jobs:
           echo "${{ secrets.APPLICATION_OAUTH2 }}" > ./src/main/resources/application-oauth2.yml
           echo "${{ secrets.APPLICATION_NOTIFICATION }}" > ./src/main/resources/application-notification.yml
       - run: chmod +x gradlew
-      - run: ./gradlew build
+      - run: ./main/gradlew build
       - name: 테스트 커버리지를 PR에 코멘트에 등록
         id: jacoco
         uses: madrapps/jacoco-report@v1.6.1
