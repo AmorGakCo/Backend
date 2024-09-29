@@ -17,6 +17,7 @@ jobs:
       - name: Apply Environment Variables
         run: |
           echo "${{ secrets.FCM_SECRET }}" | base64 -d > ./main/src/test/resources/fcm-secret.json
+      - run: pwd
       - run: cd main
       - run: chmod +x gradlew
       - run: ./gradlew build
