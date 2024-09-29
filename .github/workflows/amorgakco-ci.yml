@@ -3,7 +3,10 @@ on:
   pull_request:
     branches:
       - main
-
+defaults:
+  run:
+    shell: bash
+    working-directory: ./main
 permissions: write-all
 jobs:
   build:
@@ -16,14 +19,8 @@ jobs:
           distribution: 'temurin'
       - name: Apply Environment Variables
         run: |
-          echo "${{ secrets.APPLICATION_JWT }}" > ./src/test/resources/application-jwt.yml
-          echo "${{ secrets.APPLICATION_OAUTH2 }}" > ./src/test/resources/application-oauth2.yml
           echo "${{ secrets.FCM_SECRET }}" | base64 -d > ./src/test/resources/fcm-secret.json
-          echo "${{ secrets.APPLICATION_NOTIFICATION }}" > ./src/test/resources/application-notification.yml
-          echo "${{ secrets.APPLICATION_JWT }}" > ./src/main/resources/application-jwt.yml
-          echo "${{ secrets.FCM_SECRET }}" | base64 -d > ./src/test/resources/fcm-secret.json
-          echo "${{ secrets.APPLICATION_OAUTH2 }}" > ./src/main/resources/application-oauth2.yml
-          echo "${{ secrets.APPLICATION_NOTIFICATION }}" > ./src/main/resources/application-notification.yml
+          echo "${{ secrets.FCM_SECRET }}" | base64 -d > ./src/main/resources/fcm-secret.json
       - run: chmod +x gradlew
       - run: ./gradlew build
       - name: 테스트 커버리지를 PR에 코멘트에 등록
