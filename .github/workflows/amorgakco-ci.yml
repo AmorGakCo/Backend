@@ -6,7 +6,7 @@ on:
 defaults:
   run:
     shell: bash
-    working-directory: ./Backend/main
+    working-directory: /main
 permissions: write-all
 jobs:
   build:
