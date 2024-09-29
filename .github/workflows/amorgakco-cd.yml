@@ -15,8 +15,8 @@ jobs:
           username: ${{secrets.GCP_USERNAME}}
           key: ${{secrets.GCP_SECRET}}
           script: |
-            cd Backend/main
             git pull
+            cd Backend/main
             sudo docker-compose down
             sudo docker images prune
             sudo docker-compose up -d --build
