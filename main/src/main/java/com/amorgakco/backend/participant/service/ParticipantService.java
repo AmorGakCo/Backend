@@ -1,6 +1,4 @@
 package com.amorgakco.backend.participant.service;
-
-import com.amorgakco.backend.global.config.redisson.Lock;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
@@ -76,14 +74,12 @@ public class ParticipantService {
         ));
     }
 
-    @Lock(key = "#targetMemberId")
     public Integer upTemperature(final Long groupId, final Long requestMemberId, final Long targetMemberId) {
         final Participant requestParticipant = getParticipant(groupId, requestMemberId);
         final Participant targetParticipant = getParticipant(groupId, targetMemberId);
         return targetParticipant.upTemperature(requestParticipant);
     }
 
-    @Lock(key = "#targetMemberId")
     public Integer downTemperature(final Long groupId, final Long requestMemberId, final Long targetMemberId) {
         final Participant requestParticipant = getParticipant(groupId, requestMemberId);
         final Participant targetParticipant = getParticipant(groupId, targetMemberId);
