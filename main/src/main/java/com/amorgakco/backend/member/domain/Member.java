@@ -13,10 +13,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Version;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DialectOverride;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +51,9 @@ public class Member extends BaseTime {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private final List<Roles> roleNames = new ArrayList<>();
+
+    @Version
+    private Integer version;
 
     @Builder
     public Member(

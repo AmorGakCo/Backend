@@ -59,7 +59,7 @@ public class ParticipantController {
             @PathVariable final Long groupId,
             @AuthMemberId final Long requestMemberId
     ) {
-        return participantService.upTemperature(groupId, requestMemberId, targetMemberId);
+        return participantService.increaseTemperature(groupId, requestMemberId, targetMemberId);
     }
 
     @PatchMapping("/{targetMemberId}/groups/{groupId}/temperature-down")
@@ -68,6 +68,6 @@ public class ParticipantController {
             @PathVariable final Long groupId,
             @AuthMemberId final Long requestMemberId
     ) {
-        return participantService.downTemperature(groupId, requestMemberId, targetMemberId);
+        return participantService.decreaseTemperature(groupId, requestMemberId, targetMemberId);
     }
 }

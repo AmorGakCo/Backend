@@ -17,8 +17,7 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
     @Query("select p from Participant p join fetch p.group where p.member.id = :memberId")
     Slice<Participant> findByMember(Long memberId, Pageable pageable);
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query(
-            "select p from Participant p join fetch p.group where p.group.id = :groupId and p.member.id = :memberId")
+            "select p from Participant p join fetch p.group join fetch p.member where p.group.id = :groupId and p.member.id = :memberId")
     Optional<Participant> findByGroupAndMember(final Long groupId, final Long memberId);
 }

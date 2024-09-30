@@ -53,6 +53,13 @@ public class GlobalExceptionResolver {
         return new ErrorResponse(e.getErrorCode());
     }
 
+    @ExceptionHandler(RetryFailedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse illegalAccess(final RetryFailedException e) {
+        setCustomExceptionLog(e.getErrorCode());
+        return new ErrorResponse(e.getErrorCode());
+    }
+
     private void setCustomExceptionLog(final ErrorCode errorCode) {
         log.error("Error Code : {} , Message : {}", errorCode.getCode(), errorCode.getMessage());
     }
