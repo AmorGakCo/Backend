@@ -1,5 +1,6 @@
 package com.amorgakco.backend.participant.service;
 
+import com.amorgakco.backend.global.annotation.OptimisticLockRetryable;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.global.exception.RetryFailedException;
 import com.amorgakco.backend.group.domain.Group;
@@ -82,8 +83,9 @@ public class ParticipantService {
         ));
     }
 
-    @Retryable(retryFor = {ObjectOptimisticLockingFailureException.class},backoff = @Backoff(value = 300L),maxAttempts = 30,recover = "temperatureRecover")
+
     @Transactional
+    @OptimisticLockRetryable(recover = "temperatureRecover")
     public TemperatureResponse increaseTemperature(final Long groupId, final Long requestMemberId, final Long targetMemberId) {
         final Participant requestParticipant = getParticipant(groupId, requestMemberId);
         final Participant targetParticipant = getParticipant(groupId, targetMemberId);
@@ -91,8 +93,8 @@ public class ParticipantService {
         return new TemperatureResponse(temperature);
     }
 
-    @Retryable(retryFor = {ObjectOptimisticLockingFailureException.class},backoff = @Backoff(value = 300L),maxAttempts = 30, recover = "temperatureRecover")
     @Transactional
+    @OptimisticLockRetryable(recover = "temperatureRecover")
     public TemperatureResponse decreaseTemperature(final Long groupId, final Long requestMemberId, final Long targetMemberId) {
         final Participant requestParticipant = getParticipant(groupId, requestMemberId);
         final Participant targetParticipant = getParticipant(groupId, targetMemberId);
