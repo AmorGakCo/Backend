@@ -18,7 +18,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DialectOverride;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,14 +99,14 @@ public class Member extends BaseTime {
         }
     }
 
-    public Integer upMoGakCoTemperature() {
+    public Integer increaseMoGakCoTemperature() {
         if (moGakCoTemperature + 1 > MAX_MOGAKCO_TEMPERATURE) {
             throw IllegalAccessException.canNotExceedPositive100();
         }
         return ++moGakCoTemperature;
     }
 
-    public Integer downMoGakCoTemperature() {
+    public Integer decreaseMoGakCoTemperature() {
         if (moGakCoTemperature - 1 < MIN_MOGAKCO_TEMPERATURE) {
             throw IllegalAccessException.canNotUnderNegative100();
         }

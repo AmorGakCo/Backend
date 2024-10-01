@@ -1,5 +1,6 @@
 package com.amorgakco.backend.fcmtoken.controller;
 
+import com.amorgakco.backend.fcmtoken.dto.FcmTokenSaveRequest;
 import com.amorgakco.backend.fcmtoken.service.FcmTokenService;
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
 
@@ -22,7 +23,7 @@ public class FcmTokenController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void saveToken(
-            @RequestBody final String notificationToken, @AuthMemberId final Long memberId) {
-        fcmTokenService.save(notificationToken, memberId);
+            @RequestBody final FcmTokenSaveRequest fcmTokenSaveRequest, @AuthMemberId final Long memberId) {
+        fcmTokenService.save(fcmTokenSaveRequest.fcmToken(), memberId);
     }
 }

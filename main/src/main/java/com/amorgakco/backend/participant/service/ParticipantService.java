@@ -10,6 +10,7 @@ import com.amorgakco.backend.notification.service.NotificationCreator;
 import com.amorgakco.backend.participant.domain.Participant;
 import com.amorgakco.backend.participant.dto.ParticipationHistoryResponse;
 import com.amorgakco.backend.participant.dto.TardinessRequest;
+import com.amorgakco.backend.participant.dto.TemperatureResponse;
 import com.amorgakco.backend.participant.repository.ParticipantRepository;
 import com.amorgakco.backend.participant.service.mapper.ParticipantMapper;
 import jakarta.persistence.OptimisticLockException;
@@ -81,24 +82,26 @@ public class ParticipantService {
         ));
     }
 
-    @Retryable(retryFor = {OptimisticLockException.class, ObjectOptimisticLockingFailureException.class},backoff = @Backoff(value = 300L),maxAttempts = 10,recover = "temperatureRecover")
+    @Retryable(retryFor = {ObjectOptimisticLockingFailureException.class},backoff = @Backoff(value = 300L),maxAttempts = 30,recover = "temperatureRecover")
     @Transactional
-    public Integer increaseTemperature(final Long groupId, final Long requestMemberId, final Long targetMemberId) {
+    public TemperatureResponse increaseTemperature(final Long groupId, final Long requestMemberId, final Long targetMemberId) {
         final Participant requestParticipant = getParticipant(groupId, requestMemberId);
         final Participant targetParticipant = getParticipant(groupId, targetMemberId);
-        return targetParticipant.upTemperature(requestParticipant);
+        final Integer temperature = targetParticipant.increaseTemperature(requestParticipant);
+        return new TemperatureResponse(temperature);
     }
 
-    @Retryable(retryFor = {OptimisticLockException.class, ObjectOptimisticLockingFailureException.class},backoff = @Backoff(value = 300L),maxAttempts = 10, recover = "temperatureRecover")
+    @Retryable(retryFor = {ObjectOptimisticLockingFailureException.class},backoff = @Backoff(value = 300L),maxAttempts = 30, recover = "temperatureRecover")
     @Transactional
-    public Integer decreaseTemperature(final Long groupId, final Long requestMemberId, final Long targetMemberId) {
+    public TemperatureResponse decreaseTemperature(final Long groupId, final Long requestMemberId, final Long targetMemberId) {
         final Participant requestParticipant = getParticipant(groupId, requestMemberId);
         final Participant targetParticipant = getParticipant(groupId, targetMemberId);
-        return targetParticipant.downTemperature(requestParticipant);
+        final Integer temperature = targetParticipant.decreaseTemperature(requestParticipant);
+        return new TemperatureResponse(temperature);
     }
 
     @Recover
-    public Integer temperatureRecover(final Long groupId, final Long requestMemberId, final Long targetMemberId){
+    public TemperatureResponse temperatureRecover(final Long groupId, final Long requestMemberId, final Long targetMemberId){
         throw RetryFailedException.retryFailed();
     }
 }

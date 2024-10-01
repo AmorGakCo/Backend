@@ -74,8 +74,8 @@ tasks.named('test') {
 ext {
     set('snippetsDir', file("build/generated-snippets"))
     set('docsOutputDir', file("build/docs/asciidoc"))
-    set('projectDocsDir', file("src/main/resources/static/docs"))
-    set('deployDocsDir', file("docs"))
+    set('projectDocsDir', file("main/src/main/resources/static/docs"))
+    set('deployDocsDir', file("../docs"))
 }
 
 tasks.named('asciidoctor') {

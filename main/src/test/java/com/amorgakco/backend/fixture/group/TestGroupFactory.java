@@ -39,6 +39,20 @@ public class TestGroupFactory {
                 .build();
     }
 
+    public static Group createInactiveGroup(final Member host){
+        return Group.builder()
+                .host(host)
+                .groupCapacity(GROUP_CAPACITY)
+                .latitude(LATITUDE)
+                .longitude(LONGITUDE)
+                .beginAt(LocalDateTime.now().minusHours(5L))
+                .endAt(LocalDateTime.now().minusHours(2L))
+                .description(DESCRIPTION)
+                .name(NAME)
+                .address(ADDRESS)
+                .build();
+    }
+
     public static GroupRegisterRequest groupRegisterRequest(
             final LocalDateTime beginAt, final LocalDateTime endAt) {
         return GroupRegisterRequest.builder()

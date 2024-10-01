@@ -1,0 +1,17 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+
+== Fcm Token
+
+=== FCM 토큰 저장 요청
+
+Fcm 토큰은 사용자가 로그인 한 뒤에 곧바로 서버에 요청을 해주셔야 Web-Push 가 가능합니다.
+
+operation::fcm-token-save[snippets='http-request,http-response']

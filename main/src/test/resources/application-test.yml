@@ -7,10 +7,6 @@ spring:
     url: jdbc:h2:mem:amorgakco;MODE=MySQL;
     username: sa
     password:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/amorgakco
-#    username: root
-#    password: 1234
   jpa:
     show-sql: true
     hibernate:

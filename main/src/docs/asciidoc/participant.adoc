@@ -24,7 +24,20 @@ operation::participation-location-verification[snippets='http-request,http-respo
 
 operation::participation-history[snippets='query-parameters,http-request,http-response']
 
+=== 참여자 모각코 온도 올리기
 
+operation::participant-increase-temperature[snippets='path-parameters,http-request,http-response']
 
+=== 참여자 모각코 온도 낮추기
+
+operation::participant-decrease-temperature[snippets='path-parameters,http-request,http-response']
+
+=== 참여자 탈퇴
+
+operation::participant-withdraw[snippets='path-parameters,http-request,http-response']
+
+=== 참여자 지각 요청
+
+operation::participant-tardiness[snippets='path-parameters,http-request,http-response']
 
 

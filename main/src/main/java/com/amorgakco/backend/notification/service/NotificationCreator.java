@@ -59,8 +59,8 @@ public class NotificationCreator {
         return NotificationRequest.builder()
                 .receiver(receiver)
                 .sendingType(SendingType.WEB_PUSH)
-                .title(NotificationType.PARTICIPATION_TARDINESS.getTitle())
-                .content(NotificationType.PARTICIPATION_TARDINESS.getContent()
+                .title(NotificationType.PARTICIPATION_WITHDRAW.getTitle())
+                .content(NotificationType.PARTICIPATION_WITHDRAW.getContent()
                         .formatted(sender.getNickname(), groupName))
                 .build();
     }

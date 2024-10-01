@@ -468,6 +468,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_참여자_위치_인증">참여자 위치 인증</a></li>
 <li><a href="#_참여자의_모각코_참여_내역">참여자의 모각코 참여 내역</a></li>
+<li><a href="#_참여자_모각코_온도_올리기">참여자 모각코 온도 올리기</a></li>
+<li><a href="#_참여자_모각코_온도_낮추기">참여자 모각코 온도 낮추기</a></li>
+<li><a href="#_참여자_지각_요청">참여자 지각 요청</a></li>
 </ul>
 </li>
 <li><a href="#_jwt">Jwt</a>
@@ -516,15 +519,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /groups HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 293
+Content-Length: 291
 Host: localhost:8080
 
 {
   "name" : "AmorGakCo",
   "description" : "모각코 합시다.",
   "groupCapacity" : 4,
-  "beginAt" : "2024-09-22T16:36:39.843631",
-  "endAt" : "2024-09-22T19:36:39.843631",
+  "beginAt" : "2024-10-01T19:02:21.96202",
+  "endAt" : "2024-10-01T22:02:21.96202",
   "latitude" : 37.5703901,
   "longitude" : 126.9748397,
   "address" : "서울특별시 종로구 신문로1가 23"
@@ -596,7 +599,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 359
+Content-Length: 358
 
 {
   "status" : "success",
@@ -604,8 +607,8 @@ Content-Length: 359
   "data" : {
     "hostNickname" : "아모르겠고",
     "hostImgUrl" : "https://fakeimg",
-    "beginAt" : "2024-09-22T16:36:39.743266",
-    "endAt" : "2024-09-22T19:36:39.743272",
+    "beginAt" : "2024-10-01T19:02:21.86783",
+    "endAt" : "2024-10-01T22:02:21.867838",
     "groupCapacity" : 4,
     "currentParticipants" : 3,
     "address" : "서울특별시 종로구 신문로1가 23"
@@ -679,7 +682,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 880
+Content-Length: 879
 
 {
   "status" : "success",
@@ -697,8 +700,8 @@ Content-Length: 880
     "address" : "서울특별시 종로구 신문로1가 23",
     "longitude" : 126.9748397,
     "latitude" : 37.5703901,
-    "beginAt" : "2024-09-22T16:36:39.743266",
-    "endAt" : "2024-09-22T19:36:39.743272",
+    "beginAt" : "2024-10-01T19:02:21.86783",
+    "endAt" : "2024-10-01T22:02:21.867838",
     "groupMembers" : [ {
       "memberId" : 2,
       "imgUrl" : "https://fakeimg",
@@ -1098,45 +1101,87 @@ Content-Length: 1489
       "groupId" : 4,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-09-22T16:36:41.721794",
-      "endAt" : "2024-09-22T19:36:41.721804"
+      "beginAt" : "2024-10-01T19:02:23.875982",
+      "endAt" : "2024-10-01T22:02:23.875989"
     }, {
       "groupId" : 5,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-09-22T16:36:41.721794",
-      "endAt" : "2024-09-22T19:36:41.721804"
+      "beginAt" : "2024-10-01T19:02:23.875982",
+      "endAt" : "2024-10-01T22:02:23.875989"
     }, {
       "groupId" : 6,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-09-22T16:36:41.721794",
-      "endAt" : "2024-09-22T19:36:41.721804"
+      "beginAt" : "2024-10-01T19:02:23.875982",
+      "endAt" : "2024-10-01T22:02:23.875989"
     } ],
     "InactivatedGroup" : [ {
       "groupId" : 1,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-09-22T16:36:41.721794",
-      "endAt" : "2024-09-22T19:36:41.721804"
+      "beginAt" : "2024-10-01T19:02:23.875982",
+      "endAt" : "2024-10-01T22:02:23.875989"
     }, {
       "groupId" : 2,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-09-22T16:36:41.721794",
-      "endAt" : "2024-09-22T19:36:41.721804"
+      "beginAt" : "2024-10-01T19:02:23.875982",
+      "endAt" : "2024-10-01T22:02:23.875989"
     }, {
       "groupId" : 3,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-09-22T16:36:41.721794",
-      "endAt" : "2024-09-22T19:36:41.721804"
+      "beginAt" : "2024-10-01T19:02:23.875982",
+      "endAt" : "2024-10-01T22:02:23.875989"
     } ]
   }
 }</code></pre>
 </div>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_참여자_모각코_온도_올리기"><a class="link" href="#_참여자_모각코_온도_올리기">참여자 모각코 온도 올리기</a></h3>
+<div class="sect3">
+<h4 id="_참여자_모각코_온도_올리기_http_request"><a class="link" href="#_참여자_모각코_온도_올리기_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /participants/2/groups/1/temperature-increase HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_참여자_모각코_온도_올리기_http_response"><a class="link" href="#_참여자_모각코_온도_올리기_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+Content-Length: 126
+
+{
+  "status" : "success",
+  "path" : "/participants/2/groups/1/temperature-increase",
+  "data" : {
+    "temperature" : 1
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_참여자_모각코_온도_낮추기"><a class="link" href="#_참여자_모각코_온도_낮추기">참여자 모각코 온도 낮추기</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="_참여자_지각_요청"><a class="link" href="#_참여자_지각_요청">참여자 지각 요청</a></h3>
+
 </div>
 </div>
 </div>
@@ -1401,7 +1446,7 @@ Content-Length: 575
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-08-15 17:38:37 +0900
+Last updated 2024-09-29 21:29:45 +0900
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
