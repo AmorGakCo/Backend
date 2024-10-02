@@ -39,7 +39,7 @@ public class TestGroupFactory {
                 .build();
     }
 
-    public static Group createInactiveGroup(final Member host){
+    public static Group createInactiveGroup(final Member host) {
         return Group.builder()
                 .host(host)
                 .groupCapacity(GROUP_CAPACITY)
@@ -136,8 +136,6 @@ public class TestGroupFactory {
                 126.97758064203596);
     }
 
-    ;
-
     public static GroupSearchRequest dongLevelGroupSearchRequest() {
         return new GroupSearchRequest(
                 37.56914134233172,
@@ -147,8 +145,6 @@ public class TestGroupFactory {
                 37.56826582236329,
                 126.97879899797212);
     }
-
-    ;
 
     public static GroupSearchRequest guLevelGroupSearchRequest() {
         return new GroupSearchRequest(
@@ -160,5 +156,4 @@ public class TestGroupFactory {
                 126.97879899797212);
     }
 
-    ;
 }

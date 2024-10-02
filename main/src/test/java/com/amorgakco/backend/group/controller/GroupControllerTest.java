@@ -1,19 +1,5 @@
 package com.amorgakco.backend.group.controller;
 
-import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentRequest;
-import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
-
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doThrow;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.amorgakco.backend.docs.RestDocsTest;
 import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
@@ -27,7 +13,6 @@ import com.amorgakco.backend.group.dto.GroupRegisterRequest;
 import com.amorgakco.backend.group.service.GroupService;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.security.WithMockMember;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -37,11 +22,26 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalDateTime;
 
+import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentRequest;
+import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doThrow;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @WebMvcTest(GroupController.class)
 @WithMockMember
 class GroupControllerTest extends RestDocsTest {
 
-    @MockBean GroupService groupService;
+    @MockBean
+    GroupService groupService;
 
     @Test
     @DisplayName("그룹을 생성 후 생성된 그룹 ID를 응답 받을 수 있다.")

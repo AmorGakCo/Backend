@@ -2,7 +2,6 @@ package com.amorgakco.backend.fixture.member;
 
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.domain.Oauth2ProviderType;
-
 import lombok.Getter;
 
 @Getter

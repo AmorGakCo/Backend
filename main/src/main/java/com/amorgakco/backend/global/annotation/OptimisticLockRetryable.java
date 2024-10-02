@@ -11,7 +11,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ ElementType.METHOD, ElementType.TYPE })
+@Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Retryable(retryFor = ObjectOptimisticLockingFailureException.class, maxAttempts = 4, backoff = @Backoff(delay = 300, maxDelay = 600, multiplier = 1.2, random = true)

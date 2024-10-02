@@ -69,7 +69,7 @@ class GroupParticipationServiceTest {
         groupRepository.save(group);
         groupParticipationRepository.save(new GroupParticipation(group, member));
         // when
-        groupParticipationService.approve(group.getId(),member.getId(),host);
+        groupParticipationService.approve(group.getId(), member.getId(), host);
         // then
         GroupParticipation groupParticipation = groupParticipationRepository.findByGroupIdAndMemberId(group.getId(), member.getId()).get();
         assertThat(groupParticipation.getParticipationStatus()).isEqualTo(ParticipationStatus.APPROVED);
@@ -87,7 +87,7 @@ class GroupParticipationServiceTest {
         groupRepository.save(group);
         groupParticipationRepository.save(new GroupParticipation(group, member));
         // when
-        groupParticipationService.reject(group.getId(),member.getId(),host.getId());
+        groupParticipationService.reject(group.getId(), member.getId(), host.getId());
         // then
         GroupParticipation groupParticipation = groupParticipationRepository.findByGroupIdAndMemberId(group.getId(), member.getId()).get();
         assertThat(groupParticipation.getParticipationStatus()).isEqualTo(ParticipationStatus.REJECTED);

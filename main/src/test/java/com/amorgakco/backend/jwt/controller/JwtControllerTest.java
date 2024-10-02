@@ -1,7 +1,19 @@
 package com.amorgakco.backend.jwt.controller;
 
-import static com.amorgakco.backend.docs.ApiDocsUtils.*;
+import com.amorgakco.backend.docs.RestDocsTest;
+import com.amorgakco.backend.global.exception.ErrorCode;
+import com.amorgakco.backend.global.exception.JwtAuthenticationException;
+import com.amorgakco.backend.jwt.dto.MemberTokens;
+import com.amorgakco.backend.jwt.service.JwtService;
+import jakarta.servlet.http.Cookie;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.ResultActions;
 
+import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentRequest;
+import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
@@ -9,20 +21,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import com.amorgakco.backend.docs.RestDocsTest;
-import com.amorgakco.backend.global.exception.ErrorCode;
-import com.amorgakco.backend.global.exception.JwtAuthenticationException;
-import com.amorgakco.backend.jwt.dto.MemberTokens;
-import com.amorgakco.backend.jwt.service.JwtService;
-
-import jakarta.servlet.http.Cookie;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.ResultActions;
 
 @WebMvcTest(JwtController.class)
 class JwtControllerTest extends RestDocsTest {
@@ -33,8 +31,10 @@ class JwtControllerTest extends RestDocsTest {
     private static final String NEW_ACCESS_TOKEN = "new access token";
     private static final String NEW_REFRESH_TOKEN = "new refresh token";
 
-    @MockBean JwtService jwtService;
-    @MockBean JwtCookieLoader jwtCookieLoader;
+    @MockBean
+    JwtService jwtService;
+    @MockBean
+    JwtCookieLoader jwtCookieLoader;
 
     @Test
     @DisplayName("새로운 액세스 토큰을 응답받을 수 있다.")

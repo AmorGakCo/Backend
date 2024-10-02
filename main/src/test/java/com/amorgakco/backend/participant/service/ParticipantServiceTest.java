@@ -2,15 +2,12 @@ package com.amorgakco.backend.participant.service;
 
 import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
-import com.amorgakco.backend.fixture.participant.TestParticipantFactory;
 import com.amorgakco.backend.group.domain.Group;
-import com.amorgakco.backend.group.dto.LocationVerificationRequest;
 import com.amorgakco.backend.group.repository.GroupRepository;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.repository.MemberRepository;
 import com.amorgakco.backend.notification.infrastructure.NotificationPublisherFacade;
 import com.amorgakco.backend.notification.infrastructure.consumer.NotificationRequest;
-import com.amorgakco.backend.participant.domain.LocationVerificationStatus;
 import com.amorgakco.backend.participant.domain.Participant;
 import com.amorgakco.backend.participant.dto.ParticipationHistoryResponse;
 import com.amorgakco.backend.participant.repository.ParticipantRepository;
@@ -58,6 +55,17 @@ public class ParticipantServiceTest {
         assertThat(history.hasNext()).isTrue();
     }
 
+    private void createAndSaveTestGroups(final Member member, final int inactiveGroupSize, final int activeGroupSize) {
+        for (int i = 0; i < activeGroupSize; i++) {
+            Group group = TestGroupFactory.create(member);
+            groupRepository.save(group);
+        }
+        for (int i = 0; i < inactiveGroupSize; i++) {
+            Group group = TestGroupFactory.createInactiveGroup(member);
+            groupRepository.save(group);
+        }
+    }
+
     @Test
     @DisplayName("참여자는 모각코를 탈퇴할 수 있다.")
     void withdrawGroup() {
@@ -74,16 +82,5 @@ public class ParticipantServiceTest {
         participantService.withdraw(group.getId(), member.getId());
         // then
         assertThat(!group.getParticipants().contains(member)).isTrue();
-    }
-
-    private void createAndSaveTestGroups(final Member member, final int inactiveGroupSize, final int activeGroupSize){
-        for(int i = 0; i< activeGroupSize; i++){
-            Group group = TestGroupFactory.create(member);
-            groupRepository.save(group);
-        }
-        for(int i = 0; i< inactiveGroupSize; i++){
-            Group group = TestGroupFactory.createInactiveGroup(member);
-            groupRepository.save(group);
-        }
     }
 }

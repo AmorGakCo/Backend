@@ -3,7 +3,6 @@ package com.amorgakco.backend.security;
 import com.amorgakco.backend.global.oauth.MemberPrincipal;
 import com.amorgakco.backend.member.domain.Role;
 import com.amorgakco.backend.member.domain.Roles;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;

@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum ErrorCode {
     // Global Error Code
     NOT_VALID_ARGUMENT("001", "잘못된 입력입니다. 입력 파라미터를 다시 확인해주세요."),
-    RETRY_FAILED("002","잠시 후 다시 시도해주세요."),
+    RETRY_FAILED("002", "잠시 후 다시 시도해주세요."),
 
     // Auth Error Code
     ACCESS_TOKEN_EXPIRED("100", "액세스 토큰이 만료됐습니다."),

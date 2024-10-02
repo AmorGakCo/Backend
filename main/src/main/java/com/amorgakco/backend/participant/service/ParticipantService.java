@@ -14,15 +14,11 @@ import com.amorgakco.backend.participant.dto.TardinessRequest;
 import com.amorgakco.backend.participant.dto.TemperatureResponse;
 import com.amorgakco.backend.participant.repository.ParticipantRepository;
 import com.amorgakco.backend.participant.service.mapper.ParticipantMapper;
-import jakarta.persistence.OptimisticLockException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
-import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Recover;
-import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -103,7 +99,7 @@ public class ParticipantService {
     }
 
     @Recover
-    public TemperatureResponse temperatureRecover(final Long groupId, final Long requestMemberId, final Long targetMemberId){
+    public TemperatureResponse temperatureRecover(final Long groupId, final Long requestMemberId, final Long targetMemberId) {
         throw RetryFailedException.retryFailed();
     }
 }

@@ -58,7 +58,7 @@ class GroupServiceTest {
         // when
         groupService.delete(host.getId(), group.getId());
         // then
-        assertThatThrownBy(()->groupService.getGroup(group.getId()))
+        assertThatThrownBy(() -> groupService.getGroup(group.getId()))
                 .isInstanceOf(ResourceNotFoundException.class);
     }
 

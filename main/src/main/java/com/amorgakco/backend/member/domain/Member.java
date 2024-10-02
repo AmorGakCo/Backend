@@ -30,14 +30,14 @@ public class Member extends BaseTime {
     private static final String GITHUB_PREFIX = "github";
     private static final Integer MAX_MOGAKCO_TEMPERATURE = 100;
     private static final Integer MIN_MOGAKCO_TEMPERATURE = -100;
-
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private final List<Roles> roleNames = new ArrayList<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Enumerated(EnumType.STRING)
     private Oauth2ProviderType oauth2ProviderType;
-
     private String oauth2Id;
     private String imgUrl;
     private String nickname;
@@ -46,11 +46,6 @@ public class Member extends BaseTime {
     private String githubUrl;
     private boolean smsNotificationSetting;
     private String cellToken;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private final List<Roles> roleNames = new ArrayList<>();
-
     @Version
     private Integer version;
 

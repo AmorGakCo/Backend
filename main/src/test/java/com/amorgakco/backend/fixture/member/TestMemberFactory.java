@@ -23,7 +23,7 @@ public class TestMemberFactory {
         return new TestMember(id, OAUTH2_PROVIDER, OAUTH2_ID, IMG_URL, NICKNAME);
     }
 
-    public static Member createEntity(){
+    public static Member createEntity() {
         return Member.builder()
                 .nickname(NICKNAME)
                 .oauth2Id(OAUTH2_ID)

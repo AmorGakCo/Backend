@@ -1,11 +1,10 @@
 package com.amorgakco.backend.group.domain;
 
-import static org.assertj.core.api.Assertions.*;
-
 import com.amorgakco.backend.group.domain.location.Location;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class LocationTest {
 

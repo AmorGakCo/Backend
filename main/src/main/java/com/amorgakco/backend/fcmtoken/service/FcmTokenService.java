@@ -2,9 +2,7 @@ package com.amorgakco.backend.fcmtoken.service;
 
 import com.amorgakco.backend.fcmtoken.domain.FcmToken;
 import com.amorgakco.backend.fcmtoken.repository.FcmTokenRepository;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

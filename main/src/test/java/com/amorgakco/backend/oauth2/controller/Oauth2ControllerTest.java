@@ -1,8 +1,21 @@
 package com.amorgakco.backend.oauth2.controller;
 
+import com.amorgakco.backend.docs.RestDocsTest;
+import com.amorgakco.backend.fixture.member.TestMemberFactory;
+import com.amorgakco.backend.jwt.controller.JwtCookieLoader;
+import com.amorgakco.backend.jwt.dto.MemberTokens;
+import com.amorgakco.backend.jwt.service.JwtService;
+import com.amorgakco.backend.member.domain.Oauth2ProviderType;
+import com.amorgakco.backend.oauth2.dto.Oauth2MemberResponse;
+import com.amorgakco.backend.oauth2.service.Oauth2Service;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.ResultActions;
+
 import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentRequest;
 import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
-
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -13,27 +26,15 @@ import static org.springframework.restdocs.request.RequestDocumentation.queryPar
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.amorgakco.backend.docs.RestDocsTest;
-import com.amorgakco.backend.fixture.member.TestMemberFactory;
-import com.amorgakco.backend.jwt.controller.JwtCookieLoader;
-import com.amorgakco.backend.jwt.dto.MemberTokens;
-import com.amorgakco.backend.jwt.service.JwtService;
-import com.amorgakco.backend.member.domain.Oauth2ProviderType;
-import com.amorgakco.backend.oauth2.dto.Oauth2MemberResponse;
-import com.amorgakco.backend.oauth2.service.Oauth2Service;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.ResultActions;
-
 @WebMvcTest(Oauth2Controller.class)
 class Oauth2ControllerTest extends RestDocsTest {
 
-    @MockBean Oauth2Service oauth2Service;
-    @MockBean JwtService jwtService;
-    @MockBean JwtCookieLoader jwtCookieLoader;
+    @MockBean
+    Oauth2Service oauth2Service;
+    @MockBean
+    JwtService jwtService;
+    @MockBean
+    JwtCookieLoader jwtCookieLoader;
 
     @Test
     @DisplayName("소셜로그인 redirect url을 받을 수 있다.")
