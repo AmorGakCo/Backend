@@ -18,6 +18,7 @@ src/test/resources/application-notification.yml
 docker/
 .docker-conf/
 
+/docs
 
 ### STS ###
 .apt_generated

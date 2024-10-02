@@ -4,6 +4,7 @@ import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
 import com.amorgakco.backend.participant.dto.ParticipationHistoryResponse;
 import com.amorgakco.backend.participant.dto.TardinessRequest;
+import com.amorgakco.backend.participant.dto.TemperatureResponse;
 import com.amorgakco.backend.participant.service.ParticipantService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -53,21 +54,21 @@ public class ParticipantController {
         participantService.tardy(groupId, memberId, tardinessRequest);
     }
 
-    @PatchMapping("/{targetMemberId}/groups/{groupId}/temperature-up")
-    public Integer upTemperature(
+    @PatchMapping("/{targetMemberId}/groups/{groupId}/temperature-increase")
+    public TemperatureResponse upTemperature(
             @PathVariable final Long targetMemberId,
             @PathVariable final Long groupId,
             @AuthMemberId final Long requestMemberId
     ) {
-        return participantService.upTemperature(groupId, requestMemberId, targetMemberId);
+        return participantService.increaseTemperature(groupId, requestMemberId, targetMemberId);
     }
 
-    @PatchMapping("/{targetMemberId}/groups/{groupId}/temperature-down")
-    public Integer downTemperature(
+    @PatchMapping("/{targetMemberId}/groups/{groupId}/temperature-decrease")
+    public TemperatureResponse downTemperature(
             @PathVariable final Long targetMemberId,
             @PathVariable final Long groupId,
             @AuthMemberId final Long requestMemberId
     ) {
-        return participantService.downTemperature(groupId, requestMemberId, targetMemberId);
+        return participantService.decreaseTemperature(groupId, requestMemberId, targetMemberId);
     }
 }

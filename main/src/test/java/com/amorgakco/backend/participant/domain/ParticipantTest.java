@@ -1,8 +1,5 @@
 package com.amorgakco.backend.participant.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.fixture.group.TestParticipantsFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
@@ -10,9 +7,11 @@ import com.amorgakco.backend.global.exception.ErrorCode;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.member.domain.Member;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ParticipantTest {
 

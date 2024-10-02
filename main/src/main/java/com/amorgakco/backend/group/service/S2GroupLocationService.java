@@ -21,7 +21,8 @@ public class S2GroupLocationService implements GroupLocationService {
 
     public GroupSearchResponse findGroups(final GroupSearchRequest request) {
         final List<String> cellTokens = s2CellSearch.getCellTokens(request);
-        return groupRepository.findByCellToken(cellTokens).stream()
+        return groupRepository.findByCellToken(cellTokens)
+                .stream()
                 .map(groupMapper::toGroupLocation)
                 .collect(
                         Collectors.collectingAndThen(

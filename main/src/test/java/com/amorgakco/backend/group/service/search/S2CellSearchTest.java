@@ -1,15 +1,14 @@
 package com.amorgakco.backend.group.service.search;
 
-import static org.assertj.core.api.Assertions.*;
-
 import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.group.dto.GroupSearchRequest;
 import com.google.common.geometry.S2LatLng;
 import com.google.common.geometry.S2LatLngRect;
-
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class S2CellSearchTest {
 

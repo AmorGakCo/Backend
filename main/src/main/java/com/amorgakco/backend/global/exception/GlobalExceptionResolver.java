@@ -57,6 +57,13 @@ public class GlobalExceptionResolver {
         log.error("Error Code : {} , Message : {}", errorCode.getCode(), errorCode.getMessage());
     }
 
+    @ExceptionHandler(RetryFailedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse illegalAccess(final RetryFailedException e) {
+        setCustomExceptionLog(e.getErrorCode());
+        return new ErrorResponse(e.getErrorCode());
+    }
+
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse resourceNotFound(final ResourceNotFoundException e) {

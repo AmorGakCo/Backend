@@ -1,13 +1,12 @@
 package com.amorgakco.backend.group.domain;
 
-import static org.assertj.core.api.Assertions.*;
-
 import com.amorgakco.backend.global.exception.IllegalTimeException;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DurationTest {
 

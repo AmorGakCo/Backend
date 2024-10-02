@@ -1,5 +1,8 @@
 package com.amorgakco.backend.participant.service;
+
+import com.amorgakco.backend.global.annotation.OptimisticLockRetryable;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
+import com.amorgakco.backend.global.exception.RetryFailedException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
 import com.amorgakco.backend.group.service.GroupService;
@@ -8,12 +11,14 @@ import com.amorgakco.backend.notification.service.NotificationCreator;
 import com.amorgakco.backend.participant.domain.Participant;
 import com.amorgakco.backend.participant.dto.ParticipationHistoryResponse;
 import com.amorgakco.backend.participant.dto.TardinessRequest;
+import com.amorgakco.backend.participant.dto.TemperatureResponse;
 import com.amorgakco.backend.participant.repository.ParticipantRepository;
 import com.amorgakco.backend.participant.service.mapper.ParticipantMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
+import org.springframework.retry.annotation.Recover;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,15 +79,27 @@ public class ParticipantService {
         ));
     }
 
-    public Integer upTemperature(final Long groupId, final Long requestMemberId, final Long targetMemberId) {
+
+    @Transactional
+    @OptimisticLockRetryable(recover = "temperatureRecover")
+    public TemperatureResponse increaseTemperature(final Long groupId, final Long requestMemberId, final Long targetMemberId) {
         final Participant requestParticipant = getParticipant(groupId, requestMemberId);
         final Participant targetParticipant = getParticipant(groupId, targetMemberId);
-        return targetParticipant.upTemperature(requestParticipant);
+        final Integer temperature = targetParticipant.increaseTemperature(requestParticipant);
+        return new TemperatureResponse(temperature);
     }
 
-    public Integer downTemperature(final Long groupId, final Long requestMemberId, final Long targetMemberId) {
+    @Transactional
+    @OptimisticLockRetryable(recover = "temperatureRecover")
+    public TemperatureResponse decreaseTemperature(final Long groupId, final Long requestMemberId, final Long targetMemberId) {
         final Participant requestParticipant = getParticipant(groupId, requestMemberId);
         final Participant targetParticipant = getParticipant(groupId, targetMemberId);
-        return targetParticipant.downTemperature(requestParticipant);
+        final Integer temperature = targetParticipant.decreaseTemperature(requestParticipant);
+        return new TemperatureResponse(temperature);
+    }
+
+    @Recover
+    public TemperatureResponse temperatureRecover(final Long groupId, final Long requestMemberId, final Long targetMemberId) {
+        throw RetryFailedException.retryFailed();
     }
 }

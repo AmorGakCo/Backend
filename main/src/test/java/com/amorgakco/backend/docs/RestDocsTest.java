@@ -1,13 +1,9 @@
 package com.amorgakco.backend.docs;
 
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-
 import com.amorgakco.backend.global.security.JwtAuthenticationFilter;
 import com.amorgakco.backend.member.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +18,23 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+
 @AutoConfigureRestDocs
 @Import(RestDocsConfig.class)
 @ExtendWith({RestDocumentationExtension.class})
 public abstract class RestDocsTest {
 
     protected MockMvc mockMvc;
-    @MockBean protected MemberService memberService;
-    @Autowired private ObjectMapper objectMapper;
-    @MockBean private JwtAuthenticationFilter jwtAuthenticationFilter;
-    @MockBean private JpaMetamodelMappingContext jpaMetamodelMappingContext;
+    @MockBean
+    protected MemberService memberService;
+    @Autowired
+    private ObjectMapper objectMapper;
+    @MockBean
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+    @MockBean
+    private JpaMetamodelMappingContext jpaMetamodelMappingContext;
 
     protected String toRequestBody(final Object value) throws JsonProcessingException {
         return objectMapper.writeValueAsString(value);

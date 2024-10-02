@@ -13,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Version;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,14 +30,14 @@ public class Member extends BaseTime {
     private static final String GITHUB_PREFIX = "github";
     private static final Integer MAX_MOGAKCO_TEMPERATURE = 100;
     private static final Integer MIN_MOGAKCO_TEMPERATURE = -100;
-
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private final List<Roles> roleNames = new ArrayList<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Enumerated(EnumType.STRING)
     private Oauth2ProviderType oauth2ProviderType;
-
     private String oauth2Id;
     private String imgUrl;
     private String nickname;
@@ -45,10 +46,8 @@ public class Member extends BaseTime {
     private String githubUrl;
     private boolean smsNotificationSetting;
     private String cellToken;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private final List<Roles> roleNames = new ArrayList<>();
+    @Version
+    private Integer version;
 
     @Builder
     public Member(
@@ -95,14 +94,14 @@ public class Member extends BaseTime {
         }
     }
 
-    public Integer upMoGakCoTemperature() {
+    public Integer increaseMoGakCoTemperature() {
         if (moGakCoTemperature + 1 > MAX_MOGAKCO_TEMPERATURE) {
             throw IllegalAccessException.canNotExceedPositive100();
         }
         return ++moGakCoTemperature;
     }
 
-    public Integer downMoGakCoTemperature() {
+    public Integer decreaseMoGakCoTemperature() {
         if (moGakCoTemperature - 1 < MIN_MOGAKCO_TEMPERATURE) {
             throw IllegalAccessException.canNotUnderNegative100();
         }

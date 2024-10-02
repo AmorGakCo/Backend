@@ -1,17 +1,18 @@
 package com.amorgakco.backend.jwt.service;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.BDDMockito.*;
-
 import com.amorgakco.backend.fixture.security.TestSecretKey;
 import com.amorgakco.backend.global.exception.ErrorCode;
 import com.amorgakco.backend.global.exception.JwtAuthenticationException;
 import com.amorgakco.backend.member.repository.MemberRepository;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.mock;
 
 class JwtValidatorTest {
 

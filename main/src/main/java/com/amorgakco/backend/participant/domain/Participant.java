@@ -73,9 +73,9 @@ public class Participant extends BaseTime {
         this.group = group;
     }
 
-    public Integer upTemperature(final Participant requestParticipant) {
+    public Integer increaseTemperature(final Participant requestParticipant) {
         requestParticipant.validateSameGroupParticipant(this);
-        return member.upMoGakCoTemperature();
+        return member.increaseMoGakCoTemperature();
     }
 
     private void validateSameGroupParticipant(final Participant targetParticipant) {
@@ -84,8 +84,8 @@ public class Participant extends BaseTime {
         }
     }
 
-    public Integer downTemperature(final Participant requestParticipant) {
+    public Integer decreaseTemperature(final Participant requestParticipant) {
         requestParticipant.validateSameGroupParticipant(this);
-        return member.downMoGakCoTemperature();
+        return member.decreaseMoGakCoTemperature();
     }
 }

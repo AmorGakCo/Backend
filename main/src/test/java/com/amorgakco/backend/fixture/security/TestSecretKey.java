@@ -2,9 +2,8 @@ package com.amorgakco.backend.fixture.security;
 
 import io.jsonwebtoken.security.Keys;
 
-import java.nio.charset.StandardCharsets;
-
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 
 public class TestSecretKey {
 
