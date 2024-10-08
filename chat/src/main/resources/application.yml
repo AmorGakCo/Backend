@@ -5,5 +5,9 @@ spring:
       port: 27017
       authentication-database: admin
       username: root
-      password: 1234
+      password: amorgakcomongo1234
       database: amorgakco
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true

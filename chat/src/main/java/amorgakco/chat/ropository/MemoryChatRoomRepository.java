@@ -1,12 +1,13 @@
-package amorgakco.chat;
+package amorgakco.chat.ropository;
 
+import amorgakco.chat.service.ChatRoom;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class ChatRoomRepository {
+public class MemoryChatRoomRepository {
     private final Map<Long, ChatRoom> chatRoomMap = new HashMap<>();
 
     public ChatRoom getChatRoom(Long id) {

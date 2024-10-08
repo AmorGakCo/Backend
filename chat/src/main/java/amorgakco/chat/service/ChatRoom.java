@@ -1,5 +1,7 @@
-package amorgakco.chat;
+package amorgakco.chat.service;
 
+import amorgakco.chat.domain.MessageType;
+import amorgakco.chat.dto.ChatMessageRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +14,7 @@ import java.util.Set;
 
 @RequiredArgsConstructor
 public class ChatRoom {
-    private Set<WebSocketSession> sessions = new HashSet<>();
-    private MessageRepository messageRepository;
+    private final Set<WebSocketSession> sessions = new HashSet<>();
 
     public void handleMessage(WebSocketSession session, ChatMessageRequest chatMessageRequest, ObjectMapper objectMapper) throws JsonProcessingException {
         if (chatMessageRequest.messageType() == MessageType.ENTER) {

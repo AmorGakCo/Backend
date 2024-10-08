@@ -1,4 +1,4 @@
-package amorgakco.chat;
+package amorgakco.chat.domain;
 
 public enum MessageType {
     ENTER,
