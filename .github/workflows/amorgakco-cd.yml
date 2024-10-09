@@ -1,6 +1,8 @@
 name: AmorGakCo CD
 on:
   push:
+    paths:
+      - "/main"
     branches:
       - main
 
