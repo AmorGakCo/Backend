@@ -29,7 +29,7 @@ public class ChatRoom {
 
     private void send(ChatMessageRequest chatMessageRequest, ObjectMapper objectMapper) throws JsonProcessingException {
         TextMessage message = new TextMessage(objectMapper.writeValueAsString(chatMessageRequest));
-        sessions.parallelStream().forEach(session -> {
+        sessions.forEach(session -> {
             try {
                 session.sendMessage(message);
             } catch (IOException e) {
