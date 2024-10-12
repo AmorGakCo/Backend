@@ -11,3 +11,12 @@ spring:
     hibernate:
       ddl-auto: create
     show-sql: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    prometheus:
+      enabled: true
