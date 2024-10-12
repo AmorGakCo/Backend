@@ -43,6 +43,12 @@ public class GroupService {
                 .orElseThrow(ResourceNotFoundException::groupNotFound);
     }
 
+    public Group getGroupWithHost(final Long groupId){
+        return groupRepository
+                .findByIdWithHost(groupId)
+                .orElseThrow(ResourceNotFoundException::groupNotFound);
+    }
+
     public GroupDetailResponse getDetailGroup(final Long groupId) {
         final Group group = getGroup(groupId);
         return groupMapper.toGroupDetailResponse(group);

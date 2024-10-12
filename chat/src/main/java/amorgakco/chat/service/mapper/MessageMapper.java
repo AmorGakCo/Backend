@@ -9,7 +9,7 @@ public class MessageMapper {
     public Message toMessage(ChatMessageRequest request){
         return Message.builder()
                 .messageType(request.messageType())
-                .message(request.message())
+                .text(request.text())
                 .chatRoomId(request.chatRoomId())
                 .memberId(request.memberId())
                 .build();

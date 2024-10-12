@@ -28,7 +28,7 @@ public class GroupParticipationService {
 
     @Transactional
     public void participate(final Long groupId, final Long memberId) {
-        final Group group = groupService.getGroup(groupId);
+        final Group group = groupService.getGroupWithHost(groupId);
         final Member requestMember = memberService.getMember(memberId);
         group.validateParticipation(new Participant(requestMember));
         final GroupParticipation groupParticipation =

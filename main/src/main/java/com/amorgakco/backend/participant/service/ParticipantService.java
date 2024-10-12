@@ -59,7 +59,7 @@ public class ParticipantService {
     public void withdraw(final Long groupId, final Long memberId) {
         final Participant participant = getParticipant(groupId, memberId);
         participantRepository.delete(participant);
-        final Group group = groupService.getGroup(groupId);
+        final Group group = groupService.getGroupWithHost(groupId);
         notificationPublisherFacade.send(NotificationCreator.withdraw(
                 participant.getMember(),
                 group.getHost(),
@@ -70,7 +70,7 @@ public class ParticipantService {
     @Transactional
     public void tardy(final Long groupId, final Long memberId, final TardinessRequest tardinessRequest) {
         final Participant participant = getParticipant(groupId, memberId);
-        final Group group = groupService.getGroup(groupId);
+        final Group group = groupService.getGroupWithHost(groupId);
         notificationPublisherFacade.send(NotificationCreator.tardy(
                 participant.getMember(),
                 group.getHost(),
