@@ -1,8 +1,8 @@
-package com.amorgakco.backend.groupparticipation.controller;
+package com.amorgakco.backend.participationrequest.controller;
 
 import com.amorgakco.backend.global.argumentresolver.AuthMember;
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
-import com.amorgakco.backend.groupparticipation.service.GroupParticipationService;
+import com.amorgakco.backend.participationrequest.service.ParticipationRequestService;
 import com.amorgakco.backend.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/groups")
-public class GroupParticipationController {
+public class ParticipationRequestController {
 
-    private final GroupParticipationService groupParticipationService;
+    private final ParticipationRequestService participationRequestService;
 
     @PostMapping("/{groupId}/participation")
     @ResponseStatus(HttpStatus.CREATED)
     public void participate(@PathVariable final Long groupId, @AuthMemberId final Long memberId) {
-        groupParticipationService.participate(groupId, memberId);
+        participationRequestService.participate(groupId, memberId);
     }
 
     @PostMapping("/{groupId}/participation/{memberId}")
@@ -32,7 +32,7 @@ public class GroupParticipationController {
             @PathVariable final Long groupId,
             @PathVariable final Long memberId,
             @AuthMember final Member host) {
-        groupParticipationService.approve(groupId, memberId, host);
+        participationRequestService.approve(groupId, memberId, host);
     }
 
     @PatchMapping("/{groupId}/participation/{memberId}")
@@ -41,6 +41,6 @@ public class GroupParticipationController {
             @PathVariable final Long groupId,
             @PathVariable final Long memberId,
             @AuthMemberId final Long hostId) {
-        groupParticipationService.reject(groupId, memberId, hostId);
+        participationRequestService.reject(groupId, memberId, hostId);
     }
 }

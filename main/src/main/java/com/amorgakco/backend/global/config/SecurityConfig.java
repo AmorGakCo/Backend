@@ -43,7 +43,6 @@ public class SecurityConfig {
                                                 "/tokens/**",
                                                 "/oauth2/**",
                                                 "/groups/locations",
-                                                "/groups/detail/**",
                                                 "/groups/basic/**",
                                                 "/groups/locations",
                                                 "/members/login",

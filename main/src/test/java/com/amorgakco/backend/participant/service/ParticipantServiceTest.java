@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.in;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 
@@ -43,19 +44,19 @@ public class ParticipantServiceTest {
         Member member = TestMemberFactory.createEntity();
         memberRepository.save(member);
         final int activeGroupSize = 3;
-        final int inactiveGroupSize = 9;
+        final int inactiveGroupSize = 10;
         createAndSaveTestGroups(member, activeGroupSize, inactiveGroupSize);
         // when
         ParticipationHistoryResponse history = participantService.getParticipationHistory(member.getId(), 0);
         // then
         assertThat(history.activatedGroup().size()).isEqualTo(activeGroupSize);
         assertThat(history.elementSize()).isEqualTo(10);
-        assertThat(history.InactivatedGroup().size()).isEqualTo(7);
+        assertThat(history.InactivatedGroup().size()).isEqualTo(inactiveGroupSize);
         assertThat(history.page()).isEqualTo(0);
-        assertThat(history.hasNext()).isTrue();
+        assertThat(history.hasNext()).isFalse();
     }
 
-    private void createAndSaveTestGroups(final Member member, final int inactiveGroupSize, final int activeGroupSize) {
+    private void createAndSaveTestGroups(final Member member,final int activeGroupSize, final int inactiveGroupSize) {
         for (int i = 0; i < activeGroupSize; i++) {
             Group group = TestGroupFactory.create(member);
             groupRepository.save(group);

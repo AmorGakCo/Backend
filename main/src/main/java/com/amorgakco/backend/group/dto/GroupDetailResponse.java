@@ -15,5 +15,6 @@ public record GroupDetailResponse(
         double latitude,
         LocalDateTime beginAt,
         LocalDateTime endAt,
-        List<GroupMember> groupMembers) {
+        List<GroupMember> groupMembers,
+        boolean isGroupHost) {
 }

@@ -10,6 +10,8 @@ import com.amorgakco.backend.group.dto.GroupRegisterRequest;
 import com.amorgakco.backend.group.repository.GroupRepository;
 import com.amorgakco.backend.group.service.mapper.GroupMapper;
 import com.amorgakco.backend.member.domain.Member;
+import com.amorgakco.backend.participationrequest.repository.ParticipationRequestRepository;
+import com.amorgakco.backend.participationrequest.service.ParticipationRequestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class GroupService {
     private final GroupRepository groupRepository;
     private final GroupMapper groupMapper;
+    private final ParticipationRequestRepository participationRequestRepository;
 
     @Transactional
     public IdResponse register(final GroupRegisterRequest request, final Member host) {
@@ -43,22 +46,29 @@ public class GroupService {
                 .orElseThrow(ResourceNotFoundException::groupNotFound);
     }
 
-    public Group getGroupWithHost(final Long groupId){
+    public Group getGroupWithHost(final Long groupId) {
         return groupRepository
                 .findByIdWithHost(groupId)
                 .orElseThrow(ResourceNotFoundException::groupNotFound);
     }
 
-    public GroupDetailResponse getDetailGroup(final Long groupId) {
+    public GroupDetailResponse getDetailGroup(final Long groupId, final Long memberId) {
         final Group group = getGroup(groupId);
-        return groupMapper.toGroupDetailResponse(group);
+        final boolean isGroupHost = group.isGroupHost(memberId);
+        return groupMapper.toGroupDetailResponse(group, isGroupHost);
     }
 
-    public GroupBasicResponse getBasicGroup(final Long groupId) {
+    public GroupBasicResponse getBasicGroup(final Long groupId, final Member member) {
         final Group group =
                 groupRepository
                         .findByIdWithHost(groupId)
                         .orElseThrow(ResourceNotFoundException::groupNotFound);
-        return groupMapper.toGroupBasicInfoResponse(group);
+        boolean isParticipated = group.isMemberParticipated(member.getId());
+        boolean isParticipationRequested = isParticipationRequested(group, member);
+        return groupMapper.toGroupBasicInfoResponse(group, isParticipated, isParticipationRequested);
+    }
+
+    private boolean isParticipationRequested(final Group group, final Member member){
+        return participationRequestRepository.existsByGroupAndParticipant(group,member);
     }
 }

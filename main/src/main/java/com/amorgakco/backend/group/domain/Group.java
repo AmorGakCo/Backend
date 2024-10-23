@@ -74,6 +74,10 @@ public class Group extends BaseTime {
         this.address = address;
     }
 
+    public boolean isMemberParticipated(final Long memberId){
+        return participants.stream().anyMatch(p->p.isParticipant(memberId));
+    }
+
     public void addParticipants(final Participant newParticipant) {
         validateParticipation(newParticipant);
         this.participants.add(newParticipant);
@@ -108,8 +112,12 @@ public class Group extends BaseTime {
         return verifiedParticipants==participants.size();
     }
 
-    public boolean isNotGroupHost(final Long hostId) {
-        return !host.isEquals(hostId);
+    public boolean isNotGroupHost(final Long memberId) {
+        return !host.isEquals(memberId);
+    }
+
+    public boolean isGroupHost(final Long memberId){
+        return host.isEquals(memberId);
     }
 
     public void verifyLocation(final double longitude, final double latitude) {
@@ -119,10 +127,10 @@ public class Group extends BaseTime {
     }
 
     public boolean isInactivatedGroup() {
-        return duration.getEndAt().isBefore(LocalDateTime.now());
+        return duration.getEndAt().isAfter(LocalDateTime.now());
     }
 
     public boolean isActivatedGroup() {
-        return duration.getEndAt().isAfter(LocalDateTime.now());
+        return duration.getEndAt().isBefore(LocalDateTime.now());
     }
 }

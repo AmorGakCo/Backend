@@ -1,4 +1,4 @@
-package com.amorgakco.backend.groupparticipation.domain;
+package com.amorgakco.backend.participationrequest.domain;
 
 import com.amorgakco.backend.global.BaseTime;
 import com.amorgakco.backend.global.exception.IllegalAccessException;
@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class GroupParticipation extends BaseTime {
+public class ParticipationRequest extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +40,7 @@ public class GroupParticipation extends BaseTime {
     private ParticipationStatus participationStatus;
 
     @Builder
-    public GroupParticipation(final Group group, final Member member) {
+    public ParticipationRequest(final Group group, final Member member) {
         this.group = group;
         this.participant = member;
         this.participationStatus = ParticipationStatus.PENDING;
