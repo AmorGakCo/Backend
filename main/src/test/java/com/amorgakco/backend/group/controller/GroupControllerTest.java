@@ -156,8 +156,9 @@ class GroupControllerTest extends RestDocsTest {
     void getBasicGroup() throws Exception {
         // given
         final GroupBasicResponse response = TestGroupFactory.groupBasicResponse();
+        Member member = TestMemberFactory.create(1L);
         final Long groupId = 1L;
-        given(groupService.getBasicGroup(groupId)).willReturn(response);
+        given(groupService.getBasicGroup(groupId,member)).willReturn(response);
         // when
         final ResultActions actions = mockMvc.perform(get("/groups/basic/{groupId}", 1L));
         // then
@@ -178,7 +179,8 @@ class GroupControllerTest extends RestDocsTest {
         // given
         final GroupDetailResponse response = TestGroupFactory.groupDetailResponse();
         final Long groupId = 1L;
-        given(groupService.getDetailGroup(groupId)).willReturn(response);
+        final Long memberId = 1L;
+        given(groupService.getDetailGroup(groupId,memberId)).willReturn(response);
         // when
         final ResultActions actions = mockMvc.perform(get("/groups/detail/{groupId}", 1L));
         // then

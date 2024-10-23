@@ -30,7 +30,7 @@ public class IllegalAccessException extends IllegalStateException {
     }
 
     public static IllegalAccessException exceedGroupCapacity() {
-        return new IllegalAccessException(ErrorCode.PARTICIPANT_DUPLICATED);
+        return new IllegalAccessException(ErrorCode.EXCEED_GROUP_CAPACITY);
     }
 
     public static IllegalAccessException invalidDiagonalDistance() {
@@ -47,5 +47,9 @@ public class IllegalAccessException extends IllegalStateException {
 
     public static IllegalAccessException canNotUnderNegative100() {
         return new IllegalAccessException(ErrorCode.CAN_NOT_UNDER_NEGATIVE_100);
+    }
+
+    public static IllegalAccessException exceedParticipationLimit(){
+        return new IllegalAccessException(ErrorCode.EXCEED_PARTICIPATION_LIMIT);
     }
 }

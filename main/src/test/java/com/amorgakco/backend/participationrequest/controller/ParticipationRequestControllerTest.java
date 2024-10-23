@@ -1,7 +1,7 @@
-package com.amorgakco.backend.groupparticipation.controller;
+package com.amorgakco.backend.participationrequest.controller;
 
 import com.amorgakco.backend.docs.RestDocsTest;
-import com.amorgakco.backend.groupparticipation.service.GroupParticipationService;
+import com.amorgakco.backend.participationrequest.service.ParticipationRequestService;
 import com.amorgakco.backend.security.WithMockMember;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,11 +19,11 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(GroupParticipationController.class)
-class GroupParticipationControllerTest extends RestDocsTest {
+@WebMvcTest(ParticipationRequestController.class)
+class ParticipationRequestControllerTest extends RestDocsTest {
 
     @MockBean
-    private GroupParticipationService groupParticipationService;
+    private ParticipationRequestService participationRequestService;
 
     @Test
     @DisplayName("그룹에 참여요청을 보낼 수 있다.")

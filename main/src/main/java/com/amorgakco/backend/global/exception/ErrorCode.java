@@ -42,7 +42,8 @@ public enum ErrorCode {
     EXCEED_GROUP_CAPACITY("311", "그룹 수용 인원을 초과합니다."),
     PARTICIPATION_NOT_FOUND("312", "참여 요청을 조회할 수 없습니다."),
     INVALID_DIAGONAL_DISTANCE("313", "잘못된 그룹 검색 요청입니다. 위도 경도를 확인해주세요."),
-    NOT_SAME_GROUP_PARTICIPANT("314", "동일한 그룹 내의 참여자끼리 온도를 변경할 수 있습니다.");
+    NOT_SAME_GROUP_PARTICIPANT("314", "동일한 그룹 내의 참여자끼리 온도를 변경할 수 있습니다."),
+    EXCEED_PARTICIPATION_LIMIT("315","활동중인 모각코는 5개를 넘을 수 없습니다.");
 
     private final String code;
     private final String message;
