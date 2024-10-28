@@ -23,7 +23,7 @@ public class GroupApplicationController {
     @PostMapping("/{groupId}/participation")
     @ResponseStatus(HttpStatus.CREATED)
     public void participate(@PathVariable final Long groupId, @AuthMemberId final Long memberId) {
-        groupApplicationService.participate(groupId, memberId);
+        groupApplicationService.apply(groupId, memberId);
     }
 
     @PostMapping("/{groupId}/participation/{memberId}")

@@ -27,7 +27,7 @@ public class GroupApplicationService {
     private final GroupApplicationValidator groupApplicationValidator;
 
     @Transactional
-    public void participate(final Long groupId, final Long memberId) {
+    public void apply(final Long groupId, final Long memberId) {
         final Group group = groupService.getGroupWithHost(groupId);
         final Member requestMember = memberService.getMember(memberId);
         groupApplicationValidator.validate(group,requestMember);

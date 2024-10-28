@@ -1,6 +1,7 @@
 package com.amorgakco.backend.group.domain;
 
 import com.amorgakco.backend.global.BaseTime;
+import com.amorgakco.backend.global.exception.DuplicatedRequestException;
 import com.amorgakco.backend.global.exception.GroupAuthorityException;
 import com.amorgakco.backend.global.exception.GroupCapacityException;
 import com.amorgakco.backend.global.exception.LocationVerificationException;
@@ -93,7 +94,7 @@ public class Group extends BaseTime {
 
     private void validateDuplicatedParticipant(final Participant participant) {
         if (participants.contains(participant)) {
-            throw ParticipantException.duplicatedParticipant();
+            throw DuplicatedRequestException.duplicatedParticipant();
         }
     }
 

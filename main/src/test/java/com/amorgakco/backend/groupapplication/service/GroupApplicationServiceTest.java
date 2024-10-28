@@ -49,7 +49,7 @@ class GroupApplicationServiceTest {
         groupRepository.save(group);
         // when
         doNothing().when(notificationPublisherFacade).send(any(NotificationRequest.class));
-        groupApplicationService.participate(group.getId(), requestMember.getId());
+        groupApplicationService.apply(group.getId(), requestMember.getId());
         // then
         GroupApplication groupApplication = groupApplicationRepository.findByGroupIdAndMemberId(group.getId(), requestMember.getId()).get();
         assertThat(groupApplication.getParticipant().getId()).isEqualTo(requestMember.getId());

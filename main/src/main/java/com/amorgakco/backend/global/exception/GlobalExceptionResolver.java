@@ -48,7 +48,7 @@ public class GlobalExceptionResolver {
 
     @ExceptionHandler(GroupAuthorityException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse illegalAccess(final GroupAuthorityException e) {
+    public ErrorResponse invalidGroupAuthority(final GroupAuthorityException e) {
         setCustomExceptionLog(e.getErrorCode());
         return new ErrorResponse(e.getErrorCode());
     }
@@ -59,7 +59,7 @@ public class GlobalExceptionResolver {
 
     @ExceptionHandler(RetryFailedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse illegalAccess(final RetryFailedException e) {
+    public ErrorResponse retryFailed(final RetryFailedException e) {
         setCustomExceptionLog(e.getErrorCode());
         return new ErrorResponse(e.getErrorCode());
     }
@@ -85,9 +85,51 @@ public class GlobalExceptionResolver {
         return new ErrorResponse(e.getErrorCode());
     }
 
+    @ExceptionHandler(ParticipantException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse participantException(final ParticipantException e) {
+        setCustomExceptionLog(e.getErrorCode());
+        return new ErrorResponse(e.getErrorCode());
+    }
+
+    @ExceptionHandler(MemberTemperatureException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse invalidMemberTemperature(final MemberTemperatureException e) {
+        setCustomExceptionLog(e.getErrorCode());
+        return new ErrorResponse(e.getErrorCode());
+    }
+
     @ExceptionHandler(InvalidOauth2ProviderException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse invalidOauth2Provider(final InvalidOauth2ProviderException e) {
+        setCustomExceptionLog(e.getErrorCode());
+        return new ErrorResponse(e.getErrorCode());
+    }
+
+    @ExceptionHandler(LocationVerificationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse invalidLocationVerification(final LocationVerificationException e) {
+        setCustomExceptionLog(e.getErrorCode());
+        return new ErrorResponse(e.getErrorCode());
+    }
+
+    @ExceptionHandler(GroupSearchException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse invalidGroupSearch(final GroupSearchException e) {
+        setCustomExceptionLog(e.getErrorCode());
+        return new ErrorResponse(e.getErrorCode());
+    }
+
+    @ExceptionHandler(GroupCapacityException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse invalidGroupCapacity(final GroupCapacityException e) {
+        setCustomExceptionLog(e.getErrorCode());
+        return new ErrorResponse(e.getErrorCode());
+    }
+
+    @ExceptionHandler(DuplicatedRequestException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse duplicatedRequest(final DuplicatedRequestException e) {
         setCustomExceptionLog(e.getErrorCode());
         return new ErrorResponse(e.getErrorCode());
     }

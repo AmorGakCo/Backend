@@ -15,10 +15,6 @@ public class ParticipantException extends IllegalStateException {
         return new ParticipantException(ErrorCode.EXCEED_PARTICIPATION_LIMIT);
     }
 
-    public static ParticipantException duplicatedParticipant() {
-        return new ParticipantException(ErrorCode.PARTICIPANT_DUPLICATED);
-    }
-
     public static ParticipantException notSameGroupParticipant() {
         return new ParticipantException(ErrorCode.NOT_SAME_GROUP_PARTICIPANT);
     }
