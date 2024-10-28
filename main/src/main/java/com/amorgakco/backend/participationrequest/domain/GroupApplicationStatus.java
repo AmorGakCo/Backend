@@ -1,6 +1,6 @@
 package com.amorgakco.backend.participationrequest.domain;
 
-public enum ParticipationStatus {
+public enum GroupApplicationStatus {
     PENDING,
     APPROVED,
     REJECTED

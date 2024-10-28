@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ParticipationRequestTest {
+class GroupApplicationTest {
 
     @Test
     @DisplayName("그룹 참여를 허가할 수 있다.")
@@ -16,13 +16,13 @@ class ParticipationRequestTest {
         // given
         final Member host = TestMemberFactory.create(1L);
         final Long memberId = 2L;
-        final ParticipationRequest participationRequest =
+        final GroupApplication groupApplication =
                 TestGroupParticipationFactory.create(host, memberId);
         // when
-        participationRequest.approve(host);
+        groupApplication.approve(host);
         // then
-        assertThat(participationRequest.getParticipationStatus())
-                .isEqualTo(ParticipationStatus.APPROVED);
+        assertThat(groupApplication.getGroupApplicationStatus())
+                .isEqualTo(GroupApplicationStatus.APPROVED);
     }
 
     @Test
@@ -31,12 +31,12 @@ class ParticipationRequestTest {
         // given
         final Member host = TestMemberFactory.create(1L);
         final Long memberId = 2L;
-        final ParticipationRequest participationRequest =
+        final GroupApplication groupApplication =
                 TestGroupParticipationFactory.create(host, memberId);
         // when
-        participationRequest.reject(host);
+        groupApplication.reject(host);
         // then
-        assertThat(participationRequest.getParticipationStatus())
-                .isEqualTo(ParticipationStatus.REJECTED);
+        assertThat(groupApplication.getGroupApplicationStatus())
+                .isEqualTo(GroupApplicationStatus.REJECTED);
     }
 }

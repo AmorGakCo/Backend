@@ -2,7 +2,7 @@ package com.amorgakco.backend.participationrequest.controller;
 
 import com.amorgakco.backend.global.argumentresolver.AuthMember;
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
-import com.amorgakco.backend.participationrequest.service.ParticipationRequestService;
+import com.amorgakco.backend.participationrequest.service.GroupApplicationService;
 import com.amorgakco.backend.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/groups")
-public class ParticipationRequestController {
+public class GroupApplicationController {
 
-    private final ParticipationRequestService participationRequestService;
+    private final GroupApplicationService groupApplicationService;
 
     @PostMapping("/{groupId}/participation")
     @ResponseStatus(HttpStatus.CREATED)
     public void participate(@PathVariable final Long groupId, @AuthMemberId final Long memberId) {
-        participationRequestService.participate(groupId, memberId);
+        groupApplicationService.participate(groupId, memberId);
     }
 
     @PostMapping("/{groupId}/participation/{memberId}")
@@ -32,7 +32,7 @@ public class ParticipationRequestController {
             @PathVariable final Long groupId,
             @PathVariable final Long memberId,
             @AuthMember final Member host) {
-        participationRequestService.approve(groupId, memberId, host);
+        groupApplicationService.approve(groupId, memberId, host);
     }
 
     @PatchMapping("/{groupId}/participation/{memberId}")
@@ -41,6 +41,6 @@ public class ParticipationRequestController {
             @PathVariable final Long groupId,
             @PathVariable final Long memberId,
             @AuthMemberId final Long hostId) {
-        participationRequestService.reject(groupId, memberId, hostId);
+        groupApplicationService.reject(groupId, memberId, hostId);
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ParticipationRequestValidator {
+public class GroupApplicationValidator {
 
     private static final Integer PARTICIPATION_LIMIT = 5;
     private final ParticipantRepository participantRepository;

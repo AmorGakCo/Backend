@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ParticipationRequest extends BaseTime {
+public class GroupApplication extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,20 +37,20 @@ public class ParticipationRequest extends BaseTime {
     private Member participant;
 
     @Enumerated(EnumType.STRING)
-    private ParticipationStatus participationStatus;
+    private GroupApplicationStatus groupApplicationStatus;
 
     @Builder
-    public ParticipationRequest(final Group group, final Member member) {
+    public GroupApplication(final Group group, final Member member) {
         this.group = group;
         this.participant = member;
-        this.participationStatus = ParticipationStatus.PENDING;
+        this.groupApplicationStatus = GroupApplicationStatus.PENDING;
     }
 
     public void approve(final Member host) {
         if (group.isNotGroupHost(host.getId())) {
             throw GroupAuthorityException.noAuthorityForGroup();
         }
-        participationStatus = ParticipationStatus.APPROVED;
+        groupApplicationStatus = GroupApplicationStatus.APPROVED;
         group.addParticipants(new Participant(participant));
     }
 
@@ -58,6 +58,6 @@ public class ParticipationRequest extends BaseTime {
         if (group.isNotGroupHost(host.getId())) {
             throw GroupAuthorityException.noAuthorityForGroup();
         }
-        participationStatus = ParticipationStatus.REJECTED;
+        groupApplicationStatus = GroupApplicationStatus.REJECTED;
     }
 }
