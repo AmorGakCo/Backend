@@ -24,8 +24,8 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND("201", "존재하지 않는 회원입니다."),
     DASH_NOT_ALLOWED("202", "전화번호에 '-'를 포함할 수 없습니다."),
     INVALID_GITHUB_URL("203", "부적절한 github 주소입니다."),
-    CAN_NOT_EXCEED_POSITIVE_100("204", "모각코 온도는 100도를 넘을 수 없습니다."),
-    CAN_NOT_UNDER_NEGATIVE_100("204", "모각코 온도는 -100도 보다 낮을 수 없습니다."),
+    EXCEED_MAX_TEMPERATURE("204", "모각코 온도는 100도를 넘을 수 없습니다."),
+    UNDER_MIN_TEMPERATURE("204", "모각코 온도는 -100도 보다 낮을 수 없습니다."),
 
 
     // Group Error Code

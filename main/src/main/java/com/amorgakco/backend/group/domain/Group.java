@@ -1,10 +1,12 @@
 package com.amorgakco.backend.group.domain;
 
 import com.amorgakco.backend.global.BaseTime;
-import com.amorgakco.backend.global.exception.IllegalAccessException;
+import com.amorgakco.backend.global.exception.GroupAuthorityException;
+import com.amorgakco.backend.global.exception.GroupCapacityException;
+import com.amorgakco.backend.global.exception.LocationVerificationException;
+import com.amorgakco.backend.global.exception.ParticipantException;
 import com.amorgakco.backend.group.domain.location.Location;
 import com.amorgakco.backend.member.domain.Member;
-import com.amorgakco.backend.participant.domain.LocationVerificationStatus;
 import com.amorgakco.backend.participant.domain.Participant;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
@@ -91,25 +93,18 @@ public class Group extends BaseTime {
 
     private void validateDuplicatedParticipant(final Participant participant) {
         if (participants.contains(participant)) {
-            throw IllegalAccessException.duplicatedParticipant();
+            throw ParticipantException.duplicatedParticipant();
         }
     }
 
     private void validateGroupCapacity() {
         if (groupCapacity==getCurrentGroupSize()) {
-            throw IllegalAccessException.exceedGroupCapacity();
+            throw GroupCapacityException.exceedGroupCapacity();
         }
     }
 
     public int getCurrentGroupSize() {
         return participants.size();
-    }
-
-    public boolean isEveryParticipantsVerified() {
-        long verifiedParticipants = participants.stream()
-                .filter(p -> p.getLocationVerificationStatus().equals(LocationVerificationStatus.VERIFIED))
-                .count();
-        return verifiedParticipants==participants.size();
     }
 
     public boolean isNotGroupHost(final Long memberId) {
@@ -122,7 +117,7 @@ public class Group extends BaseTime {
 
     public void verifyLocation(final double longitude, final double latitude) {
         if (location.isNotInBoundary(longitude, latitude)) {
-            throw IllegalAccessException.verificationFailed();
+            throw LocationVerificationException.verificationFailed();
         }
     }
 

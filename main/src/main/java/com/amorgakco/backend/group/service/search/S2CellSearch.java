@@ -1,6 +1,6 @@
 package com.amorgakco.backend.group.service.search;
 
-import com.amorgakco.backend.global.exception.IllegalAccessException;
+import com.amorgakco.backend.global.exception.GroupSearchException;
 import com.amorgakco.backend.group.domain.location.LocationCalculator;
 import com.amorgakco.backend.group.dto.GroupSearchRequest;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +32,6 @@ public class S2CellSearch {
         return searchStrategies.stream()
                 .filter(s -> s.isValid(diagonalDistance))
                 .findFirst()
-                .orElseThrow(IllegalAccessException::invalidDiagonalDistance);
+                .orElseThrow(GroupSearchException::invalidDiagonalDistance);
     }
 }

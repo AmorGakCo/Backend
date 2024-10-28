@@ -25,15 +25,13 @@ import static org.mockito.Mockito.doNothing;
 
 @SpringBootTest
 @Transactional
-public class ParticipantServiceTest {
+class ParticipantServiceTest {
     @Autowired
     private ParticipantService participantService;
     @Autowired
     private MemberRepository memberRepository;
     @Autowired
     private GroupRepository groupRepository;
-    @Autowired
-    private ParticipantRepository participantRepository;
     @MockBean
     private NotificationPublisherFacade notificationPublisherFacade;
 

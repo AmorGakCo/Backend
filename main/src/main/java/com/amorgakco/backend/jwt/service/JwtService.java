@@ -1,6 +1,6 @@
 package com.amorgakco.backend.jwt.service;
 
-import com.amorgakco.backend.global.exception.IllegalAccessException;
+import com.amorgakco.backend.global.exception.JwtAuthenticationException;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.jwt.domain.RefreshToken;
 import com.amorgakco.backend.jwt.dto.MemberTokens;
@@ -41,7 +41,7 @@ public class JwtService {
     }
 
     public void logout(final Optional<Cookie> cookie) {
-        final Cookie tokenCookie = cookie.orElseThrow(IllegalAccessException::refreshTokenRequired);
+        final Cookie tokenCookie = cookie.orElseThrow(JwtAuthenticationException::refreshTokenRequired);
         final String refreshToken = tokenCookie.getValue();
         refreshTokenRepository.deleteById(refreshToken);
     }

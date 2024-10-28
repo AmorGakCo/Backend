@@ -1,7 +1,7 @@
 package com.amorgakco.backend.group.service;
 
 import com.amorgakco.backend.global.IdResponse;
-import com.amorgakco.backend.global.exception.IllegalAccessException;
+import com.amorgakco.backend.global.exception.GroupAuthorityException;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
@@ -11,7 +11,6 @@ import com.amorgakco.backend.group.repository.GroupRepository;
 import com.amorgakco.backend.group.service.mapper.GroupMapper;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.participationrequest.repository.ParticipationRequestRepository;
-import com.amorgakco.backend.participationrequest.service.ParticipationRequestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +34,7 @@ public class GroupService {
     public void delete(final Long hostId, final Long groupId) {
         final Group group = getGroup(groupId);
         if (group.isNotGroupHost(hostId)) {
-            throw IllegalAccessException.noAuthorityForGroup();
+            throw GroupAuthorityException.noAuthorityForGroup();
         }
         groupRepository.delete(group);
     }

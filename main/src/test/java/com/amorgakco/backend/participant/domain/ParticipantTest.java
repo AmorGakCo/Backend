@@ -4,7 +4,8 @@ import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.fixture.group.TestParticipantsFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.global.exception.ErrorCode;
-import com.amorgakco.backend.global.exception.IllegalAccessException;
+import com.amorgakco.backend.global.exception.GroupAuthorityException;
+import com.amorgakco.backend.global.exception.LocationVerificationException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.member.domain.Member;
 import org.junit.jupiter.api.DisplayName;
@@ -42,7 +43,7 @@ class ParticipantTest {
         participant.verify(126.9745357, 37.570387);
         // when&then
         assertThatThrownBy(() -> participant.verify(126.9745357, 37.570387))
-                .isInstanceOf(IllegalAccessException.class)
+                .isInstanceOf(LocationVerificationException.class)
                 .hasFieldOrPropertyWithValue("errorCode", ErrorCode.VERIFICATION_DUPLICATED);
     }
 }

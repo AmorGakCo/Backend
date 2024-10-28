@@ -42,9 +42,6 @@ public class SecurityConfig {
                                 request.requestMatchers(
                                                 "/tokens/**",
                                                 "/oauth2/**",
-                                                "/groups/locations",
-                                                "/groups/basic/**",
-                                                "/groups/locations",
                                                 "/members/login",
                                                 "/favicon.ico",
                                                 "/error")

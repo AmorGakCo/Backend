@@ -1,7 +1,8 @@
 package com.amorgakco.backend.participant.domain;
 
 import com.amorgakco.backend.global.BaseTime;
-import com.amorgakco.backend.global.exception.IllegalAccessException;
+import com.amorgakco.backend.global.exception.LocationVerificationException;
+import com.amorgakco.backend.global.exception.ParticipantException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.member.domain.Member;
 import jakarta.persistence.Entity;
@@ -63,7 +64,7 @@ public class Participant extends BaseTime {
 
     public void verify(final double longitude, final double latitude) {
         if (isVerified()) {
-            throw IllegalAccessException.verificationDuplicated();
+            throw LocationVerificationException.verificationDuplicated();
         }
         group.verifyLocation(longitude, latitude);
         this.locationVerificationStatus = LocationVerificationStatus.VERIFIED;
@@ -84,7 +85,7 @@ public class Participant extends BaseTime {
 
     private void validateSameGroupParticipant(final Participant targetParticipant) {
         if (!Objects.equals(this.group.getId(), targetParticipant.getGroup().getId())) {
-            throw IllegalAccessException.notSameGroupParticipant();
+            throw ParticipantException.notSameGroupParticipant();
         }
     }
 

@@ -1,7 +1,7 @@
 package com.amorgakco.backend.participationrequest.domain;
 
 import com.amorgakco.backend.global.BaseTime;
-import com.amorgakco.backend.global.exception.IllegalAccessException;
+import com.amorgakco.backend.global.exception.GroupAuthorityException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.participant.domain.Participant;
@@ -48,7 +48,7 @@ public class ParticipationRequest extends BaseTime {
 
     public void approve(final Member host) {
         if (group.isNotGroupHost(host.getId())) {
-            throw IllegalAccessException.noAuthorityForGroup();
+            throw GroupAuthorityException.noAuthorityForGroup();
         }
         participationStatus = ParticipationStatus.APPROVED;
         group.addParticipants(new Participant(participant));
@@ -56,7 +56,7 @@ public class ParticipationRequest extends BaseTime {
 
     public void reject(final Member host) {
         if (group.isNotGroupHost(host.getId())) {
-            throw IllegalAccessException.noAuthorityForGroup();
+            throw GroupAuthorityException.noAuthorityForGroup();
         }
         participationStatus = ParticipationStatus.REJECTED;
     }

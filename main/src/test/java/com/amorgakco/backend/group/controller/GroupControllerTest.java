@@ -5,7 +5,7 @@ import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.global.IdResponse;
 import com.amorgakco.backend.global.exception.ErrorCode;
-import com.amorgakco.backend.global.exception.IllegalAccessException;
+import com.amorgakco.backend.global.exception.GroupAuthorityException;
 import com.amorgakco.backend.global.exception.IllegalTimeException;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
 import com.amorgakco.backend.group.dto.GroupDetailResponse;
@@ -216,7 +216,7 @@ class GroupControllerTest extends RestDocsTest {
     @DisplayName("그룹 삭제는 호스트가 아니라면 예외 응답을 받을 수 있다.")
     void validateGroupHostDeletion() throws Exception {
         // when
-        doThrow(IllegalAccessException.noAuthorityForGroup()).when(groupService).delete(1L, 1L);
+        doThrow(GroupAuthorityException.noAuthorityForGroup()).when(groupService).delete(1L, 1L);
         final ResultActions actions = mockMvc.perform(delete("/groups/{groupId}", 1L));
         // then
         actions.andExpect(status().isBadRequest());

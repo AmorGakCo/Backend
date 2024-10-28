@@ -46,9 +46,9 @@ public class GlobalExceptionResolver {
         return new ErrorResponse(e.getMessage());
     }
 
-    @ExceptionHandler(IllegalAccessException.class)
+    @ExceptionHandler(GroupAuthorityException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse illegalAccess(final IllegalAccessException e) {
+    public ErrorResponse illegalAccess(final GroupAuthorityException e) {
         setCustomExceptionLog(e.getErrorCode());
         return new ErrorResponse(e.getErrorCode());
     }
