@@ -34,13 +34,13 @@ public class GroupController {
         return groupService.register(groupRegisterRequest, host);
     }
 
-    @GetMapping("/basic/{groupId}")
+    @GetMapping("/{groupId}/basic")
     public GroupBasicResponse getGroupBasic(
             @PathVariable final Long groupId, @AuthMember final Member member) {
         return groupService.getBasicGroup(groupId,member);
     }
 
-    @GetMapping("/detail/{groupId}")
+    @GetMapping("/{groupId}/detail")
     public GroupDetailResponse getGroupDetail(@PathVariable final Long groupId, @AuthMemberId final Long memberId) {
         return groupService.getDetailGroup(groupId,memberId);
     }
