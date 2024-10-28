@@ -31,11 +31,9 @@ public class GroupService {
     }
 
     @Transactional
-    public void delete(final Long hostId, final Long groupId) {
+    public void delete(final Member member, final Long groupId) {
         final Group group = getGroup(groupId);
-        if (group.isNotGroupHost(hostId)) {
-            throw GroupAuthorityException.noAuthorityForGroup();
-        }
+        group.validateGroupHost(member);
         groupRepository.delete(group);
     }
 

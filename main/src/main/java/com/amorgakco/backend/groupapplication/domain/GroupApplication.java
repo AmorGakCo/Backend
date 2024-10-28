@@ -46,18 +46,14 @@ public class GroupApplication extends BaseTime {
         this.groupApplicationStatus = GroupApplicationStatus.PENDING;
     }
 
-    public void approve(final Member host) {
-        if (group.isNotGroupHost(host.getId())) {
-            throw GroupAuthorityException.noAuthorityForGroup();
-        }
+    public void approve(final Member member) {
+        group.validateGroupHost(member);
         groupApplicationStatus = GroupApplicationStatus.APPROVED;
         group.addParticipants(new Participant(participant));
     }
 
-    public void reject(final Member host) {
-        if (group.isNotGroupHost(host.getId())) {
-            throw GroupAuthorityException.noAuthorityForGroup();
-        }
+    public void reject(final Member member) {
+        group.validateGroupHost(member);
         groupApplicationStatus = GroupApplicationStatus.REJECTED;
     }
 }

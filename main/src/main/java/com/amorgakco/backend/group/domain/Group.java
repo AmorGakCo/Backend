@@ -108,8 +108,10 @@ public class Group extends BaseTime {
         return participants.size();
     }
 
-    public boolean isNotGroupHost(final Long memberId) {
-        return !host.isEquals(memberId);
+    public void validateGroupHost(final Member member){
+        if(!host.isEquals(member.getId())){
+            throw GroupAuthorityException.noAuthorityForGroup();
+        }
     }
 
     public boolean isGroupHost(final Long memberId){

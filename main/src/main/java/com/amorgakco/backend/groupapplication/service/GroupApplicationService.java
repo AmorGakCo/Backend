@@ -42,9 +42,9 @@ public class GroupApplicationService {
     }
 
     @Transactional
-    public void approve(final Long groupId, final Long memberId, final Member host) {
+    public void approve(final Long groupId, final Long memberId, final Member member) {
         final GroupApplication groupApplication = getGroupParticipation(groupId, memberId);
-        groupApplication.approve(host);
+        groupApplication.approve(member);
         notificationPublisherFacade.send(NotificationCreator.participationApprove(
                 memberService.getMember(memberId),
                 groupApplication.getGroup().getName()

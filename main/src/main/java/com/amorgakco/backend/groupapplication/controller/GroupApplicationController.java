@@ -31,8 +31,8 @@ public class GroupApplicationController {
     public void approve(
             @PathVariable final Long groupId,
             @PathVariable final Long memberId,
-            @AuthMember final Member host) {
-        groupApplicationService.approve(groupId, memberId, host);
+            @AuthMember final Member member) {
+        groupApplicationService.approve(groupId, memberId, member);
     }
 
     @PatchMapping("/{groupId}/participation/{memberId}")

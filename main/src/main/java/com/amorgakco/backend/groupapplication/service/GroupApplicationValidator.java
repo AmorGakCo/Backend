@@ -21,11 +21,19 @@ public class GroupApplicationValidator {
 
     public void validate(final Group group, final Member member){
         Integer participationCount = participantRepository.countByParticipantMember(member);
-        if(participationCount>PARTICIPATION_LIMIT){
-            throw ParticipantException.exceedParticipationLimit();
-        }
-        if(groupApplicationRepository.existsByGroupAndParticipant(group,member)){
+        validateParticipationLimit(participationCount);
+        validateDuplicatedApplication(group, member);
+    }
+
+    private void validateDuplicatedApplication(final Group group, final Member member) {
+        if(groupApplicationRepository.existsByGroupAndParticipant(group, member)){
             throw DuplicatedRequestException.duplicatedGroupApplication();
+        }
+    }
+
+    private void validateParticipationLimit(final Integer participationCount) {
+        if(participationCount >PARTICIPATION_LIMIT){
+            throw ParticipantException.exceedParticipationLimit();
         }
     }
 }
