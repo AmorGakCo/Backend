@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 
 import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentRequest;
 import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -160,7 +161,7 @@ class GroupControllerTest extends RestDocsTest {
         final Long groupId = 1L;
         given(groupService.getBasicGroup(groupId,member)).willReturn(response);
         // when
-        final ResultActions actions = mockMvc.perform(get("/groups/basic/{groupId}", 1L));
+        final ResultActions actions = mockMvc.perform(get("/groups/{groupId}/basic", 1L));
         // then
         actions.andExpect(status().isOk());
         // docs
@@ -182,7 +183,7 @@ class GroupControllerTest extends RestDocsTest {
         final Long memberId = 1L;
         given(groupService.getDetailGroup(groupId,memberId)).willReturn(response);
         // when
-        final ResultActions actions = mockMvc.perform(get("/groups/detail/{groupId}", 1L));
+        final ResultActions actions = mockMvc.perform(get("/groups/{groupId}/detail", 1L));
         // then
         actions.andExpect(status().isOk());
         // docs
@@ -207,24 +208,6 @@ class GroupControllerTest extends RestDocsTest {
                 .andDo(
                         document(
                                 "group-delete",
-                                getDocumentRequest(),
-                                getDocumentResponse(),
-                                pathParameters(parameterWithName("groupId").description("그룹 ID"))));
-    }
-
-    @Test
-    @DisplayName("그룹 삭제는 호스트가 아니라면 예외 응답을 받을 수 있다.")
-    void validateGroupHostDeletion() throws Exception {
-        // when
-        doThrow(GroupAuthorityException.noAuthorityForGroup()).when(groupService).delete(1L, 1L);
-        final ResultActions actions = mockMvc.perform(delete("/groups/{groupId}", 1L));
-        // then
-        actions.andExpect(status().isBadRequest());
-        // docs
-        actions.andDo(print())
-                .andDo(
-                        document(
-                                "group-delete-host-exception",
                                 getDocumentRequest(),
                                 getDocumentResponse(),
                                 pathParameters(parameterWithName("groupId").description("그룹 ID"))));

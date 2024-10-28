@@ -56,7 +56,7 @@ class GroupServiceTest {
         memberRepository.save(host);
         groupRepository.save(group);
         // when
-        groupService.delete(host.getId(), group.getId());
+        groupService.delete(host, group.getId());
         // then
         assertThatThrownBy(() -> groupService.getGroup(group.getId()))
                 .isInstanceOf(ResourceNotFoundException.class);

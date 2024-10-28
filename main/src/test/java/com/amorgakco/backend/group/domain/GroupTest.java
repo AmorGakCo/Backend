@@ -3,6 +3,7 @@ package com.amorgakco.backend.group.domain;
 import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.fixture.group.TestParticipantsFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
+import com.amorgakco.backend.global.exception.DuplicatedRequestException;
 import com.amorgakco.backend.global.exception.ErrorCode;
 import com.amorgakco.backend.global.exception.GroupAuthorityException;
 import com.amorgakco.backend.global.exception.LocationVerificationException;
@@ -44,7 +45,7 @@ class GroupTest {
         final Participant newParticipant = new Participant(TestMemberFactory.create(2L));
         // when
         assertThatThrownBy(() -> group.addParticipants(newParticipant))
-                .isInstanceOf(ParticipantException.class)
+                .isInstanceOf(DuplicatedRequestException.class)
                 .hasFieldOrPropertyWithValue("errorCode", ErrorCode.PARTICIPANT_DUPLICATED);
     }
 
