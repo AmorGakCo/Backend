@@ -1,7 +1,7 @@
-package com.amorgakco.backend.participationrequest.controller;
+package com.amorgakco.backend.groupapplication.controller;
 
 import com.amorgakco.backend.docs.RestDocsTest;
-import com.amorgakco.backend.participationrequest.service.GroupApplicationService;
+import com.amorgakco.backend.groupapplication.service.GroupApplicationService;
 import com.amorgakco.backend.security.WithMockMember;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

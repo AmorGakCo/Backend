@@ -1,4 +1,4 @@
-package com.amorgakco.backend.participationrequest.service;
+package com.amorgakco.backend.groupapplication.service;
 
 import com.amorgakco.backend.global.exception.ParticipantException;
 import com.amorgakco.backend.group.domain.Group;

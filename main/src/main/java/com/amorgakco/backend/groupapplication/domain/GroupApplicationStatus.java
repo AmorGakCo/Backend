@@ -1,4 +1,4 @@
-package com.amorgakco.backend.participationrequest.domain;
+package com.amorgakco.backend.groupapplication.domain;
 
 public enum GroupApplicationStatus {
     PENDING,

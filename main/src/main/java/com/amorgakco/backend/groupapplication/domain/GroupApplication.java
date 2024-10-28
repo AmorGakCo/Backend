@@ -1,4 +1,4 @@
-package com.amorgakco.backend.participationrequest.domain;
+package com.amorgakco.backend.groupapplication.domain;
 
 import com.amorgakco.backend.global.BaseTime;
 import com.amorgakco.backend.global.exception.GroupAuthorityException;

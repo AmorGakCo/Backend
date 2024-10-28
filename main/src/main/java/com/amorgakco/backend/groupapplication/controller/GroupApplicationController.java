@@ -1,8 +1,8 @@
-package com.amorgakco.backend.participationrequest.controller;
+package com.amorgakco.backend.groupapplication.controller;
 
 import com.amorgakco.backend.global.argumentresolver.AuthMember;
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
-import com.amorgakco.backend.participationrequest.service.GroupApplicationService;
+import com.amorgakco.backend.groupapplication.service.GroupApplicationService;
 import com.amorgakco.backend.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

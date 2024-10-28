@@ -1,12 +1,12 @@
-package com.amorgakco.backend.participationrequest.service;
+package com.amorgakco.backend.groupapplication.service;
 
 import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.repository.GroupRepository;
-import com.amorgakco.backend.participationrequest.domain.GroupApplication;
-import com.amorgakco.backend.participationrequest.domain.GroupApplicationStatus;
-import com.amorgakco.backend.participationrequest.repository.GroupApplicationRepository;
+import com.amorgakco.backend.groupapplication.domain.GroupApplication;
+import com.amorgakco.backend.groupapplication.domain.GroupApplicationStatus;
+import com.amorgakco.backend.groupapplication.repository.GroupApplicationRepository;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.repository.MemberRepository;
 import com.amorgakco.backend.notification.infrastructure.NotificationPublisherFacade;

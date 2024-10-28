@@ -1,4 +1,4 @@
-package com.amorgakco.backend.participationrequest.domain;
+package com.amorgakco.backend.groupapplication.domain;
 
 import com.amorgakco.backend.fixture.groupparticipation.TestGroupParticipationFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;

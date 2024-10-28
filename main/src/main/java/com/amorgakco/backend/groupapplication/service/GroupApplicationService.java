@@ -1,11 +1,11 @@
-package com.amorgakco.backend.participationrequest.service;
+package com.amorgakco.backend.groupapplication.service;
 
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.service.GroupService;
-import com.amorgakco.backend.participationrequest.domain.GroupApplication;
-import com.amorgakco.backend.participationrequest.repository.GroupApplicationRepository;
-import com.amorgakco.backend.participationrequest.service.mapper.GroupApplicationMapper;
+import com.amorgakco.backend.groupapplication.domain.GroupApplication;
+import com.amorgakco.backend.groupapplication.repository.GroupApplicationRepository;
+import com.amorgakco.backend.groupapplication.service.mapper.GroupApplicationMapper;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.service.MemberService;
 import com.amorgakco.backend.notification.infrastructure.NotificationPublisherFacade;
