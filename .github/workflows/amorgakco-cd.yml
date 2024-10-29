@@ -2,7 +2,7 @@ name: AmorGakCo CD
 on:
   push:
     paths:
-      - "/main"
+      - "main/**"
     branches:
       - main
 
