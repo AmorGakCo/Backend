@@ -1,8 +1,6 @@
 name: AmorGakCo CD
 on:
   push:
-    paths:
-      - "main/**"
     branches:
       - main
 
@@ -11,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ssh access
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@master
         with:
           host: ${{secrets.GCP_HOST}}
           username: ${{secrets.GCP_USERNAME}}
