@@ -7,16 +7,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/groups")
+@RequestMapping("/group-locations")
 @RequiredArgsConstructor
 public class GroupLocationController {
 
     private final GroupLocationService groupLocationService;
 
-    @GetMapping("/locations")
+    @GetMapping
     public GroupSearchResponse getLocations(
             @ModelAttribute final GroupSearchRequest groupSearchRequest) {
         return groupLocationService.findGroups(groupSearchRequest);

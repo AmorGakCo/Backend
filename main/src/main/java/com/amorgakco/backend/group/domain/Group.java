@@ -1,10 +1,13 @@
 package com.amorgakco.backend.group.domain;
 
 import com.amorgakco.backend.global.BaseTime;
-import com.amorgakco.backend.global.exception.IllegalAccessException;
+import com.amorgakco.backend.global.exception.DuplicatedRequestException;
+import com.amorgakco.backend.global.exception.GroupAuthorityException;
+import com.amorgakco.backend.global.exception.GroupCapacityException;
+import com.amorgakco.backend.global.exception.LocationVerificationException;
+import com.amorgakco.backend.global.exception.ParticipantException;
 import com.amorgakco.backend.group.domain.location.Location;
 import com.amorgakco.backend.member.domain.Member;
-import com.amorgakco.backend.participant.domain.LocationVerificationStatus;
 import com.amorgakco.backend.participant.domain.Participant;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
@@ -74,6 +77,10 @@ public class Group extends BaseTime {
         this.address = address;
     }
 
+    public boolean isMemberParticipated(final Long memberId){
+        return participants.stream().anyMatch(p->p.isParticipant(memberId));
+    }
+
     public void addParticipants(final Participant newParticipant) {
         validateParticipation(newParticipant);
         this.participants.add(newParticipant);
@@ -87,13 +94,13 @@ public class Group extends BaseTime {
 
     private void validateDuplicatedParticipant(final Participant participant) {
         if (participants.contains(participant)) {
-            throw IllegalAccessException.duplicatedParticipant();
+            throw DuplicatedRequestException.duplicatedParticipant();
         }
     }
 
     private void validateGroupCapacity() {
         if (groupCapacity==getCurrentGroupSize()) {
-            throw IllegalAccessException.exceedGroupCapacity();
+            throw GroupCapacityException.exceedGroupCapacity();
         }
     }
 
@@ -101,28 +108,27 @@ public class Group extends BaseTime {
         return participants.size();
     }
 
-    public boolean isEveryParticipantsVerified() {
-        long verifiedParticipants = participants.stream()
-                .filter(p -> p.getLocationVerificationStatus().equals(LocationVerificationStatus.VERIFIED))
-                .count();
-        return verifiedParticipants==participants.size();
+    public void validateGroupHost(final Member member){
+        if(!host.isEquals(member.getId())){
+            throw GroupAuthorityException.noAuthorityForGroup();
+        }
     }
 
-    public boolean isNotGroupHost(final Long hostId) {
-        return !host.isEquals(hostId);
+    public boolean isGroupHost(final Long memberId){
+        return host.isEquals(memberId);
     }
 
     public void verifyLocation(final double longitude, final double latitude) {
         if (location.isNotInBoundary(longitude, latitude)) {
-            throw IllegalAccessException.verificationFailed();
+            throw LocationVerificationException.verificationFailed();
         }
     }
 
     public boolean isInactivatedGroup() {
-        return duration.getEndAt().isBefore(LocalDateTime.now());
+        return duration.getEndAt().isAfter(LocalDateTime.now());
     }
 
     public boolean isActivatedGroup() {
-        return duration.getEndAt().isAfter(LocalDateTime.now());
+        return duration.getEndAt().isBefore(LocalDateTime.now());
     }
 }

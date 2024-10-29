@@ -1,4 +1,4 @@
-package com.amorgakco.backend.groupparticipation.domain;
+package com.amorgakco.backend.groupapplication.domain;
 
 import com.amorgakco.backend.fixture.groupparticipation.TestGroupParticipationFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GroupParticipationTest {
+class GroupApplicationTest {
 
     @Test
     @DisplayName("그룹 참여를 허가할 수 있다.")
@@ -16,13 +16,13 @@ class GroupParticipationTest {
         // given
         final Member host = TestMemberFactory.create(1L);
         final Long memberId = 2L;
-        final GroupParticipation groupParticipation =
+        final GroupApplication groupApplication =
                 TestGroupParticipationFactory.create(host, memberId);
         // when
-        groupParticipation.approve(host);
+        groupApplication.approve(host);
         // then
-        assertThat(groupParticipation.getParticipationStatus())
-                .isEqualTo(ParticipationStatus.APPROVED);
+        assertThat(groupApplication.getGroupApplicationStatus())
+                .isEqualTo(GroupApplicationStatus.APPROVED);
     }
 
     @Test
@@ -31,12 +31,12 @@ class GroupParticipationTest {
         // given
         final Member host = TestMemberFactory.create(1L);
         final Long memberId = 2L;
-        final GroupParticipation groupParticipation =
+        final GroupApplication groupApplication =
                 TestGroupParticipationFactory.create(host, memberId);
         // when
-        groupParticipation.reject(host);
+        groupApplication.reject(host);
         // then
-        assertThat(groupParticipation.getParticipationStatus())
-                .isEqualTo(ParticipationStatus.REJECTED);
+        assertThat(groupApplication.getGroupApplicationStatus())
+                .isEqualTo(GroupApplicationStatus.REJECTED);
     }
 }

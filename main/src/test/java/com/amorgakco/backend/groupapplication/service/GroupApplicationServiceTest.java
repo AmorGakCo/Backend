@@ -1,12 +1,12 @@
-package com.amorgakco.backend.groupparticipation.service;
+package com.amorgakco.backend.groupapplication.service;
 
 import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.repository.GroupRepository;
-import com.amorgakco.backend.groupparticipation.domain.GroupParticipation;
-import com.amorgakco.backend.groupparticipation.domain.ParticipationStatus;
-import com.amorgakco.backend.groupparticipation.repository.GroupParticipationRepository;
+import com.amorgakco.backend.groupapplication.domain.GroupApplication;
+import com.amorgakco.backend.groupapplication.domain.GroupApplicationStatus;
+import com.amorgakco.backend.groupapplication.repository.GroupApplicationRepository;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.repository.MemberRepository;
 import com.amorgakco.backend.notification.infrastructure.NotificationPublisherFacade;
@@ -24,16 +24,16 @@ import static org.mockito.Mockito.doNothing;
 
 @SpringBootTest
 @Transactional
-class GroupParticipationServiceTest {
+class GroupApplicationServiceTest {
 
     @Autowired
-    private GroupParticipationService groupParticipationService;
+    private GroupApplicationService groupApplicationService;
     @Autowired
     private MemberRepository memberRepository;
     @Autowired
     private GroupRepository groupRepository;
     @Autowired
-    private GroupParticipationRepository groupParticipationRepository;
+    private GroupApplicationRepository groupApplicationRepository;
     @MockBean
     private NotificationPublisherFacade notificationPublisherFacade;
 
@@ -49,11 +49,11 @@ class GroupParticipationServiceTest {
         groupRepository.save(group);
         // when
         doNothing().when(notificationPublisherFacade).send(any(NotificationRequest.class));
-        groupParticipationService.participate(group.getId(), requestMember.getId());
+        groupApplicationService.apply(group.getId(), requestMember.getId());
         // then
-        GroupParticipation groupParticipation = groupParticipationRepository.findByGroupIdAndMemberId(group.getId(), requestMember.getId()).get();
-        assertThat(groupParticipation.getParticipant().getId()).isEqualTo(requestMember.getId());
-        assertThat(groupParticipation.getParticipationStatus()).isEqualTo(ParticipationStatus.PENDING);
+        GroupApplication groupApplication = groupApplicationRepository.findByGroupIdAndMemberId(group.getId(), requestMember.getId()).get();
+        assertThat(groupApplication.getParticipant().getId()).isEqualTo(requestMember.getId());
+        assertThat(groupApplication.getGroupApplicationStatus()).isEqualTo(GroupApplicationStatus.PENDING);
 
     }
 
@@ -67,12 +67,12 @@ class GroupParticipationServiceTest {
         memberRepository.save(host);
         memberRepository.save(member);
         groupRepository.save(group);
-        groupParticipationRepository.save(new GroupParticipation(group, member));
+        groupApplicationRepository.save(new GroupApplication(group, member));
         // when
-        groupParticipationService.approve(group.getId(), member.getId(), host);
+        groupApplicationService.approve(group.getId(), member.getId(), host);
         // then
-        GroupParticipation groupParticipation = groupParticipationRepository.findByGroupIdAndMemberId(group.getId(), member.getId()).get();
-        assertThat(groupParticipation.getParticipationStatus()).isEqualTo(ParticipationStatus.APPROVED);
+        GroupApplication groupApplication = groupApplicationRepository.findByGroupIdAndMemberId(group.getId(), member.getId()).get();
+        assertThat(groupApplication.getGroupApplicationStatus()).isEqualTo(GroupApplicationStatus.APPROVED);
     }
 
     @Test
@@ -85,11 +85,11 @@ class GroupParticipationServiceTest {
         memberRepository.save(host);
         memberRepository.save(member);
         groupRepository.save(group);
-        groupParticipationRepository.save(new GroupParticipation(group, member));
+        groupApplicationRepository.save(new GroupApplication(group, member));
         // when
-        groupParticipationService.reject(group.getId(), member.getId(), host.getId());
+        groupApplicationService.reject(group.getId(), member.getId(), host.getId());
         // then
-        GroupParticipation groupParticipation = groupParticipationRepository.findByGroupIdAndMemberId(group.getId(), member.getId()).get();
-        assertThat(groupParticipation.getParticipationStatus()).isEqualTo(ParticipationStatus.REJECTED);
+        GroupApplication groupApplication = groupApplicationRepository.findByGroupIdAndMemberId(group.getId(), member.getId()).get();
+        assertThat(groupApplication.getGroupApplicationStatus()).isEqualTo(GroupApplicationStatus.REJECTED);
     }
 }

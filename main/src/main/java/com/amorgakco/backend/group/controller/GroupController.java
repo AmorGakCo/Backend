@@ -34,19 +34,20 @@ public class GroupController {
         return groupService.register(groupRegisterRequest, host);
     }
 
-    @GetMapping("/basic/{groupId}")
-    public GroupBasicResponse getGroupBasic(@PathVariable final Long groupId) {
-        return groupService.getBasicGroup(groupId);
+    @GetMapping("/{groupId}/basic")
+    public GroupBasicResponse getGroupBasic(
+            @PathVariable final Long groupId, @AuthMember final Member member) {
+        return groupService.getBasicGroup(groupId,member);
     }
 
-    @GetMapping("/detail/{groupId}")
-    public GroupDetailResponse getGroupDetail(@PathVariable final Long groupId) {
-        return groupService.getDetailGroup(groupId);
+    @GetMapping("/{groupId}/detail")
+    public GroupDetailResponse getGroupDetail(@PathVariable final Long groupId, @AuthMemberId final Long memberId) {
+        return groupService.getDetailGroup(groupId,memberId);
     }
 
     @DeleteMapping("/{groupId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@AuthMemberId final Long hostId, @PathVariable final Long groupId) {
-        groupService.delete(hostId, groupId);
+    public void delete(@AuthMember final Member member, @PathVariable final Long groupId) {
+        groupService.delete(member, groupId);
     }
 }

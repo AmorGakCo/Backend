@@ -1,8 +1,8 @@
 package com.amorgakco.backend.member.domain;
 
 import com.amorgakco.backend.global.BaseTime;
-import com.amorgakco.backend.global.exception.IllegalAccessException;
 import com.amorgakco.backend.global.exception.IllegalFormatException;
+import com.amorgakco.backend.global.exception.MemberTemperatureException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -96,14 +96,14 @@ public class Member extends BaseTime {
 
     public Integer increaseMoGakCoTemperature() {
         if (moGakCoTemperature + 1 > MAX_MOGAKCO_TEMPERATURE) {
-            throw IllegalAccessException.canNotExceedPositive100();
+            throw MemberTemperatureException.exceedMaxTemperature();
         }
         return ++moGakCoTemperature;
     }
 
     public Integer decreaseMoGakCoTemperature() {
         if (moGakCoTemperature - 1 < MIN_MOGAKCO_TEMPERATURE) {
-            throw IllegalAccessException.canNotUnderNegative100();
+            throw MemberTemperatureException.underMinTemperature();
         }
         return --moGakCoTemperature;
     }

@@ -20,7 +20,7 @@ endif::[]
 
 include::group.adoc[]
 
-include::groupParticipation.adoc[]
+include::groupApplication.adoc[]
 
 include::participant.adoc[]
 

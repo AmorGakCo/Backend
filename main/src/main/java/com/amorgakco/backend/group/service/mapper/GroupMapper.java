@@ -15,7 +15,7 @@ import java.util.List;
 @Component
 public class GroupMapper {
 
-    public GroupDetailResponse toGroupDetailResponse(final Group group) {
+    public GroupDetailResponse toGroupDetailResponse(final Group group, final boolean isGroupHost) {
         final List<GroupMember> groupMembers =
                 group.getParticipants().stream().map(p -> toGroupMember(p.getMember())).toList();
         return GroupDetailResponse.builder()
@@ -28,6 +28,7 @@ public class GroupMapper {
                 .latitude(group.getLocation().getLatitude())
                 .longitude(group.getLocation().getLongitude())
                 .groupMembers(groupMembers)
+                .isGroupHost(isGroupHost)
                 .build();
     }
 
@@ -55,7 +56,7 @@ public class GroupMapper {
                 .build();
     }
 
-    public GroupBasicResponse toGroupBasicInfoResponse(final Group group) {
+    public GroupBasicResponse toGroupBasicInfoResponse(final Group group, final boolean isParticipated, final boolean isParticipationRequested) {
         final Member host = group.getHost();
         final Duration duration = group.getDuration();
         return GroupBasicResponse.builder()
@@ -66,6 +67,8 @@ public class GroupMapper {
                 .currentParticipants(group.getCurrentGroupSize())
                 .beginAt(duration.getBeginAt())
                 .endAt(duration.getEndAt())
+                .isParticipated(isParticipated)
+                .isParticipationRequested(isParticipationRequested)
                 .build();
     }
 
