@@ -37,12 +37,12 @@ public class GroupController {
     @GetMapping("/{groupId}/basic")
     public GroupBasicResponse getGroupBasic(
             @PathVariable final Long groupId, @AuthMember final Member member) {
-        return groupService.getBasicGroup(groupId,member);
+        return groupService.getBasicGroup(groupId, member);
     }
 
     @GetMapping("/{groupId}/detail")
     public GroupDetailResponse getGroupDetail(@PathVariable final Long groupId, @AuthMemberId final Long memberId) {
-        return groupService.getDetailGroup(groupId,memberId);
+        return groupService.getDetailGroup(groupId, memberId);
     }
 
     @DeleteMapping("/{groupId}")
