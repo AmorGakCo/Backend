@@ -24,6 +24,6 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
             "select p from Participant p join fetch p.group join fetch p.member where p.group.id = :groupId and p.member.id = :memberId")
     Optional<Participant> findByGroupAndMember(final Long groupId, final Long memberId);
 
-    @Query("select count(*) from Participant p where p.member = :member")
-    Integer countByParticipantMember(Member member);
+    @Query("select count(*) from Participant p where p.member = :member and p.group.duration.endAt > :now")
+    Integer countCurrentParticipationByMember(Member member, LocalDateTime now);
 }
