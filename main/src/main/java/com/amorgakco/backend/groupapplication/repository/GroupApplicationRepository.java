@@ -1,8 +1,8 @@
 package com.amorgakco.backend.groupapplication.repository;
 
 import com.amorgakco.backend.group.domain.Group;
-import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.groupapplication.domain.GroupApplication;
+import com.amorgakco.backend.member.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

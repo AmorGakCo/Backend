@@ -1,7 +1,6 @@
 package com.amorgakco.backend.groupapplication.domain;
 
 import com.amorgakco.backend.global.BaseTime;
-import com.amorgakco.backend.global.exception.GroupAuthorityException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.participant.domain.Participant;

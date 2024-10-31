@@ -5,7 +5,6 @@ import com.amorgakco.backend.global.exception.DuplicatedRequestException;
 import com.amorgakco.backend.global.exception.GroupAuthorityException;
 import com.amorgakco.backend.global.exception.GroupCapacityException;
 import com.amorgakco.backend.global.exception.LocationVerificationException;
-import com.amorgakco.backend.global.exception.ParticipantException;
 import com.amorgakco.backend.group.domain.location.Location;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.participant.domain.Participant;
@@ -77,10 +76,6 @@ public class Group extends BaseTime {
         this.address = address;
     }
 
-    public boolean isMemberParticipated(final Long memberId){
-        return participants.stream().anyMatch(p->p.isParticipant(memberId));
-    }
-
     public void addParticipants(final Participant newParticipant) {
         validateParticipation(newParticipant);
         this.participants.add(newParticipant);
@@ -108,13 +103,17 @@ public class Group extends BaseTime {
         return participants.size();
     }
 
-    public void validateGroupHost(final Member member){
-        if(!host.isEquals(member.getId())){
+    public boolean isMemberParticipated(final Long memberId) {
+        return participants.stream().anyMatch(p -> p.isParticipant(memberId));
+    }
+
+    public void validateGroupHost(final Member member) {
+        if (!host.isEquals(member.getId())) {
             throw GroupAuthorityException.noAuthorityForGroup();
         }
     }
 
-    public boolean isGroupHost(final Long memberId){
+    public boolean isGroupHost(final Long memberId) {
         return host.isEquals(memberId);
     }
 

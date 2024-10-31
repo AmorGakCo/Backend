@@ -45,7 +45,7 @@ public class Participant extends BaseTime {
         this.locationVerificationStatus = LocationVerificationStatus.UNVERIFIED;
     }
 
-    public boolean isParticipant(final Long memberId){
+    public boolean isParticipant(final Long memberId) {
         return member.isEquals(memberId);
     }
 

@@ -30,7 +30,7 @@ public class GroupApplicationService {
     public void apply(final Long groupId, final Long memberId) {
         final Group group = groupService.getGroupWithHost(groupId);
         final Member requestMember = memberService.getMember(memberId);
-        groupApplicationValidator.validate(group,requestMember);
+        groupApplicationValidator.validate(group, requestMember);
         final GroupApplication groupApplication =
                 groupApplicationMapper.toGroupApplication(group, requestMember);
         groupApplicationRepository.save(groupApplication);

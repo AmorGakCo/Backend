@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class MemberTemperatureException extends IllegalStateException{
+public class MemberTemperatureException extends IllegalStateException {
 
     private final ErrorCode errorCode;
 

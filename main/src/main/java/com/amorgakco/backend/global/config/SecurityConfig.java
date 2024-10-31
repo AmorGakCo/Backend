@@ -17,18 +17,17 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Configuration
 public class SecurityConfig {
 
+    private static final String AUTHORIZATION_HEADER = "Authorization";
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtExceptionHandlingFilter jwtExceptionHandlingFilter;
-    private static final String AUTHORIZATION_HEADER = "Authorization";
 
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
