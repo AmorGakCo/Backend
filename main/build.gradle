@@ -94,10 +94,6 @@ tasks.named('asciidoctor') {
     doLast {
         copy {
             from docsOutputDir
-            into projectDocsDir
-        }
-        copy {
-            from docsOutputDir
             into deployDocsDir
         }
     }
