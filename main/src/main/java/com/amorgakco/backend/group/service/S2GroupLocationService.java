@@ -1,5 +1,6 @@
 package com.amorgakco.backend.group.service;
 
+import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.dto.GroupSearchRequest;
 import com.amorgakco.backend.group.dto.GroupSearchResponse;
 import com.amorgakco.backend.group.repository.GroupRepository;
@@ -23,6 +24,7 @@ public class S2GroupLocationService implements GroupLocationService {
         final List<String> cellTokens = s2CellSearch.getCellTokens(request);
         return groupRepository.findByCellToken(cellTokens)
                 .stream()
+                .filter(Group::isActivatedGroup)
                 .map(groupMapper::toGroupLocation)
                 .collect(
                         Collectors.collectingAndThen(
