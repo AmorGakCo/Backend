@@ -2,7 +2,7 @@ package com.amorgakco.backend.fixture.participant;
 
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
 import com.amorgakco.backend.participant.dto.ParticipationHistory;
-import com.amorgakco.backend.participant.dto.ParticipationHistoryResponse;
+import com.amorgakco.backend.participant.dto.ParticipationHistoryPagingResponse;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,8 +16,8 @@ public class TestParticipantFactory {
     private static final LocalDateTime BEGIN_AT = LocalDateTime.now();
     private static final LocalDateTime END_AT = LocalDateTime.now().plusHours(3);
 
-    public static ParticipationHistoryResponse participationHistoryResponse() {
-        return ParticipationHistoryResponse.builder()
+    public static ParticipationHistoryPagingResponse participationHistoryResponse() {
+        return ParticipationHistoryPagingResponse.builder()
                 .page(0)
                 .hasNext(false)
                 .elementSize(inactivatedGroups().size() + activatedGroups().size())

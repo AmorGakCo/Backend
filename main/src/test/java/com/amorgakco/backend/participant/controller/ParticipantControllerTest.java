@@ -3,7 +3,7 @@ package com.amorgakco.backend.participant.controller;
 import com.amorgakco.backend.docs.RestDocsTest;
 import com.amorgakco.backend.fixture.participant.TestParticipantFactory;
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
-import com.amorgakco.backend.participant.dto.ParticipationHistoryResponse;
+import com.amorgakco.backend.participant.dto.ParticipationHistoryPagingResponse;
 import com.amorgakco.backend.participant.dto.TardinessRequest;
 import com.amorgakco.backend.participant.dto.TemperatureResponse;
 import com.amorgakco.backend.participant.service.ParticipantService;
@@ -42,10 +42,10 @@ class ParticipantControllerTest extends RestDocsTest {
         // given
         final Long memberId = 1L;
         final Integer page = 0;
-        final ParticipationHistoryResponse participationHistoryResponse =
+        final ParticipationHistoryPagingResponse participationHistoryPagingResponse =
                 TestParticipantFactory.participationHistoryResponse();
         given(participantService.getParticipationHistory(memberId, page))
-                .willReturn(participationHistoryResponse);
+                .willReturn(participationHistoryPagingResponse);
         // when
         final ResultActions actions =
                 mockMvc.perform(get("/participants/histories").queryParam("page", "0"));

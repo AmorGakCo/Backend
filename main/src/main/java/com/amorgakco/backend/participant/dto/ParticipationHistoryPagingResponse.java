@@ -5,10 +5,10 @@ import lombok.Builder;
 import java.util.List;
 
 @Builder
-public record ParticipationHistoryResponse(
+public record ParticipationHistoryPagingResponse(
         int page,
         int elementSize,
         boolean hasNext,
-        List<ParticipationHistory> activatedGroup,
-        List<ParticipationHistory> InactivatedGroup) {
+        List<ParticipationHistory> histories
+) {
 }

@@ -17,5 +17,5 @@ public interface GroupApplicationRepository extends JpaRepository<GroupApplicati
     Optional<GroupApplication> findByGroupIdAndMemberId(
             @Param("groupId") Long groupId, @Param("memberId") Long memberId);
 
-    Boolean existsByGroupAndParticipant(Group group, Member member);
+    boolean existsByGroupAndParticipant(Group group, Member member);
 }
