@@ -52,7 +52,7 @@ class GroupServiceTest {
     void deleteGroup() {
         // given
         final Member host = TestMemberFactory.createEntity();
-        final Group group = TestGroupFactory.create(host);
+        final Group group = TestGroupFactory.createActiveGroup(host);
         memberRepository.save(host);
         groupRepository.save(group);
         // when

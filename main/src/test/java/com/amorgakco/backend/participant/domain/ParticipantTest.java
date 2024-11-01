@@ -4,7 +4,6 @@ import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.fixture.group.TestParticipantsFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.global.exception.ErrorCode;
-import com.amorgakco.backend.global.exception.GroupAuthorityException;
 import com.amorgakco.backend.global.exception.LocationVerificationException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.member.domain.Member;
@@ -21,7 +20,7 @@ class ParticipantTest {
     void verifiedLocation() {
         // given
         final Member host = TestMemberFactory.create(1L);
-        final Group group = TestGroupFactory.create(host);
+        final Group group = TestGroupFactory.createActiveGroup(host);
         final Member member = TestMemberFactory.create(2L);
         final Participant participant = TestParticipantsFactory.create(member);
         group.addParticipants(participant);
@@ -36,7 +35,7 @@ class ParticipantTest {
     void duplicatedVerification() {
         // given
         final Member host = TestMemberFactory.create(1L);
-        final Group group = TestGroupFactory.create(host);
+        final Group group = TestGroupFactory.createActiveGroup(host);
         final Member member = TestMemberFactory.create(2L);
         final Participant participant = TestParticipantsFactory.create(member);
         group.addParticipants(participant);

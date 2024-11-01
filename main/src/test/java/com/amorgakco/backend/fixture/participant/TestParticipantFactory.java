@@ -2,7 +2,7 @@ package com.amorgakco.backend.fixture.participant;
 
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
 import com.amorgakco.backend.participant.dto.ParticipationHistory;
-import com.amorgakco.backend.participant.dto.ParticipationHistoryResponse;
+import com.amorgakco.backend.participant.dto.ParticipationHistoryPagingResponse;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,22 +16,32 @@ public class TestParticipantFactory {
     private static final LocalDateTime BEGIN_AT = LocalDateTime.now();
     private static final LocalDateTime END_AT = LocalDateTime.now().plusHours(3);
 
-    public static ParticipationHistoryResponse participationHistoryResponse() {
-        return ParticipationHistoryResponse.builder()
+    public static ParticipationHistoryPagingResponse currentParticipationHistoryResponse() {
+        List<ParticipationHistory> currentGroups = currentGroups();
+        return ParticipationHistoryPagingResponse.builder()
                 .page(0)
                 .hasNext(false)
-                .elementSize(inactivatedGroups().size() + activatedGroups().size())
-                .InactivatedGroup(inactivatedGroups())
-                .activatedGroup(activatedGroups())
+                .elementSize(currentGroups.size())
+                .histories(currentGroups)
                 .build();
     }
 
-    private static List<ParticipationHistory> inactivatedGroups() {
+    public static ParticipationHistoryPagingResponse pastParticipationHistoryResponse() {
+        List<ParticipationHistory> pastGroups = pastGroups();
+        return ParticipationHistoryPagingResponse.builder()
+                .page(0)
+                .hasNext(false)
+                .elementSize(pastGroups.size())
+                .histories(pastGroups)
+                .build();
+    }
+
+    private static List<ParticipationHistory> currentGroups() {
         return List.of(
                 participationHistory(1L), participationHistory(2L), participationHistory(3L));
     }
 
-    private static List<ParticipationHistory> activatedGroups() {
+    private static List<ParticipationHistory> pastGroups() {
         return List.of(
                 participationHistory(4L), participationHistory(5L), participationHistory(6L));
     }

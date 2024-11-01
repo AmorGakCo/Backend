@@ -9,7 +9,7 @@ import com.amorgakco.backend.group.service.GroupService;
 import com.amorgakco.backend.notification.infrastructure.NotificationPublisherFacade;
 import com.amorgakco.backend.notification.service.NotificationCreator;
 import com.amorgakco.backend.participant.domain.Participant;
-import com.amorgakco.backend.participant.dto.ParticipationHistoryResponse;
+import com.amorgakco.backend.participant.dto.ParticipationHistoryPagingResponse;
 import com.amorgakco.backend.participant.dto.TardinessRequest;
 import com.amorgakco.backend.participant.dto.TemperatureResponse;
 import com.amorgakco.backend.participant.repository.ParticipantRepository;
@@ -22,11 +22,14 @@ import org.springframework.retry.annotation.Recover;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class ParticipantService {
 
-    private static final Integer PAGE_SIZE = 10;
+    private static final Integer ACTIVE_GROUP_PAGE_SIZE = 5;
+    private static final Integer INACTIVE_GROUP_PAGE_SIZE = 10;
     private final ParticipantRepository participantRepository;
     private final ParticipantMapper participantMapper;
     private final GroupService groupService;
@@ -46,13 +49,23 @@ public class ParticipantService {
     }
 
     @Transactional(readOnly = true)
-    public ParticipationHistoryResponse getParticipationHistory(
+    public ParticipationHistoryPagingResponse getCurrentParticipationHistories(
             final Long memberId, final Integer page) {
         final PageRequest pageRequest =
-                PageRequest.of(page, PAGE_SIZE, Sort.by(Sort.Direction.DESC, "createdAt"));
+                PageRequest.of(page, ACTIVE_GROUP_PAGE_SIZE, Sort.by(Sort.Direction.DESC, "createdAt"));
         final Slice<Participant> participantSlice =
-                participantRepository.findByMember(memberId, pageRequest);
-        return participantMapper.toParticipationHistoryResponse(participantSlice);
+                participantRepository.findCurrentParticipationByMember(memberId, LocalDateTime.now(), pageRequest);
+        return participantMapper.toParticipationHistoryPagingResponse(participantSlice);
+    }
+
+    @Transactional(readOnly = true)
+    public ParticipationHistoryPagingResponse getPastParticipationHistories(
+            final Long memberId, final Integer page) {
+        final PageRequest pageRequest =
+                PageRequest.of(page, INACTIVE_GROUP_PAGE_SIZE, Sort.by(Sort.Direction.DESC, "createdAt"));
+        final Slice<Participant> participantSlice =
+                participantRepository.findPastParticipationByMember(memberId, LocalDateTime.now(), pageRequest);
+        return participantMapper.toParticipationHistoryPagingResponse(participantSlice);
     }
 
     @Transactional

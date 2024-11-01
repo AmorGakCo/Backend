@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class LocationVerificationException extends IllegalStateException{
+public class LocationVerificationException extends IllegalStateException {
 
     private final ErrorCode errorCode;
 

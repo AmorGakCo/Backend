@@ -2,7 +2,7 @@ package com.amorgakco.backend.participant.controller;
 
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
-import com.amorgakco.backend.participant.dto.ParticipationHistoryResponse;
+import com.amorgakco.backend.participant.dto.ParticipationHistoryPagingResponse;
 import com.amorgakco.backend.participant.dto.TardinessRequest;
 import com.amorgakco.backend.participant.dto.TemperatureResponse;
 import com.amorgakco.backend.participant.service.ParticipantService;
@@ -35,10 +35,16 @@ public class ParticipantController {
         participantService.verifyParticipantLocation(request, memberId);
     }
 
-    @GetMapping("/histories")
-    public ParticipationHistoryResponse getParticipationHistory(
-            @RequestParam final Integer page, @AuthMemberId final Long memberId) {
-        return participantService.getParticipationHistory(memberId, page);
+    @GetMapping("/current-history")
+    public ParticipationHistoryPagingResponse getCurrentParticipationHistory
+            (@RequestParam final Integer page, @AuthMemberId final Long memberId) {
+        return participantService.getCurrentParticipationHistories(memberId, page);
+    }
+
+    @GetMapping("/past-history")
+    public ParticipationHistoryPagingResponse getPastParticipationHistory
+            (@RequestParam final Integer page, @AuthMemberId final Long memberId) {
+        return participantService.getPastParticipationHistories(memberId, page);
     }
 
     @DeleteMapping("/groups/{groupId}")

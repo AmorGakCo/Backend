@@ -1,8 +1,8 @@
 package com.amorgakco.backend.groupapplication.repository;
 
 import com.amorgakco.backend.group.domain.Group;
-import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.groupapplication.domain.GroupApplication;
+import com.amorgakco.backend.member.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,5 +17,5 @@ public interface GroupApplicationRepository extends JpaRepository<GroupApplicati
     Optional<GroupApplication> findByGroupIdAndMemberId(
             @Param("groupId") Long groupId, @Param("memberId") Long memberId);
 
-    Boolean existsByGroupAndParticipant(Group group, Member member);
+    boolean existsByGroupAndParticipant(Group group, Member member);
 }

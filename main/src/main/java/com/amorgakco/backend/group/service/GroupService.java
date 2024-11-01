@@ -1,7 +1,6 @@
 package com.amorgakco.backend.group.service;
 
 import com.amorgakco.backend.global.IdResponse;
-import com.amorgakco.backend.global.exception.GroupAuthorityException;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
@@ -9,8 +8,8 @@ import com.amorgakco.backend.group.dto.GroupDetailResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
 import com.amorgakco.backend.group.repository.GroupRepository;
 import com.amorgakco.backend.group.service.mapper.GroupMapper;
-import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.groupapplication.repository.GroupApplicationRepository;
+import com.amorgakco.backend.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,7 +64,7 @@ public class GroupService {
         return groupMapper.toGroupBasicInfoResponse(group, isParticipated, isParticipationRequested);
     }
 
-    private boolean isParticipationRequested(final Group group, final Member member){
-        return groupApplicationRepository.existsByGroupAndParticipant(group,member);
+    private boolean isParticipationRequested(final Group group, final Member member) {
+        return groupApplicationRepository.existsByGroupAndParticipant(group, member);
     }
 }
