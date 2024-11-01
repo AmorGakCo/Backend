@@ -22,7 +22,7 @@ import org.springframework.retry.annotation.Recover;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static java.time.LocalDateTime.now;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -54,7 +54,7 @@ public class ParticipantService {
         final PageRequest pageRequest =
                 PageRequest.of(page, ACTIVE_GROUP_PAGE_SIZE, Sort.by(Sort.Direction.DESC, "createdAt"));
         final Slice<Participant> participantSlice =
-                participantRepository.findCurrentParticipationByMember(memberId, now(), pageRequest);
+                participantRepository.findCurrentParticipationByMember(memberId, LocalDateTime.now(), pageRequest);
         return participantMapper.toParticipationHistoryPagingResponse(participantSlice);
     }
 
@@ -64,7 +64,7 @@ public class ParticipantService {
         final PageRequest pageRequest =
                 PageRequest.of(page, INACTIVE_GROUP_PAGE_SIZE, Sort.by(Sort.Direction.DESC, "createdAt"));
         final Slice<Participant> participantSlice =
-                participantRepository.findPastParticipationByMember(memberId, now(), pageRequest);
+                participantRepository.findPastParticipationByMember(memberId, LocalDateTime.now(), pageRequest);
         return participantMapper.toParticipationHistoryPagingResponse(participantSlice);
     }
 

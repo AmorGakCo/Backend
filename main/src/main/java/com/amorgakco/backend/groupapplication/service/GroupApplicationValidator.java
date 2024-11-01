@@ -9,7 +9,7 @@ import com.amorgakco.backend.participant.repository.ParticipantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import static java.time.LocalDateTime.now;
+import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
@@ -20,7 +20,7 @@ public class GroupApplicationValidator {
     private final GroupApplicationRepository groupApplicationRepository;
 
     public void validate(final Group group, final Member member) {
-        Integer participationCount = participantRepository.countCurrentParticipationByMember(member, now());
+        Integer participationCount = participantRepository.countCurrentParticipationByMember(member, LocalDateTime.now());
         validateParticipationLimit(participationCount);
         validateDuplicatedApplication(group, member);
     }
