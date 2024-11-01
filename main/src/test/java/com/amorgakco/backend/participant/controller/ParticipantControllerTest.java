@@ -36,19 +36,45 @@ class ParticipantControllerTest extends RestDocsTest {
     private ParticipantService participantService;
 
     @Test
-    @DisplayName("회원의 그룹 참여 내역을 조회할 수 있다.")
+    @DisplayName("회원의 현재 참여중인 내역을 조회할 수 있다.")
     @WithMockMember
-    void memberParticipationHistory() throws Exception {
+    void memberCurrentParticipationHistory() throws Exception {
         // given
         final Long memberId = 1L;
         final Integer page = 0;
         final ParticipationHistoryPagingResponse participationHistoryPagingResponse =
-                TestParticipantFactory.participationHistoryResponse();
-        given(participantService.getParticipationHistory(memberId, page))
+                TestParticipantFactory.pastParticipationHistoryResponse();
+        given(participantService.getCurrentParticipationHistories(memberId, page))
                 .willReturn(participationHistoryPagingResponse);
         // when
         final ResultActions actions =
-                mockMvc.perform(get("/participants/histories").queryParam("page", "0"));
+                mockMvc.perform(get("/participants/current-history").queryParam("page", "0"));
+        // then
+        actions.andExpect(status().isOk());
+        // docs
+        actions.andDo(print())
+                .andDo(
+                        document(
+                                "participation-history",
+                                getDocumentRequest(),
+                                getDocumentResponse(),
+                                queryParameters(parameterWithName("page").description("페이지 번호"))));
+    }
+
+    @Test
+    @DisplayName("회원의 과거에 참여한 그룹 내역을 조회할 수 있다.")
+    @WithMockMember
+    void memberPastParticipationHistory() throws Exception {
+        // given
+        final Long memberId = 1L;
+        final Integer page = 0;
+        final ParticipationHistoryPagingResponse participationHistoryPagingResponse =
+                TestParticipantFactory.pastParticipationHistoryResponse();
+        given(participantService.getPastParticipationHistories(memberId, page))
+                .willReturn(participationHistoryPagingResponse);
+        // when
+        final ResultActions actions =
+                mockMvc.perform(get("/participants/past-history").queryParam("page", "0"));
         // then
         actions.andExpect(status().isOk());
         // docs

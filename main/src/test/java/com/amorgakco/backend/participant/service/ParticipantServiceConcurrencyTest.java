@@ -50,7 +50,7 @@ class ParticipantServiceConcurrencyTest {
         Member targetMember = TestMemberFactory.createEntity();
         memberRepository.save(requestMember);
         memberRepository.save(targetMember);
-        Group group = TestGroupFactory.create(requestMember);
+        Group group = TestGroupFactory.createActiveGroup(requestMember);
         group.addParticipants(new Participant(targetMember));
         groupRepository.save(group);
         int threadCount = 15;
@@ -84,7 +84,7 @@ class ParticipantServiceConcurrencyTest {
         Member targetMember = TestMemberFactory.createEntity();
         memberRepository.save(requestMember);
         memberRepository.save(targetMember);
-        Group group = TestGroupFactory.create(requestMember);
+        Group group = TestGroupFactory.createActiveGroup(requestMember);
         group.addParticipants(new Participant(targetMember));
         groupRepository.save(group);
         int threadCount = 15;

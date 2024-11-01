@@ -520,8 +520,8 @@ Host: localhost:8080
   "name" : "AmorGakCo",
   "description" : "모각코 합시다.",
   "groupCapacity" : 4,
-  "beginAt" : "2024-10-31T22:04:06.134279",
-  "endAt" : "2024-11-01T01:04:06.134279",
+  "beginAt" : "2024-11-01T19:14:10.035867",
+  "endAt" : "2024-11-01T22:14:10.035867",
   "latitude" : 37.5703901,
   "longitude" : 126.9748397,
   "address" : "서울특별시 종로구 신문로1가 23"
@@ -686,8 +686,8 @@ Content-Length: 907
     "address" : "서울특별시 종로구 신문로1가 23",
     "longitude" : 126.9748397,
     "latitude" : 37.5703901,
-    "beginAt" : "2024-10-31T22:04:06.043143",
-    "endAt" : "2024-11-01T01:04:06.043148",
+    "beginAt" : "2024-11-01T19:14:09.910027",
+    "endAt" : "2024-11-01T22:14:09.910031",
     "groupMembers" : [ {
       "memberId" : 2,
       "imgUrl" : "https://fakeimg",
@@ -914,7 +914,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <h4 id="_참여자의_모각코_참여_내역_http_request"><a class="link" href="#_참여자의_모각코_참여_내역_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /participants/histories?page=0 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /participants/current-history?page=0 HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -928,52 +928,33 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1489
+Content-Length: 813
 
 {
   "status" : "success",
-  "path" : "/participants/histories",
+  "path" : "/participants/current-history",
   "data" : {
     "page" : 0,
-    "elementSize" : 6,
+    "elementSize" : 3,
     "hasNext" : false,
-    "activatedGroup" : [ {
+    "histories" : [ {
       "groupId" : 4,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-10-31T22:04:11.825341",
-      "endAt" : "2024-11-01T01:04:11.825346"
+      "beginAt" : "2024-11-01T19:14:18.221664",
+      "endAt" : "2024-11-01T22:14:18.22167"
     }, {
       "groupId" : 5,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-10-31T22:04:11.825341",
-      "endAt" : "2024-11-01T01:04:11.825346"
+      "beginAt" : "2024-11-01T19:14:18.221664",
+      "endAt" : "2024-11-01T22:14:18.22167"
     }, {
       "groupId" : 6,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-10-31T22:04:11.825341",
-      "endAt" : "2024-11-01T01:04:11.825346"
-    } ],
-    "InactivatedGroup" : [ {
-      "groupId" : 1,
-      "name" : "AmorGakCo",
-      "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-10-31T22:04:11.825341",
-      "endAt" : "2024-11-01T01:04:11.825346"
-    }, {
-      "groupId" : 2,
-      "name" : "AmorGakCo",
-      "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-10-31T22:04:11.825341",
-      "endAt" : "2024-11-01T01:04:11.825346"
-    }, {
-      "groupId" : 3,
-      "name" : "AmorGakCo",
-      "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-10-31T22:04:11.825341",
-      "endAt" : "2024-11-01T01:04:11.825346"
+      "beginAt" : "2024-11-01T19:14:18.221664",
+      "endAt" : "2024-11-01T22:14:18.22167"
     } ]
   }
 }</code></pre>

@@ -124,6 +124,8 @@ jacocoTestReport {
                                         "com/amorgakco/backend/global/response/**",
                                         "com/amorgakco/backend/global/properties/**",
                                         "com/amorgakco/backend/global/rabbitmq/**",
+                                        "com/amorgakco/backend/oauth2/provider/**",
+                                        "com/amorgakco/backend/oauth2/service/**",
             ])
         }))
     }

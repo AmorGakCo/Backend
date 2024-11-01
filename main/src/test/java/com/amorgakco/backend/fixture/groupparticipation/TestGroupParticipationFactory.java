@@ -10,7 +10,7 @@ public class TestGroupParticipationFactory {
 
     public static GroupApplication create(final Member host, final Long memberId) {
         final Member member = TestMemberFactory.create(memberId);
-        final Group group = TestGroupFactory.create(host);
+        final Group group = TestGroupFactory.createActiveGroup(host);
         return GroupApplication.builder().group(group).member(member).build();
     }
 }

@@ -25,7 +25,7 @@ public class TestGroupFactory {
     private static final LocalDateTime BEGIN_AT = LocalDateTime.now();
     private static final LocalDateTime END_AT = LocalDateTime.now().plusHours(3);
 
-    public static Group create(final Member host) {
+    public static Group createActiveGroup(final Member host) {
         return Group.builder()
                 .host(host)
                 .groupCapacity(GROUP_CAPACITY)

@@ -45,7 +45,7 @@ class GroupApplicationServiceTest {
         Member requestMember = TestMemberFactory.createEntity();
         memberRepository.save(host);
         memberRepository.save(requestMember);
-        Group group = TestGroupFactory.create(host);
+        Group group = TestGroupFactory.createActiveGroup(host);
         groupRepository.save(group);
         // when
         doNothing().when(notificationPublisherFacade).send(any(NotificationRequest.class));
@@ -63,7 +63,7 @@ class GroupApplicationServiceTest {
         // given
         Member host = TestMemberFactory.createEntity();
         Member member = TestMemberFactory.createEntity();
-        Group group = TestGroupFactory.create(host);
+        Group group = TestGroupFactory.createActiveGroup(host);
         memberRepository.save(host);
         memberRepository.save(member);
         groupRepository.save(group);
@@ -81,7 +81,7 @@ class GroupApplicationServiceTest {
         // given
         Member host = TestMemberFactory.createEntity();
         Member member = TestMemberFactory.createEntity();
-        Group group = TestGroupFactory.create(host);
+        Group group = TestGroupFactory.createActiveGroup(host);
         memberRepository.save(host);
         memberRepository.save(member);
         groupRepository.save(group);

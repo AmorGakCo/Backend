@@ -5,9 +5,7 @@ import com.amorgakco.backend.fixture.group.TestParticipantsFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.global.exception.DuplicatedRequestException;
 import com.amorgakco.backend.global.exception.ErrorCode;
-import com.amorgakco.backend.global.exception.GroupAuthorityException;
 import com.amorgakco.backend.global.exception.LocationVerificationException;
-import com.amorgakco.backend.global.exception.ParticipantException;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.participant.domain.Participant;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +21,7 @@ class GroupTest {
     void getCurrentGroupSize() {
         // given
         final Member host = TestMemberFactory.create(1L);
-        final Group group = TestGroupFactory.create(host);
+        final Group group = TestGroupFactory.createActiveGroup(host);
         final Member member = TestMemberFactory.create(2L);
         final int expectGroupSize = 2;
         final Participant participant = TestParticipantsFactory.create(member);
@@ -39,7 +37,7 @@ class GroupTest {
     void duplicateParticipation() {
         // given
         final Member host = TestMemberFactory.create(1L);
-        final Group group = TestGroupFactory.create(host);
+        final Group group = TestGroupFactory.createActiveGroup(host);
         final Participant participant = new Participant(TestMemberFactory.create(2L));
         group.addParticipants(participant);
         final Participant newParticipant = new Participant(TestMemberFactory.create(2L));
@@ -54,7 +52,7 @@ class GroupTest {
     void validateLocationException() {
         // given
         final Member host = TestMemberFactory.create(1L);
-        final Group group = TestGroupFactory.create(host);
+        final Group group = TestGroupFactory.createActiveGroup(host);
         final Member member = TestMemberFactory.create(2L);
         final Participant participant = TestParticipantsFactory.create(member);
         group.addParticipants(participant);

@@ -35,13 +35,13 @@ public class ParticipantController {
         participantService.verifyParticipantLocation(request, memberId);
     }
 
-    @GetMapping("/active-history")
+    @GetMapping("/current-history")
     public ParticipationHistoryPagingResponse getCurrentParticipationHistory
             (@RequestParam final Integer page, @AuthMemberId final Long memberId) {
         return participantService.getCurrentParticipationHistories(memberId, page);
     }
 
-    @GetMapping("/inactive-history")
+    @GetMapping("/past-history")
     public ParticipationHistoryPagingResponse getPastParticipationHistory
             (@RequestParam final Integer page, @AuthMemberId final Long memberId) {
         return participantService.getPastParticipationHistories(memberId, page);
