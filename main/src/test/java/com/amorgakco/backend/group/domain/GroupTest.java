@@ -7,7 +7,7 @@ import com.amorgakco.backend.global.exception.DuplicatedRequestException;
 import com.amorgakco.backend.global.exception.ErrorCode;
 import com.amorgakco.backend.global.exception.LocationVerificationException;
 import com.amorgakco.backend.member.domain.Member;
-import com.amorgakco.backend.participant.domain.Participant;
+import com.amorgakco.backend.groupparticipant.domain.GroupParticipant;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,8 +24,8 @@ class GroupTest {
         final Group group = TestGroupFactory.createActiveGroup(host);
         final Member member = TestMemberFactory.create(2L);
         final int expectGroupSize = 2;
-        final Participant participant = TestParticipantsFactory.create(member);
-        group.addParticipants(participant);
+        final GroupParticipant groupParticipant = TestParticipantsFactory.create(member);
+        group.addParticipants(groupParticipant);
         // when
         final int currentGroupSize = group.getCurrentGroupSize();
         // then
@@ -38,11 +38,11 @@ class GroupTest {
         // given
         final Member host = TestMemberFactory.create(1L);
         final Group group = TestGroupFactory.createActiveGroup(host);
-        final Participant participant = new Participant(TestMemberFactory.create(2L));
-        group.addParticipants(participant);
-        final Participant newParticipant = new Participant(TestMemberFactory.create(2L));
+        final GroupParticipant groupParticipant = new GroupParticipant(TestMemberFactory.create(2L));
+        group.addParticipants(groupParticipant);
+        final GroupParticipant newGroupParticipant = new GroupParticipant(TestMemberFactory.create(2L));
         // when
-        assertThatThrownBy(() -> group.addParticipants(newParticipant))
+        assertThatThrownBy(() -> group.addParticipants(newGroupParticipant))
                 .isInstanceOf(DuplicatedRequestException.class)
                 .hasFieldOrPropertyWithValue("errorCode", ErrorCode.PARTICIPANT_DUPLICATED);
     }
@@ -54,8 +54,8 @@ class GroupTest {
         final Member host = TestMemberFactory.create(1L);
         final Group group = TestGroupFactory.createActiveGroup(host);
         final Member member = TestMemberFactory.create(2L);
-        final Participant participant = TestParticipantsFactory.create(member);
-        group.addParticipants(participant);
+        final GroupParticipant groupParticipant = TestParticipantsFactory.create(member);
+        group.addParticipants(groupParticipant);
         // when
         assertThatThrownBy(() -> group.verifyLocation(126.9754143, 37.57071))
                 .isInstanceOf(LocationVerificationException.class);

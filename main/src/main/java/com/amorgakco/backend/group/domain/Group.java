@@ -6,8 +6,8 @@ import com.amorgakco.backend.global.exception.GroupAuthorityException;
 import com.amorgakco.backend.global.exception.GroupCapacityException;
 import com.amorgakco.backend.global.exception.LocationVerificationException;
 import com.amorgakco.backend.group.domain.location.Location;
+import com.amorgakco.backend.groupparticipant.domain.GroupParticipant;
 import com.amorgakco.backend.member.domain.Member;
-import com.amorgakco.backend.participant.domain.Participant;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -37,7 +37,7 @@ import java.util.Set;
 public class Group extends BaseTime {
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private final Set<Participant> participants = new HashSet<>();
+    private final Set<GroupParticipant> groupParticipants = new HashSet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,24 +71,24 @@ public class Group extends BaseTime {
         this.groupCapacity = groupCapacity;
         this.duration = new Duration(beginAt, endAt);
         this.location = new Location(longitude, latitude);
-        addParticipants(new Participant(host));
+        addParticipants(new GroupParticipant(host));
         this.host = host;
         this.address = address;
     }
 
-    public void addParticipants(final Participant newParticipant) {
-        validateParticipation(newParticipant);
-        this.participants.add(newParticipant);
-        newParticipant.add(this);
+    public void addParticipants(final GroupParticipant newGroupParticipant) {
+        validateParticipation(newGroupParticipant);
+        this.groupParticipants.add(newGroupParticipant);
+        newGroupParticipant.add(this);
     }
 
-    public void validateParticipation(final Participant participant) {
-        validateDuplicatedParticipant(participant);
+    public void validateParticipation(final GroupParticipant groupParticipant) {
+        validateDuplicatedParticipant(groupParticipant);
         validateGroupCapacity();
     }
 
-    private void validateDuplicatedParticipant(final Participant participant) {
-        if (participants.contains(participant)) {
+    private void validateDuplicatedParticipant(final GroupParticipant groupParticipant) {
+        if (groupParticipants.contains(groupParticipant)) {
             throw DuplicatedRequestException.duplicatedParticipant();
         }
     }
@@ -100,11 +100,11 @@ public class Group extends BaseTime {
     }
 
     public int getCurrentGroupSize() {
-        return participants.size();
+        return groupParticipants.size();
     }
 
     public boolean isMemberParticipated(final Long memberId) {
-        return participants.stream().anyMatch(p -> p.isParticipant(memberId));
+        return groupParticipants.stream().anyMatch(p -> p.isParticipant(memberId));
     }
 
     public void validateGroupHost(final Member member) {

@@ -30,4 +30,8 @@ public class ResourceNotFoundException extends NoSuchElementException {
     public static ResourceNotFoundException participantsNotFound() {
         return new ResourceNotFoundException(ErrorCode.PARTICIPANT_NOT_FOUND);
     }
+
+    public static ResourceNotFoundException chatRoomNotFound() {
+        return new ResourceNotFoundException(ErrorCode.CHAT_ROOM_NOT_FOUND);
+    }
 }

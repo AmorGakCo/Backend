@@ -2,8 +2,8 @@ package com.amorgakco.backend.groupapplication.domain;
 
 import com.amorgakco.backend.global.BaseTime;
 import com.amorgakco.backend.group.domain.Group;
+import com.amorgakco.backend.groupparticipant.domain.GroupParticipant;
 import com.amorgakco.backend.member.domain.Member;
-import com.amorgakco.backend.participant.domain.Participant;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -48,7 +48,7 @@ public class GroupApplication extends BaseTime {
     public void approve(final Member member) {
         group.validateGroupHost(member);
         groupApplicationStatus = GroupApplicationStatus.APPROVED;
-        group.addParticipants(new Participant(participant));
+        group.addParticipants(new GroupParticipant(participant));
     }
 
     public void reject(final Member member) {

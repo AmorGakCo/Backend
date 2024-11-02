@@ -17,7 +17,7 @@ public class GroupMapper {
 
     public GroupDetailResponse toGroupDetailResponse(final Group group, final boolean isGroupHost) {
         final List<GroupMember> groupMembers =
-                group.getParticipants().stream().map(p -> toGroupMember(p.getMember())).toList();
+                group.getGroupParticipants().stream().map(p -> toGroupMember(p.getMember())).toList();
         return GroupDetailResponse.builder()
                 .host(toGroupMember(group.getHost()))
                 .name(group.getName())
