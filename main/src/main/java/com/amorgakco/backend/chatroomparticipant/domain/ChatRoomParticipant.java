@@ -7,6 +7,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -24,9 +25,11 @@ public class ChatRoomParticipant {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
     private ChatRoom chatRoom;
 
     public ChatRoomParticipant(final Member member, final ChatRoom chatRoom) {

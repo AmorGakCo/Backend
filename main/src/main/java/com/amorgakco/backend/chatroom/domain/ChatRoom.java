@@ -34,7 +34,6 @@ public class ChatRoom extends BaseTime {
     private Group group;
 
     @OneToMany(mappedBy = "chatRoom",cascade = CascadeType.ALL)
-    @JoinColumn
     private Set<ChatRoomParticipant> chatRoomParticipants = new HashSet<>();
 
     public void enterChatRoom(final Member member){

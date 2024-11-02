@@ -11,5 +11,5 @@ import org.springframework.stereotype.Service;
 public class ChatRoomParticipantService {
 
     private final ChatRoomParticipantRepository chatRoomParticipantRepository;
-    
+
 }
