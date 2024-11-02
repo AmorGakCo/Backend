@@ -12,6 +12,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -27,5 +29,29 @@ public class ChatRoomParticipant {
     @ManyToOne(fetch = FetchType.LAZY)
     private ChatRoom chatRoom;
 
+    public ChatRoomParticipant(final Member member, final ChatRoom chatRoom) {
+        this.member = member;
+        this.chatRoom = chatRoom;
+    }
 
+    public String getNickname(){
+        return member.getNickname();
+    }
+
+    public String getImgUrl(){
+        return member.getImgUrl();
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this==o) return true;
+        if (o==null || getClass()!=o.getClass()) return false;
+        final ChatRoomParticipant that = (ChatRoomParticipant) o;
+        return Objects.equals(getMember(), that.getMember()) && Objects.equals(getChatRoom(), that.getChatRoom());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getMember(), getChatRoom());
+    }
 }

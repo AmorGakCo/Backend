@@ -5,10 +5,10 @@ import lombok.Builder;
 import java.util.List;
 
 @Builder
-public record ChatRoomPageResponse(
+public record ChatRoomSliceResponse(
         int page,
         int elementSize,
         boolean hasNext,
-        List<ChatRoomResponse> chatRooms
+        List<ChatRoomSubjectResponse> chatRoomSubjects
 ) {
 }
