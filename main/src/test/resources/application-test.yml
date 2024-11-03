@@ -8,11 +8,12 @@ spring:
     username: sa
     password:
   jpa:
-    show-sql: true
     hibernate:
       ddl-auto: create
     properties:
-      format_sql: true
+      hibernate:
+        format_sql: true
+        show_sql: true
     defer-datasource-initialization: true
 
 fcm-secret-path: fcm-secret.json

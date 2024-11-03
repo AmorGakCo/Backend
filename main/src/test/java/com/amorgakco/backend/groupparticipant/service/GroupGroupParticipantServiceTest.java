@@ -44,7 +44,7 @@ class GroupGroupParticipantServiceTest {
         memberRepository.save(member);
         memberRepository.save(host);
         Group group = TestGroupFactory.createActiveGroup(host);
-        group.addParticipants(new GroupParticipant(member));
+        group.addParticipant(new GroupParticipant(member));
         groupRepository.save(group);
         // when
         doNothing().when(notificationPublisherFacade).send(any(NotificationRequest.class));
@@ -64,7 +64,7 @@ class GroupGroupParticipantServiceTest {
         memberRepository.save(member);
         memberRepository.save(host);
         Group group = TestGroupFactory.createActiveGroup(host);
-        group.addParticipants(new GroupParticipant(member));
+        group.addParticipant(new GroupParticipant(member));
         Group savedGroup = groupRepository.save(group);
         LocationVerificationRequest request = new LocationVerificationRequest(savedGroup.getId(), currentLatitude, currentLongitude);
         // when
@@ -113,13 +113,13 @@ class GroupGroupParticipantServiceTest {
     private void createGroupsAndParticipate(int currentGroupSize, int pastGroupSize, Member host, Member member) {
         for (int i = 0; i < currentGroupSize; i++) {
             final Group activeGroup = TestGroupFactory.createActiveGroup(host);
-            activeGroup.addParticipants(new GroupParticipant(member));
+            activeGroup.addParticipant(new GroupParticipant(member));
             groupRepository.save(activeGroup);
         }
 
         for (int i = 0; i < pastGroupSize; i++) {
             final Group inactiveGroup = TestGroupFactory.createInactiveGroup(host);
-            inactiveGroup.addParticipants(new GroupParticipant(member));
+            inactiveGroup.addParticipant(new GroupParticipant(member));
             groupRepository.save(inactiveGroup);
         }
     }

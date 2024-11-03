@@ -25,7 +25,7 @@ class GroupTest {
         final Member member = TestMemberFactory.create(2L);
         final int expectGroupSize = 2;
         final GroupParticipant groupParticipant = TestParticipantsFactory.create(member);
-        group.addParticipants(groupParticipant);
+        group.addParticipant(groupParticipant);
         // when
         final int currentGroupSize = group.getCurrentGroupSize();
         // then
@@ -39,10 +39,10 @@ class GroupTest {
         final Member host = TestMemberFactory.create(1L);
         final Group group = TestGroupFactory.createActiveGroup(host);
         final GroupParticipant groupParticipant = new GroupParticipant(TestMemberFactory.create(2L));
-        group.addParticipants(groupParticipant);
+        group.addParticipant(groupParticipant);
         final GroupParticipant newGroupParticipant = new GroupParticipant(TestMemberFactory.create(2L));
         // when
-        assertThatThrownBy(() -> group.addParticipants(newGroupParticipant))
+        assertThatThrownBy(() -> group.addParticipant(newGroupParticipant))
                 .isInstanceOf(DuplicatedRequestException.class)
                 .hasFieldOrPropertyWithValue("errorCode", ErrorCode.PARTICIPANT_DUPLICATED);
     }
@@ -55,7 +55,7 @@ class GroupTest {
         final Group group = TestGroupFactory.createActiveGroup(host);
         final Member member = TestMemberFactory.create(2L);
         final GroupParticipant groupParticipant = TestParticipantsFactory.create(member);
-        group.addParticipants(groupParticipant);
+        group.addParticipant(groupParticipant);
         // when
         assertThatThrownBy(() -> group.verifyLocation(126.9754143, 37.57071))
                 .isInstanceOf(LocationVerificationException.class);

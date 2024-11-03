@@ -51,7 +51,7 @@ class GroupGroupParticipantServiceConcurrencyTest {
         memberRepository.save(requestMember);
         memberRepository.save(targetMember);
         Group group = TestGroupFactory.createActiveGroup(requestMember);
-        group.addParticipants(new GroupParticipant(targetMember));
+        group.addParticipant(new GroupParticipant(targetMember));
         groupRepository.save(group);
         int threadCount = 15;
 
@@ -85,7 +85,7 @@ class GroupGroupParticipantServiceConcurrencyTest {
         memberRepository.save(requestMember);
         memberRepository.save(targetMember);
         Group group = TestGroupFactory.createActiveGroup(requestMember);
-        group.addParticipants(new GroupParticipant(targetMember));
+        group.addParticipant(new GroupParticipant(targetMember));
         groupRepository.save(group);
         int threadCount = 15;
 

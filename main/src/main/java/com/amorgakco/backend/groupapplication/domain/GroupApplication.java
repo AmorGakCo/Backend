@@ -48,7 +48,7 @@ public class GroupApplication extends BaseTime {
     public void approve(final Member member) {
         group.validateGroupHost(member);
         groupApplicationStatus = GroupApplicationStatus.APPROVED;
-        group.addParticipants(new GroupParticipant(participant));
+        group.addParticipant(new GroupParticipant(participant));
     }
 
     public void reject(final Member member) {

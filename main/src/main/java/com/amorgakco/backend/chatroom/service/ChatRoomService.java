@@ -42,7 +42,8 @@ public class ChatRoomService {
     }
 
     public void exitChatRoom(final Member member,final Long chatRoomId){
-        final ChatRoomParticipant chatRoomParticipant = chatRoomParticipantRepository.findByMemberAndChatRoom(member)
+        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).orElseThrow(ResourceNotFoundException::chatRoomNotFound);
+        final ChatRoomParticipant chatRoomParticipant = chatRoomParticipantRepository.findByMemberAndChatRoom(member,chatRoom)
                 .orElseThrow(ResourceNotFoundException::memberNotFound);
         chatRoomParticipantRepository.delete(chatRoomParticipant);
     }

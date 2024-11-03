@@ -2,7 +2,6 @@ package com.amorgakco.backend.chatroomparticipant.repository;
 
 import com.amorgakco.backend.chatroom.domain.ChatRoom;
 import com.amorgakco.backend.chatroomparticipant.domain.ChatRoomParticipant;
-import com.amorgakco.backend.chatroomparticipant.service.ChatRoomParticipantService;
 import com.amorgakco.backend.member.domain.Member;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -15,8 +14,8 @@ import java.util.Optional;
 @Repository
 public interface ChatRoomParticipantRepository extends JpaRepository<ChatRoomParticipant,Long> {
 
-    Optional<ChatRoomParticipant> findByMemberAndChatRoom(Member member);
+    Optional<ChatRoomParticipant> findByMemberAndChatRoom(final Member member, final ChatRoom chatRoom);
 
-    @Query("select crp.chatRoom from ChatRoomParticipant crp join fetch crp.chatRoom where crp.member = :member")
+    @Query("select crp from ChatRoomParticipant crp join fetch crp.chatRoom where crp.member = :member")
     Slice<ChatRoom> findAllByMember(Member member, PageRequest pageRequest);
 }

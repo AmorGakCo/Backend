@@ -23,7 +23,7 @@ class GroupParticipantTest {
         final Group group = TestGroupFactory.createActiveGroup(host);
         final Member member = TestMemberFactory.create(2L);
         final GroupParticipant groupParticipant = TestParticipantsFactory.create(member);
-        group.addParticipants(groupParticipant);
+        group.addParticipant(groupParticipant);
         // when
         groupParticipant.verify(126.9745357, 37.570387);
         assertThat(groupParticipant.getLocationVerificationStatus())
@@ -38,7 +38,7 @@ class GroupParticipantTest {
         final Group group = TestGroupFactory.createActiveGroup(host);
         final Member member = TestMemberFactory.create(2L);
         final GroupParticipant groupParticipant = TestParticipantsFactory.create(member);
-        group.addParticipants(groupParticipant);
+        group.addParticipant(groupParticipant);
         groupParticipant.verify(126.9745357, 37.570387);
         // when&then
         assertThatThrownBy(() -> groupParticipant.verify(126.9745357, 37.570387))

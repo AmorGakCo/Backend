@@ -71,12 +71,12 @@ public class Group extends BaseTime {
         this.groupCapacity = groupCapacity;
         this.duration = new Duration(beginAt, endAt);
         this.location = new Location(longitude, latitude);
-        addParticipants(new GroupParticipant(host));
+        addParticipant(new GroupParticipant(host));
         this.host = host;
         this.address = address;
     }
 
-    public void addParticipants(final GroupParticipant newGroupParticipant) {
+    public void addParticipant(final GroupParticipant newGroupParticipant) {
         validateParticipation(newGroupParticipant);
         this.groupParticipants.add(newGroupParticipant);
         newGroupParticipant.add(this);
