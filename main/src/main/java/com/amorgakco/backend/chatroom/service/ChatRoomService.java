@@ -8,6 +8,7 @@ import com.amorgakco.backend.chatroom.service.mapper.ChatRoomMapper;
 import com.amorgakco.backend.chatroomparticipant.domain.ChatRoomParticipant;
 import com.amorgakco.backend.chatroomparticipant.repository.ChatRoomParticipantRepository;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
+import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.member.domain.Member;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -37,15 +38,15 @@ public class ChatRoomService {
         final ChatRoom chatRoom = chatRoomRepository
                 .findById(chatRoomId)
                 .orElseThrow(ResourceNotFoundException::chatRoomNotFound);
-        chatRoom.validateParticipant(member);
+        chatRoom.validateChatRoomParticipant(member);
         return chatRoomMapper.toChatRoomResponse(chatRoom);
     }
 
-    public ChatRoomResponse registerChatRoom(final Member member, final Long chatRoomId){
+    public ChatRoomResponse participateChatRoom(final Member member, final Long chatRoomId){
         final ChatRoom chatRoom = chatRoomRepository
-                .findById(chatRoomId)
+                .findByIdWithGroup(chatRoomId)
                 .orElseThrow(ResourceNotFoundException::chatRoomNotFound);
-        chatRoom.register(member);
+        chatRoom.participate(member);
         return chatRoomMapper.toChatRoomResponse(chatRoom);
     }
 
@@ -54,5 +55,10 @@ public class ChatRoomService {
                 .findByMemberAndChatRoomId(member, chatRoomId)
                 .orElseThrow(ResourceNotFoundException::chatRoomParticipantsNotFound);
         chatRoomParticipantRepository.delete(chatRoomParticipant);
+    }
+
+    public Long registerChatRoom(final Member host,final Group group){
+        ChatRoom newChatRoom = new ChatRoom(host,group);
+        return chatRoomRepository.save(newChatRoom).getId();
     }
 }

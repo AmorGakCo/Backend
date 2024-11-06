@@ -1,11 +1,13 @@
 package com.amorgakco.backend.group.service;
 
+import com.amorgakco.backend.chatroom.service.ChatRoomService;
 import com.amorgakco.backend.global.IdResponse;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
 import com.amorgakco.backend.group.dto.GroupDetailResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
+import com.amorgakco.backend.group.dto.GroupRegisterResponse;
 import com.amorgakco.backend.group.repository.GroupRepository;
 import com.amorgakco.backend.group.service.mapper.GroupMapper;
 import com.amorgakco.backend.groupapplication.repository.GroupApplicationRepository;
@@ -21,12 +23,14 @@ public class GroupService {
     private final GroupRepository groupRepository;
     private final GroupMapper groupMapper;
     private final GroupApplicationRepository groupApplicationRepository;
+    private final ChatRoomService chatRoomService;
 
     @Transactional
-    public IdResponse register(final GroupRegisterRequest request, final Member host) {
+    public GroupRegisterResponse register(final GroupRegisterRequest request, final Member host) {
         final Group group = groupMapper.toGroup(host, request);
         final Long groupId = groupRepository.save(group).getId();
-        return new IdResponse(groupId);
+        Long chatRoomId = chatRoomService.registerChatRoom(host,group);
+        return new GroupRegisterResponse(groupId,chatRoomId);
     }
 
     @Transactional

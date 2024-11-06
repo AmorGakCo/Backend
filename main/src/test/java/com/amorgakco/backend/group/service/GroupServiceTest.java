@@ -6,6 +6,7 @@ import com.amorgakco.backend.global.IdResponse;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
+import com.amorgakco.backend.group.dto.GroupRegisterResponse;
 import com.amorgakco.backend.group.repository.GroupRepository;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.repository.MemberRepository;
@@ -41,9 +42,9 @@ class GroupServiceTest {
         final GroupRegisterRequest groupRegisterRequest =
                 TestGroupFactory.groupRegisterRequest(LocalDateTime.now(), LocalDateTime.now().plusHours(duration));
         // when
-        final IdResponse idResponse = groupService.register(groupRegisterRequest, host);
+        final GroupRegisterResponse groupRegisterResponse = groupService.register(groupRegisterRequest, host);
         // then
-        final Group group = groupRepository.findById(idResponse.id()).get();
+        final Group group = groupRepository.findById(groupRegisterResponse.groupId()).get();
         assertThat(group.getHost().getId()).isEqualTo(host.getId());
     }
 

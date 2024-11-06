@@ -10,6 +10,7 @@ import com.amorgakco.backend.global.exception.IllegalTimeException;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
 import com.amorgakco.backend.group.dto.GroupDetailResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
+import com.amorgakco.backend.group.dto.GroupRegisterResponse;
 import com.amorgakco.backend.group.service.GroupService;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.security.WithMockMember;
@@ -53,7 +54,7 @@ class GroupControllerTest extends RestDocsTest {
         final GroupRegisterRequest request = TestGroupFactory.groupRegisterRequest(beginAt, endAt);
         final Member host = TestMemberFactory.create(1L);
         given(memberService.getMember(1L)).willReturn(host);
-        given(groupService.register(request, host)).willReturn(new IdResponse(1L));
+        given(groupService.register(request, host)).willReturn(new GroupRegisterResponse(1L,1L));
         // when
         final ResultActions actions =
                 mockMvc.perform(
@@ -61,10 +62,10 @@ class GroupControllerTest extends RestDocsTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(toRequestBody(request)));
         // then
-        actions.andExpect(status().isCreated()).andExpect(jsonPath("$.data.id").value("1"));
+        actions.andExpect(status().isCreated()).andExpect(jsonPath("$.data.groupId").value("1"));
         // docs
         actions.andDo(print())
-                .andDo(document("group-register", getDocumentRequest(), getDocumentResponse()));
+                .andDo(document("group-participate", getDocumentRequest(), getDocumentResponse()));
     }
 
     @Test
@@ -90,7 +91,7 @@ class GroupControllerTest extends RestDocsTest {
         actions.andDo(print())
                 .andDo(
                         document(
-                                "group-register-max-duration-exception",
+                                "group-participate-max-duration-exception",
                                 getDocumentRequest(),
                                 getDocumentResponse()));
     }
@@ -118,7 +119,7 @@ class GroupControllerTest extends RestDocsTest {
         actions.andDo(print())
                 .andDo(
                         document(
-                                "group-register-min-duration-exception",
+                                "group-participate-min-duration-exception",
                                 getDocumentRequest(),
                                 getDocumentResponse()));
     }
@@ -147,7 +148,7 @@ class GroupControllerTest extends RestDocsTest {
         actions.andDo(print())
                 .andDo(
                         document(
-                                "group-register-time-exception",
+                                "group-participate-time-exception",
                                 getDocumentRequest(),
                                 getDocumentResponse()));
     }

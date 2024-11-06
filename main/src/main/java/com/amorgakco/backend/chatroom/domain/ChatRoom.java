@@ -3,6 +3,7 @@ package com.amorgakco.backend.chatroom.domain;
 
 import com.amorgakco.backend.chatroomparticipant.domain.ChatRoomParticipant;
 import com.amorgakco.backend.global.BaseTime;
+import com.amorgakco.backend.global.exception.ParticipantException;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.member.domain.Member;
@@ -30,17 +31,30 @@ public class ChatRoom extends BaseTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Group group;
-
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ChatRoomParticipant> chatRoomParticipants = new HashSet<>();
 
-    public void register(final Member member){
-        chatRoomParticipants.add(new ChatRoomParticipant(member,this));
+    @OneToOne(fetch = FetchType.LAZY)
+    private Group group;
+
+    public ChatRoom(final Member host, final Group group){
+        this.group = group;
+        participate(host);
     }
 
-    public void validateParticipant(final Member member){
+    public void participate(final Member member){
+        if(isMemberNotParticipatedInGroup(member)){
+            throw ParticipantException.notParticipatedInGroup();
+        }
+        ChatRoomParticipant chatRoomParticipant = new ChatRoomParticipant(member, this);
+        chatRoomParticipants.add(chatRoomParticipant);
+    }
+
+    private boolean isMemberNotParticipatedInGroup(final Member member) {
+        return group.isMemberParticipated(member.getId());
+    }
+
+    public void validateChatRoomParticipant(final Member member){
         final boolean isNotParticipated = chatRoomParticipants.stream()
                 .noneMatch(cp -> cp.getMember().isEquals(member.getId()));
         if(isNotParticipated){

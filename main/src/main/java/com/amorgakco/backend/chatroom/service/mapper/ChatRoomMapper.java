@@ -41,6 +41,7 @@ public class ChatRoomMapper {
 
     public ChatRoomResponse toChatRoomResponse(final ChatRoom chatRoom) {
         return ChatRoomResponse.builder()
+                .chatRoomId(chatRoom.getId())
                 .groupName(chatRoom.getGroup().getName())
                 .chatRoomParticipants(getParticipants(chatRoom))
                 .build();

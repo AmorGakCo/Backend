@@ -1,5 +1,6 @@
 package com.amorgakco.backend.group.domain;
 
+import com.amorgakco.backend.chatroom.domain.ChatRoom;
 import com.amorgakco.backend.global.BaseTime;
 import com.amorgakco.backend.global.exception.DuplicatedRequestException;
 import com.amorgakco.backend.global.exception.GroupAuthorityException;
@@ -18,6 +19,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -104,7 +106,7 @@ public class Group extends BaseTime {
     }
 
     public boolean isMemberParticipated(final Long memberId) {
-        return groupParticipants.stream().anyMatch(p -> p.isParticipant(memberId));
+        return !groupParticipants.stream().anyMatch(p -> p.isParticipant(memberId));
     }
 
     public void validateGroupHost(final Member member) {

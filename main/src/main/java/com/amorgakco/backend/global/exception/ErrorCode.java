@@ -48,7 +48,8 @@ public enum ErrorCode {
 
     //Chat Room Error Code
     CHAT_ROOM_NOT_FOUND("400","채팅방이 존재하지 않습니다."),
-    CHAT_ROOM_PARTICIPANT_NOT_FOUND("401","채팅방 참여자가 아닙니다.");
+    CHAT_ROOM_PARTICIPANT_NOT_FOUND("401","채팅방 참여자가 아닙니다."),
+    NOT_PARTICIPATED_IN_GROUP("402","채팅방 접속은 같은 그룹에 속한 참여자끼리 가능합니다.");
 
     private final String code;
     private final String message;

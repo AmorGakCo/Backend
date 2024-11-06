@@ -6,6 +6,7 @@ import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
 import com.amorgakco.backend.group.dto.GroupDetailResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
+import com.amorgakco.backend.group.dto.GroupRegisterResponse;
 import com.amorgakco.backend.group.service.GroupService;
 import com.amorgakco.backend.member.domain.Member;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class GroupController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public IdResponse register(
+    public GroupRegisterResponse register(
             @RequestBody final GroupRegisterRequest groupRegisterRequest,
             @AuthMember final Member host) {
         return groupService.register(groupRegisterRequest, host);

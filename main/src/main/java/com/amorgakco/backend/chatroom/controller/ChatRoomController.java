@@ -36,8 +36,8 @@ public class ChatRoomController {
 
     @PostMapping("/{chatRoomId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ChatRoomResponse registerChatRoom(@AuthMember final Member member, @PathVariable final Long chatRoomId){
-        return chatRoomService.registerChatRoom(member,chatRoomId);
+    public ChatRoomResponse participateChatRoom(@AuthMember final Member member, @PathVariable final Long chatRoomId){
+        return chatRoomService.participateChatRoom(member,chatRoomId);
     }
 
     @DeleteMapping("/{chatRoomId}")
