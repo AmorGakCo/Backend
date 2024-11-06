@@ -14,7 +14,8 @@ import java.util.Optional;
 @Repository
 public interface ChatRoomParticipantRepository extends JpaRepository<ChatRoomParticipant,Long> {
 
-    Optional<ChatRoomParticipant> findByMemberAndChatRoom(final Member member, final ChatRoom chatRoom);
+    @Query("select crp from ChatRoomParticipant crp where crp.member =:member and crp.id=:chatRoomId")
+    Optional<ChatRoomParticipant> findByMemberAndChatRoomId(final Member member, final Long chatRoomId);
 
     @Query("select crp from ChatRoomParticipant crp join fetch crp.chatRoom where crp.member = :member")
     Slice<ChatRoom> findAllByMember(Member member, PageRequest pageRequest);

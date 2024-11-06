@@ -30,21 +30,29 @@ public class ChatRoomService {
         PageRequest pageRequest = PageRequest
                 .of(page, PAGE_CONTENT_SIZE, Sort.by(Sort.Direction.DESC, "createdAt"));
         Slice<ChatRoom> chatRooms = chatRoomParticipantRepository.findAllByMember(member, pageRequest);
-        return chatRoomMapper.toChatRoomSliceResponse(chatRooms);
+        return chatRoomMapper.toChatRoomListResponse(chatRooms);
     }
 
-    public ChatRoomResponse enterChatRoom(final Member member, final Long chatRoomId) {
+    public ChatRoomResponse getChatRoom(final Member member, final Long chatRoomId) {
         final ChatRoom chatRoom = chatRoomRepository
                 .findById(chatRoomId)
                 .orElseThrow(ResourceNotFoundException::chatRoomNotFound);
-        chatRoom.validateParticipant();
+        chatRoom.validateParticipant(member);
+        return chatRoomMapper.toChatRoomResponse(chatRoom);
+    }
+
+    public ChatRoomResponse registerChatRoom(final Member member, final Long chatRoomId){
+        final ChatRoom chatRoom = chatRoomRepository
+                .findById(chatRoomId)
+                .orElseThrow(ResourceNotFoundException::chatRoomNotFound);
+        chatRoom.register(member);
         return chatRoomMapper.toChatRoomResponse(chatRoom);
     }
 
     public void exitChatRoom(final Member member, final Long chatRoomId) {
-        ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).orElseThrow(ResourceNotFoundException::chatRoomNotFound);
-        final ChatRoomParticipant chatRoomParticipant = chatRoomParticipantRepository.findByMemberAndChatRoom(member, chatRoom)
-                .orElseThrow(ResourceNotFoundException::memberNotFound);
+        ChatRoomParticipant chatRoomParticipant = chatRoomParticipantRepository
+                .findByMemberAndChatRoomId(member, chatRoomId)
+                .orElseThrow(ResourceNotFoundException::chatRoomParticipantsNotFound);
         chatRoomParticipantRepository.delete(chatRoomParticipant);
     }
 }

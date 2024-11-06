@@ -7,12 +7,14 @@ import com.amorgakco.backend.global.argumentresolver.AuthMember;
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
 import com.amorgakco.backend.member.domain.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -27,9 +29,15 @@ public class ChatRoomController {
         return chatRoomService.getChatRoomList(member, page);
     }
 
+    @GetMapping("/{chatRoomId}")
+    public ChatRoomResponse getChatRoom(@AuthMember final Member member, @PathVariable final Long chatRoomId) {
+        return chatRoomService.getChatRoom(member, chatRoomId);
+    }
+
     @PostMapping("/{chatRoomId}")
-    public ChatRoomResponse enterChatRoom(@AuthMember final Member member, @PathVariable final Long chatRoomId) {
-        return chatRoomService.enterChatRoom(member, chatRoomId);
+    @ResponseStatus(HttpStatus.CREATED)
+    public ChatRoomResponse registerChatRoom(@AuthMember final Member member, @PathVariable final Long chatRoomId){
+        return chatRoomService.registerChatRoom(member,chatRoomId);
     }
 
     @DeleteMapping("/{chatRoomId}")

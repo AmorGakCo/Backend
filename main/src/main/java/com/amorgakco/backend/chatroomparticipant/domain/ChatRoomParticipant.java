@@ -32,17 +32,17 @@ public class ChatRoomParticipant {
     @JoinColumn
     private ChatRoom chatRoom;
 
-    public ChatRoomParticipant(final Member member, final ChatRoom chatRoom) {
-        this.member = member;
-        this.chatRoom = chatRoom;
-    }
-
     public String getNickname(){
         return member.getNickname();
     }
 
     public String getImgUrl(){
         return member.getImgUrl();
+    }
+
+    public ChatRoomParticipant(final Member member, final ChatRoom chatRoom) {
+        this.member = member;
+        this.chatRoom = chatRoom;
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Component
 public class ChatRoomMapper {
 
-    public ChatRoomListResponse toChatRoomSliceResponse(final Slice<ChatRoom> chatRoomSlice) {
+    public ChatRoomListResponse toChatRoomListResponse(final Slice<ChatRoom> chatRoomSlice) {
         return ChatRoomListResponse.builder()
                 .chatRoomSubjects(getSubjects(chatRoomSlice))
                 .elementSize(chatRoomSlice.getSize())
@@ -29,7 +29,7 @@ public class ChatRoomMapper {
         return chatRoomSlice.getContent()
                 .stream()
                 .map(this::toChatRoomSubjectResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private ChatRoomSubjectResponse toChatRoomSubjectResponse(final ChatRoom chatRoom) {
@@ -52,7 +52,7 @@ public class ChatRoomMapper {
 
     private ChatRoomParticipantResponse toChatRoomParticipantResponse(final ChatRoomParticipant participant) {
         return ChatRoomParticipantResponse.builder()
-                .participantId(participant.getId())
+                .memberId(participant.getId())
                 .imgUrl(participant.getNickname())
                 .imgUrl(participant.getImgUrl())
                 .build();
