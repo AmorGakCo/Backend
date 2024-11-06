@@ -45,6 +45,10 @@ public class ChatRoomParticipant {
         this.chatRoom = chatRoom;
     }
 
+    public void exitChatRoom(){
+        chatRoom.exit(this);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this==o) return true;

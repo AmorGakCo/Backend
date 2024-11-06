@@ -1,7 +1,6 @@
 package com.amorgakco.backend.group.service;
 
 import com.amorgakco.backend.chatroom.service.ChatRoomService;
-import com.amorgakco.backend.global.IdResponse;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;

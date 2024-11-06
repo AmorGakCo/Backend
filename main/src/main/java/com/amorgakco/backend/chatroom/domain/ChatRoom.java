@@ -42,6 +42,10 @@ public class ChatRoom extends BaseTime {
         participate(host);
     }
 
+    public void exit(final ChatRoomParticipant chatRoomParticipant){
+        chatRoomParticipants.remove(chatRoomParticipant);
+    }
+
     public void participate(final Member member){
         if(isMemberNotParticipatedInGroup(member)){
             throw ParticipantException.notParticipatedInGroup();

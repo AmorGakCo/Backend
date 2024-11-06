@@ -18,5 +18,5 @@ public interface ChatRoomParticipantRepository extends JpaRepository<ChatRoomPar
     Optional<ChatRoomParticipant> findByMemberAndChatRoomId(final Member member, final Long chatRoomId);
 
     @Query("select crp from ChatRoomParticipant crp join fetch crp.chatRoom where crp.member = :member")
-    Slice<ChatRoom> findAllByMember(Member member, PageRequest pageRequest);
+    Slice<ChatRoom> findByMemberWithChatRoom(Member member, PageRequest pageRequest);
 }
