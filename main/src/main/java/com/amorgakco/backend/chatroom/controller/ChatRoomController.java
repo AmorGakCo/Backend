@@ -25,7 +25,7 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
 
     @GetMapping
-    public ChatRoomListResponse getChatRoomList(@AuthMemberId final Member member, @RequestParam final Integer page) {
+    public ChatRoomListResponse getChatRoomList(@AuthMember final Member member, @RequestParam final Integer page) {
         return chatRoomService.getChatRoomList(member, page);
     }
 

@@ -20,9 +20,7 @@ endif::[]
 
 include::group.adoc[]
 
-include::groupApplication.adoc[]
-
-include::groupParticipant.adoc[]
+include::groupParticipation.adoc[]
 
 include::jwt.adoc[]
 

@@ -17,6 +17,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -84,5 +86,25 @@ class ChatRoomServiceTest {
         ChatRoomResponse chatRoom = chatRoomService.getChatRoom(member, chatRoomId);
         // then
         assertThat(chatRoom.chatRoomId()).isEqualTo(chatRoomId);
+    }
+
+    @Test
+    @DisplayName("채팅방 참여자는 채팅방을 나갈 수 있다.")
+    void exitChatRoom() {
+        // given
+        Member host = TestMemberFactory.createEntity();
+        Member member = TestMemberFactory.createEntity();
+        memberRepository.save(host);
+        memberRepository.save(member);
+        Group group = TestGroupFactory.createActiveGroup(host);
+        group.addParticipant(new GroupParticipant(member));
+        groupRepository.save(group);
+        Long chatRoomId = chatRoomService.registerChatRoom(host,group);
+        chatRoomService.participateChatRoom(member,chatRoomId);
+        // when
+        chatRoomService.exitChatRoom(member,chatRoomId);
+        // then
+        Optional<ChatRoomParticipant> chatRoomParticipant = chatRoomParticipantRepository.findByMemberAndChatRoomId(member, chatRoomId);
+        assertThat(chatRoomParticipant).isNotPresent();
     }
 }

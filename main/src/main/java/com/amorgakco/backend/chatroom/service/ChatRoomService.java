@@ -54,6 +54,7 @@ public class ChatRoomService {
         return chatRoomRepository.save(newChatRoom).getId();
     }
 
+    @Transactional
     public void exitChatRoom(final Member member, final Long chatRoomId){
         ChatRoomParticipant chatRoomParticipant = chatRoomParticipantService
                 .getChatRoomParticipant(member, chatRoomId);

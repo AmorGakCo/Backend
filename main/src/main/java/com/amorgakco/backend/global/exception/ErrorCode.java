@@ -27,7 +27,6 @@ public enum ErrorCode {
     EXCEED_MAX_TEMPERATURE("204", "모각코 온도는 100도를 넘을 수 없습니다."),
     UNDER_MIN_TEMPERATURE("204", "모각코 온도는 -100도 보다 낮을 수 없습니다."),
 
-
     // Group Error Code
     GROUP_NOT_FOUND("301", "존재하지 않는 그룹입니다."),
     START_TIME_AFTER_ENT_TIME("302", "시작시간이 종료시간보다 늦을 수 없습니다."),

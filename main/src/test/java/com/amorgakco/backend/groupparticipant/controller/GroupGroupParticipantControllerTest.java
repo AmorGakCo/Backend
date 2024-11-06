@@ -48,7 +48,7 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
                 .willReturn(groupParticipationHistoryResponse);
         // when
         final ResultActions actions =
-                mockMvc.perform(get("/participants/current-history").queryParam("page", "0"));
+                mockMvc.perform(get("/group-participants/current-history").queryParam("page", "0"));
         // then
         actions.andExpect(status().isOk());
         // docs
@@ -74,7 +74,7 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
                 .willReturn(groupParticipationHistoryResponse);
         // when
         final ResultActions actions =
-                mockMvc.perform(get("/participants/past-history").queryParam("page", "0"));
+                mockMvc.perform(get("/group-participants/past-history").queryParam("page", "0"));
         // then
         actions.andExpect(status().isOk());
         // docs
@@ -97,7 +97,7 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
                 mockMvc.perform(
-                        patch("/participants/locations")
+                        patch("/group-participants/locations")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(toRequestBody(locationVerificationRequest)));
         // then
@@ -118,7 +118,7 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
                 mockMvc.perform(
-                        delete("/participants/groups/{groupId}", 1L)
+                        delete("/group-participants/groups/{groupId}", 1L)
                                 .contentType(MediaType.APPLICATION_JSON));
         // then
         actions.andExpect(status().isOk());
@@ -140,7 +140,7 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
                 mockMvc.perform(
-                        post("/participants/groups/{groupId}/tardiness", 1L)
+                        post("/group-participants/groups/{groupId}/tardiness", 1L)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(toRequestBody(tardinessRequest)));
         // then
@@ -168,7 +168,7 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
                 mockMvc.perform(
-                        patch("/participants/{targetMemberId}/groups/{groupId}/temperature-increase", targetMemberId, groupId)
+                        patch("/group-participants/{targetMemberId}/groups/{groupId}/temperature-increase", targetMemberId, groupId)
                                 .contentType(MediaType.APPLICATION_JSON));
         // then
         actions.andExpect(status().isOk());
@@ -196,7 +196,7 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
                 mockMvc.perform(
-                        patch("/participants/{targetMemberId}/groups/{groupId}/temperature-decrease", 2L, 1L)
+                        patch("/group-participants/{targetMemberId}/groups/{groupId}/temperature-decrease", 2L, 1L)
                                 .contentType(MediaType.APPLICATION_JSON));
         // then
         actions.andExpect(status().isOk());
