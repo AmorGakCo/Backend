@@ -1,7 +1,7 @@
 package com.amorgakco.backend.chatroom.controller;
 
 import com.amorgakco.backend.chatroom.dto.ChatRoomResponse;
-import com.amorgakco.backend.chatroom.dto.ChatRoomSliceResponse;
+import com.amorgakco.backend.chatroom.dto.ChatRoomListResponse;
 import com.amorgakco.backend.chatroom.service.ChatRoomService;
 import com.amorgakco.backend.global.argumentresolver.AuthMember;
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/chat-room")
+@RequestMapping("/chat-rooms")
 @RequiredArgsConstructor
 public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
 
     @GetMapping
-    public ChatRoomSliceResponse getChatRoomList(@AuthMemberId final Member member, @RequestParam final Integer page) {
+    public ChatRoomListResponse getChatRoomList(@AuthMemberId final Member member, @RequestParam final Integer page) {
         return chatRoomService.getChatRoomList(member, page);
     }
 

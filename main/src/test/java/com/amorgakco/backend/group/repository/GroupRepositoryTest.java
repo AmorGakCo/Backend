@@ -17,7 +17,7 @@ import java.util.Set;
 @DataJpaTest
 @Transactional
 class GroupRepositoryTest {
-    
+
     @Autowired
     EntityManager entityManager;
 

@@ -4,7 +4,7 @@ import lombok.Builder;
 
 @Builder
 public record ChatRoomParticipantResponse(
-        Long participantId,
+        Long memberId,
         String nickname,
         String imgUrl
 ) {

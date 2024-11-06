@@ -1,8 +1,8 @@
 package com.amorgakco.backend.chatroom.service;
 
 import com.amorgakco.backend.chatroom.domain.ChatRoom;
+import com.amorgakco.backend.chatroom.dto.ChatRoomListResponse;
 import com.amorgakco.backend.chatroom.dto.ChatRoomResponse;
-import com.amorgakco.backend.chatroom.dto.ChatRoomSliceResponse;
 import com.amorgakco.backend.chatroom.repository.ChatRoomRepository;
 import com.amorgakco.backend.chatroom.service.mapper.ChatRoomMapper;
 import com.amorgakco.backend.chatroomparticipant.domain.ChatRoomParticipant;
@@ -26,24 +26,24 @@ public class ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatRoomMapper chatRoomMapper;
 
-    public ChatRoomSliceResponse getChatRoomList(final Member member, final Integer page) {
+    public ChatRoomListResponse getChatRoomList(final Member member, final Integer page) {
         PageRequest pageRequest = PageRequest
                 .of(page, PAGE_CONTENT_SIZE, Sort.by(Sort.Direction.DESC, "createdAt"));
         Slice<ChatRoom> chatRooms = chatRoomParticipantRepository.findAllByMember(member, pageRequest);
         return chatRoomMapper.toChatRoomSliceResponse(chatRooms);
     }
 
-    public ChatRoomResponse enterChatRoom(final Member member, final Long chatRoomId){
+    public ChatRoomResponse enterChatRoom(final Member member, final Long chatRoomId) {
         final ChatRoom chatRoom = chatRoomRepository
                 .findById(chatRoomId)
                 .orElseThrow(ResourceNotFoundException::chatRoomNotFound);
-        chatRoom.enterChatRoom(member);
+        chatRoom.validateParticipant();
         return chatRoomMapper.toChatRoomResponse(chatRoom);
     }
 
-    public void exitChatRoom(final Member member,final Long chatRoomId){
+    public void exitChatRoom(final Member member, final Long chatRoomId) {
         ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).orElseThrow(ResourceNotFoundException::chatRoomNotFound);
-        final ChatRoomParticipant chatRoomParticipant = chatRoomParticipantRepository.findByMemberAndChatRoom(member,chatRoom)
+        final ChatRoomParticipant chatRoomParticipant = chatRoomParticipantRepository.findByMemberAndChatRoom(member, chatRoom)
                 .orElseThrow(ResourceNotFoundException::memberNotFound);
         chatRoomParticipantRepository.delete(chatRoomParticipant);
     }

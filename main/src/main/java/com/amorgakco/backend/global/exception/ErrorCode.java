@@ -35,7 +35,7 @@ public enum ErrorCode {
     MIN_DURATION("304", "모임 지속 시간은 1시간 이상 되어야 합니다."),
     NO_AUTHORITY_FOR_GROUP("305", "그룹에대한 권한이 없습니다."),
     VERIFICATION_FAILED("306", "모임 장소를 인증할 수 없습니다."),
-    PARTICIPANT_NOT_FOUND("307", "모각코 참여자가 아닙니다."),
+    GROUP_PARTICIPANT_NOT_FOUND("307", "모각코 참여자가 아닙니다."),
     LOCATION_NOT_FOUND("308", "주변 모각코가 존재하지 않습니다."),
     VERIFICATION_DUPLICATED("309", "이미 인증이 완료된 회원입니다."),
     PARTICIPANT_DUPLICATED("310", "중복된 회원입니다."),
@@ -47,7 +47,8 @@ public enum ErrorCode {
     GROUP_APPLICATION_DUPLICATED("316", "중복된 참여 요청입니다"),
 
     //Chat Room Error Code
-    CHAT_ROOM_NOT_FOUND("400","채팅방이 존재하지 않습니다.");
+    CHAT_ROOM_NOT_FOUND("400","채팅방이 존재하지 않습니다."),
+    CHAT_ROOM_PARTICIPANT_NOT_FOUND("401","채팅방 참여자가 아닙니다.");
 
     private final String code;
     private final String message;

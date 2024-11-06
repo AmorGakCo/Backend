@@ -36,7 +36,7 @@ import java.util.Set;
         indexes = @Index(name = "idx_cell_token", columnList = "cell_token"))
 public class Group extends BaseTime {
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
     private final Set<GroupParticipant> groupParticipants = new HashSet<>();
 
     @Id

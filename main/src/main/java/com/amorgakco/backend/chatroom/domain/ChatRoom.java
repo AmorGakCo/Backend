@@ -33,11 +33,10 @@ public class ChatRoom extends BaseTime {
     @OneToOne(fetch = FetchType.LAZY)
     private Group group;
 
-    @OneToMany(mappedBy = "chatRoom",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ChatRoomParticipant> chatRoomParticipants = new HashSet<>();
 
-    public void enterChatRoom(final Member member){
-        group.isMemberParticipated(member.getId());
-        chatRoomParticipants.add(new ChatRoomParticipant(member,this));
+    public void validateParticipant(){
+
     }
 }

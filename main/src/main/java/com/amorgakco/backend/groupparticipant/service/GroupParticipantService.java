@@ -45,7 +45,7 @@ public class GroupParticipantService {
     public GroupParticipant getGroupParticipant(final Long groupId, final Long memberId) {
         return groupParticipantRepository
                 .findByGroupAndMember(groupId, memberId)
-                .orElseThrow(ResourceNotFoundException::participantsNotFound);
+                .orElseThrow(ResourceNotFoundException::groupParticipantsNotFound);
     }
 
     @Transactional(readOnly = true)

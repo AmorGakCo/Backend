@@ -5,7 +5,7 @@ import lombok.Builder;
 import java.util.List;
 
 @Builder
-public record ChatRoomSliceResponse(
+public record ChatRoomListResponse(
         int page,
         int elementSize,
         boolean hasNext,

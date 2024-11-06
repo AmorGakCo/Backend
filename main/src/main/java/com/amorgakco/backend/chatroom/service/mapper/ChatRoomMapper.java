@@ -2,11 +2,10 @@ package com.amorgakco.backend.chatroom.service.mapper;
 
 import com.amorgakco.backend.chatroom.domain.ChatRoom;
 import com.amorgakco.backend.chatroom.dto.ChatRoomResponse;
-import com.amorgakco.backend.chatroom.dto.ChatRoomSliceResponse;
+import com.amorgakco.backend.chatroom.dto.ChatRoomListResponse;
 import com.amorgakco.backend.chatroom.dto.ChatRoomSubjectResponse;
 import com.amorgakco.backend.chatroomparticipant.domain.ChatRoomParticipant;
 import com.amorgakco.backend.chatroomparticipant.dto.ChatRoomParticipantResponse;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Component;
 
@@ -17,8 +16,8 @@ import java.util.stream.Collectors;
 @Component
 public class ChatRoomMapper {
 
-    public ChatRoomSliceResponse toChatRoomSliceResponse(final Slice<ChatRoom> chatRoomSlice) {
-        return ChatRoomSliceResponse.builder()
+    public ChatRoomListResponse toChatRoomSliceResponse(final Slice<ChatRoom> chatRoomSlice) {
+        return ChatRoomListResponse.builder()
                 .chatRoomSubjects(getSubjects(chatRoomSlice))
                 .elementSize(chatRoomSlice.getSize())
                 .hasNext(chatRoomSlice.hasNext())
