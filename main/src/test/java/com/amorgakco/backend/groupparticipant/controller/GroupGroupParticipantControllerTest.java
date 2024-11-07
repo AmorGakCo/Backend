@@ -1,5 +1,19 @@
 package com.amorgakco.backend.groupparticipant.controller;
 
+import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentRequest;
+import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.amorgakco.backend.docs.RestDocsTest;
 import com.amorgakco.backend.fixture.participant.TestParticipantFactory;
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
@@ -15,20 +29,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentRequest;
-import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
-import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @WebMvcTest(GroupParticipantController.class)
 class GroupGroupParticipantControllerTest extends RestDocsTest {
 
@@ -43,22 +43,22 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
         final Long memberId = 1L;
         final Integer page = 0;
         final GroupParticipationHistoryResponse groupParticipationHistoryResponse =
-                TestParticipantFactory.pastParticipationHistoryResponse();
+            TestParticipantFactory.pastParticipationHistoryResponse();
         given(groupParticipantService.getCurrentGroupParticipationHistories(memberId, page))
-                .willReturn(groupParticipationHistoryResponse);
+            .willReturn(groupParticipationHistoryResponse);
         // when
         final ResultActions actions =
-                mockMvc.perform(get("/group-participants/current-history").queryParam("page", "0"));
+            mockMvc.perform(get("/group-participants/current-history").queryParam("page", "0"));
         // then
         actions.andExpect(status().isOk());
         // docs
         actions.andDo(print())
-                .andDo(
-                        document(
-                                "participation-history",
-                                getDocumentRequest(),
-                                getDocumentResponse(),
-                                queryParameters(parameterWithName("page").description("페이지 번호"))));
+            .andDo(
+                document(
+                    "participation-history",
+                    getDocumentRequest(),
+                    getDocumentResponse(),
+                    queryParameters(parameterWithName("page").description("페이지 번호"))));
     }
 
     @Test
@@ -69,22 +69,22 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
         final Long memberId = 1L;
         final Integer page = 0;
         final GroupParticipationHistoryResponse groupParticipationHistoryResponse =
-                TestParticipantFactory.pastParticipationHistoryResponse();
+            TestParticipantFactory.pastParticipationHistoryResponse();
         given(groupParticipantService.getPastGroupParticipationHistories(memberId, page))
-                .willReturn(groupParticipationHistoryResponse);
+            .willReturn(groupParticipationHistoryResponse);
         // when
         final ResultActions actions =
-                mockMvc.perform(get("/group-participants/past-history").queryParam("page", "0"));
+            mockMvc.perform(get("/group-participants/past-history").queryParam("page", "0"));
         // then
         actions.andExpect(status().isOk());
         // docs
         actions.andDo(print())
-                .andDo(
-                        document(
-                                "participation-history",
-                                getDocumentRequest(),
-                                getDocumentResponse(),
-                                queryParameters(parameterWithName("page").description("페이지 번호"))));
+            .andDo(
+                document(
+                    "participation-history",
+                    getDocumentRequest(),
+                    getDocumentResponse(),
+                    queryParameters(parameterWithName("page").description("페이지 번호"))));
     }
 
     @Test
@@ -93,22 +93,22 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
     void verifyLocation() throws Exception {
         // given
         final LocationVerificationRequest locationVerificationRequest =
-                TestParticipantFactory.locationVerificationRequest();
+            TestParticipantFactory.locationVerificationRequest();
         // when
         final ResultActions actions =
-                mockMvc.perform(
-                        patch("/group-participants/locations")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(toRequestBody(locationVerificationRequest)));
+            mockMvc.perform(
+                patch("/group-participants/locations")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(toRequestBody(locationVerificationRequest)));
         // then
         actions.andExpect(status().isNoContent());
         // docs
         actions.andDo(print())
-                .andDo(
-                        document(
-                                "participation-location-verification",
-                                getDocumentRequest(),
-                                getDocumentResponse()));
+            .andDo(
+                document(
+                    "participation-location-verification",
+                    getDocumentRequest(),
+                    getDocumentResponse()));
     }
 
     @Test
@@ -117,19 +117,19 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
     void withdraw() throws Exception {
         // when
         final ResultActions actions =
-                mockMvc.perform(
-                        delete("/group-participants/groups/{groupId}", 1L)
-                                .contentType(MediaType.APPLICATION_JSON));
+            mockMvc.perform(
+                delete("/group-participants/groups/{groupId}", 1L)
+                    .contentType(MediaType.APPLICATION_JSON));
         // then
         actions.andExpect(status().isOk());
         // docs
         actions.andDo(print())
-                .andDo(document(
-                        "participant-withdraw",
-                        getDocumentRequest(),
-                        getDocumentResponse(),
-                        pathParameters(parameterWithName("groupId").description("그룹ID")))
-                );
+            .andDo(document(
+                "participant-withdraw",
+                getDocumentRequest(),
+                getDocumentResponse(),
+                pathParameters(parameterWithName("groupId").description("그룹ID")))
+            );
     }
 
     @Test
@@ -139,20 +139,20 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
         final TardinessRequest tardinessRequest = new TardinessRequest(10);
         // when
         final ResultActions actions =
-                mockMvc.perform(
-                        post("/group-participants/groups/{groupId}/tardiness", 1L)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(toRequestBody(tardinessRequest)));
+            mockMvc.perform(
+                post("/group-participants/groups/{groupId}/tardiness", 1L)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(toRequestBody(tardinessRequest)));
         // then
         actions.andExpect(status().isOk());
         // docs
         actions.andDo(print())
-                .andDo(document(
-                        "participant-tardiness",
-                        getDocumentRequest(),
-                        getDocumentResponse(),
-                        pathParameters(parameterWithName("groupId").description("그룹ID")))
-                );
+            .andDo(document(
+                "participant-tardiness",
+                getDocumentRequest(),
+                getDocumentResponse(),
+                pathParameters(parameterWithName("groupId").description("그룹ID")))
+            );
     }
 
     @Test
@@ -164,23 +164,25 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
         final Long targetMemberId = 2L;
         final Long requestMemberId = 1L;
         final TemperatureResponse temperatureResponse = new TemperatureResponse(1);
-        given(groupParticipantService.increaseTemperature(groupId, requestMemberId, targetMemberId)).willReturn(temperatureResponse);
+        given(groupParticipantService.increaseTemperature(groupId, requestMemberId,
+            targetMemberId)).willReturn(temperatureResponse);
         // when
         final ResultActions actions =
-                mockMvc.perform(
-                        patch("/group-participants/{targetMemberId}/groups/{groupId}/temperature-increase", targetMemberId, groupId)
-                                .contentType(MediaType.APPLICATION_JSON));
+            mockMvc.perform(
+                patch("/group-participants/{targetMemberId}/groups/{groupId}/temperature-increase",
+                    targetMemberId, groupId)
+                    .contentType(MediaType.APPLICATION_JSON));
         // then
         actions.andExpect(status().isOk());
         // docs
         actions.andDo(print())
-                .andDo(document(
-                        "participant-increase-temperature",
-                        getDocumentRequest(),
-                        getDocumentResponse(),
-                        pathParameters(parameterWithName("targetMemberId").description("온도를 상승시킬 참여자"),
-                                parameterWithName("groupId").description("그룹ID")))
-                );
+            .andDo(document(
+                "participant-increase-temperature",
+                getDocumentRequest(),
+                getDocumentResponse(),
+                pathParameters(parameterWithName("targetMemberId").description("온도를 상승시킬 참여자"),
+                    parameterWithName("groupId").description("그룹ID")))
+            );
     }
 
     @Test
@@ -192,23 +194,25 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
         final Long targetMemberId = 2L;
         final Long requestMemberId = 1L;
         final TemperatureResponse temperatureResponse = new TemperatureResponse(-1);
-        given(groupParticipantService.increaseTemperature(groupId, requestMemberId, targetMemberId)).willReturn(temperatureResponse);
+        given(groupParticipantService.increaseTemperature(groupId, requestMemberId,
+            targetMemberId)).willReturn(temperatureResponse);
         // when
         final ResultActions actions =
-                mockMvc.perform(
-                        patch("/group-participants/{targetMemberId}/groups/{groupId}/temperature-decrease", 2L, 1L)
-                                .contentType(MediaType.APPLICATION_JSON));
+            mockMvc.perform(
+                patch("/group-participants/{targetMemberId}/groups/{groupId}/temperature-decrease",
+                    2L, 1L)
+                    .contentType(MediaType.APPLICATION_JSON));
         // then
         actions.andExpect(status().isOk());
         // docs
         actions.andDo(print())
-                .andDo(document(
-                        "participant-decrease-temperature",
-                        getDocumentRequest(),
-                        getDocumentResponse(),
-                        pathParameters(
-                                parameterWithName("targetMemberId").description("온도를 상승시킬 참여자 ID"),
-                                parameterWithName("groupId").description("그룹ID")))
-                );
+            .andDo(document(
+                "participant-decrease-temperature",
+                getDocumentRequest(),
+                getDocumentResponse(),
+                pathParameters(
+                    parameterWithName("targetMemberId").description("온도를 상승시킬 참여자 ID"),
+                    parameterWithName("groupId").description("그룹ID")))
+            );
     }
 }

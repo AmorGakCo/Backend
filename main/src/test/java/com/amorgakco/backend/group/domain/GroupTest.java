@@ -1,18 +1,18 @@
 package com.amorgakco.backend.group.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.fixture.group.TestParticipantsFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.global.exception.DuplicatedRequestException;
 import com.amorgakco.backend.global.exception.ErrorCode;
 import com.amorgakco.backend.global.exception.LocationVerificationException;
-import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.groupparticipant.domain.GroupParticipant;
+import com.amorgakco.backend.member.domain.Member;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class GroupTest {
 
@@ -38,13 +38,15 @@ class GroupTest {
         // given
         final Member host = TestMemberFactory.create(1L);
         final Group group = TestGroupFactory.createActiveGroup(host);
-        final GroupParticipant groupParticipant = new GroupParticipant(TestMemberFactory.create(2L));
+        final GroupParticipant groupParticipant = new GroupParticipant(
+            TestMemberFactory.create(2L));
         group.addParticipant(groupParticipant);
-        final GroupParticipant newGroupParticipant = new GroupParticipant(TestMemberFactory.create(2L));
+        final GroupParticipant newGroupParticipant = new GroupParticipant(
+            TestMemberFactory.create(2L));
         // when
         assertThatThrownBy(() -> group.addParticipant(newGroupParticipant))
-                .isInstanceOf(DuplicatedRequestException.class)
-                .hasFieldOrPropertyWithValue("errorCode", ErrorCode.PARTICIPANT_DUPLICATED);
+            .isInstanceOf(DuplicatedRequestException.class)
+            .hasFieldOrPropertyWithValue("errorCode", ErrorCode.PARTICIPANT_DUPLICATED);
     }
 
     @Test
@@ -58,6 +60,6 @@ class GroupTest {
         group.addParticipant(groupParticipant);
         // when
         assertThatThrownBy(() -> group.verifyLocation(126.9754143, 37.57071))
-                .isInstanceOf(LocationVerificationException.class);
+            .isInstanceOf(LocationVerificationException.class);
     }
 }

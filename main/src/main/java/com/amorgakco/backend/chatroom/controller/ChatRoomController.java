@@ -1,10 +1,9 @@
 package com.amorgakco.backend.chatroom.controller;
 
-import com.amorgakco.backend.chatroom.dto.ChatRoomResponse;
 import com.amorgakco.backend.chatroom.dto.ChatRoomListResponse;
+import com.amorgakco.backend.chatroom.dto.ChatRoomResponse;
 import com.amorgakco.backend.chatroom.service.ChatRoomService;
 import com.amorgakco.backend.global.argumentresolver.AuthMember;
-import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
 import com.amorgakco.backend.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,19 +24,22 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
 
     @GetMapping
-    public ChatRoomListResponse getChatRoomList(@AuthMember final Member member, @RequestParam final Integer page) {
+    public ChatRoomListResponse getChatRoomList(@AuthMember final Member member,
+        @RequestParam final Integer page) {
         return chatRoomService.getChatRoomList(member, page);
     }
 
     @GetMapping("/{chatRoomId}")
-    public ChatRoomResponse getChatRoom(@AuthMember final Member member, @PathVariable final Long chatRoomId) {
+    public ChatRoomResponse getChatRoom(@AuthMember final Member member,
+        @PathVariable final Long chatRoomId) {
         return chatRoomService.getChatRoom(member, chatRoomId);
     }
 
     @PostMapping("/{chatRoomId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ChatRoomResponse participateChatRoom(@AuthMember final Member member, @PathVariable final Long chatRoomId){
-        return chatRoomService.participateChatRoom(member,chatRoomId);
+    public ChatRoomResponse participateChatRoom(@AuthMember final Member member,
+        @PathVariable final Long chatRoomId) {
+        return chatRoomService.participateChatRoom(member, chatRoomId);
     }
 
     @DeleteMapping("/{chatRoomId}")

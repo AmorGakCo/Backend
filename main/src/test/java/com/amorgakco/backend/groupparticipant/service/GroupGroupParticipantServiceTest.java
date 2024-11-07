@@ -1,17 +1,21 @@
 package com.amorgakco.backend.groupparticipant.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+
 import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
 import com.amorgakco.backend.group.repository.GroupRepository;
 import com.amorgakco.backend.groupparticipant.domain.GroupParticipant;
+import com.amorgakco.backend.groupparticipant.domain.LocationVerificationStatus;
+import com.amorgakco.backend.groupparticipant.dto.GroupParticipationHistoryResponse;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.repository.MemberRepository;
 import com.amorgakco.backend.notification.infrastructure.NotificationPublisherFacade;
 import com.amorgakco.backend.notification.infrastructure.consumer.NotificationRequest;
-import com.amorgakco.backend.groupparticipant.domain.LocationVerificationStatus;
-import com.amorgakco.backend.groupparticipant.dto.GroupParticipationHistoryResponse;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,13 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-
 @SpringBootTest
 @Transactional
 class GroupGroupParticipantServiceTest {
+
     @Autowired
     private GroupParticipantService groupParticipantService;
     @Autowired
@@ -66,12 +67,15 @@ class GroupGroupParticipantServiceTest {
         Group group = TestGroupFactory.createActiveGroup(host);
         group.addParticipant(new GroupParticipant(member));
         Group savedGroup = groupRepository.save(group);
-        LocationVerificationRequest request = new LocationVerificationRequest(savedGroup.getId(), currentLatitude, currentLongitude);
+        LocationVerificationRequest request = new LocationVerificationRequest(savedGroup.getId(),
+            currentLatitude, currentLongitude);
         // when
         groupParticipantService.verifyParticipantLocation(request, member.getId());
         // then
-        GroupParticipant groupParticipant = groupParticipantService.getGroupParticipant(savedGroup.getId(), member.getId());
-        assertThat(groupParticipant.getLocationVerificationStatus()).isEqualTo(LocationVerificationStatus.VERIFIED);
+        GroupParticipant groupParticipant = groupParticipantService.getGroupParticipant(
+            savedGroup.getId(), member.getId());
+        assertThat(groupParticipant.getLocationVerificationStatus()).isEqualTo(
+            LocationVerificationStatus.VERIFIED);
     }
 
     @Test
@@ -84,12 +88,14 @@ class GroupGroupParticipantServiceTest {
         Member member = TestMemberFactory.createEntity();
         memberRepository.save(member);
         memberRepository.save(host);
-        createGroupsAndParticipate(currentParticipationGroupSize, pastParticipationGroupSize, host, member);
+        createGroupsAndParticipate(currentParticipationGroupSize, pastParticipationGroupSize, host,
+            member);
         // when
         GroupParticipationHistoryResponse currentParticipationHistories =
-                groupParticipantService.getCurrentGroupParticipationHistories(member.getId(), 0);
+            groupParticipantService.getCurrentGroupParticipationHistories(member.getId(), 0);
         // then
-        assertThat(currentParticipationHistories.histories().size()).isEqualTo(currentParticipationGroupSize);
+        assertThat(currentParticipationHistories.histories().size()).isEqualTo(
+            currentParticipationGroupSize);
     }
 
     @Test
@@ -102,15 +108,18 @@ class GroupGroupParticipantServiceTest {
         Member member = TestMemberFactory.createEntity();
         memberRepository.save(member);
         memberRepository.save(host);
-        createGroupsAndParticipate(currentParticipationGroupSize, pastParticipationGroupSize, host, member);
+        createGroupsAndParticipate(currentParticipationGroupSize, pastParticipationGroupSize, host,
+            member);
         // when
         GroupParticipationHistoryResponse pastParticipationHistories =
-                groupParticipantService.getPastGroupParticipationHistories(member.getId(), 0);
+            groupParticipantService.getPastGroupParticipationHistories(member.getId(), 0);
         // then
-        assertThat(pastParticipationHistories.histories().size()).isEqualTo(pastParticipationGroupSize);
+        assertThat(pastParticipationHistories.histories().size()).isEqualTo(
+            pastParticipationGroupSize);
     }
 
-    private void createGroupsAndParticipate(int currentGroupSize, int pastGroupSize, Member host, Member member) {
+    private void createGroupsAndParticipate(int currentGroupSize, int pastGroupSize, Member host,
+        Member member) {
         for (int i = 0; i < currentGroupSize; i++) {
             final Group activeGroup = TestGroupFactory.createActiveGroup(host);
             activeGroup.addParticipant(new GroupParticipant(member));

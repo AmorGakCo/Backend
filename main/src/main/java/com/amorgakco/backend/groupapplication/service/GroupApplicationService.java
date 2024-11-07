@@ -32,12 +32,12 @@ public class GroupApplicationService {
         final Member requestMember = memberService.getMember(memberId);
         groupApplicationValidator.validate(group, requestMember);
         final GroupApplication groupApplication =
-                groupApplicationMapper.toGroupApplication(group, requestMember);
+            groupApplicationMapper.toGroupApplication(group, requestMember);
         groupApplicationRepository.save(groupApplication);
         notificationPublisherFacade.send(NotificationCreator.participationRequest(
-                requestMember,
-                group.getHost(),
-                group.getName()
+            requestMember,
+            group.getHost(),
+            group.getName()
         ));
     }
 
@@ -46,15 +46,15 @@ public class GroupApplicationService {
         final GroupApplication groupApplication = getGroupParticipation(groupId, memberId);
         groupApplication.approve(member);
         notificationPublisherFacade.send(NotificationCreator.participationApprove(
-                memberService.getMember(memberId),
-                groupApplication.getGroup().getName()
+            memberService.getMember(memberId),
+            groupApplication.getGroup().getName()
         ));
     }
 
     private GroupApplication getGroupParticipation(final Long groupId, final Long memberId) {
         return groupApplicationRepository
-                .findByGroupIdAndMemberId(groupId, memberId)
-                .orElseThrow(ResourceNotFoundException::participationNotFound);
+            .findByGroupIdAndMemberId(groupId, memberId)
+            .orElseThrow(ResourceNotFoundException::participationNotFound);
     }
 
     @Transactional
@@ -63,8 +63,8 @@ public class GroupApplicationService {
         final Member member = memberService.getMember(hostId);
         groupApplication.reject(memberService.getMember(hostId));
         notificationPublisherFacade.send(NotificationCreator.participationReject(
-                member,
-                groupApplication.getGroup().getName()
+            member,
+            groupApplication.getGroup().getName()
         ));
     }
 }

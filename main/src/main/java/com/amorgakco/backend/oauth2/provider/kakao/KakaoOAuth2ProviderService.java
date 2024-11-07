@@ -39,11 +39,11 @@ public class KakaoOAuth2ProviderService implements Oauth2ProviderService {
     @Override
     public Oauth2Member getOauth2Member(final String authCode) {
         final KakaoAuthorization kakaoAuthorization =
-                kakaoRestClient.getKakaoAccessToken(requestParams(authCode));
+            kakaoRestClient.getKakaoAccessToken(requestParams(authCode));
         final String accessToken = kakaoAuthorization.accessToken();
         log.info("access {}", accessToken);
         final KakaoMemberResponse kakaoMember =
-                kakaoRestClient.getKakaoMember(BEARER + accessToken);
+            kakaoRestClient.getKakaoMember(BEARER + accessToken);
         return kakaoMember.toOauth2Member();
     }
 

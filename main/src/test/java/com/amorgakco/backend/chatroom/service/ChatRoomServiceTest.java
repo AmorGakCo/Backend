@@ -1,5 +1,7 @@
 package com.amorgakco.backend.chatroom.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.amorgakco.backend.chatroom.domain.ChatRoom;
 import com.amorgakco.backend.chatroom.dto.ChatRoomResponse;
 import com.amorgakco.backend.chatroom.repository.ChatRoomRepository;
@@ -12,14 +14,11 @@ import com.amorgakco.backend.group.repository.GroupRepository;
 import com.amorgakco.backend.groupparticipant.domain.GroupParticipant;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.repository.MemberRepository;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class ChatRoomServiceTest {
@@ -44,7 +43,7 @@ class ChatRoomServiceTest {
         Group group = TestGroupFactory.createActiveGroup(host);
         groupRepository.save(group);
         //when
-        Long chatRoomId = chatRoomService.registerChatRoom(host,group);
+        Long chatRoomId = chatRoomService.registerChatRoom(host, group);
         //then
         ChatRoom chatRoom = chatRoomRepository.findByIdWithGroup(chatRoomId).get();
         assertThat(chatRoom.getGroup().getId()).isEqualTo(group.getId());
@@ -61,11 +60,13 @@ class ChatRoomServiceTest {
         Group group = TestGroupFactory.createActiveGroup(host);
         group.addParticipant(new GroupParticipant(member));
         groupRepository.save(group);
-        Long chatRoomId = chatRoomService.registerChatRoom(host,group);
+        Long chatRoomId = chatRoomService.registerChatRoom(host, group);
         // when
         chatRoomService.participateChatRoom(member, chatRoomId);
         // then
-        ChatRoomParticipant chatRoomParticipant = chatRoomParticipantRepository.findByMemberAndChatRoomId(member, chatRoomId).get();
+        ChatRoomParticipant chatRoomParticipant =
+            chatRoomParticipantRepository.findByMemberAndChatRoomId(
+            member, chatRoomId).get();
         assertThat(chatRoomParticipant.getMember().getId()).isEqualTo(member.getId());
     }
 
@@ -80,8 +81,8 @@ class ChatRoomServiceTest {
         Group group = TestGroupFactory.createActiveGroup(host);
         group.addParticipant(new GroupParticipant(member));
         groupRepository.save(group);
-        Long chatRoomId = chatRoomService.registerChatRoom(host,group);
-        chatRoomService.participateChatRoom(member,chatRoomId);
+        Long chatRoomId = chatRoomService.registerChatRoom(host, group);
+        chatRoomService.participateChatRoom(member, chatRoomId);
         // when
         ChatRoomResponse chatRoom = chatRoomService.getChatRoom(member, chatRoomId);
         // then
@@ -99,12 +100,14 @@ class ChatRoomServiceTest {
         Group group = TestGroupFactory.createActiveGroup(host);
         group.addParticipant(new GroupParticipant(member));
         groupRepository.save(group);
-        Long chatRoomId = chatRoomService.registerChatRoom(host,group);
-        chatRoomService.participateChatRoom(member,chatRoomId);
+        Long chatRoomId = chatRoomService.registerChatRoom(host, group);
+        chatRoomService.participateChatRoom(member, chatRoomId);
         // when
-        chatRoomService.exitChatRoom(member,chatRoomId);
+        chatRoomService.exitChatRoom(member, chatRoomId);
         // then
-        Optional<ChatRoomParticipant> chatRoomParticipant = chatRoomParticipantRepository.findByMemberAndChatRoomId(member, chatRoomId);
+        Optional<ChatRoomParticipant> chatRoomParticipant =
+            chatRoomParticipantRepository.findByMemberAndChatRoomId(
+            member, chatRoomId);
         assertThat(chatRoomParticipant).isNotPresent();
     }
 }

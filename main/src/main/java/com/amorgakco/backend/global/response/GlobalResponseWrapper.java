@@ -15,19 +15,19 @@ public class GlobalResponseWrapper implements ResponseBodyAdvice<Object> {
 
     @Override
     public boolean supports(
-            final MethodParameter returnType,
-            final Class<? extends HttpMessageConverter<?>> converterType) {
+        final MethodParameter returnType,
+        final Class<? extends HttpMessageConverter<?>> converterType) {
         return true;
     }
 
     @Override
     public Object beforeBodyWrite(
-            final Object body,
-            final MethodParameter returnType,
-            final MediaType selectedContentType,
-            final Class<? extends HttpMessageConverter<?>> selectedConverterType,
-            final ServerHttpRequest request,
-            final ServerHttpResponse response) {
+        final Object body,
+        final MethodParameter returnType,
+        final MediaType selectedContentType,
+        final Class<? extends HttpMessageConverter<?>> selectedConverterType,
+        final ServerHttpRequest request,
+        final ServerHttpResponse response) {
         if (body instanceof ErrorResponse) {
             return body;
         }

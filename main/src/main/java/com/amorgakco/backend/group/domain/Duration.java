@@ -2,16 +2,16 @@ package com.amorgakco.backend.group.domain;
 
 import com.amorgakco.backend.global.exception.IllegalTimeException;
 import jakarta.persistence.Embeddable;
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Duration {
+
     private static final int MAX_DURATION = 7;
     private static final int MIN_DURATION = 1;
     private LocalDateTime beginAt;

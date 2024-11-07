@@ -59,20 +59,20 @@ public class RabbitMQConfig {
     @Bean
     public Binding bindingFcmQueue() {
         return BindingBuilder.bind(fcmQueue())
-                .to(notificationExchange())
-                .with(RoutingKey.NOTIFICATION_FCM.getKey());
+            .to(notificationExchange())
+            .with(RoutingKey.NOTIFICATION_FCM.getKey());
     }
 
     @Bean
     public Binding bindingSmsQueue() {
         return BindingBuilder.bind(smsQueue())
-                .to(notificationExchange())
-                .with(RoutingKey.NOTIFICATION_SMS.getKey());
+            .to(notificationExchange())
+            .with(RoutingKey.NOTIFICATION_SMS.getKey());
     }
 
     @Bean
     public RabbitTemplate rabbitTemplate(
-            final ConnectionFactory connectionFactory, final MessageConverter messageConverter) {
+        final ConnectionFactory connectionFactory, final MessageConverter messageConverter) {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(messageConverter);
         return rabbitTemplate;

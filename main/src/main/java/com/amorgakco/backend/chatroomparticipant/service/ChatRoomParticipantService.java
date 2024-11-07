@@ -20,15 +20,15 @@ public class ChatRoomParticipantService {
     private static final Integer PAGE_CONTENT_SIZE = 10;
     private final ChatRoomParticipantRepository chatRoomParticipantRepository;
 
-    public Slice<ChatRoom> getParticipatedChatRooms(final Member member, final Integer page){
+    public Slice<ChatRoom> getParticipatedChatRooms(final Member member, final Integer page) {
         PageRequest pageRequest = PageRequest
-                .of(page, PAGE_CONTENT_SIZE, Sort.by(Sort.Direction.DESC, "createdAt"));
+            .of(page, PAGE_CONTENT_SIZE, Sort.by(Sort.Direction.DESC, "createdAt"));
         return chatRoomParticipantRepository.findByMemberWithChatRoom(member, pageRequest);
     }
 
     public ChatRoomParticipant getChatRoomParticipant(final Member member, final Long chatRoomId) {
         return chatRoomParticipantRepository
-                .findByMemberAndChatRoomId(member, chatRoomId)
-                .orElseThrow(ResourceNotFoundException::chatRoomParticipantsNotFound);
+            .findByMemberAndChatRoomId(member, chatRoomId)
+            .orElseThrow(ResourceNotFoundException::chatRoomParticipantsNotFound);
     }
 }

@@ -21,19 +21,19 @@ public class AuthMemberArgumentResolver implements HandlerMethodArgumentResolver
     @Override
     public boolean supportsParameter(final MethodParameter parameter) {
         return parameter.hasParameterAnnotation(AuthMember.class)
-                && parameter.getParameterType().equals(Member.class);
+            && parameter.getParameterType().equals(Member.class);
     }
 
     @Override
     public Object resolveArgument(
-            final MethodParameter parameter,
-            final ModelAndViewContainer mavContainer,
-            final NativeWebRequest webRequest,
-            final WebDataBinderFactory binderFactory)
-            throws Exception {
+        final MethodParameter parameter,
+        final ModelAndViewContainer mavContainer,
+        final NativeWebRequest webRequest,
+        final WebDataBinderFactory binderFactory)
+        throws Exception {
         final MemberPrincipal principal =
-                (MemberPrincipal)
-                        SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            (MemberPrincipal)
+                SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return memberService.getMember(Long.valueOf(principal.getUsername()));
     }
 }

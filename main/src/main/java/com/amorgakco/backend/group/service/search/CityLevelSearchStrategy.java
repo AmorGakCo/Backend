@@ -19,7 +19,7 @@ public class CityLevelSearchStrategy extends GroupSearchStrategy {
     @Override
     public S2LatLngRect createRectangle(final GroupSearchRequest request) {
         return S2LatLngRect.fromCenterSize(
-                S2LatLng.fromDegrees(request.centerLat(), request.centerLon()),
-                S2LatLng.fromDegrees(LATITUDE_SIZE, LONGITUDE_SIZE));
+            S2LatLng.fromDegrees(request.centerLat(), request.centerLon()),
+            S2LatLng.fromDegrees(LATITUDE_SIZE, LONGITUDE_SIZE));
     }
 }

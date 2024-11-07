@@ -8,6 +8,6 @@ public class GuLevelSearchStrategy extends GroupSearchStrategy {
     @Override
     public boolean isValid(final double diagonalSize) {
         return DiagonalDistanceConst.MIN_DISTANCE.getValue() < diagonalSize
-                && diagonalSize <= DiagonalDistanceConst.MAX_DISTANCE.getValue();
+            && diagonalSize <= DiagonalDistanceConst.MAX_DISTANCE.getValue();
     }
 }

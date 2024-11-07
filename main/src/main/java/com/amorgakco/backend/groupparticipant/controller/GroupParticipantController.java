@@ -30,20 +30,20 @@ public class GroupParticipantController {
     @PatchMapping("/locations")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void verifyLocation(
-            @AuthMemberId final Long memberId,
-            @RequestBody final LocationVerificationRequest request) {
+        @AuthMemberId final Long memberId,
+        @RequestBody final LocationVerificationRequest request) {
         groupParticipantService.verifyParticipantLocation(request, memberId);
     }
 
     @GetMapping("/current-history")
     public GroupParticipationHistoryResponse getCurrentParticipationHistory
-            (@RequestParam final Integer page, @AuthMemberId final Long memberId) {
+        (@RequestParam final Integer page, @AuthMemberId final Long memberId) {
         return groupParticipantService.getCurrentGroupParticipationHistories(memberId, page);
     }
 
     @GetMapping("/past-history")
     public GroupParticipationHistoryResponse getPastParticipationHistory
-            (@RequestParam final Integer page, @AuthMemberId final Long memberId) {
+        (@RequestParam final Integer page, @AuthMemberId final Long memberId) {
         return groupParticipantService.getPastGroupParticipationHistories(memberId, page);
     }
 
@@ -54,27 +54,29 @@ public class GroupParticipantController {
 
     @PostMapping("/groups/{groupId}/tardiness")
     public void tardy(
-            @PathVariable final Long groupId,
-            @AuthMemberId final Long memberId,
-            @RequestBody @Valid final TardinessRequest tardinessRequest) {
+        @PathVariable final Long groupId,
+        @AuthMemberId final Long memberId,
+        @RequestBody @Valid final TardinessRequest tardinessRequest) {
         groupParticipantService.tardy(groupId, memberId, tardinessRequest);
     }
 
     @PatchMapping("/{targetMemberId}/groups/{groupId}/temperature-increase")
     public TemperatureResponse upTemperature(
-            @PathVariable final Long targetMemberId,
-            @PathVariable final Long groupId,
-            @AuthMemberId final Long requestMemberId
+        @PathVariable final Long targetMemberId,
+        @PathVariable final Long groupId,
+        @AuthMemberId final Long requestMemberId
     ) {
-        return groupParticipantService.increaseTemperature(groupId, requestMemberId, targetMemberId);
+        return groupParticipantService.increaseTemperature(groupId, requestMemberId,
+            targetMemberId);
     }
 
     @PatchMapping("/{targetMemberId}/groups/{groupId}/temperature-decrease")
     public TemperatureResponse downTemperature(
-            @PathVariable final Long targetMemberId,
-            @PathVariable final Long groupId,
-            @AuthMemberId final Long requestMemberId
+        @PathVariable final Long targetMemberId,
+        @PathVariable final Long groupId,
+        @AuthMemberId final Long requestMemberId
     ) {
-        return groupParticipantService.decreaseTemperature(groupId, requestMemberId, targetMemberId);
+        return groupParticipantService.decreaseTemperature(groupId, requestMemberId,
+            targetMemberId);
     }
 }

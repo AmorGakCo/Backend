@@ -10,11 +10,11 @@ public class TestMember extends Member {
     private final Long id;
 
     public TestMember(
-            final Long id,
-            final Oauth2ProviderType oauth2ProviderType,
-            final String oauth2Id,
-            final String imgUrl,
-            final String nickname) {
+        final Long id,
+        final Oauth2ProviderType oauth2ProviderType,
+        final String oauth2Id,
+        final String imgUrl,
+        final String nickname) {
         super(oauth2ProviderType, oauth2Id, imgUrl, nickname);
         this.id = id;
     }

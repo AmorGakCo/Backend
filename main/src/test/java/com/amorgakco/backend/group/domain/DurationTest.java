@@ -1,12 +1,11 @@
 package com.amorgakco.backend.group.domain;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import com.amorgakco.backend.global.exception.IllegalTimeException;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalDateTime;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DurationTest {
 
@@ -28,7 +27,7 @@ class DurationTest {
         final LocalDateTime endAt = beginAt.plusMinutes(30);
         // when&then
         assertThatThrownBy(() -> new Duration(beginAt, endAt))
-                .isInstanceOf(IllegalTimeException.class);
+            .isInstanceOf(IllegalTimeException.class);
     }
 
     @Test
@@ -39,6 +38,6 @@ class DurationTest {
         final LocalDateTime endAt = beginAt.plusHours(9);
         // when&then
         assertThatThrownBy(() -> new Duration(beginAt, endAt))
-                .isInstanceOf(IllegalTimeException.class);
+            .isInstanceOf(IllegalTimeException.class);
     }
 }

@@ -4,6 +4,7 @@ import lombok.Builder;
 
 @Builder
 public record ChatRoomSubjectResponse(
-        Long chatRoomId,
-        String groupName) {
+    Long chatRoomId,
+    String groupName) {
+
 }

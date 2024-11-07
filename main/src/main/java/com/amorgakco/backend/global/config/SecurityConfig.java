@@ -4,6 +4,7 @@ import com.amorgakco.backend.global.security.JwtAccessDeniedHandler;
 import com.amorgakco.backend.global.security.JwtAuthenticationEntryPoint;
 import com.amorgakco.backend.global.security.JwtAuthenticationFilter;
 import com.amorgakco.backend.global.security.JwtExceptionHandlingFilter;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +17,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Configuration
@@ -32,30 +31,30 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
-                .cors(Customizer.withDefaults())
-                .httpBasic(AbstractHttpConfigurer::disable)
-                .formLogin(AbstractHttpConfigurer::disable)
-                .logout(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(
-                        request ->
-                                request.requestMatchers(
-                                                "/tokens/**",
-                                                "/oauth2/**",
-                                                "/members/login",
-                                                "/favicon.ico",
-                                                "/error")
-                                        .permitAll()
-                                        .anyRequest()
-                                        .authenticated())
-                .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(
-                        jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(jwtExceptionHandlingFilter, JwtAuthenticationFilter.class)
-                .exceptionHandling(
-                        e ->
-                                e.authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                                        .accessDeniedHandler(jwtAccessDeniedHandler))
-                .build();
+            .cors(Customizer.withDefaults())
+            .httpBasic(AbstractHttpConfigurer::disable)
+            .formLogin(AbstractHttpConfigurer::disable)
+            .logout(AbstractHttpConfigurer::disable)
+            .authorizeHttpRequests(
+                request ->
+                    request.requestMatchers(
+                            "/tokens/**",
+                            "/oauth2/**",
+                            "/members/login",
+                            "/favicon.ico",
+                            "/error")
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated())
+            .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .addFilterBefore(
+                jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(jwtExceptionHandlingFilter, JwtAuthenticationFilter.class)
+            .exceptionHandling(
+                e ->
+                    e.authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                        .accessDeniedHandler(jwtAccessDeniedHandler))
+            .build();
     }
 
     @Bean

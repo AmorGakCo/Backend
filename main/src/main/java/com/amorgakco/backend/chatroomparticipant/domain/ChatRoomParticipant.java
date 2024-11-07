@@ -9,11 +9,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.Objects;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -32,29 +31,34 @@ public class ChatRoomParticipant {
     @JoinColumn
     private ChatRoom chatRoom;
 
-    public String getNickname(){
-        return member.getNickname();
-    }
-
-    public String getImgUrl(){
-        return member.getImgUrl();
-    }
-
     public ChatRoomParticipant(final Member member, final ChatRoom chatRoom) {
         this.member = member;
         this.chatRoom = chatRoom;
     }
 
-    public void exitChatRoom(){
+    public String getNickname() {
+        return member.getNickname();
+    }
+
+    public String getImgUrl() {
+        return member.getImgUrl();
+    }
+
+    public void exitChatRoom() {
         chatRoom.exit(this);
     }
 
     @Override
     public boolean equals(final Object o) {
-        if (this==o) return true;
-        if (o==null || getClass()!=o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         final ChatRoomParticipant that = (ChatRoomParticipant) o;
-        return Objects.equals(getMember(), that.getMember()) && Objects.equals(getChatRoom(), that.getChatRoom());
+        return Objects.equals(getMember(), that.getMember()) && Objects.equals(getChatRoom(),
+            that.getChatRoom());
     }
 
     @Override

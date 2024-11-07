@@ -1,6 +1,5 @@
 package com.amorgakco.backend.group.controller;
 
-import com.amorgakco.backend.global.IdResponse;
 import com.amorgakco.backend.global.argumentresolver.AuthMember;
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
@@ -30,19 +29,20 @@ public class GroupController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public GroupRegisterResponse register(
-            @RequestBody final GroupRegisterRequest groupRegisterRequest,
-            @AuthMember final Member host) {
+        @RequestBody final GroupRegisterRequest groupRegisterRequest,
+        @AuthMember final Member host) {
         return groupService.register(groupRegisterRequest, host);
     }
 
     @GetMapping("/{groupId}/basic")
     public GroupBasicResponse getGroupBasic(
-            @PathVariable final Long groupId, @AuthMember final Member member) {
+        @PathVariable final Long groupId, @AuthMember final Member member) {
         return groupService.getBasicGroup(groupId, member);
     }
 
     @GetMapping("/{groupId}/detail")
-    public GroupDetailResponse getGroupDetail(@PathVariable final Long groupId, @AuthMemberId final Long memberId) {
+    public GroupDetailResponse getGroupDetail(@PathVariable final Long groupId,
+        @AuthMemberId final Long memberId) {
         return groupService.getDetailGroup(groupId, memberId);
     }
 

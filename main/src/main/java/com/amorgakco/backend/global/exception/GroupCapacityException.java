@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class GroupCapacityException extends IllegalStateException {
+
     private final ErrorCode errorCode;
 
     public static GroupCapacityException exceedGroupCapacity() {

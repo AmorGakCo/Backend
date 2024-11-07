@@ -1,5 +1,15 @@
 package com.amorgakco.backend.jwt.controller;
 
+import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentRequest;
+import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.amorgakco.backend.docs.RestDocsTest;
 import com.amorgakco.backend.global.exception.ErrorCode;
 import com.amorgakco.backend.global.exception.JwtAuthenticationException;
@@ -11,16 +21,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.ResultActions;
-
-import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentRequest;
-import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(JwtController.class)
 class JwtControllerTest extends RestDocsTest {
@@ -47,10 +47,10 @@ class JwtControllerTest extends RestDocsTest {
         final ResultActions actions = mockMvc.perform(post("/tokens", "1").cookie(oldCookie));
         // then
         actions.andExpect(status().isCreated())
-                .andExpect(jsonPath("$.data.accessToken").value(NEW_ACCESS_TOKEN));
+            .andExpect(jsonPath("$.data.accessToken").value(NEW_ACCESS_TOKEN));
         // docs
         actions.andDo(print())
-                .andDo(document("jwt-reissue", getDocumentRequest(), getDocumentResponse()));
+            .andDo(document("jwt-reissue", getDocumentRequest(), getDocumentResponse()));
     }
 
     @Test
@@ -60,18 +60,18 @@ class JwtControllerTest extends RestDocsTest {
         final Cookie cookie = new Cookie(COOKIE_NAME, OLD_REFRESH_TOKEN);
         // when
         given(jwtService.reissue(OLD_REFRESH_TOKEN))
-                .willThrow(JwtAuthenticationException.loginAgain());
+            .willThrow(JwtAuthenticationException.loginAgain());
         final ResultActions actions = mockMvc.perform(post("/tokens", "1").cookie(cookie));
         // then
         actions.andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.code").value(ErrorCode.LOGIN_AGAIN.getCode()));
+            .andExpect(jsonPath("$.code").value(ErrorCode.LOGIN_AGAIN.getCode()));
         // docs
         actions.andDo(print())
-                .andDo(
-                        document(
-                                "jwt-reissue-exception",
-                                getDocumentRequest(),
-                                getDocumentResponse()));
+            .andDo(
+                document(
+                    "jwt-reissue-exception",
+                    getDocumentRequest(),
+                    getDocumentResponse()));
     }
 
     @Test
@@ -81,12 +81,12 @@ class JwtControllerTest extends RestDocsTest {
         final Cookie cookie = new Cookie(COOKIE_NAME, OLD_REFRESH_TOKEN);
         // when
         final ResultActions actions =
-                mockMvc.perform(
-                        delete("/tokens").header(AUTH_HEADER, NEW_ACCESS_TOKEN).cookie(cookie));
+            mockMvc.perform(
+                delete("/tokens").header(AUTH_HEADER, NEW_ACCESS_TOKEN).cookie(cookie));
         // then
         actions.andExpect(status().isNoContent());
         // docs
         actions.andDo(print())
-                .andDo(document("jwt-logout", getDocumentRequest(), getDocumentResponse()));
+            .andDo(document("jwt-logout", getDocumentRequest(), getDocumentResponse()));
     }
 }

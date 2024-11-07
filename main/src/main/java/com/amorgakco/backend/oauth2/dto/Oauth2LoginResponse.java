@@ -4,4 +4,5 @@ import lombok.Builder;
 
 @Builder
 public record Oauth2LoginResponse(Oauth2MemberResponse oauth2MemberResponse, String accessToken) {
+
 }

@@ -22,11 +22,11 @@ public class CoolSmsConsumer implements SmsSender {
     private final NotificationMapper notificationMapper;
 
     public CoolSmsConsumer(
-            final DefaultMessageService messageService,
-            @Value("${server-phone-number}") final String serverPhoneNumber,
-            final SlackSender slackSender,
-            final NotificationMapper notificationMapper,
-            final NotificationRepository notificationRepository) {
+        final DefaultMessageService messageService,
+        @Value("${server-phone-number}") final String serverPhoneNumber,
+        final SlackSender slackSender,
+        final NotificationMapper notificationMapper,
+        final NotificationRepository notificationRepository) {
         this.messageService = messageService;
         this.serverPhoneNumber = serverPhoneNumber;
         this.slackSender = slackSender;

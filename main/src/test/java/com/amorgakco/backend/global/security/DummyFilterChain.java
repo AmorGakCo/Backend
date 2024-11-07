@@ -8,7 +8,7 @@ public class DummyFilterChain implements FilterChain {
 
     @Override
     public void doFilter(
-            final ServletRequest servletRequest, final ServletResponse servletResponse) {
+        final ServletRequest servletRequest, final ServletResponse servletResponse) {
         // do nothing
     }
 }

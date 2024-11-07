@@ -14,18 +14,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseTime {
+
     private static final String HTTPS_GITHUB_PREFIX = "https://github";
     private static final String GITHUB_PREFIX = "github";
     private static final Integer MAX_MOGAKCO_TEMPERATURE = 100;
@@ -51,10 +51,10 @@ public class Member extends BaseTime {
 
     @Builder
     public Member(
-            final Oauth2ProviderType oauth2ProviderType,
-            final String oauth2Id,
-            final String imgUrl,
-            final String nickname) {
+        final Oauth2ProviderType oauth2ProviderType,
+        final String oauth2Id,
+        final String imgUrl,
+        final String nickname) {
         this.oauth2ProviderType = oauth2ProviderType;
         this.oauth2Id = oauth2Id;
         this.imgUrl = imgUrl;
@@ -70,10 +70,10 @@ public class Member extends BaseTime {
     }
 
     public void validateAndUpdateAdditionalInfo(
-            final String githubUrl,
-            final String phoneNumber,
-            final boolean setting,
-            final String cellToken) {
+        final String githubUrl,
+        final String phoneNumber,
+        final boolean setting,
+        final String cellToken) {
         validateGithubUrl(githubUrl);
         validatePhoneNumber(phoneNumber);
         this.githubUrl = githubUrl;

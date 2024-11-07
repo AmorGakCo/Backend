@@ -1,5 +1,9 @@
 package com.amorgakco.backend.global.security;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.mock;
+
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.fixture.security.TestSecretKey;
 import com.amorgakco.backend.global.oauth.MemberPrincipal;
@@ -9,6 +13,8 @@ import com.amorgakco.backend.jwt.service.JwtValidator;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.repository.MemberRepository;
 import jakarta.servlet.ServletException;
+import java.io.IOException;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -16,19 +22,12 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.io.IOException;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.mock;
-
 class JwtAuthenticationFilterTest {
 
     private final MemberRepository memberRepository = mock(MemberRepository.class);
     private final JwtAuthenticationFilter jwtAuthenticationFilter =
-            new JwtAuthenticationFilter(
-                    new JwtValidator(memberRepository, TestSecretKey.create()), new JwtExtractor());
+        new JwtAuthenticationFilter(
+            new JwtValidator(memberRepository, TestSecretKey.create()), new JwtExtractor());
     private final JwtCreator jwtCreator = new JwtCreator(TestSecretKey.create());
 
     @Test
@@ -45,7 +44,7 @@ class JwtAuthenticationFilterTest {
         jwtAuthenticationFilter.doFilterInternal(request, response, new DummyFilterChain());
         // then
         final Authentication authentication =
-                SecurityContextHolder.getContext().getAuthentication();
+            SecurityContextHolder.getContext().getAuthentication();
         final MemberPrincipal principal = (MemberPrincipal) authentication.getPrincipal();
         assertThat(principal.getName()).isEqualTo("1");
     }

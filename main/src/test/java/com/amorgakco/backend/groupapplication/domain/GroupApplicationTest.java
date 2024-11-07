@@ -1,12 +1,12 @@
 package com.amorgakco.backend.groupapplication.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.amorgakco.backend.fixture.groupparticipation.TestGroupParticipationFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.member.domain.Member;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class GroupApplicationTest {
 
@@ -17,12 +17,12 @@ class GroupApplicationTest {
         final Member host = TestMemberFactory.create(1L);
         final Long memberId = 2L;
         final GroupApplication groupApplication =
-                TestGroupParticipationFactory.create(host, memberId);
+            TestGroupParticipationFactory.create(host, memberId);
         // when
         groupApplication.approve(host);
         // then
         assertThat(groupApplication.getGroupApplicationStatus())
-                .isEqualTo(GroupApplicationStatus.APPROVED);
+            .isEqualTo(GroupApplicationStatus.APPROVED);
     }
 
     @Test
@@ -32,11 +32,11 @@ class GroupApplicationTest {
         final Member host = TestMemberFactory.create(1L);
         final Long memberId = 2L;
         final GroupApplication groupApplication =
-                TestGroupParticipationFactory.create(host, memberId);
+            TestGroupParticipationFactory.create(host, memberId);
         // when
         groupApplication.reject(host);
         // then
         assertThat(groupApplication.getGroupApplicationStatus())
-                .isEqualTo(GroupApplicationStatus.REJECTED);
+            .isEqualTo(GroupApplicationStatus.REJECTED);
     }
 }

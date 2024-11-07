@@ -25,7 +25,8 @@ public class ChatRoomService {
     private final ChatRoomMapper chatRoomMapper;
 
     public ChatRoomListResponse getChatRoomList(final Member member, final Integer page) {
-        Slice<ChatRoom> participatedChatRooms = chatRoomParticipantService.getParticipatedChatRooms(member, page);
+        Slice<ChatRoom> participatedChatRooms = chatRoomParticipantService.getParticipatedChatRooms(
+            member, page);
         return chatRoomMapper.toChatRoomListResponse(participatedChatRooms);
     }
 
@@ -37,27 +38,27 @@ public class ChatRoomService {
 
     private ChatRoom getChatRoomByChatRoomId(final Long chatRoomId) {
         return chatRoomRepository
-                .findByIdWithGroup(chatRoomId)
-                .orElseThrow(ResourceNotFoundException::chatRoomNotFound);
+            .findByIdWithGroup(chatRoomId)
+            .orElseThrow(ResourceNotFoundException::chatRoomNotFound);
     }
 
     @Transactional
-    public ChatRoomResponse participateChatRoom(final Member member, final Long chatRoomId){
+    public ChatRoomResponse participateChatRoom(final Member member, final Long chatRoomId) {
         final ChatRoom chatRoom = getChatRoomByChatRoomId(chatRoomId);
         chatRoom.participate(member);
         return chatRoomMapper.toChatRoomResponse(chatRoom);
     }
 
     @Transactional
-    public Long registerChatRoom(final Member member,final Group group){
-        ChatRoom newChatRoom = new ChatRoom(member,group);
+    public Long registerChatRoom(final Member member, final Group group) {
+        ChatRoom newChatRoom = new ChatRoom(member, group);
         return chatRoomRepository.save(newChatRoom).getId();
     }
 
     @Transactional
-    public void exitChatRoom(final Member member, final Long chatRoomId){
+    public void exitChatRoom(final Member member, final Long chatRoomId) {
         ChatRoomParticipant chatRoomParticipant = chatRoomParticipantService
-                .getChatRoomParticipant(member, chatRoomId);
+            .getChatRoomParticipant(member, chatRoomId);
         chatRoomParticipant.exitChatRoom();
     }
 }

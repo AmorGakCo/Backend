@@ -18,7 +18,7 @@ public class GroupLocationController {
 
     @GetMapping
     public GroupSearchResponse getLocations(
-            @ModelAttribute final GroupSearchRequest groupSearchRequest) {
+        @ModelAttribute final GroupSearchRequest groupSearchRequest) {
         return groupLocationService.findGroups(groupSearchRequest);
     }
 }

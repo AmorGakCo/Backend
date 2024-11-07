@@ -3,13 +3,12 @@ package com.amorgakco.backend.global.config;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import java.io.IOException;
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import java.io.IOException;
 
 @Component
 @Profile("!test")
@@ -24,9 +23,9 @@ public class FcmInitializer {
     @PostConstruct
     public void initialize() throws IOException {
         final GoogleCredentials googleCredentials =
-                GoogleCredentials.fromStream(new ClassPathResource(secretPath).getInputStream());
+            GoogleCredentials.fromStream(new ClassPathResource(secretPath).getInputStream());
         final FirebaseOptions options =
-                FirebaseOptions.builder().setCredentials(googleCredentials).build();
+            FirebaseOptions.builder().setCredentials(googleCredentials).build();
         FirebaseApp.initializeApp(options);
     }
 }

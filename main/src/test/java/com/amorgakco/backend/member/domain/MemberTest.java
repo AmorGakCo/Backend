@@ -1,5 +1,8 @@
 package com.amorgakco.backend.member.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.global.exception.IllegalFormatException;
 import com.google.common.geometry.S2CellId;
@@ -7,9 +10,6 @@ import com.google.common.geometry.S2LatLng;
 import com.google.common.geometry.S2Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MemberTest {
 
@@ -37,10 +37,10 @@ class MemberTest {
         final String cellToken = S2CellId.fromPoint(point).parent(14).toToken();
         // when & then
         assertThatThrownBy(
-                () ->
-                        member.validateAndUpdateAdditionalInfo(
-                                "invalid.com", "01011112222", true, cellToken))
-                .isInstanceOf(IllegalFormatException.class);
+            () ->
+                member.validateAndUpdateAdditionalInfo(
+                    "invalid.com", "01011112222", true, cellToken))
+            .isInstanceOf(IllegalFormatException.class);
     }
 
     @Test
@@ -52,9 +52,9 @@ class MemberTest {
         final String cellToken = S2CellId.fromPoint(point).parent(14).toToken();
         // when & then
         assertThatThrownBy(
-                () ->
-                        member.validateAndUpdateAdditionalInfo(
-                                "invalid.com", "010-1111-2222", true, cellToken))
-                .isInstanceOf(IllegalFormatException.class);
+            () ->
+                member.validateAndUpdateAdditionalInfo(
+                    "invalid.com", "010-1111-2222", true, cellToken))
+            .isInstanceOf(IllegalFormatException.class);
     }
 }

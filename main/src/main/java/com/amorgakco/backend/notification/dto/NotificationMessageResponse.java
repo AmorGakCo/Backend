@@ -1,13 +1,13 @@
 package com.amorgakco.backend.notification.dto;
 
-import lombok.Builder;
-
 import java.util.List;
+import lombok.Builder;
 
 @Builder
 public record NotificationMessageResponse(
-        int page,
-        int elementSize,
-        boolean hasNext,
-        List<NotificationMessage> notificationMessages) {
+    int page,
+    int elementSize,
+    boolean hasNext,
+    List<NotificationMessage> notificationMessages) {
+
 }

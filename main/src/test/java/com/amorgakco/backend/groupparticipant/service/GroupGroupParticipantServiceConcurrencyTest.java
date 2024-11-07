@@ -1,26 +1,25 @@
 package com.amorgakco.backend.groupparticipant.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.repository.GroupRepository;
+import com.amorgakco.backend.groupparticipant.domain.GroupParticipant;
+import com.amorgakco.backend.groupparticipant.repository.GroupParticipantRepository;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.repository.MemberRepository;
 import com.amorgakco.backend.notification.infrastructure.NotificationPublisherFacade;
-import com.amorgakco.backend.groupparticipant.domain.GroupParticipant;
-import com.amorgakco.backend.groupparticipant.repository.GroupParticipantRepository;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class GroupGroupParticipantServiceConcurrencyTest {
@@ -61,7 +60,8 @@ class GroupGroupParticipantServiceConcurrencyTest {
         for (int i = 0; i < threadCount; i++) {
             executorService.execute(() -> {
                 try {
-                    groupParticipantService.increaseTemperature(group.getId(), requestMember.getId(), targetMember.getId());
+                    groupParticipantService.increaseTemperature(group.getId(),
+                        requestMember.getId(), targetMember.getId());
                 } catch (Exception e) {
                     System.out.println(e);
                 } finally {
@@ -96,7 +96,8 @@ class GroupGroupParticipantServiceConcurrencyTest {
         for (int i = 0; i < threadCount; i++) {
             executorService.execute(() -> {
                 try {
-                    groupParticipantService.decreaseTemperature(group.getId(), requestMember.getId(), targetMember.getId());
+                    groupParticipantService.decreaseTemperature(group.getId(),
+                        requestMember.getId(), targetMember.getId());
                 } catch (Exception e) {
                     System.out.println(e);
                 } finally {

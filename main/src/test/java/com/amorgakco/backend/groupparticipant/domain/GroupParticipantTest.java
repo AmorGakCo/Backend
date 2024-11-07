@@ -1,5 +1,8 @@
 package com.amorgakco.backend.groupparticipant.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.fixture.group.TestParticipantsFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
@@ -9,9 +12,6 @@ import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.member.domain.Member;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class GroupParticipantTest {
 
@@ -27,7 +27,7 @@ class GroupParticipantTest {
         // when
         groupParticipant.verify(126.9745357, 37.570387);
         assertThat(groupParticipant.getLocationVerificationStatus())
-                .isEqualTo(LocationVerificationStatus.VERIFIED);
+            .isEqualTo(LocationVerificationStatus.VERIFIED);
     }
 
     @Test
@@ -42,7 +42,7 @@ class GroupParticipantTest {
         groupParticipant.verify(126.9745357, 37.570387);
         // when&then
         assertThatThrownBy(() -> groupParticipant.verify(126.9745357, 37.570387))
-                .isInstanceOf(LocationVerificationException.class)
-                .hasFieldOrPropertyWithValue("errorCode", ErrorCode.VERIFICATION_DUPLICATED);
+            .isInstanceOf(LocationVerificationException.class)
+            .hasFieldOrPropertyWithValue("errorCode", ErrorCode.VERIFICATION_DUPLICATED);
     }
 }

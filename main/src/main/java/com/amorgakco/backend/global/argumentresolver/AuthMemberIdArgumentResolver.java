@@ -11,22 +11,23 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Component
 public class AuthMemberIdArgumentResolver implements HandlerMethodArgumentResolver {
+
     @Override
     public boolean supportsParameter(final MethodParameter parameter) {
         return parameter.hasParameterAnnotation(AuthMemberId.class)
-                && parameter.getParameterType().equals(Long.class);
+            && parameter.getParameterType().equals(Long.class);
     }
 
     @Override
     public Object resolveArgument(
-            final MethodParameter parameter,
-            final ModelAndViewContainer mavContainer,
-            final NativeWebRequest webRequest,
-            final WebDataBinderFactory binderFactory)
-            throws Exception {
+        final MethodParameter parameter,
+        final ModelAndViewContainer mavContainer,
+        final NativeWebRequest webRequest,
+        final WebDataBinderFactory binderFactory)
+        throws Exception {
         final MemberPrincipal principal =
-                (MemberPrincipal)
-                        SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            (MemberPrincipal)
+                SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return Long.valueOf(principal.getUsername());
     }
 }

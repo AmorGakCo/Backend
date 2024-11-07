@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class IllegalFormatException extends IllegalArgumentException {
+
     private final ErrorCode errorCode;
 
     public static IllegalFormatException dashNotAllowed() {

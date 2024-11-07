@@ -15,12 +15,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -32,22 +31,22 @@ public class ChatRoom extends BaseTime {
     private Long id;
 
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ChatRoomParticipant> chatRoomParticipants = new HashSet<>();
+    private final Set<ChatRoomParticipant> chatRoomParticipants = new HashSet<>();
 
     @OneToOne(fetch = FetchType.LAZY)
     private Group group;
 
-    public ChatRoom(final Member host, final Group group){
+    public ChatRoom(final Member host, final Group group) {
         this.group = group;
         participate(host);
     }
 
-    public void exit(final ChatRoomParticipant chatRoomParticipant){
+    public void exit(final ChatRoomParticipant chatRoomParticipant) {
         chatRoomParticipants.remove(chatRoomParticipant);
     }
 
-    public void participate(final Member member){
-        if(isMemberNotParticipatedInGroup(member)){
+    public void participate(final Member member) {
+        if (isMemberNotParticipatedInGroup(member)) {
             throw ParticipantException.notParticipatedInGroup();
         }
         ChatRoomParticipant chatRoomParticipant = new ChatRoomParticipant(member, this);
@@ -58,10 +57,10 @@ public class ChatRoom extends BaseTime {
         return group.isMemberParticipated(member.getId());
     }
 
-    public void validateChatRoomParticipant(final Member member){
+    public void validateChatRoomParticipant(final Member member) {
         final boolean isNotParticipated = chatRoomParticipants.stream()
-                .noneMatch(cp -> cp.getMember().isEquals(member.getId()));
-        if(isNotParticipated){
+            .noneMatch(cp -> cp.getMember().isEquals(member.getId()));
+        if (isNotParticipated) {
             throw ResourceNotFoundException.participationNotFound();
         }
     }

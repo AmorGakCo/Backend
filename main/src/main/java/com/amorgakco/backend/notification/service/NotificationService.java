@@ -20,9 +20,9 @@ public class NotificationService {
 
     public NotificationMessageResponse getNotifications(final Long memberId, final Integer page) {
         final PageRequest pageRequest =
-                PageRequest.of(page, PAGE_SIZE, Sort.by(Sort.Direction.DESC, "createdAt"));
+            PageRequest.of(page, PAGE_SIZE, Sort.by(Sort.Direction.DESC, "createdAt"));
         final Slice<Notification> notificationSlice =
-                notificationRepository.findByReceiver(memberId, pageRequest);
+            notificationRepository.findByReceiver(memberId, pageRequest);
         return notificationMapper.toNotificationMessageResponse(notificationSlice);
     }
 }

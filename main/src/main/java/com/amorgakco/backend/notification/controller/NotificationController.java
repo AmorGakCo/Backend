@@ -18,7 +18,7 @@ public class NotificationController {
 
     @GetMapping
     public NotificationMessageResponse getNotification(
-            @RequestParam final Integer page, @AuthMemberId final Long memberId) {
+        @RequestParam final Integer page, @AuthMemberId final Long memberId) {
         return notificationService.getNotifications(memberId, page);
     }
 }

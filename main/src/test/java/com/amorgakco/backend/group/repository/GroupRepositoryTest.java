@@ -7,12 +7,11 @@ import com.amorgakco.backend.groupparticipant.domain.GroupParticipant;
 import com.amorgakco.backend.member.domain.Member;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import java.util.Set;
 
 @DataJpaTest
 @Transactional
@@ -31,7 +30,8 @@ class GroupRepositoryTest {
         Group group = entityManager.find(Group.class, groupId.toString());
         Set<GroupParticipant> groupParticipants = group.getGroupParticipants();
         for (GroupParticipant groupParticipant : groupParticipants) {
-            System.out.println("groupParticipant = " + groupParticipant.getLocationVerificationStatus());
+            System.out.println(
+                "groupParticipant = " + groupParticipant.getLocationVerificationStatus());
         }
         // then
     }

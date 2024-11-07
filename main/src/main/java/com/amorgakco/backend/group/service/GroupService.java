@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class GroupService {
+
     private final GroupRepository groupRepository;
     private final GroupMapper groupMapper;
     private final GroupApplicationRepository groupApplicationRepository;
@@ -28,8 +29,8 @@ public class GroupService {
     public GroupRegisterResponse register(final GroupRegisterRequest request, final Member host) {
         final Group group = groupMapper.toGroup(host, request);
         final Long groupId = groupRepository.save(group).getId();
-        Long chatRoomId = chatRoomService.registerChatRoom(host,group);
-        return new GroupRegisterResponse(groupId,chatRoomId);
+        Long chatRoomId = chatRoomService.registerChatRoom(host, group);
+        return new GroupRegisterResponse(groupId, chatRoomId);
     }
 
     @Transactional
@@ -41,14 +42,14 @@ public class GroupService {
 
     public Group getGroup(final Long groupId) {
         return groupRepository
-                .findById(groupId)
-                .orElseThrow(ResourceNotFoundException::groupNotFound);
+            .findById(groupId)
+            .orElseThrow(ResourceNotFoundException::groupNotFound);
     }
 
     public Group getGroupWithHost(final Long groupId) {
         return groupRepository
-                .findByIdWithHost(groupId)
-                .orElseThrow(ResourceNotFoundException::groupNotFound);
+            .findByIdWithHost(groupId)
+            .orElseThrow(ResourceNotFoundException::groupNotFound);
     }
 
     public GroupDetailResponse getDetailGroup(final Long groupId, final Long memberId) {
@@ -59,12 +60,13 @@ public class GroupService {
 
     public GroupBasicResponse getBasicGroup(final Long groupId, final Member member) {
         final Group group =
-                groupRepository
-                        .findByIdWithHost(groupId)
-                        .orElseThrow(ResourceNotFoundException::groupNotFound);
+            groupRepository
+                .findByIdWithHost(groupId)
+                .orElseThrow(ResourceNotFoundException::groupNotFound);
         boolean isParticipated = group.isMemberParticipated(member.getId());
         boolean isParticipationRequested = isParticipationRequested(group, member);
-        return groupMapper.toGroupBasicInfoResponse(group, isParticipated, isParticipationRequested);
+        return groupMapper.toGroupBasicInfoResponse(group, isParticipated,
+            isParticipationRequested);
     }
 
     private boolean isParticipationRequested(final Group group, final Member member) {
