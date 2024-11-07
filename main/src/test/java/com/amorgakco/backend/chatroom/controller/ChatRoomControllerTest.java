@@ -1,5 +1,18 @@
 package com.amorgakco.backend.chatroom.controller;
 
+import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentRequest;
+import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.amorgakco.backend.chatroom.dto.ChatRoomListResponse;
 import com.amorgakco.backend.chatroom.dto.ChatRoomResponse;
 import com.amorgakco.backend.chatroom.service.ChatRoomService;
@@ -13,17 +26,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.ResultActions;
-
-import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentRequest;
-import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ChatRoomController.class)
 @WithMockMember
@@ -40,16 +42,17 @@ class ChatRoomControllerTest extends RestDocsTest {
         final Long chatRoomId = 1L;
         ChatRoomResponse response = TestChatRoomFactory.getChatRoomResponse(chatRoomId);
         given(memberService.getMember(1L)).willReturn(member);
-        given(chatRoomService.participateChatRoom(member,1L)).willReturn(response);
+        given(chatRoomService.participateChatRoom(member, 1L)).willReturn(response);
         // when
         final ResultActions actions =
-                mockMvc.perform(
-                        post("/chat-rooms/{chatRoomId}",chatRoomId));
+            mockMvc.perform(
+                post("/chat-rooms/{chatRoomId}", chatRoomId));
         // then
         actions.andExpect(status().isCreated()).andExpect(jsonPath("$.data.chatRoomId").value("1"));
         // docs
         actions.andDo(print())
-                .andDo(document("chat-room-participate", getDocumentRequest(), getDocumentResponse()));
+            .andDo(document("chat-room-participate", getDocumentRequest(), getDocumentResponse(),
+                pathParameters(parameterWithName("chatRoomId").description("채팅방 ID"))));
     }
 
     @Test
@@ -61,13 +64,14 @@ class ChatRoomControllerTest extends RestDocsTest {
         given(memberService.getMember(1L)).willReturn(member);
         // when
         final ResultActions actions =
-                mockMvc.perform(
-                        delete("/chat-rooms/{chatRoomId}",chatRoomId));
+            mockMvc.perform(
+                delete("/chat-rooms/{chatRoomId}", chatRoomId));
         // then
         actions.andExpect(status().isOk());
         //docs
         actions.andDo(print())
-                .andDo(document("chat-room-exit", getDocumentRequest(), getDocumentResponse()));
+            .andDo(document("chat-room-exit", getDocumentRequest(), getDocumentResponse(),
+                pathParameters(parameterWithName("chatRoomId").description("채팅방 ID"))));
     }
 
     @Test
@@ -78,15 +82,16 @@ class ChatRoomControllerTest extends RestDocsTest {
         final Long chatRoomId = 1L;
         ChatRoomResponse response = TestChatRoomFactory.getChatRoomResponse(chatRoomId);
         given(memberService.getMember(1L)).willReturn(member);
-        given(chatRoomService.getChatRoom(member,1L)).willReturn(response);
+        given(chatRoomService.getChatRoom(member, 1L)).willReturn(response);
         // when
         final ResultActions actions =
-                mockMvc.perform(
-                        get("/chat-rooms/{chatRoomId}",chatRoomId));
+            mockMvc.perform(
+                get("/chat-rooms/{chatRoomId}", chatRoomId));
         // then
         actions.andExpect(status().isOk()).andExpect(jsonPath("$.data.chatRoomId").value("1"));
         actions.andDo(print())
-                .andDo(document("chat-room", getDocumentRequest(), getDocumentResponse()));
+            .andDo(document("chat-room", getDocumentRequest(), getDocumentResponse(),
+                pathParameters(parameterWithName("chatRoomId").description("채팅방 ID"))));
     }
 
     @Test
@@ -97,16 +102,16 @@ class ChatRoomControllerTest extends RestDocsTest {
         final Integer page = 0;
         ChatRoomListResponse response = TestChatRoomFactory.getChatRoomListResponse();
         given(memberService.getMember(1L)).willReturn(member);
-        given(chatRoomService.getChatRoomList(member,page)).willReturn(response);
+        given(chatRoomService.getChatRoomList(member, page)).willReturn(response);
         // when
         final ResultActions actions =
-                mockMvc.perform(
-                        get("/chat-rooms")
-                                .queryParam("page",page.toString()));
+            mockMvc.perform(
+                get("/chat-rooms")
+                    .queryParam("page", page.toString()));
         // then
         actions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.elementSize").value("3"));
+            .andExpect(jsonPath("$.data.elementSize").value("3"));
         actions.andDo(print())
-                .andDo(document("chat-room-list", getDocumentRequest(), getDocumentResponse()));
+            .andDo(document("chat-room-list", getDocumentRequest(), getDocumentResponse()));
     }
 }

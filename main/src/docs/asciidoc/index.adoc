@@ -11,19 +11,16 @@ endif::[]
 
 = AmorGakCo API: 위치기반 모각코 모임 서비스
 
-== 인증
-
-기본적으로 모든 API는 Authorization 헤더에 액세스 토큰을 포함해야 합니다.
-아래 두 API는 인증 없이 접근이 가능합니다.
-
-<<주변 그룹 조회>> <<_그룹_단건_조회_모달창용>> <<_그룹_단건_조회_상세페이지용>>
+<<주변 그룹 조회>> 는 인증없이 접근이 가능합니다.
 
 include::group.adoc[]
 
-include::groupParticipation.adoc[]
+include::groupApplication.adoc[]
 
 include::jwt.adoc[]
 
 include::member.adoc[]
 
 include::notification.adoc[]
+
+include::chatRoom.adoc[]

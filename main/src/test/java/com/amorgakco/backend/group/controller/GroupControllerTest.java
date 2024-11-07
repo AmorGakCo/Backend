@@ -65,7 +65,7 @@ class GroupControllerTest extends RestDocsTest {
         actions.andExpect(status().isCreated()).andExpect(jsonPath("$.data.groupId").value("1"));
         // docs
         actions.andDo(print())
-                .andDo(document("group-participate", getDocumentRequest(), getDocumentResponse()));
+                .andDo(document("group-register", getDocumentRequest(), getDocumentResponse()));
     }
 
     @Test
@@ -91,7 +91,7 @@ class GroupControllerTest extends RestDocsTest {
         actions.andDo(print())
                 .andDo(
                         document(
-                                "group-participate-max-duration-exception",
+                                "group-register-max-duration-exception",
                                 getDocumentRequest(),
                                 getDocumentResponse()));
     }
@@ -119,7 +119,7 @@ class GroupControllerTest extends RestDocsTest {
         actions.andDo(print())
                 .andDo(
                         document(
-                                "group-participate-min-duration-exception",
+                                "group-register-min-duration-exception",
                                 getDocumentRequest(),
                                 getDocumentResponse()));
     }
@@ -148,7 +148,7 @@ class GroupControllerTest extends RestDocsTest {
         actions.andDo(print())
                 .andDo(
                         document(
-                                "group-participate-time-exception",
+                                "group-register-time-exception",
                                 getDocumentRequest(),
                                 getDocumentResponse()));
     }
