@@ -3,7 +3,6 @@ package com.amorgakco.backend.fixture.chatroom;
 import com.amorgakco.backend.chatroom.domain.ChatRoom;
 import com.amorgakco.backend.chatroom.dto.ChatRoomListResponse;
 import com.amorgakco.backend.chatroom.dto.ChatRoomResponse;
-import com.amorgakco.backend.chatroom.dto.ChatRoomSubjectResponse;
 import com.amorgakco.backend.chatroomparticipant.dto.ChatRoomParticipantResponse;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.member.domain.Member;
@@ -45,22 +44,15 @@ public class TestChatRoomFactory {
     }
 
     public static ChatRoomListResponse getChatRoomListResponse() {
-        List<ChatRoomSubjectResponse> chatRoomSubjectResponses =
-            List.of(getChatRoomSubjectResponse(1L),
-                getChatRoomSubjectResponse(2L),
-                getChatRoomSubjectResponse(3L));
+        List<ChatRoomResponse> chatRoomResponses =
+            List.of(getChatRoomResponse(1L),
+                getChatRoomResponse(2L),
+                getChatRoomResponse(3L));
         return ChatRoomListResponse.builder()
             .page(PAGE)
-            .chatRoomSubjects(chatRoomSubjectResponses)
-            .elementSize(chatRoomSubjectResponses.size())
+            .chatRoomResponses(chatRoomResponses)
+            .elementSize(chatRoomResponses.size())
             .hasNext(false)
-            .build();
-    }
-
-    private static ChatRoomSubjectResponse getChatRoomSubjectResponse(final Long chatRoomId) {
-        return ChatRoomSubjectResponse.builder()
-            .chatRoomId(chatRoomId)
-            .groupName(GROUP_NAME)
             .build();
     }
 }

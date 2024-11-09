@@ -75,26 +75,6 @@ class ChatRoomControllerTest extends RestDocsTest {
     }
 
     @Test
-    @DisplayName("사용자는 특정 채팅방의 정보를 조회할 수 있다.")
-    void getChatRoom() throws Exception {
-        // given
-        final Member member = TestMemberFactory.create(1L);
-        final Long chatRoomId = 1L;
-        ChatRoomResponse response = TestChatRoomFactory.getChatRoomResponse(chatRoomId);
-        given(memberService.getMember(1L)).willReturn(member);
-        given(chatRoomService.getChatRoom(member, 1L)).willReturn(response);
-        // when
-        final ResultActions actions =
-            mockMvc.perform(
-                get("/chat-rooms/{chatRoomId}", chatRoomId));
-        // then
-        actions.andExpect(status().isOk()).andExpect(jsonPath("$.data.chatRoomId").value("1"));
-        actions.andDo(print())
-            .andDo(document("chat-room", getDocumentRequest(), getDocumentResponse(),
-                pathParameters(parameterWithName("chatRoomId").description("채팅방 ID"))));
-    }
-
-    @Test
     @DisplayName("사용자는 소속된 채팅방 목록을 조회할 수 있다.")
     void getChatRoomList() throws Exception {
         // given

@@ -71,25 +71,6 @@ class ChatRoomServiceTest {
     }
 
     @Test
-    @DisplayName("자신이 참여중인 채팅방의 정보를 조회할 수 있다.")
-    void getChatRoom() {
-        // given
-        Member host = TestMemberFactory.createEntity();
-        Member member = TestMemberFactory.createEntity();
-        memberRepository.save(host);
-        memberRepository.save(member);
-        Group group = TestGroupFactory.createActiveGroup(host);
-        group.addParticipant(new GroupParticipant(member));
-        groupRepository.save(group);
-        Long chatRoomId = chatRoomService.registerChatRoom(host, group);
-        chatRoomService.participateChatRoom(member, chatRoomId);
-        // when
-        ChatRoomResponse chatRoom = chatRoomService.getChatRoom(member, chatRoomId);
-        // then
-        assertThat(chatRoom.chatRoomId()).isEqualTo(chatRoomId);
-    }
-
-    @Test
     @DisplayName("채팅방 참여자는 채팅방을 나갈 수 있다.")
     void exitChatRoom() {
         // given

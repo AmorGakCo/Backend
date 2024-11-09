@@ -29,12 +29,6 @@ public class ChatRoomController {
         return chatRoomService.getChatRoomList(member, page);
     }
 
-    @GetMapping("/{chatRoomId}")
-    public ChatRoomResponse getChatRoom(@AuthMember final Member member,
-        @PathVariable final Long chatRoomId) {
-        return chatRoomService.getChatRoom(member, chatRoomId);
-    }
-
     @PostMapping("/{chatRoomId}")
     @ResponseStatus(HttpStatus.CREATED)
     public ChatRoomResponse participateChatRoom(@AuthMember final Member member,

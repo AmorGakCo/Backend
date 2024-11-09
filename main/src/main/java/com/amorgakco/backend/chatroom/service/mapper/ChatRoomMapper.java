@@ -3,10 +3,8 @@ package com.amorgakco.backend.chatroom.service.mapper;
 import com.amorgakco.backend.chatroom.domain.ChatRoom;
 import com.amorgakco.backend.chatroom.dto.ChatRoomListResponse;
 import com.amorgakco.backend.chatroom.dto.ChatRoomResponse;
-import com.amorgakco.backend.chatroom.dto.ChatRoomSubjectResponse;
 import com.amorgakco.backend.chatroomparticipant.domain.ChatRoomParticipant;
 import com.amorgakco.backend.chatroomparticipant.dto.ChatRoomParticipantResponse;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Slice;
@@ -17,24 +15,11 @@ public class ChatRoomMapper {
 
     public ChatRoomListResponse toChatRoomListResponse(final Slice<ChatRoom> chatRoomSlice) {
         return ChatRoomListResponse.builder()
-            .chatRoomSubjects(getSubjects(chatRoomSlice))
+            .chatRoomResponses(
+                chatRoomSlice.getContent().stream().map(this::toChatRoomResponse).toList())
             .elementSize(chatRoomSlice.getSize())
             .hasNext(chatRoomSlice.hasNext())
             .page(chatRoomSlice.getPageable().getPageNumber())
-            .build();
-    }
-
-    private List<ChatRoomSubjectResponse> getSubjects(final Slice<ChatRoom> chatRoomSlice) {
-        return chatRoomSlice.getContent()
-            .stream()
-            .map(this::toChatRoomSubjectResponse)
-            .toList();
-    }
-
-    private ChatRoomSubjectResponse toChatRoomSubjectResponse(final ChatRoom chatRoom) {
-        return ChatRoomSubjectResponse.builder()
-            .chatRoomId(chatRoom.getId())
-            .groupName(chatRoom.getGroup().getName())
             .build();
     }
 

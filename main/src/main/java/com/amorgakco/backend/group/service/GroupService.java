@@ -42,7 +42,7 @@ public class GroupService {
 
     public Group getGroup(final Long groupId) {
         return groupRepository
-            .findById(groupId)
+            .findByIdWithParticipant(groupId)
             .orElseThrow(ResourceNotFoundException::groupNotFound);
     }
 

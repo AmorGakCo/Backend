@@ -30,12 +30,6 @@ public class ChatRoomService {
         return chatRoomMapper.toChatRoomListResponse(participatedChatRooms);
     }
 
-    public ChatRoomResponse getChatRoom(final Member member, final Long chatRoomId) {
-        final ChatRoom chatRoom = getChatRoomByChatRoomId(chatRoomId);
-        chatRoom.validateChatRoomParticipant(member);
-        return chatRoomMapper.toChatRoomResponse(chatRoom);
-    }
-
     private ChatRoom getChatRoomByChatRoomId(final Long chatRoomId) {
         return chatRoomRepository
             .findByIdWithGroup(chatRoomId)

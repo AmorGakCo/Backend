@@ -6,8 +6,8 @@ import lombok.Builder;
 
 @Builder
 public record ChatRoomResponse(
-    String groupName,
     Long chatRoomId,
+    String groupName,
     Set<ChatRoomParticipantResponse> chatRoomParticipants) {
 
 }

@@ -19,6 +19,8 @@ class GroupRepositoryTest {
 
     @Autowired
     EntityManager entityManager;
+    @Autowired
+
 
     @Test
     @DisplayName("")
