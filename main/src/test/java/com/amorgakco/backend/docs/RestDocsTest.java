@@ -1,5 +1,8 @@
 package com.amorgakco.backend.docs;
 
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+
 import com.amorgakco.backend.global.security.JwtAuthenticationFilter;
 import com.amorgakco.backend.member.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -17,9 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
-
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @AutoConfigureRestDocs
 @Import(RestDocsConfig.class)
@@ -42,13 +42,13 @@ public abstract class RestDocsTest {
 
     @BeforeEach
     public void setupMockMvc(
-            final WebApplicationContext ctx,
-            final RestDocumentationContextProvider restDocumentationContextProvider) {
+        final WebApplicationContext ctx,
+        final RestDocumentationContextProvider restDocumentationContextProvider) {
         mockMvc =
-                MockMvcBuilders.webAppContextSetup(ctx)
-                        .apply(documentationConfiguration(restDocumentationContextProvider))
-                        .addFilter(new CharacterEncodingFilter("UTF-8", true))
-                        .alwaysDo(print())
-                        .build();
+            MockMvcBuilders.webAppContextSetup(ctx)
+                .apply(documentationConfiguration(restDocumentationContextProvider))
+                .addFilter(new CharacterEncodingFilter("UTF-8", true))
+                .alwaysDo(print())
+                .build();
     }
 }

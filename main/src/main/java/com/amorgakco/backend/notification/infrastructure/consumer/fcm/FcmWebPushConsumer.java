@@ -39,15 +39,15 @@ public class FcmWebPushConsumer {
 
     public Message createMessage(final String token, final String title, final String content) {
         return Message.builder()
-                .setWebpushConfig(
-                        WebpushConfig.builder()
-                                .setNotification(
-                                        WebpushNotification.builder()
-                                                .setTitle(title)
-                                                .setBody(content)
-                                                .build())
-                                .build())
-                .setToken(token)
-                .build();
+            .setWebpushConfig(
+                WebpushConfig.builder()
+                    .setNotification(
+                        WebpushNotification.builder()
+                            .setTitle(title)
+                            .setBody(content)
+                            .build())
+                    .build())
+            .setToken(token)
+            .build();
     }
 }

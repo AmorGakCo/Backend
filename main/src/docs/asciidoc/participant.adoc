@@ -8,7 +8,7 @@ ifndef::snippets[]
 :snippets: ../../../build/generated-snippets
 endif::[]
 
-== Participant
+== 모각코 참여자
 
 === 참여자 위치 인증
 
@@ -40,4 +40,6 @@ operation::participant-withdraw[snippets='path-parameters,http-request,http-resp
 
 operation::participant-tardiness[snippets='path-parameters,http-request,http-response']
 
+=== 참여자 위치 인증
 
+operation::participation-location-verification[snippets='http-request,http-response']

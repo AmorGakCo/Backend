@@ -6,16 +6,16 @@ import com.amorgakco.backend.jwt.domain.RefreshToken;
 import com.amorgakco.backend.jwt.dto.MemberTokens;
 import com.amorgakco.backend.jwt.repository.RefreshTokenRepository;
 import jakarta.servlet.http.Cookie;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class JwtService {
+
     private final JwtProperties jwtProperties;
     private final JwtCreator jwtCreator;
     private final RefreshTokenRepository refreshTokenRepository;
@@ -29,8 +29,8 @@ public class JwtService {
 
     private RefreshToken findByRefreshToken(final String token) {
         return refreshTokenRepository
-                .findById(token)
-                .orElseThrow(ResourceNotFoundException::refreshTokenNotFound);
+            .findById(token)
+            .orElseThrow(ResourceNotFoundException::refreshTokenNotFound);
     }
 
     public MemberTokens createAndSaveMemberTokens(final String memberId) {
@@ -41,7 +41,8 @@ public class JwtService {
     }
 
     public void logout(final Optional<Cookie> cookie) {
-        final Cookie tokenCookie = cookie.orElseThrow(JwtAuthenticationException::refreshTokenRequired);
+        final Cookie tokenCookie = cookie.orElseThrow(
+            JwtAuthenticationException::refreshTokenRequired);
         final String refreshToken = tokenCookie.getValue();
         refreshTokenRepository.deleteById(refreshToken);
     }

@@ -23,8 +23,8 @@ public class MemberController {
     @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateAdditionalInfo(
-            @RequestBody final AdditionalInfoRequest additionalInfoRequest,
-            @AuthMemberId final Long memberId) {
+        @RequestBody final AdditionalInfoRequest additionalInfoRequest,
+        @AuthMemberId final Long memberId) {
         memberService.updateAdditionalInfo(additionalInfoRequest, memberId);
     }
 

@@ -4,4 +4,5 @@ import lombok.Builder;
 
 @Builder
 public record Oauth2MemberResponse(String memberId, String nickname, String imgUrl) {
+
 }

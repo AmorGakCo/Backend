@@ -7,10 +7,11 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.testcontainers.utility.DockerImageName;
 
 public class TestContainerConfig
-        implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+    implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+
     private static final RedisContainer REDIS_CONTAINER =
-            new RedisContainer(DockerImageName.parse("redis:latest"))
-                    .withExposedPorts(6379);
+        new RedisContainer(DockerImageName.parse("redis:latest"))
+            .withExposedPorts(6379);
 
     static {
         REDIS_CONTAINER.start();
@@ -19,8 +20,8 @@ public class TestContainerConfig
     @Override
     public void initialize(final ConfigurableApplicationContext applicationContext) {
         TestPropertyValues.of(
-                        "spring.data.redis.host=" + REDIS_CONTAINER.getHost(),
-                        "spring.data.redis.port=" + REDIS_CONTAINER.getFirstMappedPort())
-                .applyTo(applicationContext.getEnvironment());
+                "spring.data.redis.host=" + REDIS_CONTAINER.getHost(),
+                "spring.data.redis.port=" + REDIS_CONTAINER.getFirstMappedPort())
+            .applyTo(applicationContext.getEnvironment());
     }
 }

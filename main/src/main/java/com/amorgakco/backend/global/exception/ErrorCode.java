@@ -27,7 +27,6 @@ public enum ErrorCode {
     EXCEED_MAX_TEMPERATURE("204", "모각코 온도는 100도를 넘을 수 없습니다."),
     UNDER_MIN_TEMPERATURE("204", "모각코 온도는 -100도 보다 낮을 수 없습니다."),
 
-
     // Group Error Code
     GROUP_NOT_FOUND("301", "존재하지 않는 그룹입니다."),
     START_TIME_AFTER_ENT_TIME("302", "시작시간이 종료시간보다 늦을 수 없습니다."),
@@ -35,7 +34,7 @@ public enum ErrorCode {
     MIN_DURATION("304", "모임 지속 시간은 1시간 이상 되어야 합니다."),
     NO_AUTHORITY_FOR_GROUP("305", "그룹에대한 권한이 없습니다."),
     VERIFICATION_FAILED("306", "모임 장소를 인증할 수 없습니다."),
-    PARTICIPANT_NOT_FOUND("307", "모각코 참여자가 아닙니다."),
+    GROUP_PARTICIPANT_NOT_FOUND("307", "모각코 참여자가 아닙니다."),
     LOCATION_NOT_FOUND("308", "주변 모각코가 존재하지 않습니다."),
     VERIFICATION_DUPLICATED("309", "이미 인증이 완료된 회원입니다."),
     PARTICIPANT_DUPLICATED("310", "중복된 회원입니다."),
@@ -44,7 +43,12 @@ public enum ErrorCode {
     INVALID_DIAGONAL_DISTANCE("313", "잘못된 그룹 검색 요청입니다. 위도 경도를 확인해주세요."),
     NOT_SAME_GROUP_PARTICIPANT("314", "동일한 그룹 내의 참여자끼리 온도를 변경할 수 있습니다."),
     EXCEED_PARTICIPATION_LIMIT("315", "활동중인 모각코는 5개를 넘을 수 없습니다."),
-    GROUP_APPLICATION_DUPLICATED("316", "중복된 참여 요청입니다");
+    GROUP_APPLICATION_DUPLICATED("316", "중복된 참여 요청입니다"),
+
+    //Chat Room Error Code
+    CHAT_ROOM_NOT_FOUND("400", "채팅방이 존재하지 않습니다."),
+    CHAT_ROOM_PARTICIPANT_NOT_FOUND("401", "채팅방 참여자가 아닙니다."),
+    NOT_PARTICIPATED_IN_GROUP("402", "채팅방 접속은 같은 그룹에 속한 참여자끼리 가능합니다.");
 
     private final String code;
     private final String message;

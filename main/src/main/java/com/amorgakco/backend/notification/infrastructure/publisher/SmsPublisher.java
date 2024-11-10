@@ -18,9 +18,9 @@ public class SmsPublisher implements Publisher {
     public void publish(final NotificationRequest request) {
         if (request.receiver().isSmsNotificationActivated()) {
             rabbitTemplate.convertAndSend(
-                    ExchangeName.NOTIFICATION.getName(),
-                    RoutingKey.NOTIFICATION_SMS.getKey(),
-                    request);
+                ExchangeName.NOTIFICATION.getName(),
+                RoutingKey.NOTIFICATION_SMS.getKey(),
+                request);
         }
     }
 }

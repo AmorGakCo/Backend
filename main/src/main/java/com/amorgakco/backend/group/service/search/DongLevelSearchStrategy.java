@@ -1,9 +1,8 @@
 package com.amorgakco.backend.group.service.search;
 
 import com.amorgakco.backend.group.dto.GroupSearchRequest;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Component
 public class DongLevelSearchStrategy extends GroupSearchStrategy {

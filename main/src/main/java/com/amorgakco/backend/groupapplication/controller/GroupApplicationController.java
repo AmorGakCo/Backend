@@ -29,18 +29,18 @@ public class GroupApplicationController {
     @PostMapping("/{groupId}/participation/{memberId}")
     @ResponseStatus(HttpStatus.CREATED)
     public void approve(
-            @PathVariable final Long groupId,
-            @PathVariable final Long memberId,
-            @AuthMember final Member member) {
+        @PathVariable final Long groupId,
+        @PathVariable final Long memberId,
+        @AuthMember final Member member) {
         groupApplicationService.approve(groupId, memberId, member);
     }
 
     @PatchMapping("/{groupId}/participation/{memberId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void reject(
-            @PathVariable final Long groupId,
-            @PathVariable final Long memberId,
-            @AuthMemberId final Long hostId) {
+        @PathVariable final Long groupId,
+        @PathVariable final Long memberId,
+        @AuthMemberId final Long hostId) {
         groupApplicationService.reject(groupId, memberId, hostId);
     }
 }

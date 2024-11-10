@@ -6,30 +6,29 @@ import com.amorgakco.backend.notification.dto.NotificationMessage;
 import com.amorgakco.backend.notification.dto.NotificationMessageResponse;
 import com.amorgakco.backend.notification.infrastructure.consumer.NotificationRequest;
 import com.amorgakco.backend.notification.service.NotificationCreator;
-
 import java.util.List;
 
 public class TestNotificationFactory {
 
     public static NotificationMessageResponse notificationMessageResponse() {
         final List<NotificationMessage> notificationMessages =
-                List.of(notificationMessage(), notificationMessage(), notificationMessage());
+            List.of(notificationMessage(), notificationMessage(), notificationMessage());
         return NotificationMessageResponse.builder()
-                .page(0)
-                .hasNext(false)
-                .notificationMessages(notificationMessages)
-                .elementSize(notificationMessages.size())
-                .build();
+            .page(0)
+            .hasNext(false)
+            .notificationMessages(notificationMessages)
+            .elementSize(notificationMessages.size())
+            .build();
     }
 
     private static NotificationMessage notificationMessage() {
         final Member sender = TestMemberFactory.create(1L);
         final Member receiver = TestMemberFactory.create(2L);
         final NotificationRequest request =
-                NotificationCreator.participationRequest(sender, receiver, "mogakco");
+            NotificationCreator.participationRequest(sender, receiver, "mogakco");
         return NotificationMessage.builder()
-                .content(request.content())
-                .title(request.title())
-                .build();
+            .content(request.content())
+            .title(request.title())
+            .build();
     }
 }

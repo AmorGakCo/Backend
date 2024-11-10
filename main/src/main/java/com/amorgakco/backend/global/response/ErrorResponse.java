@@ -3,6 +3,7 @@ package com.amorgakco.backend.global.response;
 import com.amorgakco.backend.global.exception.ErrorCode;
 
 public record ErrorResponse(String status, String code, String message) {
+
     private static final String FAILURE = "failure";
 
     public ErrorResponse(final ErrorCode code) {

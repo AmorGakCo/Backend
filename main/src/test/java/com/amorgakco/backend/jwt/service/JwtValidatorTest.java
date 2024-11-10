@@ -1,25 +1,24 @@
 package com.amorgakco.backend.jwt.service;
 
-import com.amorgakco.backend.fixture.security.TestSecretKey;
-import com.amorgakco.backend.global.exception.ErrorCode;
-import com.amorgakco.backend.global.exception.JwtAuthenticationException;
-import com.amorgakco.backend.member.repository.MemberRepository;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.mock;
+
+import com.amorgakco.backend.fixture.security.TestSecretKey;
+import com.amorgakco.backend.global.exception.ErrorCode;
+import com.amorgakco.backend.global.exception.JwtAuthenticationException;
+import com.amorgakco.backend.member.repository.MemberRepository;
+import java.util.Optional;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class JwtValidatorTest {
 
     private static final String ERROR_CODE = "errorCode";
     private final MemberRepository memberRepository = mock(MemberRepository.class);
     private final JwtValidator jwtValidator =
-            new JwtValidator(memberRepository, TestSecretKey.create());
+        new JwtValidator(memberRepository, TestSecretKey.create());
     private final JwtCreator jwtCreator = new JwtCreator(TestSecretKey.create());
 
     @Test
@@ -30,8 +29,8 @@ class JwtValidatorTest {
         given(memberRepository.findByIdWithRoles(1L)).willReturn(Optional.empty());
         // when & then
         assertThatThrownBy(() -> jwtValidator.getAuthentication(accessToken))
-                .isInstanceOf(JwtAuthenticationException.class)
-                .hasFieldOrPropertyWithValue(ERROR_CODE, ErrorCode.MEMBER_NOT_FOUND);
+            .isInstanceOf(JwtAuthenticationException.class)
+            .hasFieldOrPropertyWithValue(ERROR_CODE, ErrorCode.MEMBER_NOT_FOUND);
     }
 
     @Test
@@ -41,8 +40,8 @@ class JwtValidatorTest {
         final String accessToken = jwtCreator.create("1", 0L);
         // when & then
         assertThatThrownBy(() -> jwtValidator.getAuthentication(accessToken))
-                .isInstanceOf(JwtAuthenticationException.class)
-                .hasFieldOrPropertyWithValue(ERROR_CODE, ErrorCode.ACCESS_TOKEN_EXPIRED);
+            .isInstanceOf(JwtAuthenticationException.class)
+            .hasFieldOrPropertyWithValue(ERROR_CODE, ErrorCode.ACCESS_TOKEN_EXPIRED);
     }
 
     @Test

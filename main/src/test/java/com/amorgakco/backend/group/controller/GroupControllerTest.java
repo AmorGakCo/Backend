@@ -1,32 +1,8 @@
 package com.amorgakco.backend.group.controller;
 
-import com.amorgakco.backend.docs.RestDocsTest;
-import com.amorgakco.backend.fixture.group.TestGroupFactory;
-import com.amorgakco.backend.fixture.member.TestMemberFactory;
-import com.amorgakco.backend.global.IdResponse;
-import com.amorgakco.backend.global.exception.ErrorCode;
-import com.amorgakco.backend.global.exception.GroupAuthorityException;
-import com.amorgakco.backend.global.exception.IllegalTimeException;
-import com.amorgakco.backend.group.dto.GroupBasicResponse;
-import com.amorgakco.backend.group.dto.GroupDetailResponse;
-import com.amorgakco.backend.group.dto.GroupRegisterRequest;
-import com.amorgakco.backend.group.service.GroupService;
-import com.amorgakco.backend.member.domain.Member;
-import com.amorgakco.backend.security.WithMockMember;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.ResultActions;
-
-import java.time.LocalDateTime;
-
 import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentRequest;
 import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doThrow;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -36,6 +12,26 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.amorgakco.backend.docs.RestDocsTest;
+import com.amorgakco.backend.fixture.group.TestGroupFactory;
+import com.amorgakco.backend.fixture.member.TestMemberFactory;
+import com.amorgakco.backend.global.exception.ErrorCode;
+import com.amorgakco.backend.global.exception.IllegalTimeException;
+import com.amorgakco.backend.group.dto.GroupBasicResponse;
+import com.amorgakco.backend.group.dto.GroupDetailResponse;
+import com.amorgakco.backend.group.dto.GroupRegisterRequest;
+import com.amorgakco.backend.group.dto.GroupRegisterResponse;
+import com.amorgakco.backend.group.service.GroupService;
+import com.amorgakco.backend.member.domain.Member;
+import com.amorgakco.backend.security.WithMockMember;
+import java.time.LocalDateTime;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.ResultActions;
 
 @WebMvcTest(GroupController.class)
 @WithMockMember
@@ -53,18 +49,18 @@ class GroupControllerTest extends RestDocsTest {
         final GroupRegisterRequest request = TestGroupFactory.groupRegisterRequest(beginAt, endAt);
         final Member host = TestMemberFactory.create(1L);
         given(memberService.getMember(1L)).willReturn(host);
-        given(groupService.register(request, host)).willReturn(new IdResponse(1L));
+        given(groupService.register(request, host)).willReturn(new GroupRegisterResponse(1L, 1L));
         // when
         final ResultActions actions =
-                mockMvc.perform(
-                        post("/groups")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(toRequestBody(request)));
+            mockMvc.perform(
+                post("/groups")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(toRequestBody(request)));
         // then
-        actions.andExpect(status().isCreated()).andExpect(jsonPath("$.data.id").value("1"));
+        actions.andExpect(status().isCreated()).andExpect(jsonPath("$.data.groupId").value("1"));
         // docs
         actions.andDo(print())
-                .andDo(document("group-register", getDocumentRequest(), getDocumentResponse()));
+            .andDo(document("group-register", getDocumentRequest(), getDocumentResponse()));
     }
 
     @Test
@@ -79,20 +75,20 @@ class GroupControllerTest extends RestDocsTest {
         given(groupService.register(request, host)).willThrow(IllegalTimeException.maxDuration());
         // when
         final ResultActions actions =
-                mockMvc.perform(
-                        post("/groups")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(toRequestBody(request)));
+            mockMvc.perform(
+                post("/groups")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(toRequestBody(request)));
         // then
         actions.andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.code").value(ErrorCode.MAX_DURATION.getCode()));
+            .andExpect(jsonPath("$.code").value(ErrorCode.MAX_DURATION.getCode()));
         // docs
         actions.andDo(print())
-                .andDo(
-                        document(
-                                "group-register-max-duration-exception",
-                                getDocumentRequest(),
-                                getDocumentResponse()));
+            .andDo(
+                document(
+                    "group-register-max-duration-exception",
+                    getDocumentRequest(),
+                    getDocumentResponse()));
     }
 
     @Test
@@ -107,20 +103,20 @@ class GroupControllerTest extends RestDocsTest {
         given(groupService.register(request, host)).willThrow(IllegalTimeException.minDuration());
         // when
         final ResultActions actions =
-                mockMvc.perform(
-                        post("/groups")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(toRequestBody(request)));
+            mockMvc.perform(
+                post("/groups")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(toRequestBody(request)));
         // then
         actions.andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.code").value(ErrorCode.MIN_DURATION.getCode()));
+            .andExpect(jsonPath("$.code").value(ErrorCode.MIN_DURATION.getCode()));
         // docs
         actions.andDo(print())
-                .andDo(
-                        document(
-                                "group-register-min-duration-exception",
-                                getDocumentRequest(),
-                                getDocumentResponse()));
+            .andDo(
+                document(
+                    "group-register-min-duration-exception",
+                    getDocumentRequest(),
+                    getDocumentResponse()));
     }
 
     @Test
@@ -133,23 +129,23 @@ class GroupControllerTest extends RestDocsTest {
         final Member host = TestMemberFactory.create(1L);
         given(memberService.getMember(1L)).willReturn(host);
         given(groupService.register(request, host))
-                .willThrow(IllegalTimeException.startTimeAfterEndTime());
+            .willThrow(IllegalTimeException.startTimeAfterEndTime());
         // when
         final ResultActions actions =
-                mockMvc.perform(
-                        post("/groups")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(toRequestBody(request)));
+            mockMvc.perform(
+                post("/groups")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(toRequestBody(request)));
         // then
         actions.andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.code").value(ErrorCode.START_TIME_AFTER_ENT_TIME.getCode()));
+            .andExpect(jsonPath("$.code").value(ErrorCode.START_TIME_AFTER_ENT_TIME.getCode()));
         // docs
         actions.andDo(print())
-                .andDo(
-                        document(
-                                "group-register-time-exception",
-                                getDocumentRequest(),
-                                getDocumentResponse()));
+            .andDo(
+                document(
+                    "group-register-time-exception",
+                    getDocumentRequest(),
+                    getDocumentResponse()));
     }
 
     @Test
@@ -159,19 +155,19 @@ class GroupControllerTest extends RestDocsTest {
         final GroupBasicResponse response = TestGroupFactory.groupBasicResponse();
         Member member = TestMemberFactory.create(1L);
         final Long groupId = 1L;
-        given(groupService.getBasicGroup(groupId,member)).willReturn(response);
+        given(groupService.getBasicGroup(groupId, member)).willReturn(response);
         // when
         final ResultActions actions = mockMvc.perform(get("/groups/{groupId}/basic", 1L));
         // then
         actions.andExpect(status().isOk());
         // docs
         actions.andDo(print())
-                .andDo(
-                        document(
-                                "group-get-basic",
-                                getDocumentRequest(),
-                                getDocumentResponse(),
-                                pathParameters(parameterWithName("groupId").description("그룹 ID"))));
+            .andDo(
+                document(
+                    "group-get-basic",
+                    getDocumentRequest(),
+                    getDocumentResponse(),
+                    pathParameters(parameterWithName("groupId").description("그룹 ID"))));
     }
 
     @Test
@@ -181,19 +177,19 @@ class GroupControllerTest extends RestDocsTest {
         final GroupDetailResponse response = TestGroupFactory.groupDetailResponse();
         final Long groupId = 1L;
         final Long memberId = 1L;
-        given(groupService.getDetailGroup(groupId,memberId)).willReturn(response);
+        given(groupService.getDetailGroup(groupId, memberId)).willReturn(response);
         // when
         final ResultActions actions = mockMvc.perform(get("/groups/{groupId}/detail", 1L));
         // then
         actions.andExpect(status().isOk());
         // docs
         actions.andDo(print())
-                .andDo(
-                        document(
-                                "group-get-detail",
-                                getDocumentRequest(),
-                                getDocumentResponse(),
-                                pathParameters(parameterWithName("groupId").description("그룹 ID"))));
+            .andDo(
+                document(
+                    "group-get-detail",
+                    getDocumentRequest(),
+                    getDocumentResponse(),
+                    pathParameters(parameterWithName("groupId").description("그룹 ID"))));
     }
 
     @Test
@@ -205,11 +201,11 @@ class GroupControllerTest extends RestDocsTest {
         actions.andExpect(status().isNoContent());
         // docs
         actions.andDo(print())
-                .andDo(
-                        document(
-                                "group-delete",
-                                getDocumentRequest(),
-                                getDocumentResponse(),
-                                pathParameters(parameterWithName("groupId").description("그룹 ID"))));
+            .andDo(
+                document(
+                    "group-delete",
+                    getDocumentRequest(),
+                    getDocumentResponse(),
+                    pathParameters(parameterWithName("groupId").description("그룹 ID"))));
     }
 }

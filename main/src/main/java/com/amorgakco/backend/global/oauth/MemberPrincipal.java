@@ -1,15 +1,14 @@
 package com.amorgakco.backend.global.oauth;
 
 import com.amorgakco.backend.member.domain.Roles;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 @Getter
 public class MemberPrincipal implements OAuth2User, UserDetails {
@@ -20,12 +19,12 @@ public class MemberPrincipal implements OAuth2User, UserDetails {
     private final String name;
 
     public MemberPrincipal(
-            final String name, final Map<String, Object> attributes, final List<Roles> roles) {
+        final String name, final Map<String, Object> attributes, final List<Roles> roles) {
         this.name = name;
         this.attributes = attributes;
         this.authorities =
-                AuthorityUtils.createAuthorityList(
-                        roles.stream().map(r -> r.getRole().toString()).toList());
+            AuthorityUtils.createAuthorityList(
+                roles.stream().map(r -> r.getRole().toString()).toList());
     }
 
     @Override

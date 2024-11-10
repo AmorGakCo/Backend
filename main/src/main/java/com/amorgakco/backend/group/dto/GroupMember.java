@@ -4,9 +4,10 @@ import lombok.Builder;
 
 @Builder
 public record GroupMember(
-        Long memberId,
-        String imgUrl,
-        String nickname,
-        Integer moGakCoTemperature,
-        String githubUrl) {
+    Long memberId,
+    String imgUrl,
+    String nickname,
+    Integer moGakCoTemperature,
+    String githubUrl) {
+
 }

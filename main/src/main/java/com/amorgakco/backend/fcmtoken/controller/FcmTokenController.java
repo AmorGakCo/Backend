@@ -21,7 +21,8 @@ public class FcmTokenController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void saveToken(
-            @RequestBody final FcmTokenSaveRequest fcmTokenSaveRequest, @AuthMemberId final Long memberId) {
+        @RequestBody final FcmTokenSaveRequest fcmTokenSaveRequest,
+        @AuthMemberId final Long memberId) {
         fcmTokenService.save(fcmTokenSaveRequest.fcmToken(), memberId);
     }
 }

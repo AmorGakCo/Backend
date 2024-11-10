@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class JwtAuthenticationException extends IllegalStateException {
+
     private final ErrorCode errorCode;
 
     public static JwtAuthenticationException accessTokenExpired() {

@@ -5,5 +5,6 @@ import lombok.Builder;
 
 @Builder
 public record Oauth2Member(
-        String oauth2Id, String imgUrl, String nickname, Oauth2ProviderType oauth2ProviderType) {
+    String oauth2Id, String imgUrl, String nickname, Oauth2ProviderType oauth2ProviderType) {
+
 }

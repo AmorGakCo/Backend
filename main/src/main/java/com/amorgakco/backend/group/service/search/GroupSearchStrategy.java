@@ -6,12 +6,12 @@ import com.google.common.geometry.S2CellId;
 import com.google.common.geometry.S2LatLng;
 import com.google.common.geometry.S2LatLngRect;
 import com.google.common.geometry.S2RegionCoverer;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public abstract class GroupSearchStrategy {
+
     public abstract boolean isValid(double diagonalSize);
 
     public List<String> selectCellTokens(final GroupSearchRequest request) {
@@ -22,10 +22,10 @@ public abstract class GroupSearchStrategy {
     protected final List<String> getCoveringCells(final GroupSearchRequest request) {
         final S2LatLngRect rectangle = createRectangle(request);
         final S2RegionCoverer coverer =
-                S2RegionCoverer.builder()
-                        .setMinLevel(GoogleS2Const.S2_CELL_LEVEL.getValue())
-                        .setMaxLevel(GoogleS2Const.S2_CELL_LEVEL.getValue())
-                        .build();
+            S2RegionCoverer.builder()
+                .setMinLevel(GoogleS2Const.S2_CELL_LEVEL.getValue())
+                .setMaxLevel(GoogleS2Const.S2_CELL_LEVEL.getValue())
+                .build();
         final ArrayList<S2CellId> cellIds = new ArrayList<>();
         coverer.getCovering(rectangle, cellIds);
         return cellIds.stream().map(S2CellId::toToken).toList();
@@ -33,14 +33,14 @@ public abstract class GroupSearchStrategy {
 
     private List<String> findHalfOfCells(final List<String> cellTokens) {
         return IntStream.range(0, cellTokens.size() - 1)
-                .filter(i -> i % 2==0)
-                .mapToObj(cellTokens::get)
-                .toList();
+            .filter(i -> i % 2 == 0)
+            .mapToObj(cellTokens::get)
+            .toList();
     }
 
     public S2LatLngRect createRectangle(final GroupSearchRequest request) {
         return S2LatLngRect.fromPointPair(
-                S2LatLng.fromDegrees(request.southWestLat(), request.southWestLon()),
-                S2LatLng.fromDegrees(request.northEastLat(), request.northEastLon()));
+            S2LatLng.fromDegrees(request.southWestLat(), request.southWestLon()),
+            S2LatLng.fromDegrees(request.northEastLat(), request.northEastLon()));
     }
 }

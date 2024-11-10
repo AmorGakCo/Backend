@@ -11,11 +11,11 @@ import org.springframework.web.service.annotation.PostExchange;
 public interface KakaoRestClient {
 
     @PostExchange(
-            url = "https://kauth.kakao.com/oauth/token",
-            contentType = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+        url = "https://kauth.kakao.com/oauth/token",
+        contentType = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     KakaoAuthorization getKakaoAccessToken(@RequestParam MultiValueMap<String, String> params);
 
     @GetExchange("https://kapi.kakao.com/v2/user/me")
     KakaoMemberResponse getKakaoMember(
-            @RequestHeader(name = HttpHeaders.AUTHORIZATION) String bearerToken);
+        @RequestHeader(name = HttpHeaders.AUTHORIZATION) String bearerToken);
 }

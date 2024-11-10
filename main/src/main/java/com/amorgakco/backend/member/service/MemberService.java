@@ -19,21 +19,22 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class MemberService {
+
     private final MemberRepository memberRepository;
     private final MemberMapper memberMapper;
 
     @Transactional
     public Long updateOrSave(final Oauth2Member oauth2Member) {
         return memberRepository
-                .findByOauth2ProviderAndOauth2Id(
-                        oauth2Member.oauth2ProviderType(), oauth2Member.oauth2Id())
-                .map(
-                        existingMember -> {
-                            existingMember.updateNicknameAndImgUrl(
-                                    oauth2Member.nickname(), oauth2Member.imgUrl());
-                            return existingMember.getId();
-                        })
-                .orElseGet(() -> createMember(oauth2Member));
+            .findByOauth2ProviderAndOauth2Id(
+                oauth2Member.oauth2ProviderType(), oauth2Member.oauth2Id())
+            .map(
+                existingMember -> {
+                    existingMember.updateNicknameAndImgUrl(
+                        oauth2Member.nickname(), oauth2Member.imgUrl());
+                    return existingMember.getId();
+                })
+            .orElseGet(() -> createMember(oauth2Member));
     }
 
     private Long createMember(final Oauth2Member oauth2Member) {
@@ -45,18 +46,18 @@ public class MemberService {
     public void updateAdditionalInfo(final AdditionalInfoRequest request, final Long memberId) {
         final Member member = getMember(memberId);
         final String memberCellToken =
-                createMemberCellToken(request.latitude(), request.longitude());
+            createMemberCellToken(request.latitude(), request.longitude());
         member.validateAndUpdateAdditionalInfo(
-                request.githubUrl(),
-                request.phoneNumber(),
-                request.smsNotificationSetting(),
-                memberCellToken);
+            request.githubUrl(),
+            request.phoneNumber(),
+            request.smsNotificationSetting(),
+            memberCellToken);
     }
 
     public Member getMember(final Long memberId) {
         return memberRepository
-                .findByIdWithRoles(memberId)
-                .orElseThrow(ResourceNotFoundException::memberNotFound);
+            .findByIdWithRoles(memberId)
+            .orElseThrow(ResourceNotFoundException::memberNotFound);
     }
 
     private String createMemberCellToken(final double latitude, final double longitude) {

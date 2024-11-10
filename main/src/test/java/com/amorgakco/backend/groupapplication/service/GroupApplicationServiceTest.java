@@ -1,5 +1,9 @@
 package com.amorgakco.backend.groupapplication.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+
 import com.amorgakco.backend.fixture.group.TestGroupFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.group.domain.Group;
@@ -17,10 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.transaction.annotation.Transactional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 
 @SpringBootTest
 @Transactional
@@ -51,9 +51,11 @@ class GroupApplicationServiceTest {
         doNothing().when(notificationPublisherFacade).send(any(NotificationRequest.class));
         groupApplicationService.apply(group.getId(), requestMember.getId());
         // then
-        GroupApplication groupApplication = groupApplicationRepository.findByGroupIdAndMemberId(group.getId(), requestMember.getId()).get();
+        GroupApplication groupApplication = groupApplicationRepository.findByGroupIdAndMemberId(
+            group.getId(), requestMember.getId()).get();
         assertThat(groupApplication.getParticipant().getId()).isEqualTo(requestMember.getId());
-        assertThat(groupApplication.getGroupApplicationStatus()).isEqualTo(GroupApplicationStatus.PENDING);
+        assertThat(groupApplication.getGroupApplicationStatus()).isEqualTo(
+            GroupApplicationStatus.PENDING);
 
     }
 
@@ -71,8 +73,10 @@ class GroupApplicationServiceTest {
         // when
         groupApplicationService.approve(group.getId(), member.getId(), host);
         // then
-        GroupApplication groupApplication = groupApplicationRepository.findByGroupIdAndMemberId(group.getId(), member.getId()).get();
-        assertThat(groupApplication.getGroupApplicationStatus()).isEqualTo(GroupApplicationStatus.APPROVED);
+        GroupApplication groupApplication = groupApplicationRepository.findByGroupIdAndMemberId(
+            group.getId(), member.getId()).get();
+        assertThat(groupApplication.getGroupApplicationStatus()).isEqualTo(
+            GroupApplicationStatus.APPROVED);
     }
 
     @Test
@@ -89,7 +93,9 @@ class GroupApplicationServiceTest {
         // when
         groupApplicationService.reject(group.getId(), member.getId(), host.getId());
         // then
-        GroupApplication groupApplication = groupApplicationRepository.findByGroupIdAndMemberId(group.getId(), member.getId()).get();
-        assertThat(groupApplication.getGroupApplicationStatus()).isEqualTo(GroupApplicationStatus.REJECTED);
+        GroupApplication groupApplication = groupApplicationRepository.findByGroupIdAndMemberId(
+            group.getId(), member.getId()).get();
+        assertThat(groupApplication.getGroupApplicationStatus()).isEqualTo(
+            GroupApplicationStatus.REJECTED);
     }
 }

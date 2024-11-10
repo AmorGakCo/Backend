@@ -18,7 +18,7 @@ public class FcmPublisher implements Publisher {
     @Override
     public void publish(final NotificationRequest request) {
         rabbitTemplate.convertAndSend(
-                ExchangeName.NOTIFICATION.getName(), RoutingKey.NOTIFICATION_FCM.getKey(), request);
+            ExchangeName.NOTIFICATION.getName(), RoutingKey.NOTIFICATION_FCM.getKey(), request);
         //        final Long receiverId = request.receiver().getId();
         //        fcmTokenRepository
         //                .findById(receiverId.toString())

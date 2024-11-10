@@ -6,5 +6,6 @@ import lombok.Builder;
 
 @Builder
 public record NotificationRequest(
-        String title, SendingType sendingType, String content, Member receiver) {
+    String title, SendingType sendingType, String content, Member receiver) {
+
 }

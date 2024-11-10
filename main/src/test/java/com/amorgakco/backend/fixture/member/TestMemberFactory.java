@@ -25,46 +25,46 @@ public class TestMemberFactory {
 
     public static Member createEntity() {
         return Member.builder()
-                .nickname(NICKNAME)
-                .oauth2Id(OAUTH2_ID)
-                .imgUrl(IMG_URL)
-                .oauth2ProviderType(OAUTH2_PROVIDER)
-                .build();
+            .nickname(NICKNAME)
+            .oauth2Id(OAUTH2_ID)
+            .imgUrl(IMG_URL)
+            .oauth2ProviderType(OAUTH2_PROVIDER)
+            .build();
     }
 
     public static AdditionalInfoRequest createAdditionalInfoRequest(
-            final boolean smsNotificationSetting) {
+        final boolean smsNotificationSetting) {
         return AdditionalInfoRequest.builder()
-                .githubUrl(GITHUB_URL)
-                .phoneNumber(PHONE_NUMBER)
-                .smsNotificationSetting(smsNotificationSetting)
-                .latitude(LATITUDE)
-                .longitude(LONGITUDE)
-                .build();
+            .githubUrl(GITHUB_URL)
+            .phoneNumber(PHONE_NUMBER)
+            .smsNotificationSetting(smsNotificationSetting)
+            .latitude(LATITUDE)
+            .longitude(LONGITUDE)
+            .build();
     }
 
     public static PrivateMemberResponse privateMemberResponse() {
         return PrivateMemberResponse.builder()
-                .githubUrl(GITHUB_URL)
-                .phoneNumber(PHONE_NUMBER)
-                .moGakCoTemperature(MOGAKCO_TEMPERATURE)
-                .smsNotificationSetting(true)
-                .build();
+            .githubUrl(GITHUB_URL)
+            .phoneNumber(PHONE_NUMBER)
+            .moGakCoTemperature(MOGAKCO_TEMPERATURE)
+            .smsNotificationSetting(true)
+            .build();
     }
 
     public static Oauth2MemberResponse oauth2MemberResponse(final String memberId) {
         return Oauth2MemberResponse.builder()
-                .imgUrl(IMG_URL)
-                .memberId(memberId)
-                .nickname(NICKNAME)
-                .build();
+            .imgUrl(IMG_URL)
+            .memberId(memberId)
+            .nickname(NICKNAME)
+            .build();
     }
 
     public static Oauth2LoginResponse loginResponse(
-            final String memberId, final Oauth2MemberResponse oauth2MemberResponse) {
+        final String memberId, final Oauth2MemberResponse oauth2MemberResponse) {
         return Oauth2LoginResponse.builder()
-                .oauth2MemberResponse(oauth2MemberResponse)
-                .accessToken("access-token")
-                .build();
+            .oauth2MemberResponse(oauth2MemberResponse)
+            .accessToken("access-token")
+            .build();
     }
 }

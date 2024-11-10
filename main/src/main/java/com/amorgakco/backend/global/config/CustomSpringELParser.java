@@ -5,6 +5,10 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 
 public class CustomSpringELParser {
+
+    private CustomSpringELParser() {
+    }
+
     public static Object getDynamicValue(String[] parameterNames, Object[] args, String key) {
         ExpressionParser parser = new SpelExpressionParser();
         StandardEvaluationContext context = new StandardEvaluationContext();
@@ -14,8 +18,5 @@ public class CustomSpringELParser {
         }
 
         return parser.parseExpression(key).getValue(context, Object.class);
-    }
-
-    private CustomSpringELParser() {
     }
 }

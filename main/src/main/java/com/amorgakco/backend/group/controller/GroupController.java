@@ -1,11 +1,11 @@
 package com.amorgakco.backend.group.controller;
 
-import com.amorgakco.backend.global.IdResponse;
 import com.amorgakco.backend.global.argumentresolver.AuthMember;
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
 import com.amorgakco.backend.group.dto.GroupDetailResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
+import com.amorgakco.backend.group.dto.GroupRegisterResponse;
 import com.amorgakco.backend.group.service.GroupService;
 import com.amorgakco.backend.member.domain.Member;
 import lombok.RequiredArgsConstructor;
@@ -28,20 +28,21 @@ public class GroupController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public IdResponse register(
-            @RequestBody final GroupRegisterRequest groupRegisterRequest,
-            @AuthMember final Member host) {
+    public GroupRegisterResponse register(
+        @RequestBody final GroupRegisterRequest groupRegisterRequest,
+        @AuthMember final Member host) {
         return groupService.register(groupRegisterRequest, host);
     }
 
     @GetMapping("/{groupId}/basic")
     public GroupBasicResponse getGroupBasic(
-            @PathVariable final Long groupId, @AuthMember final Member member) {
+        @PathVariable final Long groupId, @AuthMember final Member member) {
         return groupService.getBasicGroup(groupId, member);
     }
 
     @GetMapping("/{groupId}/detail")
-    public GroupDetailResponse getGroupDetail(@PathVariable final Long groupId, @AuthMemberId final Long memberId) {
+    public GroupDetailResponse getGroupDetail(@PathVariable final Long groupId,
+        @AuthMemberId final Long memberId) {
         return groupService.getDetailGroup(groupId, memberId);
     }
 

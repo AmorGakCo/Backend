@@ -1,5 +1,14 @@
 package com.amorgakco.backend.member.controller;
 
+import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentRequest;
+import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.amorgakco.backend.docs.RestDocsTest;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.member.dto.AdditionalInfoRequest;
@@ -10,15 +19,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
-
-import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentRequest;
-import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MemberController.class)
 class MemberControllerTest extends RestDocsTest {
@@ -31,20 +31,20 @@ class MemberControllerTest extends RestDocsTest {
         final AdditionalInfoRequest request = TestMemberFactory.createAdditionalInfoRequest(true);
 
         final ResultActions actions =
-                // when
-                mockMvc.perform(
-                        patch("/members")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(toRequestBody(request)));
+            // when
+            mockMvc.perform(
+                patch("/members")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(toRequestBody(request)));
         // then
         actions.andExpect(status().isNoContent());
         // docs
         actions.andDo(print())
-                .andDo(
-                        document(
-                                "member-save-additional-info",
-                                getDocumentRequest(),
-                                getDocumentResponse()));
+            .andDo(
+                document(
+                    "member-save-additional-info",
+                    getDocumentRequest(),
+                    getDocumentResponse()));
     }
 
     @Test
@@ -54,7 +54,7 @@ class MemberControllerTest extends RestDocsTest {
         // given
         final Long memberId = 1L;
         final PrivateMemberResponse privateMemberResponse =
-                TestMemberFactory.privateMemberResponse();
+            TestMemberFactory.privateMemberResponse();
         given(memberService.getPrivateMember(memberId)).willReturn(privateMemberResponse);
         // when
         final ResultActions actions = mockMvc.perform(get("/members/private"));
@@ -62,6 +62,6 @@ class MemberControllerTest extends RestDocsTest {
         actions.andExpect(status().isOk());
         // docs
         actions.andDo(print())
-                .andDo(document("member-private", getDocumentRequest(), getDocumentResponse()));
+            .andDo(document("member-private", getDocumentRequest(), getDocumentResponse()));
     }
 }

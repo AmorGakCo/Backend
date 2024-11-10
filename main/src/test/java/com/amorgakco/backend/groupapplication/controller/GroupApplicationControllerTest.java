@@ -1,14 +1,5 @@
 package com.amorgakco.backend.groupapplication.controller;
 
-import com.amorgakco.backend.docs.RestDocsTest;
-import com.amorgakco.backend.groupapplication.service.GroupApplicationService;
-import com.amorgakco.backend.security.WithMockMember;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.ResultActions;
-
 import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentRequest;
 import static com.amorgakco.backend.docs.ApiDocsUtils.getDocumentResponse;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -18,6 +9,15 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.amorgakco.backend.docs.RestDocsTest;
+import com.amorgakco.backend.groupapplication.service.GroupApplicationService;
+import com.amorgakco.backend.security.WithMockMember;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.ResultActions;
 
 @WebMvcTest(GroupApplicationController.class)
 class GroupApplicationControllerTest extends RestDocsTest {
@@ -35,13 +35,13 @@ class GroupApplicationControllerTest extends RestDocsTest {
         actions.andExpect(status().isCreated());
         // docs
         actions.andDo(print())
-                .andDo(
-                        document(
-                                "groups-participation",
-                                getDocumentRequest(),
-                                getDocumentResponse(),
-                                pathParameters(
-                                        parameterWithName("groupId").description("참여할 그룹 ID"))));
+            .andDo(
+                document(
+                    "groups-participation",
+                    getDocumentRequest(),
+                    getDocumentResponse(),
+                    pathParameters(
+                        parameterWithName("groupId").description("참여할 그룹 ID"))));
     }
 
     @Test
@@ -50,19 +50,19 @@ class GroupApplicationControllerTest extends RestDocsTest {
     void approveParticipation() throws Exception {
         // when
         final ResultActions actions =
-                mockMvc.perform(post("/groups/{groupId}/participation/{memberId}", 1L, 2L));
+            mockMvc.perform(post("/groups/{groupId}/participation/{memberId}", 1L, 2L));
         // then
         actions.andExpect(status().isCreated());
         // docs
         actions.andDo(print())
-                .andDo(
-                        document(
-                                "groups-participation-approve",
-                                getDocumentRequest(),
-                                getDocumentResponse(),
-                                pathParameters(
-                                        parameterWithName("groupId").description("참여할 그룹 ID"),
-                                        parameterWithName("memberId").description("참여 요청 회원 ID"))));
+            .andDo(
+                document(
+                    "groups-participation-approve",
+                    getDocumentRequest(),
+                    getDocumentResponse(),
+                    pathParameters(
+                        parameterWithName("groupId").description("참여할 그룹 ID"),
+                        parameterWithName("memberId").description("참여 요청 회원 ID"))));
     }
 
     @Test
@@ -71,18 +71,18 @@ class GroupApplicationControllerTest extends RestDocsTest {
     void rejectParticipation() throws Exception {
         // when
         final ResultActions actions =
-                mockMvc.perform(patch("/groups/{groupId}/participation/{memberId}", 1L, 2L));
+            mockMvc.perform(patch("/groups/{groupId}/participation/{memberId}", 1L, 2L));
         // then
         actions.andExpect(status().isNoContent());
         // docs
         actions.andDo(print())
-                .andDo(
-                        document(
-                                "groups-participation-reject",
-                                getDocumentRequest(),
-                                getDocumentResponse(),
-                                pathParameters(
-                                        parameterWithName("groupId").description("참여할 그룹 ID"),
-                                        parameterWithName("memberId").description("참여 요청 회원 ID"))));
+            .andDo(
+                document(
+                    "groups-participation-reject",
+                    getDocumentRequest(),
+                    getDocumentResponse(),
+                    pathParameters(
+                        parameterWithName("groupId").description("참여할 그룹 ID"),
+                        parameterWithName("memberId").description("참여 요청 회원 ID"))));
     }
 }

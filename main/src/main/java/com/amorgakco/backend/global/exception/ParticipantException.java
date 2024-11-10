@@ -18,4 +18,8 @@ public class ParticipantException extends IllegalStateException {
     public static ParticipantException notSameGroupParticipant() {
         return new ParticipantException(ErrorCode.NOT_SAME_GROUP_PARTICIPANT);
     }
+
+    public static ParticipantException notParticipatedInGroup() {
+        return new ParticipantException(ErrorCode.NOT_PARTICIPATED_IN_GROUP);
+    }
 }

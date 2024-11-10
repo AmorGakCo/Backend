@@ -36,10 +36,10 @@ public class Notification extends BaseTime {
 
     @Builder
     public Notification(
-            final String title,
-            final String content,
-            final Member receiver,
-            final SendingType sendingType) {
+        final String title,
+        final String content,
+        final Member receiver,
+        final SendingType sendingType) {
         this.title = title;
         this.content = content;
         this.receiver = receiver;

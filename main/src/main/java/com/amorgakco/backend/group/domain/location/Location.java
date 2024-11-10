@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Location {
+
     // 위치 인증 허용 반경 : 50m
     private static final double VERIFICATION_RADIUS_LIMIT = 50;
     // 탐색 허용 반경 : 3000m
@@ -27,12 +28,12 @@ public class Location {
         this.longitude = longitude;
         final S2Point point = S2LatLng.fromDegrees(latitude, longitude).toPoint();
         this.cellToken =
-                S2CellId.fromPoint(point).parent(GoogleS2Const.S2_CELL_LEVEL.getValue()).toToken();
+            S2CellId.fromPoint(point).parent(GoogleS2Const.S2_CELL_LEVEL.getValue()).toToken();
     }
 
     public boolean isNotInBoundary(final double longitude, final double latitude) {
         final double distance =
-                LocationCalculator.getDistance(this.longitude, this.latitude, longitude, latitude);
+            LocationCalculator.getDistance(this.longitude, this.latitude, longitude, latitude);
         return distance > VERIFICATION_RADIUS_LIMIT;
     }
 }

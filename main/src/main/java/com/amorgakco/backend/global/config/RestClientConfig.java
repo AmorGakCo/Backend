@@ -15,7 +15,7 @@ public class RestClientConfig {
         final RestClient restClient = RestClient.create();
         final RestClientAdapter restClientAdapter = RestClientAdapter.create(restClient);
         final HttpServiceProxyFactory factory =
-                HttpServiceProxyFactory.builderFor(restClientAdapter).build();
+            HttpServiceProxyFactory.builderFor(restClientAdapter).build();
         return factory.createClient(KakaoRestClient.class);
     }
 }

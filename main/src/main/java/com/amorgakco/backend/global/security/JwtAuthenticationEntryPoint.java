@@ -14,15 +14,15 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     private final HandlerExceptionResolver resolver;
 
     public JwtAuthenticationEntryPoint(
-            @Qualifier("handlerExceptionResolver") final HandlerExceptionResolver resolver) {
+        @Qualifier("handlerExceptionResolver") final HandlerExceptionResolver resolver) {
         this.resolver = resolver;
     }
 
     @Override
     public void commence(
-            final HttpServletRequest request,
-            final HttpServletResponse response,
-            final AuthenticationException authException) {
+        final HttpServletRequest request,
+        final HttpServletResponse response,
+        final AuthenticationException authException) {
         resolver.resolveException(request, response, null, authException);
     }
 }
