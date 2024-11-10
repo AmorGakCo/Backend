@@ -25,8 +25,8 @@ public class ChatRoomController {
 
     @GetMapping
     public ChatRoomListResponse getChatRoomList(@AuthMember final Member member,
-        @RequestParam final Integer page) {
-        return chatRoomService.getChatRoomList(member, page);
+        @RequestParam final Integer page, @RequestParam final Integer size) {
+        return chatRoomService.getChatRoomList(member, page,size);
     }
 
     @PostMapping("/{chatRoomId}")

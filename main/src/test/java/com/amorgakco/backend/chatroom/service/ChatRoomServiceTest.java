@@ -3,7 +3,6 @@ package com.amorgakco.backend.chatroom.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.amorgakco.backend.chatroom.domain.ChatRoom;
-import com.amorgakco.backend.chatroom.dto.ChatRoomResponse;
 import com.amorgakco.backend.chatroom.repository.ChatRoomRepository;
 import com.amorgakco.backend.chatroomparticipant.domain.ChatRoomParticipant;
 import com.amorgakco.backend.chatroomparticipant.repository.ChatRoomParticipantRepository;
@@ -65,7 +64,7 @@ class ChatRoomServiceTest {
         chatRoomService.participateChatRoom(member, chatRoomId);
         // then
         ChatRoomParticipant chatRoomParticipant =
-            chatRoomParticipantRepository.findByMemberAndChatRoomId(
+            chatRoomParticipantRepository.findByMemberAndId(
             member, chatRoomId).get();
         assertThat(chatRoomParticipant.getMember().getId()).isEqualTo(member.getId());
     }
@@ -87,7 +86,7 @@ class ChatRoomServiceTest {
         chatRoomService.exitChatRoom(member, chatRoomId);
         // then
         Optional<ChatRoomParticipant> chatRoomParticipant =
-            chatRoomParticipantRepository.findByMemberAndChatRoomId(
+            chatRoomParticipantRepository.findByMemberAndId(
             member, chatRoomId);
         assertThat(chatRoomParticipant).isNotPresent();
     }

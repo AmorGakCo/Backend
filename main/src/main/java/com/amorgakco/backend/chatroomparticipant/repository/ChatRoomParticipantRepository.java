@@ -15,7 +15,7 @@ public interface ChatRoomParticipantRepository extends JpaRepository<ChatRoomPar
 
     @Query("select crp from ChatRoomParticipant crp join fetch crp.member where crp.member "
         + "=:member and crp.chatRoom.id=:chatRoomId")
-    Optional<ChatRoomParticipant> findByMemberAndChatRoomId(final Member member,
+    Optional<ChatRoomParticipant> findByMemberAndId(final Member member,
         final Long chatRoomId);
 
     @Query("select crp from ChatRoomParticipant crp join fetch crp.chatRoom where crp.member = "

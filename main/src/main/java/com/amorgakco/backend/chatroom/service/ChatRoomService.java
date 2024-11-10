@@ -24,9 +24,9 @@ public class ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatRoomMapper chatRoomMapper;
 
-    public ChatRoomListResponse getChatRoomList(final Member member, final Integer page) {
+    public ChatRoomListResponse getChatRoomList(final Member member, final Integer page, final Integer size) {
         Slice<ChatRoom> participatedChatRooms = chatRoomParticipantService.getParticipatedChatRooms(
-            member, page);
+            member, page,size);
         return chatRoomMapper.toChatRoomListResponse(participatedChatRooms);
     }
 
