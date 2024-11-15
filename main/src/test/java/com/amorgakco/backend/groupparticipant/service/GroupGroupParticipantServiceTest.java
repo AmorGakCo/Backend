@@ -15,7 +15,7 @@ import com.amorgakco.backend.groupparticipant.dto.GroupParticipationHistoryRespo
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.repository.MemberRepository;
 import com.amorgakco.backend.notification.infrastructure.NotificationPublisherFacade;
-import com.amorgakco.backend.notification.infrastructure.consumer.NotificationRequest;
+import com.amorgakco.backend.notification.dto.NotificationRequest;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

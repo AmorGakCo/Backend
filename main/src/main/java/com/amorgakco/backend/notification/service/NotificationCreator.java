@@ -3,7 +3,7 @@ package com.amorgakco.backend.notification.service;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.notification.domain.NotificationType;
 import com.amorgakco.backend.notification.domain.SendingType;
-import com.amorgakco.backend.notification.infrastructure.consumer.NotificationRequest;
+import com.amorgakco.backend.notification.dto.NotificationRequest;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

@@ -1,9 +1,10 @@
 package com.amorgakco.backend.notification.service.mapper;
 
 import com.amorgakco.backend.notification.domain.Notification;
+import com.amorgakco.backend.notification.dto.FcmMessageRequest;
 import com.amorgakco.backend.notification.dto.NotificationMessage;
 import com.amorgakco.backend.notification.dto.NotificationMessageResponse;
-import com.amorgakco.backend.notification.infrastructure.consumer.NotificationRequest;
+import com.amorgakco.backend.notification.dto.NotificationRequest;
 import java.util.List;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Component;
