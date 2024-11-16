@@ -21,6 +21,7 @@ import com.amorgakco.backend.fixture.chatroom.TestChatRoomFactory;
 import com.amorgakco.backend.fixture.member.TestMemberFactory;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.security.WithMockMember;
+import jakarta.persistence.criteria.CriteriaBuilder.In;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -80,17 +81,19 @@ class ChatRoomControllerTest extends RestDocsTest {
         // given
         final Member member = TestMemberFactory.create(1L);
         final Integer page = 0;
+        final Integer size = 3;
         ChatRoomListResponse response = TestChatRoomFactory.getChatRoomListResponse();
         given(memberService.getMember(1L)).willReturn(member);
-        given(chatRoomService.getChatRoomList(member, page)).willReturn(response);
+        given(chatRoomService.getChatRoomList(member, page,size)).willReturn(response);
         // when
         final ResultActions actions =
             mockMvc.perform(
                 get("/chat-rooms")
-                    .queryParam("page", page.toString()));
+                    .queryParam("page", page.toString())
+                    .queryParam("size",size.toString()));
         // then
         actions.andExpect(status().isOk())
-            .andExpect(jsonPath("$.data.elementSize").value("3"));
+            .andExpect(jsonPath("$.data.elementSize").value(size));
         actions.andDo(print())
             .andDo(document("chat-room-list", getDocumentRequest(), getDocumentResponse()));
     }

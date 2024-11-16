@@ -1,8 +1,10 @@
-name: AmorGakCo CD
+name: AmorGakCo Main Server CD
 on:
   push:
     branches:
       - main
+    paths:
+      - 'main/**'
 
 jobs:
   deploy:
@@ -11,9 +13,9 @@ jobs:
       - name: ssh access
         uses: appleboy/ssh-action@master
         with:
-          host: ${{secrets.GCP_HOST}}
+          host: ${{secrets.GCP_MAIN_HOST}}
           username: ${{secrets.GCP_USERNAME}}
-          key: ${{secrets.GCP_SECRET}}
+          key: ${{secrets.GCP_MAIN_SECRET}}
           script: |
             cd Backend/main
             git pull

@@ -20,7 +20,7 @@ operation::group-get-basic[snippets='path-parameters,http-request,http-response'
 
 === 그룹 단건 조회 [상세페이지용]
 
-operation::group-get-detail[snippets='path-parameters,path-parameters,http-request,http-response']
+operation::group-get-detail[snippets='path-parameters,http-request,http-response']
 
 === 주변 그룹 조회
 

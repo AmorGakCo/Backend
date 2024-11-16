@@ -69,6 +69,8 @@ public class TestGroupFactory {
     public static GroupBasicResponse groupBasicResponse() {
         final Member member = TestMemberFactory.create(1L);
         return GroupBasicResponse.builder()
+            .isParticipationRequested(true)
+            .isParticipated(true)
             .hostNickname(member.getNickname())
             .groupCapacity(GROUP_CAPACITY)
             .address(ADDRESS)

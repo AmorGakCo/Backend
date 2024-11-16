@@ -1,0 +1,24 @@
+name: AmorGakCo Notification Server CD
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'notification/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ssh access
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.GCP_NOTIFICATION_HOST}}
+          username: ${{secrets.GCP_USERNAME}}
+          key: ${{secrets.GCP_NOTIFICATION_SECRET}}
+          script: |
+            cd Backend/main
+            git pull
+            sudo docker-compose down -v
+            sudo docker images prune
+            sudo docker-compose up -d --build
