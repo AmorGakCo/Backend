@@ -17,15 +17,7 @@ public class FcmWebPushConsumer {
 
     @RabbitListener(queues = "fcm")
     public void send(final FcmMessageRequest request) {
-        slackSender.sendFcmMessage(request);
-        //        fcmTokenRepository
-        //                .findById(request.receiver().getId().toString())
-        //                .ifPresent(
-        //                        token ->
-        //                                createMessage(
-        //                                        token.getToken(),
-        //                                        request.notificationContent().getTitle(),
-        //                                        request.content()));
+        createMessage(request.token(),request.title(),request.content());
     }
 
     public Message createMessage(final String token, final String title, final String content) {
