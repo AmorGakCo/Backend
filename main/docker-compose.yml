@@ -11,22 +11,7 @@ services:
     restart: always
     tty: true
     environment:
-      SPRING_PROFILES_ACTIVE: dev
-
-  db:
-    image: mysql:latest
-    container_name: db
-    ports:
-      - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: amorgakco
-      TZ: Asia/Seoul
-    volumes:
-      - ./docker/mysql/:/var/lib/mysql
-    restart: always
-    networks:
-      amorgakco-dev:
+      SPRING_PROFILES_ACTIVE: dev-gcp
   
   redis:
     image: redis:latest
@@ -37,18 +22,6 @@ services:
       amorgakco-dev:
     restart: always
     tty: true
-
-  rabbitmq:
-    image: rabbitmq:3-management-alpine
-    container_name: "rabbitmq"
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    volumes:
-      - ./docker/rabbitmq/data/:/var/lib/rabbitmq/
-      - ./docker/rabbitmq/log/:/var/log/rabbitmq
-    networks:
-      amorgakco-dev:
 
 networks:
   amorgakco-dev:

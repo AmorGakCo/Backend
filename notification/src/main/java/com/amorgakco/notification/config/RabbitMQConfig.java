@@ -24,6 +24,9 @@ public class RabbitMQConfig {
         final SimpleRabbitListenerContainerFactory factory =
             new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
+        factory.setPrefetchCount(0);
+        factory.setConcurrentConsumers(3);
+        factory.setMaxConcurrentConsumers(5);
         return factory;
     }
 
