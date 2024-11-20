@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./
+    container_name: notification
+    ports:
+      - "8080:8080"
+    networks:
+      amorgakco-dev:
+    restart: always
+    tty: true
+
+networks:
+  amorgakco-dev:
+
