@@ -103,7 +103,7 @@ public class Group extends BaseTime {
     }
 
     public boolean isMemberParticipated(final Long memberId) {
-        return !groupParticipants.stream().anyMatch(p -> p.isParticipant(memberId));
+        return groupParticipants.stream().anyMatch(p -> p.isParticipant(memberId));
     }
 
     public void validateGroupHost(final Member member) {
