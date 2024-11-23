@@ -10,6 +10,8 @@ services:
       amorgakco-dev:
     restart: always
     tty: true
+    environment:
+      SPRING_PROFILES_ACTIVE: dev-gcp
 
 networks:
   amorgakco-dev:
