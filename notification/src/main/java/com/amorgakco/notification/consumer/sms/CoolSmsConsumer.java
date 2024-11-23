@@ -37,17 +37,16 @@ public class CoolSmsConsumer implements SmsConsumer {
     public void consume(
             final SmsMessageRequest request, final Channel channel, final Envelope envelope)
             throws IOException {
-        //        slackSender.sendSmsMessage(request);
-        final long deliveryTag = envelope.getDeliveryTag();
-        try {
-            messageService.send(createMessage(request));
-            channel.basicAck(deliveryTag, false);
-        } catch (NurigoEmptyResponseException
-                | NurigoMessageNotReceivedException
-                | NurigoUnknownException e) {
-            channel.basicNack(deliveryTag, false, false);
-
-        }
+        slackSender.sendSmsMessage(request);
+//        final long deliveryTag = envelope.getDeliveryTag();
+//        try {
+//            messageService.send(createMessage(request));
+//            channel.basicAck(deliveryTag, false);
+//        } catch (NurigoEmptyResponseException
+//                | NurigoMessageNotReceivedException
+//                | NurigoUnknownException e) {
+//            channel.basicNack(deliveryTag, false, false);
+//        }
     }
 
     private Message createMessage(final SmsMessageRequest request) {
