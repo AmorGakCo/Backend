@@ -1,8 +1,8 @@
 package com.amorgakco.backend.notification.infrastructure.publisher;
 
-import com.amorgakco.backend.notification.infrastructure.consumer.NotificationRequest;
+import com.amorgakco.backend.notification.domain.Notification;
 
 public interface Publisher {
 
-    void publish(NotificationRequest request);
+    void publish(Notification notification);
 }

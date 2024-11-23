@@ -14,7 +14,7 @@ import com.amorgakco.backend.groupapplication.repository.GroupApplicationReposit
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.repository.MemberRepository;
 import com.amorgakco.backend.notification.infrastructure.NotificationPublisherFacade;
-import com.amorgakco.backend.notification.infrastructure.consumer.NotificationRequest;
+import com.amorgakco.backend.notification.dto.NotificationRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
