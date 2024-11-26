@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/group-locations")
+@RequestMapping("/api/group-locations")
 @RequiredArgsConstructor
 public class GroupLocationController {
 

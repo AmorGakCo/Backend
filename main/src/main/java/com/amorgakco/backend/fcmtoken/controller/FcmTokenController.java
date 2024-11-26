@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/fcm-tokens")
+@RequestMapping("/api/fcm-tokens")
 public class FcmTokenController {
 
     private final FcmTokenService fcmTokenService;

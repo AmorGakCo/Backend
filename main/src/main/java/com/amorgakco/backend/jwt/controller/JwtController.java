@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/tokens")
+@RequestMapping("/api/tokens")
 public class JwtController {
 
     private final JwtService jwtService;

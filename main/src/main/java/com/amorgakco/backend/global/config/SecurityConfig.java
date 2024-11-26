@@ -38,9 +38,9 @@ public class SecurityConfig {
             .authorizeHttpRequests(
                 request ->
                     request.requestMatchers(
-                            "/tokens/**",
-                            "/oauth2/**",
-                            "/members/login",
+                            "/api/tokens/**",
+                            "/api/oauth2/**",
+                            "/api/members/login",
                             "/favicon.ico",
                             "/error")
                         .permitAll()

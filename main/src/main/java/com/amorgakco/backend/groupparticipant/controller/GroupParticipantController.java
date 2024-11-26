@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/group-participants")
+@RequestMapping("/api/group-participants")
 @RequiredArgsConstructor
 public class GroupParticipantController {
 
