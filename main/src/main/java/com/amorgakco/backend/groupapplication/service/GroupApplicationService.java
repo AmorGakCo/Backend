@@ -4,6 +4,7 @@ import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.service.GroupService;
 import com.amorgakco.backend.groupapplication.domain.GroupApplication;
+import com.amorgakco.backend.groupapplication.dto.ApplicationResponse;
 import com.amorgakco.backend.groupapplication.repository.GroupApplicationRepository;
 import com.amorgakco.backend.groupapplication.service.mapper.GroupApplicationMapper;
 import com.amorgakco.backend.member.domain.Member;
@@ -27,7 +28,7 @@ public class GroupApplicationService {
     private final GroupApplicationValidator groupApplicationValidator;
 
     @Transactional
-    public void apply(final Long groupId, final Long memberId) {
+    public ApplicationResponse apply(final Long groupId, final Long memberId) {
         final Group group = groupService.getGroupWithHost(groupId);
         final Member requestMember = memberService.getMember(memberId);
         groupApplicationValidator.validate(group, requestMember);
@@ -39,6 +40,7 @@ public class GroupApplicationService {
             group.getHost(),
             group.getName()
         ));
+        return new ApplicationResponse(groupApplication.getId());
     }
 
     @Transactional

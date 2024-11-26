@@ -54,7 +54,7 @@ public class ChatRoom extends BaseTime {
     }
 
     private boolean isMemberNotParticipatedInGroup(final Member member) {
-        return group.isMemberParticipated(member.getId());
+        return !group.isMemberParticipated(member.getId());
     }
 
     public void validateChatRoomParticipant(final Member member) {

@@ -2,6 +2,7 @@ package com.amorgakco.backend.groupapplication.controller;
 
 import com.amorgakco.backend.global.argumentresolver.AuthMember;
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
+import com.amorgakco.backend.groupapplication.dto.ApplicationResponse;
 import com.amorgakco.backend.groupapplication.service.GroupApplicationService;
 import com.amorgakco.backend.member.domain.Member;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,8 @@ public class GroupApplicationController {
 
     @PostMapping("/{groupId}/participation")
     @ResponseStatus(HttpStatus.CREATED)
-    public void participate(@PathVariable final Long groupId, @AuthMemberId final Long memberId) {
-        groupApplicationService.apply(groupId, memberId);
+    public ApplicationResponse participate(@PathVariable final Long groupId, @AuthMemberId final Long memberId) {
+        return groupApplicationService.apply(groupId, memberId);
     }
 
     @PostMapping("/{groupId}/participation/{memberId}")

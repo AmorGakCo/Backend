@@ -155,6 +155,7 @@ class GroupControllerTest extends RestDocsTest {
         final GroupBasicResponse response = TestGroupFactory.groupBasicResponse();
         Member member = TestMemberFactory.create(1L);
         final Long groupId = 1L;
+        given(memberService.getMember(1L)).willReturn(member);
         given(groupService.getBasicGroup(groupId, member)).willReturn(response);
         // when
         final ResultActions actions = mockMvc.perform(get("/groups/{groupId}/basic", 1L));
