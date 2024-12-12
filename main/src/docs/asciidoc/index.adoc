@@ -24,3 +24,5 @@ include::member.adoc[]
 include::notification.adoc[]
 
 include::chatRoom.adoc[]
+
+include::participant.adoc[]
