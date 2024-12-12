@@ -53,7 +53,7 @@ class GroupControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
             mockMvc.perform(
-                post("/groups")
+                post("/api/groups")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(toRequestBody(request)));
         // then
@@ -76,7 +76,7 @@ class GroupControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
             mockMvc.perform(
-                post("/groups")
+                post("/api/groups")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(toRequestBody(request)));
         // then
@@ -104,7 +104,7 @@ class GroupControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
             mockMvc.perform(
-                post("/groups")
+                post("/api/groups")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(toRequestBody(request)));
         // then
@@ -133,7 +133,7 @@ class GroupControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
             mockMvc.perform(
-                post("/groups")
+                post("/api/groups")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(toRequestBody(request)));
         // then
@@ -158,7 +158,7 @@ class GroupControllerTest extends RestDocsTest {
         given(memberService.getMember(1L)).willReturn(member);
         given(groupService.getBasicGroup(groupId, member)).willReturn(response);
         // when
-        final ResultActions actions = mockMvc.perform(get("/groups/{groupId}/basic", 1L));
+        final ResultActions actions = mockMvc.perform(get("/api/groups/{groupId}/basic", 1L));
         // then
         actions.andExpect(status().isOk());
         // docs
@@ -180,7 +180,7 @@ class GroupControllerTest extends RestDocsTest {
         final Long memberId = 1L;
         given(groupService.getDetailGroup(groupId, memberId)).willReturn(response);
         // when
-        final ResultActions actions = mockMvc.perform(get("/groups/{groupId}/detail", 1L));
+        final ResultActions actions = mockMvc.perform(get("/api/groups/{groupId}/detail", 1L));
         // then
         actions.andExpect(status().isOk());
         // docs
@@ -197,7 +197,7 @@ class GroupControllerTest extends RestDocsTest {
     @DisplayName("그룹 삭제 응답을 받을 수 있다.")
     void deleteGroup() throws Exception {
         // when
-        final ResultActions actions = mockMvc.perform(delete("/groups/{groupId}", 1L));
+        final ResultActions actions = mockMvc.perform(delete("/api/groups/{groupId}", 1L));
         // then
         actions.andExpect(status().isNoContent());
         // docs

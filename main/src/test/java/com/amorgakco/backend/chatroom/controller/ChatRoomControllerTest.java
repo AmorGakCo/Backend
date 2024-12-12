@@ -47,7 +47,7 @@ class ChatRoomControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
             mockMvc.perform(
-                post("/chat-rooms/{chatRoomId}", chatRoomId));
+                post("/api/chat-rooms/{chatRoomId}", chatRoomId));
         // then
         actions.andExpect(status().isCreated()).andExpect(jsonPath("$.data.chatRoomId").value("1"));
         // docs
@@ -66,7 +66,7 @@ class ChatRoomControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
             mockMvc.perform(
-                delete("/chat-rooms/{chatRoomId}", chatRoomId));
+                delete("/api/chat-rooms/{chatRoomId}", chatRoomId));
         // then
         actions.andExpect(status().isOk());
         //docs
@@ -88,7 +88,7 @@ class ChatRoomControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
             mockMvc.perform(
-                get("/chat-rooms")
+                get("/api/chat-rooms")
                     .queryParam("page", page.toString())
                     .queryParam("size",size.toString()));
         // then

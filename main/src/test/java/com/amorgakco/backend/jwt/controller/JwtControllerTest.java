@@ -44,7 +44,7 @@ class JwtControllerTest extends RestDocsTest {
         given(jwtService.reissue(OLD_REFRESH_TOKEN)).willReturn(memberTokens);
         final Cookie oldCookie = new Cookie(COOKIE_NAME, OLD_REFRESH_TOKEN);
         // when
-        final ResultActions actions = mockMvc.perform(post("/tokens", "1").cookie(oldCookie));
+        final ResultActions actions = mockMvc.perform(post("/api/tokens", "1").cookie(oldCookie));
         // then
         actions.andExpect(status().isCreated())
             .andExpect(jsonPath("$.data.accessToken").value(NEW_ACCESS_TOKEN));
@@ -61,7 +61,7 @@ class JwtControllerTest extends RestDocsTest {
         // when
         given(jwtService.reissue(OLD_REFRESH_TOKEN))
             .willThrow(JwtAuthenticationException.loginAgain());
-        final ResultActions actions = mockMvc.perform(post("/tokens", "1").cookie(cookie));
+        final ResultActions actions = mockMvc.perform(post("/api/tokens", "1").cookie(cookie));
         // then
         actions.andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.code").value(ErrorCode.LOGIN_AGAIN.getCode()));
@@ -82,7 +82,7 @@ class JwtControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
             mockMvc.perform(
-                delete("/tokens").header(AUTH_HEADER, NEW_ACCESS_TOKEN).cookie(cookie));
+                delete("/api/tokens").header(AUTH_HEADER, NEW_ACCESS_TOKEN).cookie(cookie));
         // then
         actions.andExpect(status().isNoContent());
         // docs

@@ -44,7 +44,7 @@ class Oauth2ControllerTest extends RestDocsTest {
         given(oauth2Service.getRedirectionLoginUrl(Oauth2ProviderType.KAKAO))
             .willReturn(redirectUrl);
         // when
-        final ResultActions actions = mockMvc.perform(get("/oauth2/{oauth2ProviderType}", "kakao"));
+        final ResultActions actions = mockMvc.perform(get("/api/oauth2/{oauth2ProviderType}", "kakao"));
         // then
         actions.andExpect(status().isFound());
         // docs
@@ -74,7 +74,7 @@ class Oauth2ControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
             mockMvc.perform(
-                post("/oauth2/{oauth2ProviderType}", "kakao")
+                post("/api/oauth2/{oauth2ProviderType}", "kakao")
                     .queryParam("authCode", authCode));
         // then
         actions.andExpect(status().isCreated());

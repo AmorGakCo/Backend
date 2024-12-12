@@ -43,3 +43,12 @@ operation::participant-tardiness[snippets='path-parameters,http-request,http-res
 === 참여자 위치 인증
 
 operation::participation-location-verification[snippets='http-request,http-response']
+
+=== 현재 참여중인 그룹 내역
+
+operation::participation-current-history[snippets='query-parameters,http-request,http-response']
+
+=== 과거에 참여한 그룹 내역
+
+operation::participation-past-history[snippets='query-parameters,http-request,http-response']
+

@@ -34,7 +34,7 @@ class FcmTokenControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
             mockMvc.perform(
-                post("/fcm-tokens")
+                post("/api/fcm-tokens")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(toRequestBody(fcmTokenSaveRequest)));
         // then

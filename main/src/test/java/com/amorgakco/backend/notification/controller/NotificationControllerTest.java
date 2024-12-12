@@ -39,7 +39,7 @@ class NotificationControllerTest extends RestDocsTest {
         given(notificationService.getNotifications(memberId, page)).willReturn(response);
         // when
         final ResultActions actions =
-            mockMvc.perform(get("/notifications").queryParam("page", "0"));
+            mockMvc.perform(get("/api/notifications").queryParam("page", "0"));
         // then
         actions.andExpect(status().isOk());
         // docs

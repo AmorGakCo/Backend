@@ -30,7 +30,7 @@ class GroupApplicationControllerTest extends RestDocsTest {
     @WithMockMember
     void getMemberPrivate() throws Exception {
         // when
-        final ResultActions actions = mockMvc.perform(post("/groups/{groupId}/participation", 1L));
+        final ResultActions actions = mockMvc.perform(post("/api/groups/{groupId}/participation", 1L));
         // then
         actions.andExpect(status().isCreated());
         // docs
@@ -50,7 +50,7 @@ class GroupApplicationControllerTest extends RestDocsTest {
     void approveParticipation() throws Exception {
         // when
         final ResultActions actions =
-            mockMvc.perform(post("/groups/{groupId}/participation/{memberId}", 1L, 2L));
+            mockMvc.perform(post("/api/groups/{groupId}/participation/{memberId}", 1L, 2L));
         // then
         actions.andExpect(status().isCreated());
         // docs
@@ -71,7 +71,7 @@ class GroupApplicationControllerTest extends RestDocsTest {
     void rejectParticipation() throws Exception {
         // when
         final ResultActions actions =
-            mockMvc.perform(patch("/groups/{groupId}/participation/{memberId}", 1L, 2L));
+            mockMvc.perform(patch("/api/groups/{groupId}/participation/{memberId}", 1L, 2L));
         // then
         actions.andExpect(status().isNoContent());
         // docs

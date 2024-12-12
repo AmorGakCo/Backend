@@ -33,7 +33,7 @@ class MemberControllerTest extends RestDocsTest {
         final ResultActions actions =
             // when
             mockMvc.perform(
-                patch("/members")
+                patch("/api/members")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(toRequestBody(request)));
         // then
@@ -57,7 +57,7 @@ class MemberControllerTest extends RestDocsTest {
             TestMemberFactory.privateMemberResponse();
         given(memberService.getPrivateMember(memberId)).willReturn(privateMemberResponse);
         // when
-        final ResultActions actions = mockMvc.perform(get("/members/private"));
+        final ResultActions actions = mockMvc.perform(get("/api/members/private"));
         // then
         actions.andExpect(status().isOk());
         // docs

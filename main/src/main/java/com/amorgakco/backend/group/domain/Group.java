@@ -122,11 +122,7 @@ public class Group extends BaseTime {
         }
     }
 
-    public boolean isInactivatedGroup() {
-        return duration.getEndAt().isAfter(LocalDateTime.now());
-    }
-
     public boolean isActivatedGroup() {
-        return duration.getEndAt().isBefore(LocalDateTime.now());
+        return duration.getEndAt().isAfter(LocalDateTime.now());
     }
 }

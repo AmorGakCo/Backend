@@ -36,7 +36,7 @@ class GroupLocationControllerTest extends RestDocsTest {
         given(groupLocationService.findGroups(request)).willReturn(response);
         final ResultActions actions =
             mockMvc.perform(
-                get("/group-locations")
+                get("/api/group-locations")
                     .queryParam("southWestLat", "37.50242")
                     .queryParam("southWestLon", "127.0167")
                     .queryParam("northEastLat", "37.52911")

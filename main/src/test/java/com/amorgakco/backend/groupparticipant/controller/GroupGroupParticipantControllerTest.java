@@ -48,14 +48,14 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
             .willReturn(groupParticipationHistoryResponse);
         // when
         final ResultActions actions =
-            mockMvc.perform(get("/group-participants/current-history").queryParam("page", "0"));
+            mockMvc.perform(get("/api/group-participants/current-history").queryParam("page", "0"));
         // then
         actions.andExpect(status().isOk());
         // docs
         actions.andDo(print())
             .andDo(
                 document(
-                    "participation-history",
+                    "participation-current-history",
                     getDocumentRequest(),
                     getDocumentResponse(),
                     queryParameters(parameterWithName("page").description("페이지 번호"))));
@@ -74,14 +74,14 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
             .willReturn(groupParticipationHistoryResponse);
         // when
         final ResultActions actions =
-            mockMvc.perform(get("/group-participants/past-history").queryParam("page", "0"));
+            mockMvc.perform(get("/api/group-participants/past-history").queryParam("page", "0"));
         // then
         actions.andExpect(status().isOk());
         // docs
         actions.andDo(print())
             .andDo(
                 document(
-                    "participation-history",
+                    "participation-past-history",
                     getDocumentRequest(),
                     getDocumentResponse(),
                     queryParameters(parameterWithName("page").description("페이지 번호"))));
@@ -97,7 +97,7 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
             mockMvc.perform(
-                patch("/group-participants/locations")
+                patch("/api/group-participants/locations")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(toRequestBody(locationVerificationRequest)));
         // then
@@ -118,7 +118,7 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
             mockMvc.perform(
-                delete("/group-participants/groups/{groupId}", 1L)
+                delete("/api/group-participants/groups/{groupId}", 1L)
                     .contentType(MediaType.APPLICATION_JSON));
         // then
         actions.andExpect(status().isOk());
@@ -140,7 +140,7 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
             mockMvc.perform(
-                post("/group-participants/groups/{groupId}/tardiness", 1L)
+                post("/api/group-participants/groups/{groupId}/tardiness", 1L)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(toRequestBody(tardinessRequest)));
         // then
@@ -169,7 +169,7 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
             mockMvc.perform(
-                patch("/group-participants/{targetMemberId}/groups/{groupId}/temperature-increase",
+                patch("/api/group-participants/{targetMemberId}/groups/{groupId}/temperature-increase",
                     targetMemberId, groupId)
                     .contentType(MediaType.APPLICATION_JSON));
         // then
@@ -199,7 +199,7 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
         // when
         final ResultActions actions =
             mockMvc.perform(
-                patch("/group-participants/{targetMemberId}/groups/{groupId}/temperature-decrease",
+                patch("/api/group-participants/{targetMemberId}/groups/{groupId}/temperature-decrease",
                     2L, 1L)
                     .contentType(MediaType.APPLICATION_JSON));
         // then

@@ -509,7 +509,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h4 id="_그룹_등록_http_request"><a class="link" href="#_그룹_등록_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /groups HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/groups HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Content-Length: 293
 Host: localhost:8080
@@ -518,8 +518,8 @@ Host: localhost:8080
   "name" : "AmorGakCo",
   "description" : "모각코 합시다.",
   "groupCapacity" : 4,
-  "beginAt" : "2024-11-26T14:21:26.179419",
-  "endAt" : "2024-11-26T17:21:26.179419",
+  "beginAt" : "2024-12-12T23:57:31.431581",
+  "endAt" : "2024-12-13T02:57:31.431581",
   "latitude" : 37.5703901,
   "longitude" : 126.9748397,
   "address" : "서울특별시 종로구 신문로1가 23"
@@ -536,11 +536,11 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 106
+Content-Length: 110
 
 {
   "status" : "success",
-  "path" : "/groups",
+  "path" : "/api/groups",
   "data" : {
     "groupId" : 1,
     "chatRoomId" : 1
@@ -555,7 +555,7 @@ Content-Length: 106
 <div class="sect3">
 <h4 id="_그룹_단건_조회_모달창용_path_parameters"><a class="link" href="#_그룹_단건_조회_모달창용_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /groups/{groupId}/basic</caption>
+<caption class="title">Table 1. /api/groups/{groupId}/basic</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -578,7 +578,7 @@ Content-Length: 106
 <h4 id="_그룹_단건_조회_모달창용_http_request"><a class="link" href="#_그룹_단건_조회_모달창용_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /groups/1/basic HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/groups/1/basic HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -592,16 +592,16 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 427
+Content-Length: 431
 
 {
   "status" : "success",
-  "path" : "/groups/1/basic",
+  "path" : "/api/groups/1/basic",
   "data" : {
     "hostNickname" : "아모르겠고",
     "hostImgUrl" : "https://fakeimg",
-    "beginAt" : "2024-11-26T14:21:18.752152",
-    "endAt" : "2024-11-26T17:21:18.752161",
+    "beginAt" : "2024-12-12T23:57:31.384528",
+    "endAt" : "2024-12-13T02:57:31.384532",
     "groupCapacity" : 4,
     "currentParticipants" : 3,
     "address" : "서울특별시 종로구 신문로1가 23",
@@ -618,7 +618,7 @@ Content-Length: 427
 <div class="sect3">
 <h4 id="_그룹_단건_조회_상세페이지용_path_parameters"><a class="link" href="#_그룹_단건_조회_상세페이지용_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /groups/{groupId}/detail</caption>
+<caption class="title">Table 1. /api/groups/{groupId}/detail</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -641,7 +641,7 @@ Content-Length: 427
 <h4 id="_그룹_단건_조회_상세페이지용_http_request"><a class="link" href="#_그룹_단건_조회_상세페이지용_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /groups/1/detail HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/groups/1/detail HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -655,11 +655,11 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 907
+Content-Length: 911
 
 {
   "status" : "success",
-  "path" : "/groups/1/detail",
+  "path" : "/api/groups/1/detail",
   "data" : {
     "host" : {
       "memberId" : 1,
@@ -673,8 +673,8 @@ Content-Length: 907
     "address" : "서울특별시 종로구 신문로1가 23",
     "longitude" : 126.9748397,
     "latitude" : 37.5703901,
-    "beginAt" : "2024-11-26T14:21:18.752152",
-    "endAt" : "2024-11-26T17:21:18.752161",
+    "beginAt" : "2024-12-12T23:57:31.384528",
+    "endAt" : "2024-12-13T02:57:31.384532",
     "groupMembers" : [ {
       "memberId" : 2,
       "imgUrl" : "https://fakeimg",
@@ -742,7 +742,7 @@ Content-Length: 907
 <h4 id="_주변_그룹_조회_http_request"><a class="link" href="#_주변_그룹_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /group-locations?southWestLat=37.50242&amp;southWestLon=127.0167&amp;northEastLat=37.52911&amp;northEastLon=127.0439&amp;centerLat=37.5162149&amp;centerLon=127.0195806 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/group-locations?southWestLat=37.50242&amp;southWestLon=127.0167&amp;northEastLat=37.52911&amp;northEastLon=127.0439&amp;centerLat=37.5162149&amp;centerLon=127.0195806 HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -756,11 +756,11 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 357
+Content-Length: 361
 
 {
   "status" : "success",
-  "path" : "/group-locations",
+  "path" : "/api/group-locations",
   "data" : {
     "locations" : [ {
       "latitude" : 23.1111,
@@ -786,7 +786,7 @@ Content-Length: 357
 <div class="sect3">
 <h4 id="_그룹_삭제_path_parameters"><a class="link" href="#_그룹_삭제_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /groups/{groupId}</caption>
+<caption class="title">Table 1. /api/groups/{groupId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -809,7 +809,7 @@ Content-Length: 357
 <h4 id="_그룹_삭제_http_request"><a class="link" href="#_그룹_삭제_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /groups/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /api/groups/1 HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -836,7 +836,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <div class="sect3">
 <h4 id="_그룹_참여_path_parameters"><a class="link" href="#_그룹_참여_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /groups/{groupId}/participation</caption>
+<caption class="title">Table 1. /api/groups/{groupId}/participation</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -859,7 +859,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <h4 id="_그룹_참여_http_request"><a class="link" href="#_그룹_참여_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /groups/1/participation HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/groups/1/participation HTTP/1.1
 Host: localhost:8080
 Content-Type: application/x-www-form-urlencoded</code></pre>
 </div>
@@ -882,7 +882,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <div class="sect3">
 <h4 id="_그룹_참여_허가_path_parameters"><a class="link" href="#_그룹_참여_허가_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /groups/{groupId}/participation/{memberId}</caption>
+<caption class="title">Table 1. /api/groups/{groupId}/participation/{memberId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -909,7 +909,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <h4 id="_그룹_참여_허가_http_request"><a class="link" href="#_그룹_참여_허가_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /groups/1/participation/2 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/groups/1/participation/2 HTTP/1.1
 Host: localhost:8080
 Content-Type: application/x-www-form-urlencoded</code></pre>
 </div>
@@ -932,7 +932,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <div class="sect3">
 <h4 id="_그룹_참여_거절_path_parameters"><a class="link" href="#_그룹_참여_거절_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /groups/{groupId}/participation/{memberId}</caption>
+<caption class="title">Table 1. /api/groups/{groupId}/participation/{memberId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -959,7 +959,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <h4 id="_그룹_참여_거절_http_request"><a class="link" href="#_그룹_참여_거절_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /groups/1/participation/2 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /api/groups/1/participation/2 HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -998,7 +998,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <h4 id="_액세스_토큰_재발급_http_request"><a class="link" href="#_액세스_토큰_재발급_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /tokens HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/tokens HTTP/1.1
 Host: localhost:8080
 Cookie: refresh-token=old refresh token
 Content-Type: application/x-www-form-urlencoded</code></pre>
@@ -1014,11 +1014,11 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 105
+Content-Length: 109
 
 {
   "status" : "success",
-  "path" : "/tokens",
+  "path" : "/api/tokens",
   "data" : {
     "accessToken" : "new access token"
   }
@@ -1036,7 +1036,7 @@ Content-Length: 105
 <h4 id="_액세스_토큰_재발급_예외_http_request"><a class="link" href="#_액세스_토큰_재발급_예외_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /tokens HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/tokens HTTP/1.1
 Host: localhost:8080
 Cookie: refresh-token=old refresh token
 Content-Type: application/x-www-form-urlencoded</code></pre>
@@ -1069,7 +1069,7 @@ Content-Length: 91
 <h4 id="_로그아웃_http_request"><a class="link" href="#_로그아웃_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /tokens HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /api/tokens HTTP/1.1
 Authorization: new access token
 Host: localhost:8080
 Cookie: refresh-token=old refresh token</code></pre>
@@ -1099,7 +1099,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <h4 id="_추가_정보_입력_http_request"><a class="link" href="#_추가_정보_입력_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /members HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /api/members HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Content-Length: 166
 Host: localhost:8080
@@ -1132,7 +1132,7 @@ Vary: Access-Control-Request-Headers</code></pre>
 <h4 id="_개인_정보_조회_http_request"><a class="link" href="#_개인_정보_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /members/private HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/members/private HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1146,11 +1146,11 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 225
+Content-Length: 229
 
 {
   "status" : "success",
-  "path" : "/members/private",
+  "path" : "/api/members/private",
   "data" : {
     "smsNotificationSetting" : true,
     "githubUrl" : "https://github/songhaechan",
@@ -1194,7 +1194,7 @@ Content-Length: 225
 <h4 id="_알림_내역_조회_http_request"><a class="link" href="#_알림_내역_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /notifications?page=0 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/notifications?page=0 HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1208,11 +1208,11 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 575
+Content-Length: 579
 
 {
   "status" : "success",
-  "path" : "/notifications",
+  "path" : "/api/notifications",
   "data" : {
     "page" : 0,
     "elementSize" : 3,
@@ -1244,7 +1244,7 @@ Content-Length: 575
 <h4 id="_채팅방_목록_조회_http_request"><a class="link" href="#_채팅방_목록_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /chat-rooms?page=0&amp;size=3 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/chat-rooms?page=0&amp;size=3 HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1258,11 +1258,11 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1433
+Content-Length: 1437
 
 {
   "status" : "success",
-  "path" : "/chat-rooms",
+  "path" : "/api/chat-rooms",
   "data" : {
     "page" : 0,
     "elementSize" : 3,
@@ -1327,7 +1327,7 @@ Content-Length: 1433
 <div class="sect3">
 <h4 id="_채팅방_나가기_path_parameters"><a class="link" href="#_채팅방_나가기_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /chat-rooms/{chatRoomId}</caption>
+<caption class="title">Table 1. /api/chat-rooms/{chatRoomId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1350,7 +1350,7 @@ Content-Length: 1433
 <h4 id="_채팅방_나가기_http_request"><a class="link" href="#_채팅방_나가기_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /chat-rooms/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /api/chat-rooms/1 HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1364,11 +1364,11 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 71
+Content-Length: 75
 
 {
   "status" : "success",
-  "path" : "/chat-rooms/1",
+  "path" : "/api/chat-rooms/1",
   "data" : null
 }</code></pre>
 </div>
@@ -1380,7 +1380,7 @@ Content-Length: 71
 <div class="sect3">
 <h4 id="_채팅방_참여_path_parameters"><a class="link" href="#_채팅방_참여_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /chat-rooms/{chatRoomId}</caption>
+<caption class="title">Table 1. /api/chat-rooms/{chatRoomId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1403,7 +1403,7 @@ Content-Length: 71
 <h4 id="_채팅방_참여_http_request"><a class="link" href="#_채팅방_참여_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /chat-rooms/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/chat-rooms/1 HTTP/1.1
 Host: localhost:8080
 Content-Type: application/x-www-form-urlencoded</code></pre>
 </div>
@@ -1418,11 +1418,11 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 457
+Content-Length: 461
 
 {
   "status" : "success",
-  "path" : "/chat-rooms/1",
+  "path" : "/api/chat-rooms/1",
   "data" : {
     "chatRoomId" : 1,
     "groupName" : "Amorgakco",
