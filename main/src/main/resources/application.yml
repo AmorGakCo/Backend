@@ -7,5 +7,4 @@ spring:
     group:
       local: local,oauth2local,jwt
       dev: dev,oauth2,jwt
-      dev-gcp: dev-gcp,jwt,oauth2
       prod: oauth2,jwt

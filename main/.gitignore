@@ -15,7 +15,7 @@ src/main/resources/application-jwt.yml
 src/main/resources/application-notification.yml
 src/main/resources/application-dev.yml
 src/main/resources/application-prod.yml
-src/main/resources/application-dev-gcp.yml
+src/main/resources/application-dev.yml
 src/main/resources/fcm-secret.json
 src/test/resources/fcm-secret.json
 src/test/resources/application-jwt.yml

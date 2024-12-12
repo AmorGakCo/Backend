@@ -15,6 +15,7 @@ build/
 fcm-secret.json
 application-notification.yml
 application-dev-gcp.yml
+application-dev.yml
 
 ### STS ###
 .apt_generated
