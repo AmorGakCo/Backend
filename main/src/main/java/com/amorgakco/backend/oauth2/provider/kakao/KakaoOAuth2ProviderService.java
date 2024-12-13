@@ -37,9 +37,9 @@ public class KakaoOAuth2ProviderService implements Oauth2ProviderService {
     }
 
     @Override
-    public Oauth2Member getOauth2Member(final String authCode) {
+    public Oauth2Member getOauth2Member(final String authCode,final String redirectUrl) {
         final KakaoAuthorization kakaoAuthorization =
-            kakaoRestClient.getKakaoAccessToken(requestParams(authCode));
+            kakaoRestClient.getKakaoAccessToken(requestParams(authCode,redirectUrl));
         final String accessToken = kakaoAuthorization.accessToken();
         log.info("access {}", accessToken);
         final KakaoMemberResponse kakaoMember =
@@ -47,11 +47,12 @@ public class KakaoOAuth2ProviderService implements Oauth2ProviderService {
         return kakaoMember.toOauth2Member();
     }
 
-    private MultiValueMap<String, String> requestParams(final String authCode) {
+    private MultiValueMap<String, String> requestParams(final String authCode,
+        final String redirectUrl) {
         final MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add(GRANT_TYPE, AUTHORIZATION_CODE);
         params.add(CLIENT_ID, kakaoOauth2Properties.clientId());
-        params.add(REDIRECT_URI, kakaoOauth2Properties.redirectUri());
+        params.add(REDIRECT_URI, redirectUrl);
         params.add(CODE, authCode);
         params.add(CLIENT_ID, kakaoOauth2Properties.clientSecret());
         return params;
