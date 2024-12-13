@@ -8,6 +8,7 @@ import com.amorgakco.backend.member.domain.Oauth2ProviderType;
 import com.amorgakco.backend.oauth2.dto.Oauth2LoginResponse;
 import com.amorgakco.backend.oauth2.dto.Oauth2MemberResponse;
 import com.amorgakco.backend.oauth2.service.Oauth2Service;
+import com.google.api.Http;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -43,9 +44,9 @@ public class Oauth2Controller {
         throws IOException {
         final String loginUrl = oauth2Service.getRedirectionLoginUrl(oauth2ProviderType);
         // TODO : 개발 끝나고 수정
-        String host = request.getServerName();
-        log.info("host:{}",host);
-        if(host.equals("localhost")){
+        String referer = request.getHeader(HttpHeaders.REFERER);
+        log.info("host:{}",referer);
+        if(referer.equals("localhost")){
             response.sendRedirect(localKakaoRedirectionLoginUrl.redirectionUrl());
         }else{
             response.sendRedirect(loginUrl);
