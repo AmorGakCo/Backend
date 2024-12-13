@@ -22,4 +22,15 @@ public class Oauth2LoginUrlConfig {
                 .queryParam("scope", String.join(",", kakaoOauth2Properties.scope()))
                 .toUriString());
     }
+
+    @Bean
+    public LocalKakaoRedirectionLoginUrl localRedirectionLoginUrl (){
+        return new LocalKakaoRedirectionLoginUrl(
+            UriComponentsBuilder.fromUriString("http://localhost:3000/redirected/kakao")
+                .queryParam("response_type", "code")
+                .queryParam("client_id", kakaoOauth2Properties.clientId())
+                .queryParam("redirect_uri", kakaoOauth2Properties.redirectUri())
+                .queryParam("scope", String.join(",", kakaoOauth2Properties.scope()))
+                .toUriString());
+    }
 }
