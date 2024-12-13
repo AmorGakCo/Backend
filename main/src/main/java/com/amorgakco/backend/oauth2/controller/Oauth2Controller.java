@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/oauth2")
+@Slf4j
 public class Oauth2Controller {
 
     private final Oauth2Service oauth2Service;
@@ -42,6 +44,7 @@ public class Oauth2Controller {
         final String loginUrl = oauth2Service.getRedirectionLoginUrl(oauth2ProviderType);
         // TODO : 개발 끝나고 수정
         String host = request.getServerName();
+        log.info("host:{}",host);
         if(host.equals("localhost")){
             response.sendRedirect(localKakaoRedirectionLoginUrl.redirectionUrl());
         }else{

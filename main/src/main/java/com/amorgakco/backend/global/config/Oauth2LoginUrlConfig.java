@@ -26,10 +26,10 @@ public class Oauth2LoginUrlConfig {
     @Bean
     public LocalKakaoRedirectionLoginUrl localRedirectionLoginUrl (){
         return new LocalKakaoRedirectionLoginUrl(
-            UriComponentsBuilder.fromUriString("http://localhost:3000/redirected/kakao")
+            UriComponentsBuilder.fromUriString(kakaoOauth2Properties.loginUri())
                 .queryParam("response_type", "code")
                 .queryParam("client_id", kakaoOauth2Properties.clientId())
-                .queryParam("redirect_uri", kakaoOauth2Properties.redirectUri())
+                .queryParam("redirect_uri", "http://localhost:3000/redirected/kakao")
                 .queryParam("scope", String.join(",", kakaoOauth2Properties.scope()))
                 .toUriString());
     }
