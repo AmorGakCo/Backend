@@ -44,7 +44,6 @@ public class Oauth2Controller {
         final String loginUrl = oauth2Service.getRedirectionLoginUrl(oauth2ProviderType);
         // TODO : 개발 끝나고 수정
         String host = request.getServerName();
-        log.info("host:{}",host);
         if(host.equals("localhost")){
             response.sendRedirect(localKakaoRedirectionLoginUrl.redirectionUrl());
         }else{
