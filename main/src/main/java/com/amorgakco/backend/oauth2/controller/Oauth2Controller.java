@@ -12,6 +12,8 @@ import com.google.api.Http;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -41,12 +43,12 @@ public class Oauth2Controller {
         @PathVariable final Oauth2ProviderType oauth2ProviderType,
         final HttpServletRequest request,
         final HttpServletResponse response)
-        throws IOException {
+        throws IOException, URISyntaxException {
         final String loginUrl = oauth2Service.getRedirectionLoginUrl(oauth2ProviderType);
         // TODO : 개발 끝나고 수정
         String referer = request.getHeader(HttpHeaders.REFERER);
         log.info("host:{}",referer);
-        if(referer.equals("localhost")){
+        if(new URI(referer).getHost().equals("localhost")){
             response.sendRedirect(localKakaoRedirectionLoginUrl.redirectionUrl());
         }else{
             response.sendRedirect(loginUrl);
