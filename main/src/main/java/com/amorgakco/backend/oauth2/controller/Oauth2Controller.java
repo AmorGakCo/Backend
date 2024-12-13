@@ -46,8 +46,7 @@ public class Oauth2Controller {
         throws IOException, URISyntaxException {
         final String loginUrl = oauth2Service.getRedirectionLoginUrl(oauth2ProviderType);
         // TODO : 개발 끝나고 수정
-        String referer = request.getHeader(HttpHeaders.REFERER);
-        log.info("host:{}",referer);
+        String referer = request.getHeader(HttpHeaders.REFERER).substring(5);
         if(new URI(referer).getHost().equals("localhost")){
             response.sendRedirect(localKakaoRedirectionLoginUrl.redirectionUrl());
         }else{
