@@ -45,7 +45,7 @@ public class Oauth2Controller {
         final HttpServletRequest request,
         final HttpServletResponse response)
         throws IOException, URISyntaxException {
-        String redirectionUrl = getRedirectionUrlFromReferer(request,
+        String redirectionUrl = getLoginUrl(request,
             oauth2ProviderType);
         response.sendRedirect(redirectionUrl);
     }
@@ -57,8 +57,7 @@ public class Oauth2Controller {
         @RequestParam final String authCode,
         final HttpServletRequest request,
         final HttpServletResponse response) throws URISyntaxException {
-        final String redirectionUrl = getRedirectionUrlFromReferer(request,
-            oauth2ProviderType);
+        final String redirectionUrl = getRedirectUrl(request);
         final Oauth2MemberResponse oauth2MemberResponse =
             oauth2Service.login(oauth2ProviderType, authCode,redirectionUrl);
         final MemberTokens tokens =
@@ -67,14 +66,22 @@ public class Oauth2Controller {
         return new Oauth2LoginResponse(oauth2MemberResponse, tokens.accessToken());
     }
 
-    private String getRedirectionUrlFromReferer(final HttpServletRequest request,
+    private String getLoginUrl(final HttpServletRequest request,
         final Oauth2ProviderType oauth2ProviderType) throws URISyntaxException {
         String referer = request.getHeader(HttpHeaders.REFERER);
-        log.info("referer:{}",request.getHeader(HttpHeaders.REFERER));
         if (new URI(referer).getHost().equals("localhost")) {
             return localKakaoRedirectionLoginUrl.redirectionUrl();
         } else {
             return oauth2Service.getRedirectionLoginUrl(oauth2ProviderType);
+        }
+    }
+
+    private String getRedirectUrl(final HttpServletRequest request) throws URISyntaxException {
+        String referer = request.getHeader(HttpHeaders.REFERER);
+        if (new URI(referer).getHost().equals("localhost")) {
+            return "http://localhost:3000/redirected/kakao";
+        } else {
+            return "https://amorgakco.store/redirected/kakao";
         }
     }
 }

@@ -53,7 +53,6 @@ public class KakaoOAuth2ProviderService implements Oauth2ProviderService {
         params.add(GRANT_TYPE, AUTHORIZATION_CODE);
         params.add(CLIENT_ID, kakaoOauth2Properties.clientId());
         params.add(REDIRECT_URI, redirectUrl);
-        log.info("redirectUrl:{}",redirectUrl);
         params.add(CODE, authCode);
         params.add(CLIENT_ID, kakaoOauth2Properties.clientSecret());
         return params;
