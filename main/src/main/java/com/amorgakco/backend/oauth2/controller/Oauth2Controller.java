@@ -70,6 +70,8 @@ public class Oauth2Controller {
     private String getRedirectionUrlFromReferer(final HttpServletRequest request,
         final Oauth2ProviderType oauth2ProviderType) throws URISyntaxException {
         String referer = request.getHeader(HttpHeaders.REFERER).substring(5);
+        log.info("referer:{}",request.getHeader(HttpHeaders.REFERER));
+        log.info("host:{}",request.getHeader(HttpHeaders.REFERER).substring(5));
         if (new URI(referer).getHost().equals("localhost")) {
             return localKakaoRedirectionLoginUrl.redirectionUrl();
         } else {
