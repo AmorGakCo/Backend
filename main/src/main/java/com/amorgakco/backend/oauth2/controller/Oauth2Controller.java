@@ -71,7 +71,6 @@ public class Oauth2Controller {
         final Oauth2ProviderType oauth2ProviderType) throws URISyntaxException {
         String referer = request.getHeader(HttpHeaders.REFERER);
         log.info("referer:{}",request.getHeader(HttpHeaders.REFERER));
-        log.info("host:{}",request.getHeader(HttpHeaders.REFERER).substring(5));
         if (new URI(referer).getHost().equals("localhost")) {
             return localKakaoRedirectionLoginUrl.redirectionUrl();
         } else {
