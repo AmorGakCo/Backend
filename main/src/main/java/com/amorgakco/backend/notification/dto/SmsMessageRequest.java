@@ -1,13 +1,7 @@
 package com.amorgakco.backend.notification.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+public record SmsMessageRequest(
+    Long notificationId, String title, String content, String phoneNumber
+) {
 
-@Getter
-public class SmsMessageRequest{
-    private Long notificationId;
-    private String title;
-    private String content;
-    private String phoneNumber;
 }
