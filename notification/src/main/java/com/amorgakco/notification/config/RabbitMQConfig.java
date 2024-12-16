@@ -2,6 +2,9 @@ package com.amorgakco.notification.config;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -43,13 +46,6 @@ public class RabbitMQConfig {
 
     @Bean
     public RabbitTemplate rabbitTemplate() {
-        final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory());
-        rabbitTemplate.setMessageConverter(messageConverter());
-        return rabbitTemplate;
-    }
-
-    @Bean
-    public MessageConverter messageConverter() {
-        return new Jackson2JsonMessageConverter();
+        return new RabbitTemplate(connectionFactory());
     }
 }

@@ -2,6 +2,7 @@ package com.amorgakco.notification.consumer.sms;
 
 import com.amorgakco.notification.dto.SmsMessageRequest;
 import com.amorgakco.notification.consumer.slack.SlackSender;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Envelope;
 
@@ -23,20 +24,25 @@ public class CoolSmsConsumer implements SmsConsumer {
     private final DefaultMessageService messageService;
     private final String serverPhoneNumber;
     private final SlackSender slackSender;
+    private final ObjectMapper objectMapper;
 
     public CoolSmsConsumer(
             final DefaultMessageService messageService,
             @Value("${server-phone-number}") final String serverPhoneNumber,
-            final SlackSender slackSender) {
+            final SlackSender slackSender,
+        final ObjectMapper objectMapper) {
         this.messageService = messageService;
         this.serverPhoneNumber = serverPhoneNumber;
         this.slackSender = slackSender;
+        this.objectMapper = objectMapper;
     }
 
     @RabbitListener(queues = "sms")
     public void consume(
-            final SmsMessageRequest request, final Channel channel, final Envelope envelope)
+            final String message, final Channel channel, final Envelope envelope)
             throws IOException {
+        SmsMessageRequest request = objectMapper.readValue(message,
+            SmsMessageRequest.class);
         slackSender.sendSmsMessage(request);
 //        final long deliveryTag = envelope.getDeliveryTag();
 //        try {

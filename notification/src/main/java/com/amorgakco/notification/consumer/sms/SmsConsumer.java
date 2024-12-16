@@ -7,6 +7,6 @@ import java.io.IOException;
 
 public interface SmsConsumer {
 
-    void consume(final SmsMessageRequest request, final Channel channel, final Envelope envelope)
+    void consume(final String message, final Channel channel, final Envelope envelope)
             throws IOException;
 }
