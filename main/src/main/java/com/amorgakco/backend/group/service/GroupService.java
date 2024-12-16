@@ -36,6 +36,7 @@ public class GroupService {
     @Transactional
     public void delete(final Member member, final Long groupId) {
         final Group group = getGroup(groupId);
+        chatRoomService.deleteChatRoom(group);
         group.validateGroupHost(member);
         groupRepository.delete(group);
     }

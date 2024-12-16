@@ -55,4 +55,11 @@ public class ChatRoomService {
             .getChatRoomParticipant(member, chatRoomId);
         chatRoomParticipant.exitChatRoom();
     }
+
+    @Transactional
+    public void deleteChatRoom(final Group group){
+        ChatRoom chatRoom = chatRoomRepository.findByGroup(group)
+            .orElseThrow(ResourceNotFoundException::chatRoomNotFound);
+        chatRoomRepository.delete(chatRoom);
+    }
 }
