@@ -38,8 +38,9 @@ public class CoolSmsConsumer implements SmsConsumer {
     }
 
     @RabbitListener(queues = "sms")
+    @Override
     public void consume(
-            final String message, final Channel channel, final Envelope envelope)
+            final String message)
             throws IOException {
         SmsMessageRequest request = objectMapper.readValue(message,
             SmsMessageRequest.class);
