@@ -3,6 +3,7 @@ package com.amorgakco.backend.group.controller;
 import com.amorgakco.backend.global.argumentresolver.AuthMember;
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
+import com.amorgakco.backend.group.dto.GroupDeleteResponse;
 import com.amorgakco.backend.group.dto.GroupDetailResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
 import com.amorgakco.backend.group.dto.GroupRegisterResponse;
@@ -48,7 +49,7 @@ public class GroupController {
 
     @DeleteMapping("/{groupId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@AuthMember final Member member, @PathVariable final Long groupId) {
-        groupService.delete(member, groupId);
+    public GroupDeleteResponse delete(@AuthMember final Member member, @PathVariable final Long groupId) {
+        return groupService.delete(member, groupId);
     }
 }

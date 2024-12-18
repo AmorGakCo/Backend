@@ -8,6 +8,7 @@ import com.amorgakco.backend.group.dto.LocationVerificationRequest;
 import com.amorgakco.backend.group.service.GroupService;
 import com.amorgakco.backend.groupparticipant.domain.GroupParticipant;
 import com.amorgakco.backend.groupparticipant.dto.GroupParticipationHistoryResponse;
+import com.amorgakco.backend.groupparticipant.dto.LocationVerificationResponse;
 import com.amorgakco.backend.groupparticipant.dto.TardinessRequest;
 import com.amorgakco.backend.groupparticipant.dto.TemperatureResponse;
 import com.amorgakco.backend.groupparticipant.repository.GroupParticipantRepository;
@@ -35,10 +36,11 @@ public class GroupParticipantService {
     private final NotificationPublisherFacade notificationPublisherFacade;
 
     @Transactional
-    public void verifyParticipantLocation(
+    public LocationVerificationResponse verifyParticipantLocation(
         final LocationVerificationRequest request, final Long memberId) {
         final GroupParticipant groupParticipant = getGroupParticipant(request.groupId(), memberId);
         groupParticipant.verify(request.longitude(), request.latitude());
+        return new LocationVerificationResponse(memberId);
     }
 
     public GroupParticipant getGroupParticipant(final Long groupId, final Long memberId) {

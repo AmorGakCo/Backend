@@ -4,6 +4,7 @@ import com.amorgakco.backend.chatroom.service.ChatRoomService;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.dto.GroupBasicResponse;
+import com.amorgakco.backend.group.dto.GroupDeleteResponse;
 import com.amorgakco.backend.group.dto.GroupDetailResponse;
 import com.amorgakco.backend.group.dto.GroupRegisterRequest;
 import com.amorgakco.backend.group.dto.GroupRegisterResponse;
@@ -34,11 +35,12 @@ public class GroupService {
     }
 
     @Transactional
-    public void delete(final Member member, final Long groupId) {
+    public GroupDeleteResponse delete(final Member member, final Long groupId) {
         final Group group = getGroup(groupId);
         chatRoomService.deleteChatRoom(group);
         group.validateGroupHost(member);
         groupRepository.delete(group);
+        return new GroupDeleteResponse(groupId);
     }
 
     public Group getGroup(final Long groupId) {

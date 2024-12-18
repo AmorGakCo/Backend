@@ -58,8 +58,6 @@ public class ChatRoomService {
 
     @Transactional
     public void deleteChatRoom(final Group group){
-        ChatRoom chatRoom = chatRoomRepository.findByGroup(group)
-            .orElseThrow(ResourceNotFoundException::chatRoomNotFound);
-        chatRoomRepository.delete(chatRoom);
+        chatRoomRepository.findByGroup(group).ifPresent(chatRoomRepository::delete);
     }
 }

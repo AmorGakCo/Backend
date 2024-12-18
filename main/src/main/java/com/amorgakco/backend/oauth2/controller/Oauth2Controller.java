@@ -59,7 +59,7 @@ public class Oauth2Controller {
         final HttpServletResponse response) throws URISyntaxException {
         final String redirectionUrl = getRedirectUrl(request);
         final Oauth2MemberResponse oauth2MemberResponse =
-            oauth2Service.login(oauth2ProviderType, authCode,redirectionUrl);
+            oauth2Service.login(oauth2ProviderType, authCode, redirectionUrl);
         final MemberTokens tokens =
             jwtService.createAndSaveMemberTokens(oauth2MemberResponse.memberId());
         jwtCookieLoader.loadCookie(response, tokens.refreshToken());

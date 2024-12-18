@@ -33,8 +33,7 @@ public class GroupParticipantController {
     public LocationVerificationResponse verifyLocation(
         @AuthMemberId final Long memberId,
         @RequestBody final LocationVerificationRequest request) {
-        groupParticipantService.verifyParticipantLocation(request, memberId);
-        return new LocationVerificationResponse(memberId);
+        return groupParticipantService.verifyParticipantLocation(request, memberId);
     }
 
     @GetMapping("/current-history")
