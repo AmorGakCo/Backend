@@ -3,6 +3,7 @@ package com.amorgakco.backend.groupparticipant.controller;
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
 import com.amorgakco.backend.groupparticipant.dto.GroupParticipationHistoryResponse;
+import com.amorgakco.backend.groupparticipant.dto.LocationVerificationResponse;
 import com.amorgakco.backend.groupparticipant.dto.TardinessRequest;
 import com.amorgakco.backend.groupparticipant.dto.TemperatureResponse;
 import com.amorgakco.backend.groupparticipant.service.GroupParticipantService;
@@ -29,10 +30,11 @@ public class GroupParticipantController {
 
     @PatchMapping("/locations")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void verifyLocation(
+    public LocationVerificationResponse verifyLocation(
         @AuthMemberId final Long memberId,
         @RequestBody final LocationVerificationRequest request) {
         groupParticipantService.verifyParticipantLocation(request, memberId);
+        return new LocationVerificationResponse(memberId);
     }
 
     @GetMapping("/current-history")
