@@ -48,9 +48,8 @@ public class GroupController {
     }
 
     @DeleteMapping("/{groupId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public GroupDeleteResponse delete(@AuthMember final Member member, @PathVariable final Long groupId) {
         return groupService.delete(member, groupId);
     }
-    
+
 }

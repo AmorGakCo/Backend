@@ -29,7 +29,6 @@ public class GroupParticipantController {
     private final GroupParticipantService groupParticipantService;
 
     @PatchMapping("/locations")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public LocationVerificationResponse verifyLocation(
         @AuthMemberId final Long memberId,
         @RequestBody final LocationVerificationRequest request) {
