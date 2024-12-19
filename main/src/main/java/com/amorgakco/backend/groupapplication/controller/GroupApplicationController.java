@@ -3,6 +3,7 @@ package com.amorgakco.backend.groupapplication.controller;
 import com.amorgakco.backend.global.argumentresolver.AuthMember;
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
 import com.amorgakco.backend.groupapplication.dto.ApplicationResponse;
+import com.amorgakco.backend.groupapplication.dto.ApproveResponse;
 import com.amorgakco.backend.groupapplication.service.GroupApplicationService;
 import com.amorgakco.backend.member.domain.Member;
 import lombok.RequiredArgsConstructor;
@@ -28,12 +29,11 @@ public class GroupApplicationController {
     }
 
     @PostMapping("/{groupId}/participation/{memberId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void approve(
+    public ApproveResponse approve(
         @PathVariable final Long groupId,
         @PathVariable final Long memberId,
         @AuthMember final Member member) {
-        groupApplicationService.approve(groupId, memberId, member);
+        return groupApplicationService.approve(groupId, memberId, member);
     }
 
     @PatchMapping("/{groupId}/participation/{memberId}")

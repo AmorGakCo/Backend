@@ -5,6 +5,7 @@ import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.service.GroupService;
 import com.amorgakco.backend.groupapplication.domain.GroupApplication;
 import com.amorgakco.backend.groupapplication.dto.ApplicationResponse;
+import com.amorgakco.backend.groupapplication.dto.ApproveResponse;
 import com.amorgakco.backend.groupapplication.repository.GroupApplicationRepository;
 import com.amorgakco.backend.groupapplication.service.mapper.GroupApplicationMapper;
 import com.amorgakco.backend.member.domain.Member;
@@ -44,13 +45,14 @@ public class GroupApplicationService {
     }
 
     @Transactional
-    public void approve(final Long groupId, final Long memberId, final Member member) {
+    public ApproveResponse approve(final Long groupId, final Long memberId, final Member member) {
         final GroupApplication groupApplication = getGroupParticipation(groupId, memberId);
         groupApplication.approve(member);
         notificationPublisherFacade.send(NotificationCreator.participationApprove(
             memberService.getMember(memberId),
             groupApplication.getGroup().getName()
         ));
+        return new ApproveResponse(memberId);
     }
 
     private GroupApplication getGroupParticipation(final Long groupId, final Long memberId) {
