@@ -24,7 +24,7 @@ public class Oauth2LoginUrlConfig {
     }
 
     @Bean
-    public LocalKakaoRedirectionLoginUrl localRedirectionLoginUrl (){
+    public LocalKakaoRedirectionLoginUrl localRedirectionLoginUrl() {
         return new LocalKakaoRedirectionLoginUrl(
             UriComponentsBuilder.fromUriString(kakaoOauth2Properties.loginUri())
                 .queryParam("response_type", "code")

@@ -116,7 +116,7 @@ public class Member extends BaseTime {
         return smsNotificationSetting;
     }
 
-    public void setNickname(String nickname){
+    public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 }

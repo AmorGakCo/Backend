@@ -2,14 +2,12 @@ package com.amorgakco.backend.groupapplication.controller;
 
 import com.amorgakco.backend.global.argumentresolver.AuthMember;
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
-import com.amorgakco.backend.groupapplication.dto.ApplicationListResponse;
 import com.amorgakco.backend.groupapplication.dto.ApplicationRegisterResponse;
 import com.amorgakco.backend.groupapplication.dto.ApproveResponse;
 import com.amorgakco.backend.groupapplication.service.GroupApplicationService;
 import com.amorgakco.backend.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

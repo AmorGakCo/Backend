@@ -27,7 +27,7 @@ public class Oauth2Service {
         final String redirectUrl) {
         final Oauth2ProviderService providerService =
             oauth2ProviderSelector.getProvider(oauth2ProviderType);
-        final Oauth2Member oauth2Member = providerService.getOauth2Member(authCode,redirectUrl);
+        final Oauth2Member oauth2Member = providerService.getOauth2Member(authCode, redirectUrl);
         final Long memberId = memberService.updateOrSave(oauth2Member);
         return new Oauth2MemberResponse(
             memberId.toString(), oauth2Member.nickname(), oauth2Member.imgUrl());

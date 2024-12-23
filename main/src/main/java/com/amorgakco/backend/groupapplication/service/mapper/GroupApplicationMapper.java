@@ -15,11 +15,13 @@ public class GroupApplicationMapper {
         return GroupApplication.builder().group(group).member(newParticipant).build();
     }
 
-    public ApplicationListResponse toApplicationListResponse(final List<GroupApplication> groupApplications){
-        return new ApplicationListResponse(groupApplications.stream().map(this::toApplicationResponse).toList());
+    public ApplicationListResponse toApplicationListResponse(
+        final List<GroupApplication> groupApplications) {
+        return new ApplicationListResponse(
+            groupApplications.stream().map(this::toApplicationResponse).toList());
     }
 
-    private ApplicationResponse toApplicationResponse(final GroupApplication groupApplication){
+    private ApplicationResponse toApplicationResponse(final GroupApplication groupApplication) {
         final Group group = groupApplication.getGroup();
         final Member member = groupApplication.getApplicant();
         return ApplicationResponse.builder()

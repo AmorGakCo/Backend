@@ -48,7 +48,8 @@ public class GroupController {
     }
 
     @DeleteMapping("/{groupId}")
-    public GroupDeleteResponse delete(@AuthMember final Member member, @PathVariable final Long groupId) {
+    public GroupDeleteResponse delete(@AuthMember final Member member,
+        @PathVariable final Long groupId) {
         return groupService.delete(member, groupId);
     }
 

@@ -9,6 +9,7 @@ import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.PostExchange;
 
 public interface KakaoRestClient {
+
     @PostExchange(
         url = "https://kauth.kakao.com/oauth/token",
         contentType = MediaType.APPLICATION_FORM_URLENCODED_VALUE)

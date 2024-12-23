@@ -24,9 +24,10 @@ public class ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatRoomMapper chatRoomMapper;
 
-    public ChatRoomListResponse getChatRoomList(final Member member, final Integer page, final Integer size) {
+    public ChatRoomListResponse getChatRoomList(final Member member, final Integer page,
+        final Integer size) {
         Slice<ChatRoom> participatedChatRooms = chatRoomParticipantService.getParticipatedChatRooms(
-            member, page,size);
+            member, page, size);
         return chatRoomMapper.toChatRoomListResponse(participatedChatRooms);
     }
 
@@ -57,7 +58,7 @@ public class ChatRoomService {
     }
 
     @Transactional
-    public void deleteChatRoom(final Group group){
+    public void deleteChatRoom(final Group group) {
         chatRoomRepository.findByGroup(group).ifPresent(chatRoomRepository::delete);
     }
 }

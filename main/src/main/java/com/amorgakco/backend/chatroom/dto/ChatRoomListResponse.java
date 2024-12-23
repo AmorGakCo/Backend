@@ -1,6 +1,5 @@
 package com.amorgakco.backend.chatroom.dto;
 
-import com.amorgakco.backend.chatroomparticipant.dto.ChatRoomParticipantResponse;
 import java.util.List;
 import lombok.Builder;
 

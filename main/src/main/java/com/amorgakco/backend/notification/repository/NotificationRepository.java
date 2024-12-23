@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
     @Query(
-        "select n from Notification n join fetch n.receiver join fetch n.sender join fetch n.group where n.receiver.id = :receiverId")
+        "select n from Notification n join fetch n.receiver join fetch n.sender join fetch n"
+            + ".group where n.receiver.id = :receiverId")
     Slice<Notification> findByReceiver(Long receiverId, Pageable pageable);
 }

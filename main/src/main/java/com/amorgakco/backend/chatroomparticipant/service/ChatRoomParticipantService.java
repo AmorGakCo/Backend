@@ -19,7 +19,8 @@ public class ChatRoomParticipantService {
 
     private final ChatRoomParticipantRepository chatRoomParticipantRepository;
 
-    public Slice<ChatRoom> getParticipatedChatRooms(final Member member, final Integer page, final Integer size) {
+    public Slice<ChatRoom> getParticipatedChatRooms(final Member member, final Integer page,
+        final Integer size) {
         PageRequest pageRequest = PageRequest
             .of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
         return chatRoomParticipantRepository.findByMemberWithChatRoom(member, pageRequest);
