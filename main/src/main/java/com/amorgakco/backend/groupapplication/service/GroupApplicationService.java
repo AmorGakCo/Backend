@@ -4,7 +4,7 @@ import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.service.GroupService;
 import com.amorgakco.backend.groupapplication.domain.GroupApplication;
-import com.amorgakco.backend.groupapplication.dto.ApplicationResponse;
+import com.amorgakco.backend.groupapplication.dto.ApplicationRegisterResponse;
 import com.amorgakco.backend.groupapplication.dto.ApproveResponse;
 import com.amorgakco.backend.groupapplication.repository.GroupApplicationRepository;
 import com.amorgakco.backend.groupapplication.service.mapper.GroupApplicationMapper;
@@ -29,28 +29,30 @@ public class GroupApplicationService {
     private final GroupApplicationValidator groupApplicationValidator;
 
     @Transactional
-    public ApplicationResponse apply(final Long groupId, final Long memberId) {
+    public ApplicationRegisterResponse apply(final Long groupId, final Long memberId) {
         final Group group = groupService.getGroupWithHost(groupId);
-        final Member requestMember = memberService.getMember(memberId);
-        groupApplicationValidator.validate(group, requestMember);
+        final Member sender = memberService.getMember(memberId);
+        groupApplicationValidator.validate(group, sender);
         final GroupApplication groupApplication =
-            groupApplicationMapper.toGroupApplication(group, requestMember);
+            groupApplicationMapper.toGroupApplication(group, sender);
         groupApplicationRepository.save(groupApplication);
         notificationPublisherFacade.send(NotificationCreator.participationRequest(
-            requestMember,
+            sender,
             group.getHost(),
-            group.getName()
+            group
         ));
-        return new ApplicationResponse(groupApplication.getId());
+        return new ApplicationRegisterResponse(groupApplication.getId());
     }
 
     @Transactional
     public ApproveResponse approve(final Long groupId, final Long memberId, final Member member) {
         final GroupApplication groupApplication = getGroupParticipation(groupId, memberId);
         groupApplication.approve(member);
+        Group group = groupApplication.getGroup();
         notificationPublisherFacade.send(NotificationCreator.participationApprove(
-            memberService.getMember(memberId),
-            groupApplication.getGroup().getName()
+            group.getHost(),
+            groupApplication.getApplicant(),
+            group
         ));
         return new ApproveResponse(memberId);
     }
@@ -64,11 +66,12 @@ public class GroupApplicationService {
     @Transactional
     public void reject(final Long groupId, final Long memberId, final Long hostId) {
         final GroupApplication groupApplication = getGroupParticipation(groupId, memberId);
-        final Member member = memberService.getMember(hostId);
         groupApplication.reject(memberService.getMember(hostId));
+        final Group group = groupApplication.getGroup();
         notificationPublisherFacade.send(NotificationCreator.participationReject(
-            member,
-            groupApplication.getGroup().getName()
+            group.getHost(),
+            groupApplication.getApplicant(),
+            group
         ));
     }
 }

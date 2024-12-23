@@ -1,12 +1,10 @@
 package com.amorgakco.backend.groupapplication.service;
 
 import com.amorgakco.backend.global.exception.DuplicatedRequestException;
-import com.amorgakco.backend.global.exception.ParticipantException;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.groupapplication.repository.GroupApplicationRepository;
 import com.amorgakco.backend.groupparticipant.repository.GroupParticipantRepository;
 import com.amorgakco.backend.member.domain.Member;
-import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +30,7 @@ public class GroupApplicationValidator {
 //    }
 
     private void validateDuplicatedApplication(final Group group, final Member member) {
-        if (groupApplicationRepository.existsByGroupAndParticipant(group, member)) {
+        if (groupApplicationRepository.existsByGroupAndApplicant(group, member)) {
             throw DuplicatedRequestException.duplicatedGroupApplication();
         }
     }

@@ -73,6 +73,6 @@ public class GroupService {
     }
 
     private boolean isParticipationRequested(final Group group, final Member member) {
-        return groupApplicationRepository.existsByGroupAndParticipant(group, member);
+        return groupApplicationRepository.existsByGroupAndApplicant(group, member);
     }
 }

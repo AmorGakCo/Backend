@@ -13,10 +13,10 @@ import org.springframework.stereotype.Repository;
 public interface GroupApplicationRepository extends JpaRepository<GroupApplication, Long> {
 
     @Query(
-        "select gp from GroupApplication gp join fetch gp.group where gp.group.id = :groupId and "
-            + "gp.participant.id =:memberId")
+        "select gp from GroupApplication gp join fetch gp.group g join fetch g.host join fetch "
+            + "gp.applicant where gp.group.id =:groupId and gp.applicant.id =:memberId")
     Optional<GroupApplication> findByGroupIdAndMemberId(
         @Param("groupId") Long groupId, @Param("memberId") Long memberId);
 
-    boolean existsByGroupAndParticipant(Group group, Member member);
+    boolean existsByGroupAndApplicant(Group group, Member applicant);
 }

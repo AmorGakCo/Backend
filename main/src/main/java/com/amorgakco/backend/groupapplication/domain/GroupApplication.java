@@ -33,7 +33,7 @@ public class GroupApplication extends BaseTime {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
-    private Member participant;
+    private Member applicant;
 
     @Enumerated(EnumType.STRING)
     private GroupApplicationStatus groupApplicationStatus;
@@ -41,14 +41,14 @@ public class GroupApplication extends BaseTime {
     @Builder
     public GroupApplication(final Group group, final Member member) {
         this.group = group;
-        this.participant = member;
+        this.applicant = member;
         this.groupApplicationStatus = GroupApplicationStatus.PENDING;
     }
 
     public void approve(final Member member) {
         group.validateGroupHost(member);
         groupApplicationStatus = GroupApplicationStatus.APPROVED;
-        group.addParticipant(new GroupParticipant(participant));
+        group.addParticipant(new GroupParticipant(applicant));
     }
 
     public void reject(final Member member) {

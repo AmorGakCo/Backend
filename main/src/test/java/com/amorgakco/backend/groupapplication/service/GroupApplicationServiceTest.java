@@ -53,7 +53,7 @@ class GroupApplicationServiceTest {
         // then
         GroupApplication groupApplication = groupApplicationRepository.findByGroupIdAndMemberId(
             group.getId(), requestMember.getId()).get();
-        assertThat(groupApplication.getParticipant().getId()).isEqualTo(requestMember.getId());
+        assertThat(groupApplication.getApplicant().getId()).isEqualTo(requestMember.getId());
         assertThat(groupApplication.getGroupApplicationStatus()).isEqualTo(
             GroupApplicationStatus.PENDING);
 

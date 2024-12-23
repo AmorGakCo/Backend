@@ -31,6 +31,10 @@ public class NotificationMapper {
         return NotificationMessage.builder()
             .title(notification.getTitle())
             .content(notification.getContent())
+            .notificationType(notification.getNotificationType())
+            .senderMemberId(notification.getSender().getId())
+            .receiverMemberId(notification.getReceiver().getId())
+            .groupId(notification.getGroup().getId())
             .build();
     }
 
@@ -39,7 +43,10 @@ public class NotificationMapper {
             .title(request.title())
             .sendingType(request.sendingType())
             .receiver(request.receiver())
+            .sender(request.sender())
+            .group(request.group())
             .content(request.content())
+            .notificationType(request.notificationType())
             .build();
     }
 }

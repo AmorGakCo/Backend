@@ -80,7 +80,7 @@ public class GroupParticipantService {
         notificationPublisherFacade.send(NotificationCreator.withdraw(
             groupParticipant.getMember(),
             group.getHost(),
-            group.getName()
+            group
         ));
     }
 
@@ -92,7 +92,7 @@ public class GroupParticipantService {
         notificationPublisherFacade.send(NotificationCreator.tardy(
             groupParticipant.getMember(),
             group.getHost(),
-            group.getName(),
+            group,
             tardinessRequest.minute()
         ));
     }
