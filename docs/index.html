@@ -531,8 +531,8 @@ Host: localhost:8080
   "name" : "AmorGakCo",
   "description" : "모각코 합시다.",
   "groupCapacity" : 4,
-  "beginAt" : "2024-12-19T00:00:33.752225",
-  "endAt" : "2024-12-19T03:00:33.752225",
+  "beginAt" : "2024-12-23T19:27:37.211223",
+  "endAt" : "2024-12-23T22:27:37.211223",
   "latitude" : 37.5703901,
   "longitude" : 126.9748397,
   "address" : "서울특별시 종로구 신문로1가 23"
@@ -607,8 +607,8 @@ Content-Length: 431
   "data" : {
     "hostNickname" : "아모르겠고",
     "hostImgUrl" : "https://fakeimg",
-    "beginAt" : "2024-12-19T00:00:32.896949",
-    "endAt" : "2024-12-19T03:00:32.896962",
+    "beginAt" : "2024-12-23T19:27:36.402674",
+    "endAt" : "2024-12-23T22:27:36.402682",
     "groupCapacity" : 4,
     "currentParticipants" : 3,
     "address" : "서울특별시 종로구 신문로1가 23",
@@ -677,8 +677,8 @@ Content-Length: 911
     "address" : "서울특별시 종로구 신문로1가 23",
     "longitude" : 126.9748397,
     "latitude" : 37.5703901,
-    "beginAt" : "2024-12-19T00:00:32.896949",
-    "endAt" : "2024-12-19T03:00:32.896962",
+    "beginAt" : "2024-12-23T19:27:36.402674",
+    "endAt" : "2024-12-23T22:27:36.402682",
     "groupMembers" : [ {
       "memberId" : 2,
       "imgUrl" : "https://fakeimg",
@@ -819,7 +819,15 @@ Host: localhost:8080</code></pre>
 <h4 id="_그룹_삭제_http_response"><a class="link" href="#_그룹_삭제_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 71
+
+{
+  "status" : "success",
+  "path" : "/api/groups/1",
+  "data" : null
+}</code></pre>
 </div>
 </div>
 </div>
@@ -834,7 +842,7 @@ Host: localhost:8080</code></pre>
 <div class="sect3">
 <h4 id="_그룹_참여_path_parameters"><a class="link" href="#_그룹_참여_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/groups/{groupId}/participation</caption>
+<caption class="title">Table 1. /api/groups/{groupId}/applications</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -857,7 +865,7 @@ Host: localhost:8080</code></pre>
 <h4 id="_그룹_참여_http_request"><a class="link" href="#_그룹_참여_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/groups/1/participation HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/groups/1/applications HTTP/1.1
 Host: localhost:8080
 Content-Type: application/x-www-form-urlencoded</code></pre>
 </div>
@@ -877,7 +885,7 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <div class="sect3">
 <h4 id="_그룹_참여_허가_path_parameters"><a class="link" href="#_그룹_참여_허가_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/groups/{groupId}/participation/{memberId}</caption>
+<caption class="title">Table 1. /api/groups/{groupId}/applications/{memberId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -904,7 +912,7 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <h4 id="_그룹_참여_허가_http_request"><a class="link" href="#_그룹_참여_허가_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/groups/1/participation/2 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/groups/1/applications/2 HTTP/1.1
 Host: localhost:8080
 Content-Type: application/x-www-form-urlencoded</code></pre>
 </div>
@@ -914,7 +922,15 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <h4 id="_그룹_참여_허가_http_response"><a class="link" href="#_그룹_참여_허가_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 86
+
+{
+  "status" : "success",
+  "path" : "/api/groups/1/applications/2",
+  "data" : null
+}</code></pre>
 </div>
 </div>
 </div>
@@ -924,7 +940,7 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <div class="sect3">
 <h4 id="_그룹_참여_거절_path_parameters"><a class="link" href="#_그룹_참여_거절_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/groups/{groupId}/participation/{memberId}</caption>
+<caption class="title">Table 1. /api/groups/{groupId}/applications/{memberId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -951,7 +967,7 @@ Content-Type: application/x-www-form-urlencoded</code></pre>
 <h4 id="_그룹_참여_거절_http_request"><a class="link" href="#_그룹_참여_거절_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /api/groups/1/participation/2 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /api/groups/1/applications/2 HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1179,7 +1195,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 579
+Content-Length: 987
 
 {
   "status" : "success",
@@ -1190,13 +1206,25 @@ Content-Length: 579
     "hasNext" : false,
     "notificationMessages" : [ {
       "title" : "참여 요청",
-      "content" : "아모르겠고 님께서 mogakco 모각코에 참여하길 원합니다."
+      "content" : "아모르겠고 님께서 AmorGakCo 모각코에 참여하길 원합니다.",
+      "groupId" : null,
+      "senderMemberId" : 1,
+      "receiverMemberId" : 2,
+      "notificationType" : "PARTICIPATION_REQUEST"
     }, {
       "title" : "참여 요청",
-      "content" : "아모르겠고 님께서 mogakco 모각코에 참여하길 원합니다."
+      "content" : "아모르겠고 님께서 AmorGakCo 모각코에 참여하길 원합니다.",
+      "groupId" : null,
+      "senderMemberId" : 1,
+      "receiverMemberId" : 2,
+      "notificationType" : "PARTICIPATION_REQUEST"
     }, {
       "title" : "참여 요청",
-      "content" : "아모르겠고 님께서 mogakco 모각코에 참여하길 원합니다."
+      "content" : "아모르겠고 님께서 AmorGakCo 모각코에 참여하길 원합니다.",
+      "groupId" : null,
+      "senderMemberId" : 1,
+      "receiverMemberId" : 2,
+      "notificationType" : "PARTICIPATION_REQUEST"
     } ]
   }
 }</code></pre>
@@ -1435,7 +1463,15 @@ Host: localhost:8080
 <h4 id="_참여자_위치_인증_http_response"><a class="link" href="#_참여자_위치_인증_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 91
+
+{
+  "status" : "success",
+  "path" : "/api/group-participants/locations",
+  "data" : null
+}</code></pre>
 </div>
 </div>
 </div>
@@ -1694,7 +1730,15 @@ Host: localhost:8080
 <h4 id="_참여자_위치_인증_2_http_response"><a class="link" href="#_참여자_위치_인증_2_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content</code></pre>
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 91
+
+{
+  "status" : "success",
+  "path" : "/api/group-participants/locations",
+  "data" : null
+}</code></pre>
 </div>
 </div>
 </div>
@@ -1750,20 +1794,20 @@ Content-Length: 826
       "groupId" : 4,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-12-19T00:00:35.075058",
-      "endAt" : "2024-12-19T03:00:35.075063"
+      "beginAt" : "2024-12-23T19:27:32.351086",
+      "endAt" : "2024-12-23T22:27:32.351097"
     }, {
       "groupId" : 5,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-12-19T00:00:35.075058",
-      "endAt" : "2024-12-19T03:00:35.075063"
+      "beginAt" : "2024-12-23T19:27:32.351086",
+      "endAt" : "2024-12-23T22:27:32.351097"
     }, {
       "groupId" : 6,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-12-19T00:00:35.075058",
-      "endAt" : "2024-12-19T03:00:35.075063"
+      "beginAt" : "2024-12-23T19:27:32.351086",
+      "endAt" : "2024-12-23T22:27:32.351097"
     } ]
   }
 }</code></pre>
@@ -1822,20 +1866,20 @@ Content-Length: 823
       "groupId" : 4,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-12-19T00:00:35.075058",
-      "endAt" : "2024-12-19T03:00:35.075063"
+      "beginAt" : "2024-12-23T19:27:32.351086",
+      "endAt" : "2024-12-23T22:27:32.351097"
     }, {
       "groupId" : 5,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-12-19T00:00:35.075058",
-      "endAt" : "2024-12-19T03:00:35.075063"
+      "beginAt" : "2024-12-23T19:27:32.351086",
+      "endAt" : "2024-12-23T22:27:32.351097"
     }, {
       "groupId" : 6,
       "name" : "AmorGakCo",
       "address" : "서울특별시 종로구 신문로1가 23",
-      "beginAt" : "2024-12-19T00:00:35.075058",
-      "endAt" : "2024-12-19T03:00:35.075063"
+      "beginAt" : "2024-12-23T19:27:32.351086",
+      "endAt" : "2024-12-23T22:27:32.351097"
     } ]
   }
 }</code></pre>

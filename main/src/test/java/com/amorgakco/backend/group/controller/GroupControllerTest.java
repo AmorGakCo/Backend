@@ -199,7 +199,7 @@ class GroupControllerTest extends RestDocsTest {
         // when
         final ResultActions actions = mockMvc.perform(delete("/api/groups/{groupId}", 1L));
         // then
-        actions.andExpect(status().isNoContent());
+        actions.andExpect(status().isOk());
         // docs
         actions.andDo(print())
             .andDo(

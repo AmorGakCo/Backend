@@ -101,7 +101,7 @@ class GroupGroupParticipantControllerTest extends RestDocsTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(toRequestBody(locationVerificationRequest)));
         // then
-        actions.andExpect(status().isNoContent());
+        actions.andExpect(status().isOk());
         // docs
         actions.andDo(print())
             .andDo(

@@ -28,9 +28,9 @@ class GroupApplicationControllerTest extends RestDocsTest {
     @Test
     @DisplayName("그룹에 참여요청을 보낼 수 있다.")
     @WithMockMember
-    void getMemberPrivate() throws Exception {
+    void applicationRequest() throws Exception {
         // when
-        final ResultActions actions = mockMvc.perform(post("/api/groups/{groupId}/participation", 1L));
+        final ResultActions actions = mockMvc.perform(post("/api/groups/{groupId}/applications", 1L));
         // then
         actions.andExpect(status().isCreated());
         // docs
@@ -47,12 +47,12 @@ class GroupApplicationControllerTest extends RestDocsTest {
     @Test
     @DisplayName("그룹 참여를 허가할 수 있다.")
     @WithMockMember
-    void approveParticipation() throws Exception {
+    void approveApplication() throws Exception {
         // when
         final ResultActions actions =
-            mockMvc.perform(post("/api/groups/{groupId}/participation/{memberId}", 1L, 2L));
+            mockMvc.perform(post("/api/groups/{groupId}/applications/{memberId}", 1L, 2L));
         // then
-        actions.andExpect(status().isCreated());
+        actions.andExpect(status().isOk());
         // docs
         actions.andDo(print())
             .andDo(
@@ -68,10 +68,10 @@ class GroupApplicationControllerTest extends RestDocsTest {
     @Test
     @DisplayName("그룹 참여를 거절할 수 있다.")
     @WithMockMember
-    void rejectParticipation() throws Exception {
+    void rejectApplication() throws Exception {
         // when
         final ResultActions actions =
-            mockMvc.perform(patch("/api/groups/{groupId}/participation/{memberId}", 1L, 2L));
+            mockMvc.perform(patch("/api/groups/{groupId}/applications/{memberId}", 1L, 2L));
         // then
         actions.andExpect(status().isNoContent());
         // docs
