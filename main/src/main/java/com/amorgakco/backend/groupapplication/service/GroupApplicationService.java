@@ -6,12 +6,14 @@ import com.amorgakco.backend.group.service.GroupService;
 import com.amorgakco.backend.groupapplication.domain.GroupApplication;
 import com.amorgakco.backend.groupapplication.dto.ApplicationRegisterResponse;
 import com.amorgakco.backend.groupapplication.dto.ApproveResponse;
+import com.amorgakco.backend.groupapplication.dto.RejectResponse;
 import com.amorgakco.backend.groupapplication.repository.GroupApplicationRepository;
 import com.amorgakco.backend.groupapplication.service.mapper.GroupApplicationMapper;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.service.MemberService;
 import com.amorgakco.backend.notification.infrastructure.NotificationPublisherFacade;
 import com.amorgakco.backend.notification.service.NotificationCreator;
+import com.amorgakco.backend.notification.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,7 @@ public class GroupApplicationService {
     private final NotificationPublisherFacade notificationPublisherFacade;
     private final MemberService memberService;
     private final GroupApplicationValidator groupApplicationValidator;
+    private final NotificationService notificationService;
 
     @Transactional
     public ApplicationRegisterResponse apply(final Long groupId, final Long memberId) {
@@ -45,7 +48,7 @@ public class GroupApplicationService {
     }
 
     @Transactional
-    public ApproveResponse approve(final Long groupId, final Long memberId, final Member member) {
+    public ApproveResponse approve(final Long groupId, final Long memberId, final Member member,final Long notificationId) {
         final GroupApplication groupApplication = getGroupParticipation(groupId, memberId);
         groupApplication.approve(member);
         Group group = groupApplication.getGroup();
@@ -54,6 +57,7 @@ public class GroupApplicationService {
             groupApplication.getApplicant(),
             group
         ));
+        notificationService.deleteNotification(notificationId);
         return new ApproveResponse(memberId);
     }
 
@@ -64,7 +68,8 @@ public class GroupApplicationService {
     }
 
     @Transactional
-    public void reject(final Long groupId, final Long memberId, final Long hostId) {
+    public RejectResponse reject(final Long groupId, final Long memberId, final Long hostId,
+        final Long notificationId) {
         final GroupApplication groupApplication = getGroupParticipation(groupId, memberId);
         groupApplication.reject(memberService.getMember(hostId));
         final Group group = groupApplication.getGroup();
@@ -73,5 +78,7 @@ public class GroupApplicationService {
             groupApplication.getApplicant(),
             group
         ));
+        notificationService.deleteNotification(notificationId);
+        return new RejectResponse(memberId);
     }
 }

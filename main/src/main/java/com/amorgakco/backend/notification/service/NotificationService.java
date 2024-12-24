@@ -1,6 +1,7 @@
 package com.amorgakco.backend.notification.service;
 
 import com.amorgakco.backend.notification.domain.Notification;
+import com.amorgakco.backend.notification.dto.NotificationDeleteResponse;
 import com.amorgakco.backend.notification.dto.NotificationMessageResponse;
 import com.amorgakco.backend.notification.repository.NotificationRepository;
 import com.amorgakco.backend.notification.service.mapper.NotificationMapper;
@@ -9,9 +10,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class NotificationService {
 
     private static final Integer PAGE_SIZE = 10;
@@ -24,5 +27,11 @@ public class NotificationService {
         final Slice<Notification> notificationSlice =
             notificationRepository.findByReceiver(memberId, pageRequest);
         return notificationMapper.toNotificationMessageResponse(notificationSlice);
+    }
+
+    @Transactional
+    public NotificationDeleteResponse deleteNotification(final Long notificationId){
+        notificationRepository.deleteById(notificationId);
+        return new NotificationDeleteResponse(notificationId);
     }
 }

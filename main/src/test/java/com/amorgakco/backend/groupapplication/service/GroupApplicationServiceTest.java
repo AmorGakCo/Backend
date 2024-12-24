@@ -2,6 +2,7 @@ package com.amorgakco.backend.groupapplication.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.doNothing;
 
 import com.amorgakco.backend.fixture.group.TestGroupFactory;
@@ -15,8 +16,10 @@ import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.repository.MemberRepository;
 import com.amorgakco.backend.notification.infrastructure.NotificationPublisherFacade;
 import com.amorgakco.backend.notification.dto.NotificationRequest;
+import com.amorgakco.backend.notification.service.NotificationService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -36,6 +39,8 @@ class GroupApplicationServiceTest {
     private GroupApplicationRepository groupApplicationRepository;
     @MockBean
     private NotificationPublisherFacade notificationPublisherFacade;
+    @MockBean
+    private NotificationService notificationService;
 
     @Test
     @DisplayName("사용자는 참여요청을 보낼 수 있다.")
@@ -66,12 +71,14 @@ class GroupApplicationServiceTest {
         Member host = TestMemberFactory.createEntity();
         Member member = TestMemberFactory.createEntity();
         Group group = TestGroupFactory.createActiveGroup(host);
+        Long notificationId = 1L;
         memberRepository.save(host);
         memberRepository.save(member);
         groupRepository.save(group);
         groupApplicationRepository.save(new GroupApplication(group, member));
+        given(notificationService.deleteNotification(notificationId)).willReturn(null);
         // when
-        groupApplicationService.approve(group.getId(), member.getId(), host);
+        groupApplicationService.approve(group.getId(), member.getId(), host,notificationId);
         // then
         GroupApplication groupApplication = groupApplicationRepository.findByGroupIdAndMemberId(
             group.getId(), member.getId()).get();
@@ -86,12 +93,14 @@ class GroupApplicationServiceTest {
         Member host = TestMemberFactory.createEntity();
         Member member = TestMemberFactory.createEntity();
         Group group = TestGroupFactory.createActiveGroup(host);
+        Long notificationId = 1L;
         memberRepository.save(host);
         memberRepository.save(member);
         groupRepository.save(group);
         groupApplicationRepository.save(new GroupApplication(group, member));
+        given(notificationService.deleteNotification(notificationId)).willReturn(null);
         // when
-        groupApplicationService.reject(group.getId(), member.getId(), host.getId());
+        groupApplicationService.reject(group.getId(), member.getId(), host.getId(),notificationId);
         // then
         GroupApplication groupApplication = groupApplicationRepository.findByGroupIdAndMemberId(
             group.getId(), member.getId()).get();

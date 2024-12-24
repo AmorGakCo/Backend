@@ -50,7 +50,7 @@ class GroupApplicationControllerTest extends RestDocsTest {
     void approveApplication() throws Exception {
         // when
         final ResultActions actions =
-            mockMvc.perform(post("/api/groups/{groupId}/applications/{memberId}", 1L, 2L));
+            mockMvc.perform(post("/api/groups/{groupId}/applications/{memberId}/notifications/{notificationId}", 1L, 2L,1L));
         // then
         actions.andExpect(status().isOk());
         // docs
@@ -62,7 +62,8 @@ class GroupApplicationControllerTest extends RestDocsTest {
                     getDocumentResponse(),
                     pathParameters(
                         parameterWithName("groupId").description("참여할 그룹 ID"),
-                        parameterWithName("memberId").description("참여 요청 회원 ID"))));
+                        parameterWithName("memberId").description("참여 요청 회원 ID"),
+                        parameterWithName("notificationId").description("알림 ID"))));
     }
 
     @Test
@@ -71,9 +72,9 @@ class GroupApplicationControllerTest extends RestDocsTest {
     void rejectApplication() throws Exception {
         // when
         final ResultActions actions =
-            mockMvc.perform(patch("/api/groups/{groupId}/applications/{memberId}", 1L, 2L));
+            mockMvc.perform(patch("/api/groups/{groupId}/applications/{memberId}/notifications/{notificationId}", 1L, 2L,1L));
         // then
-        actions.andExpect(status().isNoContent());
+        actions.andExpect(status().isOk());
         // docs
         actions.andDo(print())
             .andDo(
@@ -83,6 +84,7 @@ class GroupApplicationControllerTest extends RestDocsTest {
                     getDocumentResponse(),
                     pathParameters(
                         parameterWithName("groupId").description("참여할 그룹 ID"),
-                        parameterWithName("memberId").description("참여 요청 회원 ID"))));
+                        parameterWithName("memberId").description("참여 요청 회원 ID"),
+                        parameterWithName("notificationId").description("알림 ID"))));
     }
 }

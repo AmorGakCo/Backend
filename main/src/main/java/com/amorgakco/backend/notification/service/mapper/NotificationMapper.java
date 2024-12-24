@@ -28,6 +28,7 @@ public class NotificationMapper {
 
     private NotificationMessage toNotificationMessage(final Notification notification) {
         return NotificationMessage.builder()
+            .notificationId(notification.getId())
             .title(notification.getTitle())
             .content(notification.getContent())
             .notificationType(notification.getNotificationType())
