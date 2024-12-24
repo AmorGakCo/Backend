@@ -1,6 +1,5 @@
 package com.amorgakco.notification.consumer.fcm;
 
-import com.amorgakco.notification.consumer.slack.SlackSender;
 import com.amorgakco.notification.dto.FcmMessageRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.messaging.Message;
@@ -18,15 +17,13 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class FcmWebPushConsumer {
 
-    private final SlackSender slackSender;
     private final ObjectMapper objectMapper;
 
     @RabbitListener(queues = "fcm")
     public void send(final String message) throws IOException {
         FcmMessageRequest request = objectMapper.readValue(message,
             FcmMessageRequest.class);
-        slackSender.sendFcmMessage(request);
-//        createMessage(request.token(),request.title(),request.content());
+        createMessage(request.token(),request.title(),request.content());
     }
 
     public Message createMessage(final String token, final String title, final String content) {
