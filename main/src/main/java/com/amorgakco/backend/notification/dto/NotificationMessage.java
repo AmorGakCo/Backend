@@ -1,6 +1,7 @@
 package com.amorgakco.backend.notification.dto;
 
 import com.amorgakco.backend.notification.domain.NotificationType;
+import java.time.LocalDateTime;
 import lombok.Builder;
 
 @Builder
@@ -11,6 +12,7 @@ public record NotificationMessage(
     Long groupId,
     Long senderMemberId,
     Long receiverMemberId,
-    NotificationType notificationType) {
+    NotificationType notificationType,
+    LocalDateTime createdAt) {
 
 }

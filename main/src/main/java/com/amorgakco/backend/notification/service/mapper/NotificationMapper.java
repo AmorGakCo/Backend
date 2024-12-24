@@ -35,6 +35,7 @@ public class NotificationMapper {
             .senderMemberId(notification.getSender().getId())
             .receiverMemberId(notification.getReceiver().getId())
             .groupId(notification.getGroup().getId())
+            .createdAt(notification.getCreatedAt())
             .build();
     }
 

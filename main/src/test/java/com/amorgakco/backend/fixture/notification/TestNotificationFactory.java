@@ -8,6 +8,7 @@ import com.amorgakco.backend.notification.dto.NotificationMessage;
 import com.amorgakco.backend.notification.dto.NotificationMessageResponse;
 import com.amorgakco.backend.notification.dto.NotificationRequest;
 import com.amorgakco.backend.notification.service.NotificationCreator;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -39,6 +40,8 @@ public class TestNotificationFactory {
             .groupId(group.getId())
             .receiverMemberId(receiver.getId())
             .senderMemberId(sender.getId())
+            .notificationId(1L)
+            .createdAt(LocalDateTime.now())
             .build();
     }
 }
