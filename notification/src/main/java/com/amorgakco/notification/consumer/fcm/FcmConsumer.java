@@ -31,7 +31,7 @@ public class FcmConsumer {
         @Header(AmqpHeaders.DELIVERY_TAG) final long deliveryTag,
         final Channel channel) throws IOException, FirebaseMessagingException {
         final Message message = createFcmMessage(fcmMessageRequest);
-
+        log.info("message : {}",message);
         if(fcmMessageRequest.getNotificationId() % 2 ==0){
             log.info("notification Id {}",fcmMessageRequest.getNotificationId());
             log.info("deliveryTag {}",deliveryTag);
