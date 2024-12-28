@@ -4,6 +4,7 @@ import com.amorgakco.backend.global.rabbitmq.ExchangeName;
 import com.amorgakco.backend.global.rabbitmq.QueueName;
 import com.amorgakco.backend.global.rabbitmq.RabbitMQProperties;
 import com.amorgakco.backend.global.rabbitmq.RoutingKey;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -172,7 +173,7 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public MessageConverter messageConverter() {
-        return new Jackson2JsonMessageConverter();
+    public MessageConverter messageConverter(final ObjectMapper objectMapper) {
+        return new Jackson2JsonMessageConverter(objectMapper);
     }
 }
