@@ -36,10 +36,7 @@ public class FcmConsumer {
         FcmMessageRequest fcmMessageRequest =
                 objectMapper.readValue(fcmMessageJson, FcmMessageRequest.class);
         final Message message = createFcmMessage(fcmMessageRequest);
-        log.info("message : {}", message);
         if (fcmMessageRequest.getNotificationId() % 2 == 0) {
-            log.info("notification Id {}", fcmMessageRequest.getNotificationId());
-            log.info("deliveryTag {}", deliveryTag);
             try {
                 throw new NotificationException();
             } catch (NotificationException e) {
@@ -51,7 +48,6 @@ public class FcmConsumer {
             FirebaseMessaging.getInstance().send(message);
             channel.basicAck(deliveryTag, false);
         }
-
         //        try{
         //            FirebaseMessaging.getInstance().send(message);
         //            channel.basicAck(deliveryTag,false);

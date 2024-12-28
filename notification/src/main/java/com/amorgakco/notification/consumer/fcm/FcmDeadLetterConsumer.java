@@ -43,7 +43,7 @@ public class FcmDeadLetterConsumer {
             rabbitTemplate.convertAndSend(
                     ExchangeName.NOTIFICATION_DELAY.getName(),
                     RoutingKey.NOTIFICATION_FCM_DELAY.getKey(),
-                    fcmMessageRequest);
+                    fcmMessage);
         }
     }
 
