@@ -1,8 +1,13 @@
 package com.amorgakco.notification.dto;
 
+import lombok.Builder;
+import lombok.Getter;
 
-public record FcmMessageRequest(
-    Long notificationId,String title, String content, String token
-) {
-
+@Getter
+@Builder
+public class FcmMessageRequest {
+    private Long notificationId;
+    private String title;
+    private String content;
+    private String token;
 }

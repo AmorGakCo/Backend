@@ -27,12 +27,12 @@ public class FcmConsumer {
 
     @RabbitListener(queues = "fcm")
     public void send(
-        @Payload FcmMessageRequest fcmMessageRequest,
+        FcmMessageRequest fcmMessageRequest,
         @Header(AmqpHeaders.DELIVERY_TAG) final long deliveryTag,
         final Channel channel) throws IOException, FirebaseMessagingException {
         final Message message = createFcmMessage(fcmMessageRequest);
 
-        if(fcmMessageRequest.notificationId() % 2 ==0){
+        if(fcmMessageRequest.getNotificationId() % 2 ==0){
             try{
                 throw new NotificationException();
             }catch (NotificationException e){
@@ -59,11 +59,11 @@ public class FcmConsumer {
                         WebpushConfig.builder()
                                 .setNotification(
                                         WebpushNotification.builder()
-                                                .setTitle(request.title())
-                                                .setBody(request.content())
+                                                .setTitle(request.getTitle())
+                                                .setBody(request.getContent())
                                                 .build())
                                 .build())
-                .setToken(request.token())
+                .setToken(request.getToken())
                 .build();
     }
 }

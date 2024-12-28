@@ -30,10 +30,10 @@ public class FcmPublisher implements Publisher {
         rabbitTemplate.convertAndSend(
             ExchangeName.NOTIFICATION.getName(),
             RoutingKey.NOTIFICATION_FCM.getKey(),
-            new FcmMessageRequest(
-                notification.getId(),
-                notification.getTitle(),
-                notification.getContent(),
-                token));
+            FcmMessageRequest.builder()
+                .title(notification.getTitle())
+                .notificationId(notification.getId())
+                .content(notification.getContent())
+                .token(token));
     }
 }

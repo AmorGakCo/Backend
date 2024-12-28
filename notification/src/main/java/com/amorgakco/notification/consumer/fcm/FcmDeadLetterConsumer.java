@@ -22,7 +22,7 @@ public class FcmDeadLetterConsumer {
     private final SlackSender slackSender;
 
     @RabbitListener(queues = "fcm.deadletter")
-    public void send(@Payload final FcmMessageRequest fcmMessageRequest,
+    public void send(final FcmMessageRequest fcmMessageRequest,
         @Header("x-retries-count") Integer retryCount) throws IOException {
         if(retryCount>RETRY_THRESHOLD){
             sendSlack(fcmMessageRequest,retryCount);
