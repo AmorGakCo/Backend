@@ -59,9 +59,9 @@ public class CoolSmsConsumer implements SmsConsumer {
     private Message createMessage(final SmsMessageRequest request) {
         final Message message = new Message();
         message.setFrom(serverPhoneNumber);
-        message.setTo(request.phoneNumber());
-        message.setText(request.title() + "\n");
-        message.setText(request.content());
+        message.setTo(request.getPhoneNumber());
+        message.setText(request.getTitle() + "\n");
+        message.setText(request.getContent());
         return message;
     }
 }

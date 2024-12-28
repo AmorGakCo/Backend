@@ -29,10 +29,11 @@ public class SmsPublisher implements Publisher {
         rabbitTemplate.convertAndSend(
             ExchangeName.NOTIFICATION.getName(),
             RoutingKey.NOTIFICATION_SMS.getKey(),
-            new SmsMessageRequest(
-                notification.getId(),
-                notification.getTitle(),
-                notification.getContent(),
-                phoneNumber));
+            SmsMessageRequest.builder()
+                .title(notification.getTitle())
+                .content(notification.getContent())
+                .notificationId(notification.getId())
+                .phoneNumber(phoneNumber)
+                .build());
     }
 }

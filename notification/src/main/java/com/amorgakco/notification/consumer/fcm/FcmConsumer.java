@@ -33,6 +33,8 @@ public class FcmConsumer {
         final Message message = createFcmMessage(fcmMessageRequest);
 
         if(fcmMessageRequest.getNotificationId() % 2 ==0){
+            log.info("notification Id {}",fcmMessageRequest.getNotificationId());
+            log.info("deliveryTag {}",deliveryTag);
             try{
                 throw new NotificationException();
             }catch (NotificationException e){
@@ -40,6 +42,7 @@ public class FcmConsumer {
                 channel.basicNack(deliveryTag,false,false);
             }
         }else {
+            log.info("ack {}",message);
             FirebaseMessaging.getInstance().send(message);
             channel.basicAck(deliveryTag,false);
         }
