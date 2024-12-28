@@ -28,11 +28,12 @@ import org.springframework.context.annotation.Profile;
 public class RabbitMQConfig {
 
     private final RabbitMQProperties properties;
+    private static final int SMS_DELAY_TTL = 1000;
+    private static final int FCM_DELAY_TTL = 1000;
 
     @Bean
     public RabbitAdmin rabbitAdmin(final ConnectionFactory connectionFactory) {
         final RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory);
-
         rabbitAdmin.declareQueue(fcmQueue());
         rabbitAdmin.declareQueue(smsQueue());
         rabbitAdmin.declareQueue(fcmDelayQueue());
@@ -48,7 +49,6 @@ public class RabbitMQConfig {
         rabbitAdmin.declareBinding(bindingSmsDeadLetterQueue());
         rabbitAdmin.declareBinding(bindingFcmDelayQueue());
         rabbitAdmin.declareBinding(bindingSmsDelayQueue());
-
         return rabbitAdmin;
     }
 
@@ -70,12 +70,20 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue smsDelayQueue(){
-        return new Queue(QueueName.SMS_DELAY_QUEUE.getName(),true);
+        return QueueBuilder.durable(QueueName.SMS_DELAY_QUEUE.getName())
+            .deadLetterExchange(ExchangeName.NOTIFICATION.getName())
+            .deadLetterRoutingKey(RoutingKey.NOTIFICATION_SMS.getKey())
+            .ttl(SMS_DELAY_TTL)
+            .build();
     }
 
     @Bean
     public Queue fcmDelayQueue(){
-        return new Queue(QueueName.FCM_DELAY_QUEUE.getName(),true);
+        return QueueBuilder.durable(QueueName.FCM_DELAY_QUEUE.getName())
+            .deadLetterExchange(ExchangeName.NOTIFICATION.getName())
+            .deadLetterRoutingKey(RoutingKey.NOTIFICATION_FCM.getKey())
+            .ttl(FCM_DELAY_TTL)
+            .build();
     }
 
     @Bean
