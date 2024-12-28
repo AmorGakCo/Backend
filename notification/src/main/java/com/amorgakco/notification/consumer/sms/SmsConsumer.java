@@ -4,6 +4,5 @@ import java.io.IOException;
 
 public interface SmsConsumer {
 
-    void consume(final String message)
-            throws IOException;
+    void consume(final String message) throws IOException;
 }

@@ -1,14 +1,9 @@
 package com.amorgakco.notification.consumer.sms;
 
-import com.amorgakco.notification.dto.SmsMessageRequest;
 import com.amorgakco.notification.consumer.slack.SlackSender;
+import com.amorgakco.notification.dto.SmsMessageRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Envelope;
 
-import net.nurigo.sdk.message.exception.NurigoEmptyResponseException;
-import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException;
-import net.nurigo.sdk.message.exception.NurigoUnknownException;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.service.DefaultMessageService;
 
@@ -30,7 +25,7 @@ public class CoolSmsConsumer implements SmsConsumer {
             final DefaultMessageService messageService,
             @Value("${server-phone-number}") final String serverPhoneNumber,
             final SlackSender slackSender,
-        final ObjectMapper objectMapper) {
+            final ObjectMapper objectMapper) {
         this.messageService = messageService;
         this.serverPhoneNumber = serverPhoneNumber;
         this.slackSender = slackSender;
@@ -39,21 +34,18 @@ public class CoolSmsConsumer implements SmsConsumer {
 
     @RabbitListener(queues = "sms")
     @Override
-    public void consume(
-            final String message)
-            throws IOException {
-        SmsMessageRequest request = objectMapper.readValue(message,
-            SmsMessageRequest.class);
+    public void consume(final String message) throws IOException {
+        SmsMessageRequest request = objectMapper.readValue(message, SmsMessageRequest.class);
         slackSender.sendSmsMessage(request);
-//        final long deliveryTag = envelope.getDeliveryTag();
-//        try {
-//            messageService.send(createFcmMessage(request));
-//            channel.basicAck(deliveryTag, false);
-//        } catch (NurigoEmptyResponseException
-//                | NurigoMessageNotReceivedException
-//                | NurigoUnknownException e) {
-//            channel.basicNack(deliveryTag, false, false);
-//        }
+        //        final long deliveryTag = envelope.getDeliveryTag();
+        //        try {
+        //            messageService.send(createFcmMessage(request));
+        //            channel.basicAck(deliveryTag, false);
+        //        } catch (NurigoEmptyResponseException
+        //                | NurigoMessageNotReceivedException
+        //                | NurigoUnknownException e) {
+        //            channel.basicNack(deliveryTag, false, false);
+        //        }
     }
 
     private Message createMessage(final SmsMessageRequest request) {

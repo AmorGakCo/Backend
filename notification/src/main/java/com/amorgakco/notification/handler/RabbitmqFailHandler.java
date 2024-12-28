@@ -14,22 +14,22 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class RabbitmqFailHandler {
 
-    private final RabbitTemplate rabbitTemplate;
     private static final int FAIL_THRESHOLD = 2;
+    private final RabbitTemplate rabbitTemplate;
 
-    public void handle(final Channel channel, final Message message){
+    public void handle(final Channel channel, final Message message) {
         int failCount = (int) message.getMessageProperties().getHeaders().get("x-retries-count");
-        if(failCount < FAIL_THRESHOLD){
-            sendNack(channel,message);
+        if (failCount < FAIL_THRESHOLD) {
+            sendNack(channel, message);
         }
     }
 
     private void sendNack(final Channel channel, final Message message) {
         long deliveryTag = message.getMessageProperties().getDeliveryTag();
-        try{
-            channel.basicNack(deliveryTag,false,false);
-        }catch (IOException e){
-            log.error("nack error : {}",message);
+        try {
+            channel.basicNack(deliveryTag, false, false);
+        } catch (IOException e) {
+            log.error("nack error : {}", message);
         }
     }
 }
