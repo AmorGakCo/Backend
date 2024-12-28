@@ -55,19 +55,7 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public DefaultJackson2JavaTypeMapper typeMapper() {
-        DefaultJackson2JavaTypeMapper typeMapper = new DefaultJackson2JavaTypeMapper();
-        Map<String, Class<?>> idClassMapping = new HashMap<>();
-        idClassMapping.put("com.amorgakco.backend.notification.dto.FcmMessageRequest", FcmMessageRequest.class);
-        typeMapper.setIdClassMapping(idClassMapping);
-        return typeMapper;
-    }
-
-    @Bean
-    public MessageConverter messageConverter(final ObjectMapper objectMapper, final DefaultJackson2JavaTypeMapper typeMapper) {
-        Jackson2JsonMessageConverter jackson2JsonMessageConverter = new Jackson2JsonMessageConverter(
-            objectMapper);
-        jackson2JsonMessageConverter.setJavaTypeMapper(typeMapper);
-        return jackson2JsonMessageConverter;
+    public MessageConverter messageConverter() {
+        return new Jackson2JsonMessageConverter();
     }
 }
