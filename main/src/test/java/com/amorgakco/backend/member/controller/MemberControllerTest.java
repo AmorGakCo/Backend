@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.ResultActions;
 class MemberControllerTest extends RestDocsTest {
 
     @Test
-    @DisplayName("깃헙아이디,전화번호,SMS 수신여부, 위치를 설정할 수 있다")
+    @DisplayName("깃헙아이디,전화번호,SMS_QUEUE 수신여부, 위치를 설정할 수 있다")
     @WithMockMember
     void saveOrUpdateAdditionalInfo() throws Exception {
         // given

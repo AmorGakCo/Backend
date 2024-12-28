@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum ExchangeName {
     NOTIFICATION("notification"),
-    NOTIFICATION_DEAD_LETTER("notification-dl");
+    NOTIFICATION_DEAD_LETTER("notification.dlx"),
+    NOTIFICATION_DELAY("notification.delay");
 
     private final String name;
 }

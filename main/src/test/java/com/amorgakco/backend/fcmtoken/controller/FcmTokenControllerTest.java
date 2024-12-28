@@ -27,7 +27,7 @@ class FcmTokenControllerTest extends RestDocsTest {
 
     @Test
     @WithMockMember
-    @DisplayName("FCM 토큰을 저장한다.")
+    @DisplayName("FCM_QUEUE 토큰을 저장한다.")
     void saveFcmToken() throws Exception {
         //given
         final FcmTokenSaveRequest fcmTokenSaveRequest = new FcmTokenSaveRequest("fcm-token");

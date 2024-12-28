@@ -47,7 +47,7 @@ public class CoolSmsConsumer implements SmsConsumer {
         slackSender.sendSmsMessage(request);
 //        final long deliveryTag = envelope.getDeliveryTag();
 //        try {
-//            messageService.send(createMessage(request));
+//            messageService.send(createFcmMessage(request));
 //            channel.basicAck(deliveryTag, false);
 //        } catch (NurigoEmptyResponseException
 //                | NurigoMessageNotReceivedException
