@@ -34,6 +34,7 @@ public class FcmPublisher implements Publisher {
                 .title(notification.getTitle())
                 .notificationId(notification.getId())
                 .content(notification.getContent())
-                .token(token));
+                .token(token)
+                .build());
     }
 }
