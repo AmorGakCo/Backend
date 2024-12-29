@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -18,6 +19,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
+@Slf4j
 public class FcmDeadLetterConsumer {
     private static final Integer RETRY_THRESHOLD = 2;
     private final RabbitTemplate rabbitTemplate;
@@ -37,8 +39,10 @@ public class FcmDeadLetterConsumer {
                                                 .get("x-retries-count"))
                         .orElse(1);
         if (retryCount > RETRY_THRESHOLD) {
+            log.info("Send Slack : {}",fcmMessage);
             sendSlack(fcmMessageRequest, retryCount);
         } else {
+            log.info("Send delay queue : {} , ",fcmMessage);
             fcmMessage.getMessageProperties().getHeaders().put("x-retries-count", ++retryCount);
             rabbitTemplate.convertAndSend(
                     ExchangeName.NOTIFICATION_DELAY.getName(),
