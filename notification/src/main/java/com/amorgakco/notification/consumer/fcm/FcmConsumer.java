@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.support.AmqpHeaders;
+import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -27,29 +29,30 @@ public class FcmConsumer {
 
     @RabbitListener(queues = "fcm")
     public void send(
-            org.springframework.amqp.core.Message fcmMessage,
+            String fcmMessage,
+            @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag,
             final Channel channel)
             throws IOException, FirebaseMessagingException {
         FcmMessageRequest fcmMessageRequest =
-                objectMapper.readValue(fcmMessage.getBody(), FcmMessageRequest.class);
+                objectMapper.readValue(fcmMessage, FcmMessageRequest.class);
         final Message message = createFcmMessage(fcmMessageRequest);
-        if (fcmMessageRequest.getNotificationId() % 2 == 0) {
-            try {
-                throw new NotificationException();
-            } catch (NotificationException e) {
-                channel.basicNack(fcmMessage.getMessageProperties().getDeliveryTag(), false, false);
-            }
-        } else {
-            FirebaseMessaging.getInstance().send(message);
-            channel.basicAck(fcmMessage.getMessageProperties().getDeliveryTag(), false);
-        }
-        //        try{
-        //            FirebaseMessaging.getInstance().send(message);
-        //            channel.basicAck(deliveryTag,false);
-        //        }catch (FirebaseMessagingException e){
-        //            log.info("RabbitMQ Nacked FCM Notification : {}",fcmMessageJson);
-        //            channel.basicNack(deliveryTag,false,false);
-        //        }
+//        if (fcmMessageRequest.getNotificationId() % 2 == 0) {
+//            try {
+//                throw new NotificationException();
+//            } catch (NotificationException e) {
+//                channel.basicNack(fcmMessage.getMessageProperties().getDeliveryTag(), false, false);
+//            }
+//        } else {
+//            FirebaseMessaging.getInstance().send(message);
+//            channel.basicAck(fcmMessage.getMessageProperties().getDeliveryTag(), false);
+//        }
+                try{
+                    FirebaseMessaging.getInstance().send(message);
+                    channel.basicAck(deliveryTag,false);
+                }catch (FirebaseMessagingException e){
+                    log.info("RabbitMQ Nacked FCM Notification : {}",fcmMessage);
+                    channel.basicNack(deliveryTag,false,false);
+                }
     }
 
     public Message createFcmMessage(final FcmMessageRequest request) {
