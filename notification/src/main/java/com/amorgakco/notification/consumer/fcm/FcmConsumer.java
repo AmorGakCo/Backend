@@ -29,24 +29,23 @@ public class FcmConsumer {
 
     @RabbitListener(queues = "fcm")
     public void send(
-            String fcmMessageJson,
-            @Header(AmqpHeaders.DELIVERY_TAG) final long deliveryTag,
+            org.springframework.amqp.core.Message fcmMessage,
             final Channel channel)
             throws IOException, FirebaseMessagingException {
         FcmMessageRequest fcmMessageRequest =
-                objectMapper.readValue(fcmMessageJson, FcmMessageRequest.class);
+                objectMapper.readValue(fcmMessage.getBody(), FcmMessageRequest.class);
         final Message message = createFcmMessage(fcmMessageRequest);
         if (fcmMessageRequest.getNotificationId() % 2 == 0) {
             try {
                 throw new NotificationException();
             } catch (NotificationException e) {
-                log.info("RabbitMQ Nacked FCM Notification : {}", fcmMessageJson);
-                channel.basicNack(deliveryTag, false, false);
+                log.info("RabbitMQ Nacked FCM Notification : {}", fcmMessage);
+                channel.basicNack(fcmMessage.getMessageProperties().getDeliveryTag(), false, false);
             }
         } else {
             log.info("ack {}", message);
             FirebaseMessaging.getInstance().send(message);
-            channel.basicAck(deliveryTag, false);
+            channel.basicAck(fcmMessage.getMessageProperties().getDeliveryTag(), false);
         }
         //        try{
         //            FirebaseMessaging.getInstance().send(message);
