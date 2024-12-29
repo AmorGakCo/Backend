@@ -39,10 +39,8 @@ public class FcmDeadLetterConsumer {
                                                 .get("x-retries-count"))
                         .orElse(1);
         if (retryCount > RETRY_THRESHOLD) {
-            log.info("Send Slack : {}",fcmMessage);
             sendSlack(fcmMessageRequest, retryCount);
         } else {
-            log.info("Send delay queue : {} , ",fcmMessage);
             fcmMessage.getMessageProperties().getHeaders().put("x-retries-count", ++retryCount);
             rabbitTemplate.convertAndSend(
                     ExchangeName.NOTIFICATION_DELAY.getName(),

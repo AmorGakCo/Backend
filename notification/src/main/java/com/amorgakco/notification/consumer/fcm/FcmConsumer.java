@@ -14,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.support.AmqpHeaders;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -39,11 +37,9 @@ public class FcmConsumer {
             try {
                 throw new NotificationException();
             } catch (NotificationException e) {
-                log.info("RabbitMQ Nacked FCM Notification : {}", fcmMessage);
                 channel.basicNack(fcmMessage.getMessageProperties().getDeliveryTag(), false, false);
             }
         } else {
-            log.info("ack {}", message);
             FirebaseMessaging.getInstance().send(message);
             channel.basicAck(fcmMessage.getMessageProperties().getDeliveryTag(), false);
         }
