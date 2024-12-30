@@ -81,4 +81,18 @@ public class NotificationCreator {
             .notificationType(NotificationType.PARTICIPATION_WITHDRAW)
             .build();
     }
+
+    public static NotificationRequest deleteGroup(
+        final Member sender, final Member receiver, final Group group) {
+        return NotificationRequest.builder()
+            .sender(sender)
+            .receiver(receiver)
+            .group(group)
+            .sendingType(SendingType.WEB_PUSH)
+            .title(NotificationType.GROUP_DELETED.getTitle())
+            .content(NotificationType.GROUP_DELETED.getContent()
+                .formatted(sender.getNickname(), group.getName()))
+            .notificationType(NotificationType.GROUP_DELETED)
+            .build();
+    }
 }

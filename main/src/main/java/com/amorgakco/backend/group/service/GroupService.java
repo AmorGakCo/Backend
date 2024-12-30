@@ -11,7 +11,11 @@ import com.amorgakco.backend.group.dto.GroupRegisterResponse;
 import com.amorgakco.backend.group.repository.GroupRepository;
 import com.amorgakco.backend.group.service.mapper.GroupMapper;
 import com.amorgakco.backend.groupapplication.repository.GroupApplicationRepository;
+import com.amorgakco.backend.groupparticipant.domain.GroupParticipant;
 import com.amorgakco.backend.member.domain.Member;
+import com.amorgakco.backend.notification.infrastructure.NotificationPublisherFacade;
+import com.amorgakco.backend.notification.service.NotificationCreator;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +29,7 @@ public class GroupService {
     private final GroupMapper groupMapper;
     private final GroupApplicationRepository groupApplicationRepository;
     private final ChatRoomService chatRoomService;
+    private final NotificationPublisherFacade notificationPublisherFacade;
 
     @Transactional
     public GroupRegisterResponse register(final GroupRegisterRequest request, final Member host) {
@@ -41,7 +46,18 @@ public class GroupService {
         group.validateGroupHost(member);
         groupApplicationRepository.deleteByGroup(group);
         groupRepository.delete(group);
+        sendNotificationToParticipants(group);
         return new GroupDeleteResponse(groupId);
+    }
+
+    private void sendNotificationToParticipants(final Group group) {
+        final Set<GroupParticipant> groupParticipants = group.getGroupParticipants();
+        groupParticipants.forEach(
+            gp -> notificationPublisherFacade.send(NotificationCreator.deleteGroup(
+                group.getHost(),
+                gp.getMember(),
+                group
+            )));
     }
 
     public Group getGroup(final Long groupId) {
