@@ -19,4 +19,6 @@ public interface GroupApplicationRepository extends JpaRepository<GroupApplicati
         @Param("groupId") Long groupId, @Param("memberId") Long memberId);
 
     boolean existsByGroupAndApplicant(Group group, Member applicant);
+
+    void deleteByGroup(Group group);
 }

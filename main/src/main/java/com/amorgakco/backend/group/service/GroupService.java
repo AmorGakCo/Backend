@@ -39,6 +39,7 @@ public class GroupService {
         final Group group = getGroup(groupId);
         chatRoomService.deleteChatRoom(group);
         group.validateGroupHost(member);
+        groupApplicationRepository.deleteByGroup(group);
         groupRepository.delete(group);
         return new GroupDeleteResponse(groupId);
     }
