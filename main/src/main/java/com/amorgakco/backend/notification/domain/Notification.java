@@ -3,13 +3,16 @@ package com.amorgakco.backend.notification.domain;
 import com.amorgakco.backend.global.BaseTime;
 import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.member.domain.Member;
+import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -39,12 +42,15 @@ public class Notification extends BaseTime {
     private NotificationType notificationType;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sender_member_id" ,nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member sender;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "receiver_member_id" ,nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member receiver;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id" ,nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Group group;
 
     @Builder
