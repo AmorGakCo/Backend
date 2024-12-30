@@ -48,7 +48,6 @@ public class FcmConsumer {
 //        }
                 try{
                     FirebaseMessaging.getInstance().send(message);
-                    channel.basicAck(deliveryTag,false);
                 }catch (FirebaseMessagingException e){
                     log.info("RabbitMQ Nacked FCM Notification : {}",fcmMessage);
                     channel.basicNack(deliveryTag,false,false);
