@@ -4,6 +4,7 @@ import com.amorgakco.backend.jwt.dto.AccessTokenResponse;
 import com.amorgakco.backend.jwt.dto.MemberTokens;
 import com.amorgakco.backend.jwt.service.JwtService;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +28,10 @@ public class JwtController {
     @ResponseStatus(HttpStatus.CREATED)
     public AccessTokenResponse reissueAccessToken(
         @CookieValue(value = "refresh-token") final String refreshToken,
+        final HttpServletRequest request,
         final HttpServletResponse response) {
         final MemberTokens memberTokens = jwtService.reissue(refreshToken);
-        jwtCookieLoader.loadCookie(response, memberTokens.refreshToken());
+        jwtCookieLoader.loadCookie(request,response, memberTokens.refreshToken());
         return new AccessTokenResponse(memberTokens.accessToken());
     }
 
