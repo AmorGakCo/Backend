@@ -62,7 +62,7 @@ public class Oauth2Controller {
             oauth2Service.login(oauth2ProviderType, authCode, redirectionUrl);
         final MemberTokens tokens =
             jwtService.createAndSaveMemberTokens(oauth2MemberResponse.memberId());
-        jwtCookieLoader.loadCookie(response, tokens.refreshToken());
+        jwtCookieLoader.loadCookie(request,response, tokens.refreshToken());
         return new Oauth2LoginResponse(oauth2MemberResponse, tokens.accessToken());
     }
 
