@@ -28,10 +28,9 @@ public class JwtController {
     @ResponseStatus(HttpStatus.CREATED)
     public AccessTokenResponse reissueAccessToken(
         @CookieValue(value = "refresh-token") final String refreshToken,
-        final HttpServletRequest request,
         final HttpServletResponse response) {
         final MemberTokens memberTokens = jwtService.reissue(refreshToken);
-        jwtCookieLoader.loadCookie(request,response, memberTokens.refreshToken());
+        jwtCookieLoader.loadCookie(response, memberTokens.refreshToken());
         return new AccessTokenResponse(memberTokens.accessToken());
     }
 
