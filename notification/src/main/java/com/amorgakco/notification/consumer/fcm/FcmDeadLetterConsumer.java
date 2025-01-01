@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -30,14 +31,7 @@ public class FcmDeadLetterConsumer {
     public void send(Message fcmMessage) throws IOException {
         FcmMessageRequest fcmMessageRequest =
                 objectMapper.readValue(fcmMessage.getBody(), FcmMessageRequest.class);
-        Integer retryCount =
-                Optional.ofNullable(
-                                (Integer)
-                                        fcmMessage
-                                                .getMessageProperties()
-                                                .getHeaders()
-                                                .get("x-retries-count"))
-                        .orElse(1);
+        Integer retryCount = getRetryCount(fcmMessage);
         if (retryCount > RETRY_THRESHOLD) {
             sendSlack(fcmMessageRequest, retryCount);
         } else {
@@ -47,6 +41,16 @@ public class FcmDeadLetterConsumer {
                     RoutingKey.NOTIFICATION_FCM_DELAY.getKey(),
                     fcmMessage);
         }
+    }
+
+    private Integer getRetryCount(final Message fcmMessage) {
+        return Optional.ofNullable(
+                (Integer)
+                    fcmMessage
+                        .getMessageProperties()
+                        .getHeaders()
+                        .get("x-retries-count"))
+            .orElse(1);
     }
 
     public void sendSlack(final FcmMessageRequest failedMessage, final Integer retryCount) {
