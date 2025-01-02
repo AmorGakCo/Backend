@@ -42,7 +42,8 @@ public class SecurityConfig {
                             "/api/oauth2/**",
                             "/api/members/login",
                             "/favicon.ico",
-                            "/error")
+                            "/error",
+                            "/api/actuator/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated())
