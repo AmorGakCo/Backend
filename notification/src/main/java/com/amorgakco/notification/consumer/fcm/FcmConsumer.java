@@ -36,21 +36,12 @@ public class FcmConsumer {
         FcmMessageRequest fcmMessageRequest =
                 objectMapper.readValue(fcmMessage, FcmMessageRequest.class);
         final Message message = createFcmMessage(fcmMessageRequest);
-        if (fcmMessageRequest.getNotificationId() % 2 == 0) {
-            try {
-                throw new NotificationException();
-            } catch (NotificationException e) {
-                channel.basicNack(deliveryTag, false, false);
-            }
-        } else {
+        try{
             FirebaseMessaging.getInstance().send(message);
+        }catch (FirebaseMessagingException e){
+            log.info("RabbitMQ Nacked FCM Notification : {}",fcmMessage);
+            channel.basicNack(deliveryTag,false,false);
         }
-//                try{
-//                    FirebaseMessaging.getInstance().send(message);
-//                }catch (FirebaseMessagingException e){
-//                    log.info("RabbitMQ Nacked FCM Notification : {}",fcmMessage);
-//                    channel.basicNack(deliveryTag,false,false);
-//                }
     }
 
     public Message createFcmMessage(final FcmMessageRequest request) {

@@ -60,7 +60,7 @@ public class RabbitMQConfig {
             .deadLetterExchange(ExchangeName.NOTIFICATION_DEAD_LETTER.getName())
             .build();
     }
-    
+
     @Bean
     public Queue smsQueue() {
         return QueueBuilder.durable(QueueName.SMS_QUEUE.getName())
