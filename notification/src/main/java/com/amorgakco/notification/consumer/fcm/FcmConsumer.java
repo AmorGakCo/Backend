@@ -35,13 +35,14 @@ public class FcmConsumer {
             throws IOException, FirebaseMessagingException {
         FcmMessageRequest fcmMessageRequest =
                 objectMapper.readValue(fcmMessage, FcmMessageRequest.class);
-        final Message message = createFcmMessage(fcmMessageRequest);
-        try{
-            FirebaseMessaging.getInstance().send(message);
-        }catch (FirebaseMessagingException e){
-            log.info("RabbitMQ Nacked FCM Notification : {}",fcmMessage);
-            channel.basicNack(deliveryTag,false,false);
-        }
+        log.info("message send");
+//        final Message message = createFcmMessage(fcmMessageRequest);
+//        try{
+//            FirebaseMessaging.getInstance().send(message);
+//        }catch (FirebaseMessagingException e){
+//            log.info("RabbitMQ Nacked FCM Notification : {}",fcmMessage);
+//            channel.basicNack(deliveryTag,false,false);
+//        }
     }
 
     public Message createFcmMessage(final FcmMessageRequest request) {
