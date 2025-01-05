@@ -27,7 +27,7 @@ public class FcmConsumer {
 
     private final ObjectMapper objectMapper;
 
-    @RabbitListener(queues = "fcm", concurrency = "5")
+    @RabbitListener(queues = "fcm")
     public void send(
             String fcmMessage,
             @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag,
