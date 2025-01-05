@@ -1,6 +1,5 @@
 package com.amorgakco.notification.consumer.fcm;
 
-import com.amorgakco.notification.consumer.NotificationException;
 import com.amorgakco.notification.dto.FcmMessageRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.messaging.FirebaseMessaging;
