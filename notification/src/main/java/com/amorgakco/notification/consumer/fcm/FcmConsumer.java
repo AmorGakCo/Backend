@@ -33,16 +33,18 @@ public class FcmConsumer {
             @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag,
             final Channel channel)
             throws IOException, FirebaseMessagingException {
+        long startTime = System.currentTimeMillis();
         FcmMessageRequest fcmMessageRequest =
                 objectMapper.readValue(fcmMessage, FcmMessageRequest.class);
-        log.info("message send");
-//        final Message message = createFcmMessage(fcmMessageRequest);
-//        try{
-//            FirebaseMessaging.getInstance().send(message);
-//        }catch (FirebaseMessagingException e){
-//            log.info("RabbitMQ Nacked FCM Notification : {}",fcmMessage);
-//            channel.basicNack(deliveryTag,false,false);
-//        }
+        final Message message = createFcmMessage(fcmMessageRequest);
+        try{
+            FirebaseMessaging.getInstance().send(message);
+        }catch (FirebaseMessagingException e){
+            log.info("RabbitMQ Nacked FCM Notification : {}",fcmMessage);
+            channel.basicNack(deliveryTag,false,false);
+        }
+        long endTime = System.currentTimeMillis();
+        log.info("Excution Time : {} ",endTime-startTime);
     }
 
     public Message createFcmMessage(final FcmMessageRequest request) {
