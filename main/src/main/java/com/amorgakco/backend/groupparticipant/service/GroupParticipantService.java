@@ -84,7 +84,6 @@ public class GroupParticipantService {
         ));
     }
 
-    @Transactional
     public void tardy(final Long groupId, final Long memberId,
         final TardinessRequest tardinessRequest) {
         final GroupParticipant groupParticipant = getGroupParticipant(groupId, memberId);
