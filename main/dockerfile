@@ -1,17 +1,5 @@
-FROM bellsoft/liberica-openjdk-alpine:17 AS builder
-FROM bellsoft/liberica-openjdk-alpine:17
+FROM gradle:7.5.1-jdk17
+WORKDIR /app
+COPY . /app
 
-CMD ["./gradlew", "clean", "build"]
-
-ARG JAR_FILE=build/libs/*.jar
-
-COPY ${JAR_FILE} app.jar
-
-CMD (java \
-          -Dcom.sun.management.jmxremote \
-          -Dcom.sun.management.jmxremote.port=9010 \
-          -Dcom.sun.management.jmxremote.authenticate=false \
-          -Dcom.sun.management.jmxremote.ssl=false \
-          -Dcom.sun.management.jmxremote.rmi.port=9010 \
-          -Djava.rmi.server.hostname=34.64.170.190 \
-          -jar app.jar)
+CMD ["gradle", "bootRun"]
