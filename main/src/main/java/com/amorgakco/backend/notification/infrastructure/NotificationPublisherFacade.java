@@ -33,9 +33,16 @@ public class NotificationPublisherFacade {
         this.notificationMapper = notificationMapper;
     }
 
-    public void send(final NotificationRequest request) {
-        final Publisher publisher = publishers.get(request.sendingType());
-        final Notification notification = notificationMapper.toNotification(request);
+    public void send(final Notification notification) {
+        final Publisher publisher = publishers.get(notification.getSendingType());
+//        final Notification notification = notificationMapper.toNotification(request);
+//        notificationRepository.save(notification);
+        publisher.publish(notification);
+    }
+
+    public void send(final NotificationRequest notificationRequest) {
+        final Publisher publisher = publishers.get(notificationRequest.sendingType());
+        final Notification notification = notificationMapper.toNotification(notificationRequest);
         notificationRepository.save(notification);
         publisher.publish(notification);
     }

@@ -13,8 +13,12 @@ import com.amorgakco.backend.groupparticipant.dto.TardinessRequest;
 import com.amorgakco.backend.groupparticipant.dto.TemperatureResponse;
 import com.amorgakco.backend.groupparticipant.repository.GroupParticipantRepository;
 import com.amorgakco.backend.groupparticipant.service.mapper.GroupParticipantMapper;
+import com.amorgakco.backend.notification.domain.Notification;
+import com.amorgakco.backend.notification.dto.NotificationRequest;
 import com.amorgakco.backend.notification.infrastructure.NotificationPublisherFacade;
+import com.amorgakco.backend.notification.repository.NotificationRepository;
 import com.amorgakco.backend.notification.service.NotificationCreator;
+import com.amorgakco.backend.notification.service.mapper.NotificationMapper;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +27,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.retry.annotation.Recover;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +39,10 @@ public class GroupParticipantService {
     private final GroupParticipantMapper groupParticipantMapper;
     private final GroupService groupService;
     private final NotificationPublisherFacade notificationPublisherFacade;
+
+    private final TransactionTemplate transactionTemplate;
+    private final NotificationMapper notificationMapper;
+    private final NotificationRepository notificationRepository;
 
     @Transactional
     public LocationVerificationResponse verifyParticipantLocation(
@@ -84,17 +93,23 @@ public class GroupParticipantService {
         ));
     }
 
-    @Transactional
     public void tardy(final Long groupId, final Long memberId,
         final TardinessRequest tardinessRequest) {
-        final GroupParticipant groupParticipant = getGroupParticipant(groupId, memberId);
-        final Group group = groupService.getGroupWithHost(groupId);
-        notificationPublisherFacade.send(NotificationCreator.tardy(
-            groupParticipant.getMember(),
-            group.getHost(),
-            group,
-            tardinessRequest.minute()
-        ));
+        Notification savedNotification = transactionTemplate.execute(status -> {
+                final GroupParticipant groupParticipant = getGroupParticipant(groupId, memberId);
+                final Group group = groupService.getGroupWithHost(groupId);
+                NotificationRequest request = NotificationCreator.tardy(
+                    groupParticipant.getMember(),
+                    group.getHost(),
+                    group,
+                    tardinessRequest.minute()
+                );
+                Notification notification = notificationMapper.toNotification(request);
+                notificationRepository.save(notification);
+                return notification;
+            }
+        );
+        notificationPublisherFacade.send(savedNotification);
     }
 
 
