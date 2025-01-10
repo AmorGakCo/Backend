@@ -13,8 +13,6 @@ import com.amorgakco.backend.groupparticipant.dto.TardinessRequest;
 import com.amorgakco.backend.groupparticipant.dto.TemperatureResponse;
 import com.amorgakco.backend.groupparticipant.repository.GroupParticipantRepository;
 import com.amorgakco.backend.groupparticipant.service.mapper.GroupParticipantMapper;
-import com.amorgakco.backend.notification.domain.Notification;
-import com.amorgakco.backend.notification.dto.NotificationRequest;
 import com.amorgakco.backend.notification.infrastructure.NotificationPublisherFacade;
 import com.amorgakco.backend.notification.repository.NotificationRepository;
 import com.amorgakco.backend.notification.service.NotificationCreator;
@@ -95,22 +93,14 @@ public class GroupParticipantService {
 
     public void tardy(final Long groupId, final Long memberId,
         final TardinessRequest tardinessRequest) {
-        Notification savedNotification = transactionTemplate.execute(status -> {
-                final GroupParticipant groupParticipant = getGroupParticipant(groupId, memberId);
-                Group group = groupParticipant.getGroup();
-//                final Group group = groupService.getGroupWithHost(groupId);
-                NotificationRequest request = NotificationCreator.tardy(
-                    groupParticipant.getMember(),
-                    group.getHost(),
-                    group,
-                    tardinessRequest.minute()
-                );
-                Notification notification = notificationMapper.toNotification(request);
-                notificationRepository.save(notification);
-                return notification;
-            }
-        );
-        notificationPublisherFacade.send(savedNotification);
+        final GroupParticipant groupParticipant = getGroupParticipant(groupId, memberId);
+        Group group = groupParticipant.getGroup();
+        notificationPublisherFacade.send(NotificationCreator.tardy(
+            groupParticipant.getMember(),
+            group.getHost(),
+            group,
+            tardinessRequest.minute()
+        ));
     }
 
 
