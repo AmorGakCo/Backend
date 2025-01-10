@@ -24,7 +24,7 @@ public interface GroupParticipantRepository extends JpaRepository<GroupParticipa
         Pageable pageable);
 
     @Query(
-        "select p from GroupParticipant p join fetch p.group join fetch p.member where p.group.id"
+        "select p from GroupParticipant p join fetch p.group g join fetch g.host join fetch p.member where p.group.id"
             + " = :groupId and p.member.id = :memberId")
     Optional<GroupParticipant> findByGroupAndMember(final Long groupId, final Long memberId);
 

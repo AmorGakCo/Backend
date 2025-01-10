@@ -97,7 +97,8 @@ public class GroupParticipantService {
         final TardinessRequest tardinessRequest) {
         Notification savedNotification = transactionTemplate.execute(status -> {
                 final GroupParticipant groupParticipant = getGroupParticipant(groupId, memberId);
-                final Group group = groupService.getGroupWithHost(groupId);
+                Group group = groupParticipant.getGroup();
+//                final Group group = groupService.getGroupWithHost(groupId);
                 NotificationRequest request = NotificationCreator.tardy(
                     groupParticipant.getMember(),
                     group.getHost(),
