@@ -25,6 +25,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.retry.annotation.Recover;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -92,6 +93,7 @@ public class GroupParticipantService {
         ));
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public void tardy(final Long groupId, final Long memberId,
         final TardinessRequest tardinessRequest) {
         final GroupParticipant groupParticipant = getGroupParticipant(groupId, memberId);
