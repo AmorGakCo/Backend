@@ -22,7 +22,6 @@ public class MemberController {
     private final MemberService memberService;
 
     @PatchMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public AdditionalInfoResponse updateAdditionalInfo(
         @RequestBody final AdditionalInfoRequest additionalInfoRequest,
         @AuthMemberId final Long memberId) {
