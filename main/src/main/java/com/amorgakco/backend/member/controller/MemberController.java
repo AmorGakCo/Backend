@@ -2,6 +2,7 @@ package com.amorgakco.backend.member.controller;
 
 import com.amorgakco.backend.global.argumentresolver.AuthMemberId;
 import com.amorgakco.backend.member.dto.AdditionalInfoRequest;
+import com.amorgakco.backend.member.dto.AdditionalInfoResponse;
 import com.amorgakco.backend.member.dto.PrivateMemberResponse;
 import com.amorgakco.backend.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +23,10 @@ public class MemberController {
 
     @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateAdditionalInfo(
+    public AdditionalInfoResponse updateAdditionalInfo(
         @RequestBody final AdditionalInfoRequest additionalInfoRequest,
         @AuthMemberId final Long memberId) {
-        memberService.updateAdditionalInfo(additionalInfoRequest, memberId);
+        return memberService.updateAdditionalInfo(additionalInfoRequest, memberId);
     }
 
     @GetMapping("/private")

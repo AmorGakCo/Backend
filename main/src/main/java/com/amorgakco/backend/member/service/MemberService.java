@@ -4,6 +4,7 @@ import com.amorgakco.backend.global.GoogleS2Const;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.member.dto.AdditionalInfoRequest;
+import com.amorgakco.backend.member.dto.AdditionalInfoResponse;
 import com.amorgakco.backend.member.dto.PrivateMemberResponse;
 import com.amorgakco.backend.member.repository.MemberRepository;
 import com.amorgakco.backend.member.service.mapper.MemberMapper;
@@ -43,7 +44,7 @@ public class MemberService {
     }
 
     @Transactional
-    public void updateAdditionalInfo(final AdditionalInfoRequest request, final Long memberId) {
+    public AdditionalInfoResponse updateAdditionalInfo(final AdditionalInfoRequest request, final Long memberId) {
         final Member member = getMember(memberId);
         final String memberCellToken =
             createMemberCellToken(request.latitude(), request.longitude());
@@ -52,6 +53,7 @@ public class MemberService {
             request.phoneNumber(),
             request.smsNotificationSetting(),
             memberCellToken);
+        return new AdditionalInfoResponse(memberId);
     }
 
     public Member getMember(final Long memberId) {

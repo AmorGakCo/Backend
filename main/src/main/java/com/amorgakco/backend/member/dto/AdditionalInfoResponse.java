@@ -1,2 +1,7 @@
-package com.amorgakco.backend.member.dto;public class AdditionalInfoResponse {
+package com.amorgakco.backend.member.dto;
+
+public record AdditionalInfoResponse(
+    Long memberId
+) {
+
 }
