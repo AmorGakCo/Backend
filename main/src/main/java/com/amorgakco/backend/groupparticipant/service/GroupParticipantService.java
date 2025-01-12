@@ -103,7 +103,6 @@ public class GroupParticipantService {
         ));
     }
 
-
     @Transactional
     @OptimisticLockRetryable(recover = "temperatureRecover")
     public TemperatureResponse increaseTemperature(final Long groupId, final Long requestMemberId,
