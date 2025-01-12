@@ -13,6 +13,7 @@ import com.amorgakco.backend.groupparticipant.dto.TardinessRequest;
 import com.amorgakco.backend.groupparticipant.dto.TemperatureResponse;
 import com.amorgakco.backend.groupparticipant.repository.GroupParticipantRepository;
 import com.amorgakco.backend.groupparticipant.service.mapper.GroupParticipantMapper;
+import com.amorgakco.backend.notification.dto.NotificationRequest;
 import com.amorgakco.backend.notification.infrastructure.NotificationPublisherFacade;
 import com.amorgakco.backend.notification.repository.NotificationRepository;
 import com.amorgakco.backend.notification.service.NotificationCreator;
@@ -102,6 +103,7 @@ public class GroupParticipantService {
             tardinessRequest.minute()
         ));
     }
+
 
     @Transactional
     @OptimisticLockRetryable(recover = "temperatureRecover")
