@@ -18,18 +18,19 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SoftDelete;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SoftDelete
 public class Notification extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private String title;
 
@@ -41,16 +42,10 @@ public class Notification extends BaseTime {
     @Enumerated(EnumType.STRING)
     private NotificationType notificationType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender_member_id" ,nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member sender;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "receiver_member_id" ,nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member receiver;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id" ,nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Group group;
 
     @Builder

@@ -48,7 +48,7 @@ public class GroupApplicationService {
     }
 
     @Transactional
-    public ApproveResponse approve(final Long groupId, final Long memberId, final Member member,final Long notificationId) {
+    public ApproveResponse approve(final Long groupId, final Long memberId, final Member member,final String notificationId) {
         final GroupApplication groupApplication = getGroupParticipation(groupId, memberId);
         groupApplication.approve(member);
         Group group = groupApplication.getGroup();
@@ -69,7 +69,7 @@ public class GroupApplicationService {
 
     @Transactional
     public RejectResponse reject(final Long groupId, final Long memberId, final Long hostId,
-        final Long notificationId) {
+        final String notificationId) {
         final GroupApplication groupApplication = getGroupParticipation(groupId, memberId);
         groupApplication.reject(memberService.getMember(hostId));
         final Group group = groupApplication.getGroup();

@@ -30,7 +30,7 @@ public class NotificationService {
     }
 
     @Transactional
-    public NotificationDeleteResponse deleteNotification(final Long notificationId){
+    public NotificationDeleteResponse deleteNotification(final String notificationId){
         notificationRepository.deleteById(notificationId);
         return new NotificationDeleteResponse(notificationId);
     }

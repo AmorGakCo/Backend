@@ -6,7 +6,7 @@ import lombok.Builder;
 
 @Builder
 public record NotificationMessage(
-    Long notificationId,
+    String notificationId,
     String title,
     String content,
     Long groupId,

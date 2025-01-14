@@ -27,7 +27,7 @@ public class NotificationController {
 
     @DeleteMapping("/{notificationId}")
     public NotificationDeleteResponse deleteNotification(
-        @PathVariable Long notificationId){
+        @PathVariable String notificationId){
         return notificationService.deleteNotification(notificationId);
     }
 }

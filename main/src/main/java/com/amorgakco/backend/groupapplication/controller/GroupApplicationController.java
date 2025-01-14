@@ -37,7 +37,7 @@ public class GroupApplicationController {
         @PathVariable final Long groupId,
         @PathVariable final Long memberId,
         @AuthMember final Member hostId,
-        @PathVariable final Long notificationId) {
+        @PathVariable final String notificationId) {
         return groupApplicationService.approve(groupId, memberId, hostId,notificationId);
     }
 
@@ -46,7 +46,7 @@ public class GroupApplicationController {
         @PathVariable final Long groupId,
         @PathVariable final Long memberId,
         @AuthMemberId final Long hostId,
-        @PathVariable final Long notificationId) {
+        @PathVariable final String notificationId) {
         return groupApplicationService.reject(groupId, memberId, hostId,notificationId);
     }
 

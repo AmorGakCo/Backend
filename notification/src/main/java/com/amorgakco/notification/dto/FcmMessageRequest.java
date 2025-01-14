@@ -8,7 +8,7 @@ import lombok.ToString;
 @Builder
 @ToString
 public class FcmMessageRequest {
-    private Long notificationId;
+    private String notificationId;
     private String title;
     private String content;
     private String token;
