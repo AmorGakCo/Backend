@@ -2,7 +2,6 @@ package com.amorgakco.backend.notification.domain;
 
 import com.amorgakco.backend.global.BaseTime;
 import com.amorgakco.backend.group.domain.Group;
-import com.amorgakco.backend.member.domain.Member;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -33,24 +32,21 @@ public class Notification extends BaseTime {
     @Enumerated(EnumType.STRING)
     private NotificationType notificationType;
 
-    private Member sender;
+    private Long senderMemberId;
 
-    private Member receiver;
-
-    private Group group;
+    private Long receiverMemberId;
 
     @Builder
     public Notification(
-        final String title, Member sender,
+        final String title,
         final String content,
-        final Member receiver,
-        final SendingType sendingType, NotificationType notificationType, Group group) {
+        final SendingType sendingType, NotificationType notificationType,
+        Long senderMemberId, Long receiverMemberId) {
         this.title = title;
-        this.sender = sender;
         this.content = content;
-        this.receiver = receiver;
         this.sendingType = sendingType;
         this.notificationType = notificationType;
-        this.group = group;
+        this.senderMemberId = senderMemberId;
+        this.receiverMemberId = receiverMemberId;
     }
 }

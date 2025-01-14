@@ -19,9 +19,8 @@ public class FcmPublisher implements Publisher {
 
     @Override
     public void publish(final Notification notification) {
-        final Member receiver = notification.getReceiver();
         fcmTokenRepository
-            .findById(receiver.getId().toString())
+            .findById(notification.getReceiverMemberId().toString())
             .ifPresent(
                 token -> convertAndSend(notification, token.getToken()));
     }
