@@ -40,10 +40,6 @@ public class GroupParticipantService {
     private final GroupService groupService;
     private final NotificationPublisherFacade notificationPublisherFacade;
 
-    private final TransactionTemplate transactionTemplate;
-    private final NotificationMapper notificationMapper;
-    private final NotificationRepository notificationRepository;
-
     @Transactional
     public LocationVerificationResponse verifyParticipantLocation(
         final LocationVerificationRequest request, final Long memberId) {
@@ -93,7 +89,7 @@ public class GroupParticipantService {
         ));
     }
 
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Transactional
     public void tardy(final Long groupId, final Long memberId,
         final TardinessRequest tardinessRequest) {
         final GroupParticipant groupParticipant = getGroupParticipant(groupId, memberId);
