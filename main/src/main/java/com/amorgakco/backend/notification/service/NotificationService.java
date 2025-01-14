@@ -21,13 +21,13 @@ public class NotificationService {
     private final NotificationRepository notificationRepository;
     private final NotificationMapper notificationMapper;
 
-    public NotificationMessageResponse getNotifications(final Long memberId, final Integer page) {
-        final PageRequest pageRequest =
-            PageRequest.of(page, PAGE_SIZE, Sort.by(Sort.Direction.DESC, "createdAt"));
-        final Slice<Notification> notificationSlice =
-            notificationRepository.findByReceiver(memberId, pageRequest);
-        return notificationMapper.toNotificationMessageResponse(notificationSlice);
-    }
+//    public NotificationMessageResponse getNotifications(final Long memberId, final Integer page) {
+//        final PageRequest pageRequest =
+//            PageRequest.of(page, PAGE_SIZE, Sort.by(Sort.Direction.DESC, "createdAt"));
+//        final Slice<Notification> notificationSlice =
+//            notificationRepository.findByReceiver(memberId, pageRequest);
+//        return notificationMapper.toNotificationMessageResponse(notificationSlice);
+//    }
 
     @Transactional
     public NotificationDeleteResponse deleteNotification(final String notificationId){

@@ -19,11 +19,11 @@ public class NotificationController {
 
     private final NotificationService notificationService;
 
-    @GetMapping
-    public NotificationMessageResponse getNotification(
-        @RequestParam final Integer page, @AuthMemberId final Long memberId) {
-        return notificationService.getNotifications(memberId, page);
-    }
+//    @GetMapping
+//    public NotificationMessageResponse getNotification(
+//        @RequestParam final Integer page, @AuthMemberId final Long memberId) {
+//        return notificationService.getNotifications(memberId, page);
+//    }
 
     @DeleteMapping("/{notificationId}")
     public NotificationDeleteResponse deleteNotification(

@@ -18,22 +18,26 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 @RequiredArgsConstructor
 @Slf4j
 public class ChatHandler extends TextWebSocketHandler {
+
     private final ObjectMapper objectMapper;
     private final MessageMapper messageMapper;
     private final MemoryChatRoomRepository memoryChatRoomRepository;
     private final MessageRepository messageRepository;
 
     @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+    protected void handleTextMessage(WebSocketSession session, TextMessage message)
+        throws Exception {
         final String payload = message.getPayload();
-        final ChatMessageRequest chatMessageRequest = objectMapper.readValue(payload, ChatMessageRequest.class);
-        final ChatRoom chatRoom = memoryChatRoomRepository.getChatRoom(chatMessageRequest.chatRoomId());
+        final ChatMessageRequest chatMessageRequest = objectMapper.readValue(payload,
+            ChatMessageRequest.class);
+        final ChatRoom chatRoom = memoryChatRoomRepository.getChatRoom(
+            chatMessageRequest.chatRoomId());
         chatRoom.handleMessage(session, chatMessageRequest, objectMapper);
         messageRepository.save(messageMapper.toMessage(chatMessageRequest));
     }
 
     @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status){
-        log.info("Connection Close : {} , Status : {}",session.getId(),status.toString());
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
+        log.info("Connection Close : {} , Status : {}", session.getId(), status.toString());
     }
 }

@@ -18,6 +18,13 @@ spring:
     redis:
       host: localhost
       port: 6379
+    mongodb:
+      host: localhost
+      port: 27017
+      authentication-database: admin
+      username: root
+      password: amorgakcomongo1234
+      database: amorgakco
   rabbitmq:
     host: localhost
     port: 5672
