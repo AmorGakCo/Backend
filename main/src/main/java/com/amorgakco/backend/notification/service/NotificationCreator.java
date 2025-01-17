@@ -1,6 +1,7 @@
 package com.amorgakco.backend.notification.service;
 
 import com.amorgakco.backend.group.domain.Group;
+import com.amorgakco.backend.groupparticipant.domain.GroupParticipant;
 import com.amorgakco.backend.member.domain.Member;
 import com.amorgakco.backend.notification.domain.NotificationType;
 import com.amorgakco.backend.notification.domain.SendingType;
@@ -53,12 +54,13 @@ public class NotificationCreator {
             .build();
     }
 
-    public static NotificationRequest tardy(
-        final Member sender, final Member receiver, final Group group,
+    public static NotificationRequest tardy(final GroupParticipant groupParticipant,
         final int requestMinute) {
+        final Group group = groupParticipant.getGroup();
+        final Member sender = groupParticipant.getMember();
         return NotificationRequest.builder()
-            .sender(sender)
-            .receiver(receiver)
+            .sender(groupParticipant.getMember())
+            .receiver(group.getHost())
             .group(group)
             .sendingType(SendingType.WEB_PUSH)
             .title(NotificationType.PARTICIPATION_TARDINESS.getTitle())
@@ -69,7 +71,10 @@ public class NotificationCreator {
     }
 
     public static NotificationRequest withdraw(
-        final Member sender, final Member receiver, final Group group) {
+        final GroupParticipant groupParticipant) {
+        final Member sender = groupParticipant.getMember();
+        final Group group = groupParticipant.getGroup();
+        final Member receiver = group.getHost();
         return NotificationRequest.builder()
             .sender(sender)
             .receiver(receiver)

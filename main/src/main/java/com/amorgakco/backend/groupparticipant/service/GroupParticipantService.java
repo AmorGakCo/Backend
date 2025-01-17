@@ -3,7 +3,6 @@ package com.amorgakco.backend.groupparticipant.service;
 import com.amorgakco.backend.global.annotation.OptimisticLockRetryable;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.global.exception.RetryFailedException;
-import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
 import com.amorgakco.backend.group.service.GroupService;
 import com.amorgakco.backend.groupparticipant.domain.GroupParticipant;
@@ -13,11 +12,8 @@ import com.amorgakco.backend.groupparticipant.dto.TardinessRequest;
 import com.amorgakco.backend.groupparticipant.dto.TemperatureResponse;
 import com.amorgakco.backend.groupparticipant.repository.GroupParticipantRepository;
 import com.amorgakco.backend.groupparticipant.service.mapper.GroupParticipantMapper;
-import com.amorgakco.backend.notification.dto.NotificationRequest;
 import com.amorgakco.backend.notification.infrastructure.NotificationPublisherFacade;
-import com.amorgakco.backend.notification.repository.NotificationRepository;
 import com.amorgakco.backend.notification.service.NotificationCreator;
-import com.amorgakco.backend.notification.service.mapper.NotificationMapper;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -25,9 +21,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.retry.annotation.Recover;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionTemplate;
 
 @Service
 @RequiredArgsConstructor
@@ -81,27 +75,18 @@ public class GroupParticipantService {
     public void withdraw(final Long groupId, final Long memberId) {
         final GroupParticipant groupParticipant = getGroupParticipant(groupId, memberId);
         groupParticipantRepository.delete(groupParticipant);
-        final Group group = groupService.getGroupWithHost(groupId);
-        notificationPublisherFacade.send(NotificationCreator.withdraw(
-            groupParticipant.getMember(),
-            group.getHost(),
-            group
-        ));
+        notificationPublisherFacade.send(NotificationCreator.withdraw(groupParticipant));
     }
 
     @Transactional
     public void tardy(final Long groupId, final Long memberId,
         final TardinessRequest tardinessRequest) {
         final GroupParticipant groupParticipant = getGroupParticipant(groupId, memberId);
-        Group group = groupParticipant.getGroup();
         notificationPublisherFacade.send(NotificationCreator.tardy(
-            groupParticipant.getMember(),
-            group.getHost(),
-            group,
+            groupParticipant,
             tardinessRequest.minute()
         ));
     }
-
 
     @Transactional
     @OptimisticLockRetryable(recover = "temperatureRecover")
