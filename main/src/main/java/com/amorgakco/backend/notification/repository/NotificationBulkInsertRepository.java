@@ -27,7 +27,7 @@ public class NotificationBulkInsertRepository {
                 title,
                 notification_type,
                 sending_type)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?)
+            VALUES (?,?,?,?,?,?,?,?)
             """;
 
         jdbcTemplate.batchUpdate(sql,
@@ -40,8 +40,8 @@ public class NotificationBulkInsertRepository {
                 ps.setLong(4, notification.getSenderId());
                 ps.setString(5, notification.getContent());
                 ps.setString(6, notification.getTitle());
-                ps.setString(7, String.valueOf(notification.getSendingType()));
-
+                ps.setString(7, String.valueOf(notification.getNotificationType()));
+                ps.setString(8,String.valueOf(notification.getSendingType()));
             });
     }
 
