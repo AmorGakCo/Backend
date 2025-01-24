@@ -3,6 +3,7 @@ package com.amorgakco.backend.groupparticipant.service;
 import com.amorgakco.backend.global.annotation.OptimisticLockRetryable;
 import com.amorgakco.backend.global.exception.ResourceNotFoundException;
 import com.amorgakco.backend.global.exception.RetryFailedException;
+import com.amorgakco.backend.group.domain.Group;
 import com.amorgakco.backend.group.dto.LocationVerificationRequest;
 import com.amorgakco.backend.group.service.GroupService;
 import com.amorgakco.backend.groupparticipant.domain.GroupParticipant;
@@ -82,9 +83,11 @@ public class GroupParticipantService {
     public void tardy(final Long groupId, final Long memberId,
         final TardinessRequest tardinessRequest) {
         final GroupParticipant groupParticipant = getGroupParticipant(groupId, memberId);
+        Group group = groupService.getGroup(groupId);
         notificationPublisherFacade.send(NotificationCreator.tardy(
             groupParticipant,
-            tardinessRequest.minute()
+            tardinessRequest.minute(),
+            group
         ));
     }
 

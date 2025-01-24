@@ -55,8 +55,8 @@ public class NotificationCreator {
     }
 
     public static NotificationRequest tardy(final GroupParticipant groupParticipant,
-        final int requestMinute) {
-        final Group group = groupParticipant.getGroup();
+        final int requestMinute,final Group group) {
+//        final Group group = groupParticipant.getGroup();
         final Member sender = groupParticipant.getMember();
         return NotificationRequest.builder()
             .sender(groupParticipant.getMember())
