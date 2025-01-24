@@ -12,29 +12,29 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class NotificationMemoryRepository {
 
-    private final NotificationRepository notificationRepository;
-    private List<Notification> notificationQueue = new LinkedList<>();
-    private final Lock lock = new ReentrantLock();
     private static final int BULK_INSERT_SIZE = 500;
+    private final NotificationRepository notificationRepository;
+    private final Lock lock = new ReentrantLock();
+    private List<Notification> notificationQueue = new LinkedList<>();
 
-    public void save(final Notification notification){
-        if(notificationQueue.size() >= BULK_INSERT_SIZE){
-            syncNotificationQueue();
-        }
-        notificationQueue.add(notification);
-    }
-
-    private void syncNotificationQueue() {
+    public void save(final Notification notification) {
         lock.lock();
-        try{
-            notificationRepository.saveAll(notificationQueue);
-            notificationQueue = new LinkedList<>();
-        }finally {
+        try {
+            if (notificationQueue.size() >= BULK_INSERT_SIZE) {
+                syncNotificationQueue();
+            }
+            notificationQueue.add(notification);
+        } finally {
             lock.unlock();
         }
     }
 
-    public void flush(){
+    private void syncNotificationQueue() {
+        notificationRepository.saveAll(notificationQueue);
+        notificationQueue = new LinkedList<>();
+    }
+
+    public void flush() {
         syncNotificationQueue();
     }
 
