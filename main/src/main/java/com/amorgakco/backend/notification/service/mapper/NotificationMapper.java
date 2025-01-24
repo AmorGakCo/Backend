@@ -38,15 +38,13 @@ public class NotificationMapper {
             .build();
     }
 
-    public Notification toNotificationCache(final NotificationRequest request) {
+    public Notification toNotification(final NotificationRequest request) {
         return Notification.builder()
             .title(request.title())
             .sendingType(request.sendingType())
             .receiverId(request.receiver().getId())
             .senderId(request.sender().getId())
             .content(request.content())
-            .phoneNumber(request.receiver().getPhoneNumber())
-            .isSmsNotificationActivated(request.receiver().isSmsNotificationActivated())
             .notificationType(request.notificationType())
             .build();
     }

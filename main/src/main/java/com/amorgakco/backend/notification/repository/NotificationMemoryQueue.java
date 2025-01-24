@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class NotificationMemoryRepository {
+public class NotificationMemoryQueue {
 
     private static final int BULK_INSERT_SIZE = 500;
-    private final NotificationRepository notificationRepository;
+    private final NotificationBulkInsertRepository bulkInsertRepository;
     private final Lock lock = new ReentrantLock();
     private List<Notification> notificationQueue = new LinkedList<>();
 
@@ -30,7 +30,7 @@ public class NotificationMemoryRepository {
     }
 
     private void syncNotificationQueue() {
-        notificationRepository.saveAll(notificationQueue);
+        bulkInsertRepository.saveAll(notificationQueue);
         notificationQueue = new LinkedList<>();
     }
 

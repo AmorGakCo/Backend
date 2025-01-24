@@ -7,6 +7,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +18,7 @@ import org.hibernate.annotations.SoftDelete;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SoftDelete
-public class Notification extends BaseTime {
+public class Notification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,25 +36,23 @@ public class Notification extends BaseTime {
 
     private Long senderId;
 
-    private boolean isSmsNotificationActivated;
-
-    private String phoneNumber;
-
     private Long receiverId;
+
+    private LocalDateTime createdAt;
 
     @Builder
     public Notification(
         final String title,
         final String content,
         final SendingType sendingType, NotificationType notificationType,
-        Long senderId, boolean isSmsNotificationActivated, String phoneNumber, Long receiverId) {
+        Long senderId, Long receiverId, LocalDateTime createdAt) {
         this.title = title;
         this.content = content;
         this.sendingType = sendingType;
         this.notificationType = notificationType;
         this.senderId = senderId;
-        this.isSmsNotificationActivated = isSmsNotificationActivated;
-        this.phoneNumber = phoneNumber;
         this.receiverId = receiverId;
+        this.createdAt = createdAt;
+        this.createdAt = LocalDateTime.now();
     }
 }

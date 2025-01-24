@@ -7,8 +7,7 @@ import com.amorgakco.backend.notification.infrastructure.publisher.FcmPublisher;
 import com.amorgakco.backend.notification.infrastructure.publisher.Publisher;
 import com.amorgakco.backend.notification.infrastructure.publisher.SmsAndFcmPublisher;
 import com.amorgakco.backend.notification.infrastructure.publisher.SmsPublisher;
-import com.amorgakco.backend.notification.repository.NotificationMemoryRepository;
-import com.amorgakco.backend.notification.repository.NotificationRepository;
+import com.amorgakco.backend.notification.repository.NotificationMemoryQueue;
 import com.amorgakco.backend.notification.service.mapper.NotificationMapper;
 import java.util.EnumMap;
 import org.springframework.stereotype.Service;
@@ -18,16 +17,16 @@ public class NotificationPublisherFacade {
 
     private final EnumMap<SendingType, Publisher> publishers = new EnumMap<>(SendingType.class);
     private final NotificationMapper notificationMapper;
-    private final NotificationMemoryRepository notificationMemoryRepository;
+    private final NotificationMemoryQueue notificationMemoryQueue;
 
     public NotificationPublisherFacade(
         final SmsPublisher smsPublisher,
         final FcmPublisher fcmPublisher,
         final SmsAndFcmPublisher smsAndFcmPublisher,
         final NotificationMapper notificationMapper,
-        NotificationMemoryRepository notificationMemoryRepository
+        NotificationMemoryQueue notificationMemoryQueue
     ) {
-        this.notificationMemoryRepository = notificationMemoryRepository;
+        this.notificationMemoryQueue = notificationMemoryQueue;
         publishers.put(SendingType.SMS, smsPublisher);
         publishers.put(SendingType.WEB_PUSH, fcmPublisher);
         publishers.put(SendingType.SMS_AND_WEB_PUSH, smsAndFcmPublisher);
@@ -37,8 +36,8 @@ public class NotificationPublisherFacade {
     public void send(final NotificationRequest notificationRequest) {
         final Publisher publisher = publishers.get(notificationRequest.sendingType());
         final Notification notification =
-            notificationMapper.toNotificationCache(notificationRequest);
-        notificationMemoryRepository.save(notification);
-        publisher.publish(notification);
+            notificationMapper.toNotification(notificationRequest);
+        notificationMemoryQueue.save(notification);
+        publisher.publish(notificationRequest);
     }
 }

@@ -1,6 +1,6 @@
 package com.amorgakco.backend.notification.infrastructure.publisher;
 
-import com.amorgakco.backend.notification.domain.Notification;
+import com.amorgakco.backend.notification.dto.NotificationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +12,8 @@ public class SmsAndFcmPublisher implements Publisher {
     private final FcmPublisher fcmPublisher;
 
     @Override
-    public void publish(final Notification notification) {
-        smsPublisher.publish(notification);
-        fcmPublisher.publish(notification);
+    public void publish(final NotificationRequest notificationRequest) {
+        smsPublisher.publish(notificationRequest);
+        fcmPublisher.publish(notificationRequest);
     }
 }

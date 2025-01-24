@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FcmMessageRequest {
-    private Long notificationId;
     private String title;
     private String content;
     private String token;

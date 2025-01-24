@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SmsMessageRequest {
-    private Long notificationId;
     private String title;
     private String content;
     private String phoneNumber;
