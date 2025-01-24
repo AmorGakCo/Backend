@@ -32,21 +32,21 @@ public class NotificationMapper {
             .title(notification.getTitle())
             .content(notification.getContent())
             .notificationType(notification.getNotificationType())
-            .senderMemberId(notification.getSender().getId())
-            .receiverMemberId(notification.getReceiver().getId())
-            .groupId(notification.getGroup().getId())
+            .senderMemberId(notification.getSenderId())
+            .receiverMemberId(notification.getReceiverId())
             .createdAt(notification.getCreatedAt())
             .build();
     }
 
-    public Notification toNotification(final NotificationRequest request) {
+    public Notification toNotificationCache(final NotificationRequest request) {
         return Notification.builder()
             .title(request.title())
             .sendingType(request.sendingType())
-            .receiver(request.receiver())
-            .sender(request.sender())
-            .group(request.group())
+            .receiverId(request.receiver().getId())
+            .senderId(request.sender().getId())
             .content(request.content())
+            .phoneNumber(request.receiver().getPhoneNumber())
+            .isSmsNotificationActivated(request.receiver().isSmsNotificationActivated())
             .notificationType(request.notificationType())
             .build();
     }

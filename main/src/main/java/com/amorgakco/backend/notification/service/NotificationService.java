@@ -3,6 +3,7 @@ package com.amorgakco.backend.notification.service;
 import com.amorgakco.backend.notification.domain.Notification;
 import com.amorgakco.backend.notification.dto.NotificationDeleteResponse;
 import com.amorgakco.backend.notification.dto.NotificationMessageResponse;
+import com.amorgakco.backend.notification.repository.NotificationMemoryRepository;
 import com.amorgakco.backend.notification.repository.NotificationRepository;
 import com.amorgakco.backend.notification.service.mapper.NotificationMapper;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +20,12 @@ public class NotificationService {
 
     private static final Integer PAGE_SIZE = 10;
     private final NotificationRepository notificationRepository;
+    private final NotificationMemoryRepository notificationMemoryRepository;
     private final NotificationMapper notificationMapper;
 
+    @Transactional
     public NotificationMessageResponse getNotifications(final Long memberId, final Integer page) {
+        notificationMemoryRepository.flush();
         final PageRequest pageRequest =
             PageRequest.of(page, PAGE_SIZE, Sort.by(Sort.Direction.DESC, "createdAt"));
         final Slice<Notification> notificationSlice =
@@ -30,7 +34,7 @@ public class NotificationService {
     }
 
     @Transactional
-    public NotificationDeleteResponse deleteNotification(final Long notificationId){
+    public NotificationDeleteResponse deleteNotification(final Long notificationId) {
         notificationRepository.deleteById(notificationId);
         return new NotificationDeleteResponse(notificationId);
     }

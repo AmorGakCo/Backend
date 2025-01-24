@@ -18,9 +18,8 @@ public class SmsPublisher implements Publisher {
 
     @Override
     public void publish(final Notification notification) {
-        final Member receiver = notification.getReceiver();
-        if (receiver.isSmsNotificationActivated()) {
-            final String phoneNumber = receiver.getPhoneNumber();
+        if (notification.isSmsNotificationActivated()) {
+            final String phoneNumber = notification.getPhoneNumber();
             convertAndSend(notification, phoneNumber);
         }
     }
