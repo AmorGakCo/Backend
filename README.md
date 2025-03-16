@@ -9,4 +9,4 @@ Java, Spring Boot, MySQL, RabbitMQ, GCP, Redis, Nginx, OAuth2
 ## 기여자
 |송해찬|이주영|김승진|박상윤|
 |:----:|:----:|:----:|:----:|
-|Back End|Front End|Reviewer|Publisher|
+|BackEnd|FrontEnd|Reviewer|Publisher|
