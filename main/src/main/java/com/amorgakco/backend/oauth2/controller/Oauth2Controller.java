@@ -67,9 +67,6 @@ public class Oauth2Controller {
     }
 
     @GetMapping("/test")
-
-
-
     private String getLoginUrl(final HttpServletRequest request,
         final Oauth2ProviderType oauth2ProviderType) throws URISyntaxException {
         String referer = request.getHeader(HttpHeaders.REFERER);

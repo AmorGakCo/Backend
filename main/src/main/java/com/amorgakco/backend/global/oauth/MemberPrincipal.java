@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 @Getter
-public class MemberPrincipal implements OAuth2User, UserDetails {
+public class MemberPrincipal implements UserDetails {
 
     private static final String EMPTY_PASSWORD = "";
     private final Map<String, Object> attributes;

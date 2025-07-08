@@ -22,13 +22,13 @@ public class RabbitMQConfig {
 
     @Bean
     public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(
-            ConnectionFactory connectionFactory) {
+        ConnectionFactory connectionFactory) {
         final SimpleRabbitListenerContainerFactory factory =
-                new SimpleRabbitListenerContainerFactory();
+            new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setConcurrentConsumers(6);
         factory.setMaxConcurrentConsumers(10);
-        factory.setPrefetchCount(5);
+        factory.setPrefetchCount(20);
         return factory;
     }
 
@@ -44,7 +44,7 @@ public class RabbitMQConfig {
 
     @Bean
     public RabbitTemplate rabbitTemplate(
-            final ConnectionFactory connectionFactory, final MessageConverter messageConverter) {
+        final ConnectionFactory connectionFactory, final MessageConverter messageConverter) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(messageConverter);
         return rabbitTemplate;
